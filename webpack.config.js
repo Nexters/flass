@@ -8,7 +8,7 @@ const webpack = require('webpack');
 
 let config = require('./webpack.config.base');
 
-// config.output.filename = 'js/app.js';
+config.output.filename = 'js/app.js';
 // config.plugins = [
 //   new webpack.optimize.CommonsChunkPlugin({
 //     name: 'app.vendor',

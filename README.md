@@ -12,7 +12,6 @@ This is a pure [Ruby on Rails](http://rubyonrails.org/) / [React](https://facebo
 - SASS and StyleLint support
 - Hashed filenames for production assets
 - Separate app and vendor JS bundles
-- Postgres compatibility
 - Using Rails default gems and NPM packages only
 
 ## Exit Asset Pipeline, Enter Webpack
