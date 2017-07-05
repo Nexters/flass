@@ -5,7 +5,6 @@
 'use strict';
 
 const webpack = require('webpack');
-const path = require('path');
 
 module.exports = {
   entry: {
@@ -27,8 +26,9 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
+    // https://velopert.com/1492
     rules: [
-      {
+    /*  {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint-loader',
@@ -36,7 +36,7 @@ module.exports = {
         query: {
           configFile: './.eslintrc',
         },
-      },
+      }, */
       {
         test: /\.js$/,
         exclude: /node_modules/,
