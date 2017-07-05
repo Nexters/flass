@@ -2,11 +2,11 @@
  * @fileOverview The Server Timestamp reducer.
  */
 
-import { handleActions } from 'redux-actions';
+import {handleActions} from 'redux-actions';
 
 import {
   SERVER_TIMESTAMP_UPDATE,
-} from '../constants/reducer-actions.const';
+} from './HelloWorldActions';
 
 const initialState = null;
 

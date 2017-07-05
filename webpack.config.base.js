@@ -4,15 +4,26 @@
 
 'use strict';
 
+const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: './front/js/app.boot.js',
+    app: './client/App.js',
   },
+
   output: {
-    path: path.resolve(__dirname, 'public/dist'),
+    path: __dirname + '/public/',
+    filename: 'bundle.js'
+  },
+
+  devServer: {
+    hot: true,
+    inline: true,
+    host: '0.0.0.0',
+    port: 4000,
+    historyApiFallback: true,
+    contentBase: __dirname + '/public/'
   },
   devtool: 'source-map',
   module: {
@@ -37,4 +48,8 @@ module.exports = {
       }
     ],
   },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };

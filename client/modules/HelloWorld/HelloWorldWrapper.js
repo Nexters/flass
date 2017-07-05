@@ -4,8 +4,8 @@
 
 import { connect } from 'react-redux';
 
-import HelloWorld from '../components/hello-world.comp';
-import { fetchServerTimestamp } from '../actions/server-timestamp.action';
+import HelloWorld from './HelloWorld';
+import { fetchServerTimestamp } from './HelloWorldActions';
 
 /**
  * Handle state change and map it to local component props.

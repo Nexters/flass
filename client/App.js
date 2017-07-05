@@ -2,17 +2,15 @@
  * @fileOverview The app main entry point.
  */
 
-// Include the main scss file for webpack processing.
-require('../css/app.scss');
-
+import './App.scss';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import rootReducer from './reducers/root-reducer.redux';
-import HelloWorld from './containers/hello-world.cont';
+import rootReducer from './reducers';
+import HelloWorld from './modules/HelloWorld/HelloWorldWrapper';
 
 let appBoot = module.exports = {};
 
