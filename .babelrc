@@ -1,4 +1,5 @@
 {
   "presets": ["es2015", "react"],
-  "only": ["client/*.js", "client/**/*.js"]
+  "only": ["client/*.js", "client/**/*.js"],
+  "plugins": ["transform-object-rest-spread"]
 }

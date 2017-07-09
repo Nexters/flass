@@ -14,7 +14,7 @@ import { fetchServerTimestamp } from './HelloWorldActions';
  */
 function mapStateToProps(state) {
   return {
-    serverTimestamp: state.serverTimestamp,
+    serverTimestamp: state.HelloWorld.serverTimestamp,
   };
 }
 

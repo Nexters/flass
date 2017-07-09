@@ -1,4 +1,3 @@
-# rails-react-boilerplate
 
 This is a pure [Ruby on Rails](http://rubyonrails.org/) / [React](https://facebook.github.io/react/) / [Redux](https://github.com/reactjs/redux) / [Webpack 2](https://webpack.github.io/) boilerplate app.
 
@@ -59,6 +58,9 @@ Builds the assets for development mode, and rebuilds on every detected change.
 
 `npm run webpack-production`  
 Builds the assets for production mode, output files are hashed.
+
+`webpack-dev-server`
+클라이언트 단만 실행.
 
 ## Load assets in production from a custom root directory or URL
 

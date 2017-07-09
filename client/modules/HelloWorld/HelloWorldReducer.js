@@ -1,17 +1,18 @@
-/**
- * @fileOverview The Server Timestamp reducer.
- */
-
-import {handleActions} from 'redux-actions';
-
 import {
   SERVER_TIMESTAMP_UPDATE,
 } from './HelloWorldActions';
 
-const initialState = null;
+const initialState = {serverTimestamp: null};
 
-export default handleActions({
-  [SERVER_TIMESTAMP_UPDATE]: (state, action) => {
-    return action.timestamp;
-  },
-}, initialState);
+const HelloWorldReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SERVER_TIMESTAMP_UPDATE:
+      return {
+        serverTimestamp: action.serverTimestamp
+      };
+    default:
+      return state;
+  }
+};
+
+export default HelloWorldReducer;

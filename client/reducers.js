@@ -4,8 +4,8 @@
 
 import { combineReducers } from 'redux';
 
-import serverTimestamp from './modules/HelloWorld/HelloWorldReducer';
+import HelloWorld from './modules/HelloWorld/HelloWorldReducer';
 
 export default combineReducers({
-  serverTimestamp,
+  HelloWorld,
 });
