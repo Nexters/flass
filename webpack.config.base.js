@@ -1,14 +1,10 @@
-/**
- * @fileOverview Webpack basic configuration file.
- */
-
 'use strict';
 
 const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: './client/App.js',
+    app: ['react-hot-loader/patch', './client/App.js']
   },
 
   output: {
@@ -19,7 +15,7 @@ module.exports = {
   devServer: {
     hot: true,
     inline: true,
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 4000,
     historyApiFallback: true,
     contentBase: __dirname + '/public/'
@@ -28,19 +24,19 @@ module.exports = {
   module: {
     // https://velopert.com/1492
     rules: [
-    /*  {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        query: {
-          configFile: './.eslintrc',
-        },
-      }, */
+      /*  {
+       test: /\.js$/,
+       exclude: /node_modules/,
+       loader: 'eslint-loader',
+       enforce: 'pre',
+       query: {
+       configFile: './.eslintrc-tmp',
+       },
+       }, */
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loaders: ['react-hot-loader/webpack', 'babel-loader']
       },
       {
         test: /\.scss$/,

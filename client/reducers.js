@@ -4,8 +4,10 @@
 
 import { combineReducers } from 'redux';
 
-import HelloWorld from './modules/HelloWorld/HelloWorldReducer';
+import helloworld from './modules/HelloWorld/HelloWorldReducer';
+import memo from './modules/Memo/MemoReducer';
 
 export default combineReducers({
-  HelloWorld,
+  helloworld,
+  memo
 });
