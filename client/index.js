@@ -1,21 +1,19 @@
-/**
- * @fileOverview The app main entry point.
- */
-
-import './App.scss';
-import React from 'react';
-import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from './reducers';
-import HelloWorld from './modules/HelloWorld/HelloWorldWrapper';
+import FireBaseConfig from './config/FirebaseConfig';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-let appBoot = module.exports = {};
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { AppContainer } from 'react-hot-loader'
+import MemoApp from "./modules/Memo/MemoApp";
 
-appBoot.init = function() {
+const render = Component => {
   console.log('init() :: App starts booting...');
+  injectTapEventPlugin();
 
   // Check for devToolsExtension
   const create = window.devToolsExtension ?
@@ -27,13 +25,20 @@ appBoot.init = function() {
   // Init store
   const store = createStoreWithMiddleware(rootReducer);
 
-  ReactDom.render(
-    <Provider store={ store }>
-      <HelloWorld />
-    </Provider>,
-    document.getElementById('root')
-  );
+  FireBaseConfig.init();
+
+  ReactDOM.render(
+    <AppContainer>
+      <Provider store={ store }>
+        <Component />
+      </Provider>
+    </AppContainer>,
+    document.getElementById('app')
+  )
 };
 
-// init app
-appBoot.init();
+render(MemoApp);
+
+if (module.hot) {
+  module.hot.accept('./modules/Root', () => { render(MemoApp) });
+}

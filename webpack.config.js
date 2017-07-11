@@ -1,21 +1,52 @@
-/**
- * @fileOverview Webpack configuration file for development.
- */
-
-'use strict';
-
 const webpack = require('webpack');
+const path = require('path');
 
-let config = require('./webpack.config.base');
+module.exports = {
+  devtool: 'source-map',
+  entry: {
+    app: [
+      'react-hot-loader/patch',
+      './client/index'
+    ]
+  },
+  output: {
+    path: path.resolve(__dirname, './public'),
+    filename: 'app.js'
+  },
 
-config.output.filename = 'js/app.js';
-// config.plugins = [
-//   new webpack.optimize.CommonsChunkPlugin({
-//     name: 'app.vendor',
-//     filename: 'js/app.vendor.js',
-//     minChunks: module => /node_modules/.test(module.resource),
-//   }),
-//   new ExtractTextPlugin('css/app.css')
-// ];
+  devServer: {
+    hot: true,
+    inline: true,
+    host: 'localhost',
+    port: 4000,
+    historyApiFallback: true,
+    contentBase: __dirname + '/public/'
+  },
+  module: {
+    // https://velopert.com/1492
+    rules: [
+      /*  {
+       test: /\.js$/,
+       exclude: /node_modules/,
+       loader: 'eslint-loader',
+       enforce: 'pre',
+       query: {
+       confile: './.eslintrc-tmp',
+       },
+       }, */
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
+    ],
+  },
 
-module.exports = config;
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
+};

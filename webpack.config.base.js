@@ -1,15 +1,17 @@
-'use strict';
-
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
+  devtool: 'source-map',
   entry: {
-    app: ['react-hot-loader/patch', './client/App.js']
+    app: [
+      'react-hot-loader/patch',
+      './client/index.js'
+    ]
   },
-
   output: {
-    path: __dirname + '/public/',
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, './public/js'),
+    filename: 'app.js'
   },
 
   devServer: {
@@ -20,7 +22,6 @@ module.exports = {
     historyApiFallback: true,
     contentBase: __dirname + '/public/'
   },
-  devtool: 'source-map',
   module: {
     // https://velopert.com/1492
     rules: [
@@ -36,7 +37,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['react-hot-loader/webpack', 'babel-loader']
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,
