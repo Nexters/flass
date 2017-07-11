@@ -54,14 +54,12 @@ class MemoContainer extends Component {
     const {memos = [], selectedId} = this.props;
     return (
       <div>
-        1231312312
         <MemoList memos={memos}
                   handleClick={this.props.fetchSelectedMemoId}
                   deleteMemo={_.partial(this.props.fetchDeleteMemo, this.props.uid, _)}
         />
         <MemoDetail memo={memos.find((memo => memo.id == selectedId))}
                     addMemo={_.partial(this.saveMemo, this.props.uid, _)}/>
-        asdaslndaslkdnaslkdnasl
       </div>
     );
   }

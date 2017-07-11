@@ -8,7 +8,7 @@ import {
   fetchUpdateMemo,
   fetchDeleteMemo,
   fetchSelectedMemoId
-} from './MemoActions';
+} from '../../modules/Memo/MemoActions';
 
 /**
  * Handle state change and map it to local component props.

@@ -9,7 +9,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import MemoApp from "./modules/Memo/MemoApp";
+import MemoApp from "./components/Memo/MemoApp";
 
 const render = Component => {
   console.log('init() :: App starts booting...');
@@ -40,5 +40,5 @@ const render = Component => {
 render(MemoApp);
 
 if (module.hot) {
-  module.hot.accept('./modules/Root', () => { render(MemoApp) });
+  module.hot.accept('./components/Root', () => { render(MemoApp) });
 }
