@@ -1,16 +1,20 @@
-import React, {Component, PropTypes} from 'react';
-import {FloatingActionButton, TextField} from "material-ui";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { FloatingActionButton, TextField } from 'material-ui';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 const propTypes = {
+  addMemo: PropTypes.func.isRequired,
   memo: PropTypes.shape({
     id: PropTypes.string,
     txt: PropTypes.string
-  })
+  }),
+  txt: PropTypes.string
 };
 
 const defaultProps = {
-  memo: {}
+  memo: {},
+  txt: ''
 };
 
 class MemoDetail extends Component {
@@ -24,28 +28,19 @@ class MemoDetail extends Component {
     this.handleBlur = this.handleBlur.bind(this);
   }
 
-  handleAddMemo(e) {
-    const txt = this.state.txt;
-    this.props.addMemo({
-      txt: txt,
-      created: new Date().getTime()
-    });
-    this.setState({txt: ''});
-  }
-
   handleChange(e) {
-    this.setState({txt: e.target.value});
+    this.setState({ txt: e.target.value });
   }
 
   handleBlur() {
-    const {id} = this.props.memo;
+    const { id } = this.props.memo;
     if (!id) {
       return;
     }
     const txt = this.state.txt;
     this.props.addMemo({
       ...this.props.memo,
-      txt: txt,
+      txt,
       updated: new Date().getTime()
     });
   }
@@ -60,19 +55,27 @@ class MemoDetail extends Component {
     return (
       <div className=".memo-detail">
         <TextField
-          defaultValue={this.state.txt}
-          value={this.state.txt}
+          defaultValue={ this.state.txt }
+          value={ this.state.txt }
           hintText="some anything"
-          multiLine={true}
-          rows={20}
-          onChange={this.handleChange}
-          onBlur={this.handleBlur}
-        />
-        <FloatingActionButton className=".btn-add-memo" onClick={this.handleAddMemo}>
+          multiLine
+          rows={ 20 }
+          onChange={ this.handleChange }
+          onBlur={ this.handleBlur } />
+        <FloatingActionButton className=".btn-add-memo" onClick={ this.handleAddMemo }>
           <ContentAdd />
         </FloatingActionButton>
       </div>
     );
+  }
+
+  handleAddMemo() {
+    const txt = this.state.txt;
+    this.props.addMemo({
+      txt,
+      created: new Date().getTime()
+    });
+    this.setState({ txt: '' });
   }
 }
 
