@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MemoContainerWrapper from "./MemoContainerWrapper";
+import MemoContainerWrapper from './MemoContainerWrapper';
 
 const propTypes = {};
 
