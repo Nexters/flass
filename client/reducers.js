@@ -5,7 +5,9 @@
 import { combineReducers } from 'redux';
 
 import memo from './modules/Memo/MemoReducer';
+import flass from './modules/Flass/FlassReducer';
 
 export default combineReducers({
-  memo
+  memo,
+  flass
 });

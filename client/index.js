@@ -10,6 +10,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import MemoApp from "./components/Memo/MemoApp";
+import FlassApp from "./components/Flass/FlassApp";
 
 const render = Component => {
   console.log('init() :: App starts booting...');
@@ -37,8 +38,8 @@ const render = Component => {
   )
 };
 
-render(MemoApp);
+render(FlassApp);
 
 if (module.hot) {
-  module.hot.accept('./components/Root', () => { render(MemoApp) });
+  module.hot.accept('./components/Root', () => { render(FlassApp) });
 }
