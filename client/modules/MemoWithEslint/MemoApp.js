@@ -7,13 +7,6 @@ const propTypes = {};
 const defaultProps = {};
 
 class MemoApp extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-  }
-
   render() {
     return (
       <MuiThemeProvider>

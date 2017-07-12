@@ -1,13 +1,11 @@
-/**
- * @fileOverview The root reducer, combines all reducers.
- */
-
 import { combineReducers } from 'redux';
 
-import memo from './modules/Memo/MemoReducer';
+import memo from './modules/MemoWithEslint/MemoReducer';
 import flass from './modules/Flass/FlassReducer';
+import TestTutorialReducer from './modules/TestTutorialModule/TestTutorialReducer';
 
 export default combineReducers({
   memo,
-  flass
+  flass,
+  comments: TestTutorialReducer
 });

@@ -1,14 +1,13 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import MemoContainer from './MemoContainer';
 import {
   fetchUpdateUid,
   fetchAddMemo,
-  fetchSaveMemo,
   fetchUpdateMemo,
   fetchDeleteMemo,
   fetchSelectedMemoId
-} from '../../modules/Memo/MemoActions';
+} from './MemoActions';
 
 /**
  * Handle state change and map it to local component props.
@@ -28,12 +27,12 @@ function mapStateToProps(state) {
  */
 function mapDispatchToProps(dispatch) {
   return {
-    onFetchUpdateUid: (uid) => {
+    onFetchUpdateUid: uid => {
       dispatch(fetchUpdateUid(uid));
     },
-    fetchAddMemo: (data) => {
-      let value = data.val();
-      let memo = {
+    fetchAddMemo: data => {
+      const value = data.val();
+      const memo = {
         id: data.key,
         txt: value.txt,
         created: value.created,
@@ -41,9 +40,9 @@ function mapDispatchToProps(dispatch) {
       };
       dispatch(fetchAddMemo(memo));
     },
-    fetchUpdateMemo: (data) => {
-      let value = data.val();
-      let memo = {
+    fetchUpdateMemo: data => {
+      const value = data.val();
+      const memo = {
         id: data.key,
         txt: value.txt,
         created: value.created,
@@ -54,7 +53,7 @@ function mapDispatchToProps(dispatch) {
     fetchDeleteMemo: (uid, key) => {
       dispatch(fetchDeleteMemo(uid, key));
     },
-    fetchSelectedMemoId: (id) => {
+    fetchSelectedMemoId: id => {
       dispatch(fetchSelectedMemoId(id));
     }
   };

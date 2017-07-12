@@ -2,15 +2,14 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import rootReducer from './reducers';
-import FireBaseConfig from './config/FirebaseConfig';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
-import MemoApp from "./components/Memo/MemoApp";
 import FlassApp from "./components/Flass/FlassApp";
+import rootReducer from './reducers';
+import FireBaseConfig from './config/FirebaseConfig';
 
 const render = Component => {
   console.log('init() :: App starts booting...');
@@ -35,7 +34,7 @@ const render = Component => {
       </Provider>
     </AppContainer>,
     document.getElementById('app')
-  )
+  );
 };
 
 render(FlassApp);
