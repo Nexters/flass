@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentSend from 'material-ui/svg-icons/content/send';
@@ -9,9 +10,11 @@ import FlassDrawerItem from './FlassDrawerItem';
 
 import './FlassDrawer.scss';
 
-const propTypes = {};
+const propTypes = {
+};
 
-const defaultProps = {};
+const defaultProps = {
+};
 
 class FlassDrawer extends Component {
   componentDidMount() {

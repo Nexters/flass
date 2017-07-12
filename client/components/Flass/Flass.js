@@ -4,6 +4,7 @@ import SvgIcon from 'material-ui/SvgIcon';
 import FlassDrawer from './FlassDrawer';
 import FlassBadge from './FlassBadge';
 import './Flass.scss';
+import FlassGrid from './FlassGrid';
 
 const propTypes = {};
 const defaultProps = {};
@@ -32,10 +33,12 @@ class Flass extends Component {
     return (
       <div>
         <AppBar
+          className="flass-app-bar"
           showMenuIconButton={ false }
           title="Flass"
           titleStyle={ { paddingTop: 13, paddingLeft: 13 } }
           iconElementRight={ <FlassBadge /> } />
+        <FlassGrid />
         <FlassDrawer />
       </div>
     );

@@ -1,14 +1,23 @@
+@import "./Flass";
+
+$flassDrawerWidth: 6rem;
 
 .flass-drawer {
   position: fixed;
-  width: 6rem;
+  top: $flassAppBarHeight;
+  width: $flassDrawerWidth;
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
+  background-color: #eee;
   height: 100%;
   min-height: 20rem;
 }
 
+
 .flass-drawer-top {
+  display: flex;
+  flex-direction: column;
+  flexWrap: 'wrap';
   height: 100%;
 }
 

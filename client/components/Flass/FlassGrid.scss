@@ -1,0 +1,20 @@
+@import "./Flass";
+@import "./FlassDrawer";
+
+$flassGridGap: 2rem;
+
+.flass-grid-list-container {
+  position: relative;
+  top: $flassAppBarHeight + $flassGridGap;
+  left: $flassDrawerWidth + $flassGridGap;
+  width: 55rem;
+  overflow: auto;
+}
+
+.flass-grid-list {
+  width: 55rem;
+}
+
+.flass-grid-item {
+
+}

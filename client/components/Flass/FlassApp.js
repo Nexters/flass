@@ -9,8 +9,7 @@ const flassTheme = getMuiTheme({
     textColor: cyan500,
   },
   appBar: {
-    height: 40,
-    padding: 10,
+    height: 40
   },
 });
 
