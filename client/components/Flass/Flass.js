@@ -1,16 +1,16 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
-import FlassDrawer from "./FlassDrawer";
 import SvgIcon from 'material-ui/SvgIcon';
+import FlassDrawer from './FlassDrawer';
+import FlassBadge from './FlassBadge';
 import './Flass.scss';
-import FlassBadge from "./FlassBadge";
 
 const propTypes = {};
 const defaultProps = {};
 
-const HomeIcon = (props) => (
-  <SvgIcon {...props}>
-    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+const HomeIcon = props => (
+  <SvgIcon { ...props }>
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
   </SvgIcon>
 );
 
@@ -25,10 +25,6 @@ const AppBarRight = (
 );
 
 class Flass extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
   }
 
@@ -36,12 +32,11 @@ class Flass extends Component {
     return (
       <div>
         <AppBar
-          showMenuIconButton={false}
+          showMenuIconButton={ false }
           title="Flass"
-          titleStyle={{paddingTop: 13, paddingLeft: 13}}
-          iconElementRight={<FlassBadge />}
-        />
-        <FlassDrawer/>
+          titleStyle={ { paddingTop: 13, paddingLeft: 13 } }
+          iconElementRight={ <FlassBadge /> } />
+        <FlassDrawer />
       </div>
     );
   }

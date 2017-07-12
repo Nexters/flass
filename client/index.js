@@ -7,9 +7,10 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import FlassApp from "./components/Flass/FlassApp";
+import FlassApp from './components/Flass/FlassApp';
 import rootReducer from './reducers';
 import FireBaseConfig from './config/FirebaseConfig';
+import MemoApp from './modules/MemoWithEslint/MemoApp';
 
 const render = Component => {
   console.log('init() :: App starts booting...');
@@ -40,5 +41,5 @@ const render = Component => {
 render(FlassApp);
 
 if (module.hot) {
-  module.hot.accept('./components/Root', () => { render(FlassApp) });
+  module.hot.accept('./components/Root', () => { render(FlassApp); });
 }

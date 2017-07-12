@@ -1,6 +1,4 @@
-import {
-
-} from './FlassActions';
+import {} from './FlassActions';
 
 const initialState = {};
 
@@ -10,6 +8,6 @@ const FlassReducer = (state = initialState, action) => {
     default:
       return state;
   }
-}
+};
 
 export default FlassReducer;

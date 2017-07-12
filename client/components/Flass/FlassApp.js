@@ -1,25 +1,23 @@
 import React from 'react';
-import {cyan500} from 'material-ui/styles/colors';
+import { cyan500 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import Flass from "./Flass";
+import Flass from './Flass';
 
 const flassTheme = getMuiTheme({
   palette: {
-    textColor: cyan500
+    textColor: cyan500,
   },
   appBar: {
     height: 40,
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
-const FlassApp = () => {
-  return (
-    <MuiThemeProvider muiTheme={flassTheme}>
-      <Flass/>
-    </MuiThemeProvider>
-  );
-};
+const FlassApp = () => (
+  <MuiThemeProvider muiTheme={ flassTheme }>
+    <Flass />
+  </MuiThemeProvider>
+);
 
 export default FlassApp;

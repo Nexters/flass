@@ -1,16 +1,18 @@
-import React, {Component, PropTypes} from 'react';
-import ActionHome from 'material-ui/svg-icons/action/home';
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import './FlassDrawerItem.scss';
 
-const propTypes = {};
+const propTypes = {
+  icon: PropTypes.object,
+  children: PropTypes.object,
+};
 
-const defaultProps = {};
+const defaultProps = {
+  icon: null,
+  children: null,
+};
 
 class FlassDrawerItem extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
   }
 
