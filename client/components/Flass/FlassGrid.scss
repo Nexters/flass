@@ -5,8 +5,9 @@ $flassGridGap: 2rem;
 
 .flass-grid-list-container {
   position: relative;
-  top: $flassAppBarHeight + $flassGridGap;
-  left: $flassDrawerWidth + $flassGridGap;
+  top: $flassAppBarHeight;
+  left: $flassDrawerWidth;
+  padding: $flassGridGap;
   width: 55rem;
   overflow: auto;
 }

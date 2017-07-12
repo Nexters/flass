@@ -4,7 +4,8 @@ $flassDrawerWidth: 6rem;
 
 .flass-drawer {
   position: fixed;
-  top: $flassAppBarHeight;
+  top: 0;
+  padding-top: $flassAppBarHeight !important;
   width: $flassDrawerWidth;
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
@@ -13,12 +14,11 @@ $flassDrawerWidth: 6rem;
   min-height: 20rem;
 }
 
-
 .flass-drawer-top {
   height: 100%;
 }
 
-$drawerBottomHeight : 13rem;
+$drawerBottomHeight: 13rem;
 
 .flass-drawer-bottom {
   position: relative;

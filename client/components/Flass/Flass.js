@@ -1,29 +1,12 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
-import SvgIcon from 'material-ui/SvgIcon';
 import FlassDrawer from './FlassDrawer';
-import FlassBadge from './FlassBadge';
-import './Flass.scss';
+import FlassUserAppBar from './FlassUserAppBar';
 import FlassGrid from './FlassGrid';
+import './Flass.scss';
 
 const propTypes = {};
 const defaultProps = {};
-
-const HomeIcon = props => (
-  <SvgIcon { ...props }>
-    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-  </SvgIcon>
-);
-
-const FlassUserAppBar = (<div>
-  이름 <HomeIcon />
-</div>);
-
-const AppBarRight = (
-  <div>
-    <FlassBadge />
-  </div>
-);
 
 class Flass extends Component {
   componentDidMount() {
@@ -36,8 +19,8 @@ class Flass extends Component {
           className="flass-app-bar"
           showMenuIconButton={ false }
           title="Flass"
-          titleStyle={ { paddingTop: 13, paddingLeft: 13 } }
-          iconElementRight={ <FlassBadge /> } />
+          titleStyle={ { paddingTop: 10, paddingLeft: 3 } }
+          iconElementRight={ <FlassUserAppBar /> } />
         <FlassGrid />
         <FlassDrawer />
       </div>
