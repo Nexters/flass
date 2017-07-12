@@ -29,7 +29,7 @@ class FlassDrawer extends Component {
           <FlassDrawerItem icon={ <ContentSend /> }>구독 영상</FlassDrawerItem>
         </div>
         <div className="flass-drawer-bottom">
-          <Divider />
+          <Divider className="flass-drawer-bottom-divider" />
           <FlassDrawerItem icon={ <ContentDrafts /> }>설정</FlassDrawerItem>
           <FlassDrawerItem icon={ <ContentInbox /> }>로그아웃</FlassDrawerItem>
         </div>

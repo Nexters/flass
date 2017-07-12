@@ -19,10 +19,10 @@ class FlassDrawerItem extends Component {
   render() {
     return (
       <div className="flass-drawer-item">
-        <div>
+        <div className="flass-drawer-item-icon">
           {this.props.icon}
         </div>
-        <div>
+        <div className="flass-drawer-item-text">
           {this.props.children}
         </div>
       </div>
