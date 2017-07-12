@@ -3,8 +3,6 @@ language:
 rvm:
   - 2.4.1
 sudo: false
-notifications:
-  slack: shakacode:YvfXbuFMcFAHt6ZjABIs0KET
 addons:
   apt:
     sources:
@@ -24,7 +22,6 @@ before_install:
   - export PATH=$PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
 install:
   - bundle install
-  - chromedriver-update
   - nvm install stable && nvm alias default stable
   - npm install npm@latest -g
   - npm install -g yarn
