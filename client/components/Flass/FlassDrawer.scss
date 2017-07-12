@@ -1,15 +1,21 @@
 
 .flass-drawer {
+  position: fixed;
   width: 6rem;
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
-  height: 40rem;
-  float: left;
+  height: 100%;
+  min-height: 20rem;
 }
 
+.flass-drawer-top {
+  height: 100%;
+}
+
+$drawerBottomHeight : 12rem;
+
 .flass-drawer-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 15rem;
+  position: relative;
+  bottom: $drawerBottomHeight;
+  height: $drawerBottomHeight;
 }

@@ -1,20 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import AppBar from 'material-ui/AppBar';
 import FlassDrawer from "./FlassDrawer";
-import Badge from 'material-ui/Badge';
-import IconButton from 'material-ui/IconButton';
-import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import SvgIcon from 'material-ui/SvgIcon';
 import './Flass.scss';
+import FlassBadge from "./FlassBadge";
 
 const propTypes = {};
 const defaultProps = {};
-
-const FlassBadge = (<Badge
-  badgeContent={4}
-  primary={true}>
-  <NotificationsIcon />
-</Badge>);
 
 const HomeIcon = (props) => (
   <SvgIcon {...props}>
@@ -44,13 +36,10 @@ class Flass extends Component {
     return (
       <div>
         <AppBar
+          showMenuIconButton={false}
           title="Flass"
-          iconElementRight={<Badge
-            badgeContent={4}
-            primary={true}
-            badgeStyle={{top: 12, right: 12}}>
-            <NotificationsIcon className="flass-notification-icon" />
-          </Badge>}
+          titleStyle={{paddingTop: 13, paddingLeft: 13}}
+          iconElementRight={<FlassBadge />}
         />
         <FlassDrawer/>
       </div>
