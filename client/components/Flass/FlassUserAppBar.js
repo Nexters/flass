@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import SvgIcon from 'material-ui/SvgIcon';
 import FlassBadge from './FlassBadge';
 
-const propTypes = {};
+const propTypes = {
+  badges: PropTypes.array
+};
 
-const defaultProps = {};
+const defaultProps = {
+  badges: [
+    { id: 1, content: 'Refresh' },
+    { id: 2, content: 'Help &amp; feedback' },
+    { id: 3, content: 'Settings' },
+    { id: 4, content: 'Sign out' }
+  ]
+};
 
 class FlassUserAppBar extends Component {
   componentDidMount() {}
@@ -12,7 +22,7 @@ class FlassUserAppBar extends Component {
   render() {
     return (
       <div className="flass-user-app-bar">
-        <FlassBadge />
+        <FlassBadge badges={ this.props.badges } />
         <span>
         이름
         </span>

@@ -4,7 +4,7 @@ import './FlassDrawerItem.scss';
 
 const propTypes = {
   icon: PropTypes.object,
-  children: PropTypes.object,
+  children: PropTypes.string,
 };
 
 const defaultProps = {
