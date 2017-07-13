@@ -7,7 +7,8 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import './FlassGrid.scss';
+// import './FlassGrid.scss';
+import FlassContentLayoutComponent from './FlassContentLayoutComponent';
 
 const propTypes = {};
 
@@ -75,7 +76,7 @@ class FlassGrid extends Component {
 
   render() {
     return (
-      <div className="flass-grid-list-container">
+      <FlassContentLayoutComponent>
         <GridList
           cellHeight={ 200 }
           cols={ 3 }
@@ -92,7 +93,7 @@ class FlassGrid extends Component {
             </GridTile>
           ))}
         </GridList>
-      </div>
+      </FlassContentLayoutComponent>
     );
   }
 }

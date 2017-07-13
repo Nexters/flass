@@ -7,7 +7,6 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import FlassApp from './components/Flass/FlassApp';
 import rootReducer from './reducers';
 import Root from './components/Root';
 
