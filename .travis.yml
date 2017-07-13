@@ -2,13 +2,12 @@ language:
   - ruby
 rvm:
   - 2.3.0
-env:
-  - TRAVIS_NODE_VERSION="0.12"
-  - TRAVIS_NODE_VERSION="4"
 install:
   - gem install bundler
   - bundle install
-  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
   - npm install
   - rake db:create
 env:
