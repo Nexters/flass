@@ -1,5 +1,5 @@
-import {connect} from 'react-redux';
-import Flass from "./Flass";
+import { connect } from 'react-redux';
+import Flass from './Flass';
 
 
 function mapStateToProps(state) {

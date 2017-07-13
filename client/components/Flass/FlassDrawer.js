@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { List, ListItem } from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
-import ActionInfo from 'material-ui/svg-icons/action/info';
+import { List, ListItem } from 'material-ui/List';
+import FlassDrawerItem from './FlassDrawerItem';
 
 import FlassDrawerItem from './FlassDrawerItem';
 import './FlassDrawer.scss';
 
-const propTypes = {};
+const propTypes = {
+};
 
-const defaultProps = {};
+const defaultProps = {
+};
 
 class FlassDrawer extends Component {
+  componentDidMount() {
+  }
+
   render() {
     return (
       <List className="flass-drawer">
@@ -25,7 +30,7 @@ class FlassDrawer extends Component {
           <FlassDrawerItem icon={ <ContentSend /> }>구독 영상</FlassDrawerItem>
         </div>
         <div className="flass-drawer-bottom">
-          <Divider />
+          <Divider className="flass-drawer-bottom-divider" />
           <FlassDrawerItem icon={ <ContentDrafts /> }>설정</FlassDrawerItem>
           <FlassDrawerItem icon={ <ContentInbox /> }>로그아웃</FlassDrawerItem>
         </div>

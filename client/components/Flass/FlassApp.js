@@ -6,12 +6,11 @@ import Flass from './Flass';
 
 const flassTheme = getMuiTheme({
   palette: {
-    textColor: cyan500
+    textColor: cyan500,
   },
   appBar: {
-    height: 40,
-    padding: 10
-  }
+    height: 40
+  },
 });
 
 const FlassApp = () => (

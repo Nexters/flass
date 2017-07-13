@@ -10,6 +10,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import FlassApp from './components/Flass/FlassApp';
 import rootReducer from './reducers';
 import FireBaseConfig from './config/FirebaseConfig';
+import MemoApp from './modules/MemoWithEslint/MemoApp';
 
 const render = Component => {
   console.log('init() :: App starts booting...');

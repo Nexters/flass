@@ -1,0 +1,18 @@
+language:
+  - ruby
+rvm:
+  - 2.3.0
+install:
+  - gem install bundler
+  - bundle install
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - npm install
+  - rake db:create
+env:
+  global:
+    - RAILS_ENV=test
+script:
+  - npm run test
+  - bundle exec rake
