@@ -7,7 +7,6 @@ import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
 import { List, ListItem } from 'material-ui/List';
 import FlassDrawerItem from './FlassDrawerItem';
-
 import './FlassDrawer.scss';
 
 const propTypes = {
