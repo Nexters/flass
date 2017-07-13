@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import './FlassGrid.scss';
 
@@ -66,6 +69,10 @@ class FlassGrid extends Component {
 
   componentDidMount() {}
 
+  getChildContext() {
+    return { muiTheme: getMuiTheme(baseTheme) };
+  }
+
   render() {
     return (
       <div className="flass-grid-list-container">
@@ -90,6 +97,9 @@ class FlassGrid extends Component {
   }
 }
 
+FlassGrid.childContextTypes = {
+  muiTheme: PropTypes.object.isRequired
+};
 FlassGrid.propTypes = propTypes;
 FlassGrid.defaultProps = defaultProps;
 
