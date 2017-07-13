@@ -11,5 +11,5 @@ env:
   global:
     - RAILS_ENV=test
 script:
-  - npm run test
+  - npm run dev
   - rails s
