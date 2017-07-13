@@ -10,7 +10,6 @@ install:
 env:
   global:
     - RAILS_ENV=test
-    - NODE_ENV=production webpack --config webpack.config.js
 script:
-  - npm run webpack
+  - npm run test
   - rails s
