@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
 
+import FlassContentLayoutComponent from '../Flass/FlassContentLayoutComponent';
 import VideoButtonComponent from './VideoButtonComponent';
 import VideoSeekBarComponent from './VideoSeekBarComponent';
 import VideoVolumeBarComponent from './VideoVolumeBarComponent';
@@ -38,7 +39,7 @@ class VideoComponent extends Component {
     const { url, playing, volume, played, loaded, duration, playbackRate, youtubeConfig, fileConfig } = this.state;
     const YOUTUBE_URL = 'https://www.youtube.com/watch?v=PTkKJI27NlE';
     return (
-      <div>
+      <FlassContentLayoutComponent>
         <h1>VideoComponent</h1>
         <ReactPlayer
           ref={ player => { this.player = player; } }
@@ -158,7 +159,7 @@ class VideoComponent extends Component {
           </div>
 
         </div>
-      </div>
+      </FlassContentLayoutComponent>
     );
   }
 
