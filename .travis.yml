@@ -5,9 +5,11 @@ rvm:
 install:
   - gem install bundler
   - bundle install
-  - npm install
+  - npm install -g npm@2
   - rake db:create
-
+env:
+  global:
+    - RAILS_ENV=test
 script:
   - npm run webpack
   - rails s
