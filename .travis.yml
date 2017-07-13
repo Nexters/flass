@@ -15,4 +15,4 @@ env:
     - RAILS_ENV=test
 script:
   - npm run test
-  - rails s
+  - bundle exec rake
