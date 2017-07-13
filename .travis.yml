@@ -1,40 +1,13 @@
 language:
   - ruby
 rvm:
-  - 2.4.1
-sudo: false
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.9
-services:
-  - postgresql
-env:
-  global:
-    - RAILS_ENV=test
-    - CXX=g++-4.9
-before_install:
-  - mkdir $PWD/travis-phantomjs
-  - curl -sSL https://github.com/Medium/phantomjs/releases/download/v2.1.1/phantomjs-2.1.1-linux-x86_64.tar.bz2 -o $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2
-  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis-phantomjs
-  - export PATH=$PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
+  - 2.3.0
 install:
+  - gem install bundler
   - bundle install
-  - nvm install stable && nvm alias default stable
-  - npm install npm@latest -g
-  - npm install -g yarn
-  - npm --version
-  - yarn install
-  - rake db:setup
-
-# Tip: No need to run xvfb if running headless testing. However, we're going to start with
-# Poltergeist and switch to selenium if a test fails.
-before_script:
-   - export DISPLAY=:99.0
-   - sh -e /etc/init.d/xvfb start
+  - npm install
+  - rake db:create
 
 script:
-  - bundle exec rake db:schema:load
-  - bundle exec rake
+  - npm run webpack
+  - rails s
