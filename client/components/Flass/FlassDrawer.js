@@ -8,6 +8,7 @@ import Divider from 'material-ui/Divider';
 import { List, ListItem } from 'material-ui/List';
 import FlassDrawerItem from './FlassDrawerItem';
 
+import FlassDrawerItem from './FlassDrawerItem';
 import './FlassDrawer.scss';
 
 const propTypes = {
