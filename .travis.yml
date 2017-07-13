@@ -6,6 +6,7 @@ install:
   - gem install bundler
   - bundle install
   - npm install -g npm@2
+  - npm install
   - rake db:create
 env:
   global:
