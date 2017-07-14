@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import FlassApp from './Flass/FlassApp';
-// import Flass from './Flass/Flass';
-import FlassGrid from './Flass/FlassGrid';
+import FlassGrid from './Flass/FlassGrid/FlassGrid';
 import VideoComponent from './Video/VideoComponent';
+import FlassDetail from './Flass/FlassDetail/FlassDetail';
 
 class Root extends Component {
   render() {
     return (
-      <FlassApp>
-        <BrowserRouter>
-          <main>
-            <Switch>
-              <Route exact path="/" component={ FlassGrid } />
-              <Route path="/video" component={ VideoComponent } />
-            </Switch>
-          </main>
-        </BrowserRouter>
-      </FlassApp>
+      <BrowserRouter>
+        <FlassApp>
+          <Switch>
+            <Route exact path="/" component={ FlassGrid } />
+            <Route path="/channel/me" component={ FlassGrid } />
+            <Route path="/detail/:id" component={ FlassDetail } />
+            <Route path="/video" component={ VideoComponent } />
+          </Switch>
+        </FlassApp>
+      </BrowserRouter>
     );
   }
 }

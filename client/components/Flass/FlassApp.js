@@ -6,9 +6,10 @@ import AppBar from 'material-ui/AppBar';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 
-// import Flass from './Flass';
-import FlassUserAppBar from './FlassUserAppBar';
-import FlassDrawer from './FlassDrawer';
+import FlassUserAppBar from './FlassAppBar/FlassUserAppBar';
+import FlassDrawer from './FlassDrawer/FlassDrawer';
+import FlassContent from './FlassContent';
+import './FlassApp.scss';
 
 const flassTheme = getMuiTheme({
   palette: {
@@ -42,9 +43,9 @@ class FlassApp extends Component {
             title="Flass"
             titleStyle={ { paddingTop: 10, paddingLeft: 3 } }
             iconElementRight={ <FlassUserAppBar /> } />
-          <main>
+          <FlassContent>
             { this.props.children }
-          </main>
+          </FlassContent>
           <FlassDrawer />
         </div>
       </MuiThemeProvider>

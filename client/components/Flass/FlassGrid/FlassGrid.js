@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
-import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import './FlassGrid.scss';
 
-// import './FlassGrid.scss';
-import FlassContentLayoutComponent from './FlassContentLayoutComponent';
 
 const propTypes = {};
 
 const defaultProps = {};
-
 
 const tilesData = [
   {
@@ -76,24 +74,25 @@ class FlassGrid extends Component {
 
   render() {
     return (
-      <FlassContentLayoutComponent>
-        <GridList
-          cellHeight={ 200 }
-          cols={ 3 }
-          padding={ 20 }
-          className="flass-grid-list">
-          {tilesData.map(tile => (
+      <GridList
+        cellHeight={ 200 }
+        cols={ 3 }
+        padding={ 20 }
+        className="flass-grid-list">
+        {tilesData.map(tile => (
+          <Link to={ `/detail/${tile.key}` }>
             <GridTile
               key={ tile.key }
               className="flass-grid-item"
               title={ tile.title }
               subtitle={ <span>by <b>{tile.author}</b></span> }
-              actionIcon={ <IconButton><StarBorder color="white" /></IconButton> }>
+              actionIcon={ <IconButton><StarBorder
+                color="white" /></IconButton> }>
               <img alt="" src={ tile.img } />
             </GridTile>
-          ))}
-        </GridList>
-      </FlassContentLayoutComponent>
+          </Link>
+        ))}
+      </GridList>
     );
   }
 }

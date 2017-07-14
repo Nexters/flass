@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
 
-import FlassContentLayoutComponent from '../Flass/FlassContentLayoutComponent';
+import FlassContentLayoutComponent from '../Flass/FlassContent';
 import VideoButtonComponent from './VideoButtonComponent';
 import VideoSeekBarComponent from './VideoSeekBarComponent';
 import VideoVolumeBarComponent from './VideoVolumeBarComponent';

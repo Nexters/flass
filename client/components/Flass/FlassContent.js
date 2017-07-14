@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './FlassGrid.scss';
+import './FlassContent.scss';
 
 const propTypes = {
   children: PropTypes.element.isRequired
@@ -9,7 +9,7 @@ const propTypes = {
 const defaultProps = {};
 
 const FlassContentLayoutComponent = props => (
-  <div className="flass-grid-list-container">
+  <div className="flass-content-container">
     { props.children }
   </div>
 );
