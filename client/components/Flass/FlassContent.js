@@ -8,13 +8,13 @@ const propTypes = {
 };
 const defaultProps = {};
 
-const FlassContentLayoutComponent = props => (
+const FlassContent = props => (
   <div className="flass-content-container">
     { props.children }
   </div>
 );
 
-FlassContentLayoutComponent.propTypes = propTypes;
-FlassContentLayoutComponent.defaultProps = defaultProps;
+FlassContent.propTypes = propTypes;
+FlassContent.defaultProps = defaultProps;
 
-export default FlassContentLayoutComponent;
+export default FlassContent;

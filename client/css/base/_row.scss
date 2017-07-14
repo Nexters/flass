@@ -1,0 +1,17 @@
+@import "./mixins";
+
+.row {
+  @include clearfix;
+
+  @include atLarge {
+    &__large-8 {
+      float: left;
+      width: 66.66%;
+    }
+
+    &__large-4 {
+      float: left;
+      width: 33.33%;
+    }
+  }
+}
