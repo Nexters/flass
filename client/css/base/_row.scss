@@ -3,6 +3,17 @@
 .row {
   @include clearfix;
 
+  &--equal-height-at-large {
+    @include atLarge {
+      display: flex;
+    }
+
+    & > div {
+      float: none;
+      display: flex;
+    }
+  }
+
   @include atLarge {
     &__large-8 {
       float: left;

@@ -42,29 +42,37 @@ class VideoComponent extends Component {
     const YOUTUBE_URL = 'https://www.youtube.com/watch?v=PTkKJI27NlE';
     return (
       <div>
-        <div className="row__large-8">
-          <ReactPlayer
-            ref={ player => { this.player = player; } }
-            className="react-player"
-            width="100%"
-            height="100%"
-            url={ YOUTUBE_URL }
-            playing={ playing }
-            playbackRate={ playbackRate }
-            volume={ volume }
-            youtubeConfig={ youtubeConfig }
-            fileConfig={ fileConfig }
-            onReady={ () => console.log('onReady') }
-            onStart={ () => console.log('onStart') }
-            onPlay={ () => this.setState({ playing: true }) }
-            onPause={ () => this.setState({ playing: false }) }
-            onEnded={ () => this.setState({ playing: false }) }
-            onError={ e => console.log('onError', e) }
-            onProgress={ this.onProgress }
-            onDuration={ duration => this.setState({ duration }) } />
+        <div className="row--equal-height-at-large">
+          <div className="row__large-8">
+            <ReactPlayer
+              ref={ player => { this.player = player; } }
+              className="react-player"
+              width="100%"
+              height="100%"
+              url={ YOUTUBE_URL }
+              playing={ playing }
+              playbackRate={ playbackRate }
+              volume={ volume }
+              youtubeConfig={ youtubeConfig }
+              fileConfig={ fileConfig }
+              onReady={ () => console.log('onReady') }
+              onStart={ () => console.log('onStart') }
+              onPlay={ () => this.setState({ playing: true }) }
+              onPause={ () => this.setState({ playing: false }) }
+              onEnded={ () => this.setState({ playing: false }) }
+              onError={ e => console.log('onError', e) }
+              onProgress={ this.onProgress }
+              onDuration={ duration => this.setState({ duration }) } />
+          </div>
+
+          <div className="row__large-4">
+            <div>
+              문제 추가
+            </div>
+          </div>
         </div>
 
-        <div className="row__large-4">
+        <div>
           <div>
             <div>탐색바</div>
             <VideoSeekBarComponent
