@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import autobind from 'autobind-decorator';
 
 import VideoCustomBarComponent from './VideoCustomBarComponent';
 
@@ -38,7 +39,7 @@ class VideoCustomProgressBarComponent extends Component {
       isDragging: false
     };
 
-    this.onCustomSeekBarMouseDown = this.onCustomSeekBarMouseDown.bind(this);
+    //this.onCustomSeekBarMouseDown = this.onCustomSeekBarMouseDown.bind(this);
     this.onCustomSeekBarChange = this.onCustomSeekBarChange.bind(this);
     this.onCustomSeekBarMouseUp = this.onCustomSeekBarMouseUp.bind(this);
   }
@@ -69,7 +70,7 @@ class VideoCustomProgressBarComponent extends Component {
     );
   }
 
-  onCustomSeekBarMouseDown(e) {
+  onCustomSeekBarMouseDown = e => {
     this.setState({ isDragging: true });
     this.props.onCustomSeekBarMouseDown();
     e.stopPropagation();
@@ -90,7 +91,6 @@ class VideoCustomProgressBarComponent extends Component {
       if (movedPosition > PROGRESS_MAX) {
         movedPosition = max;
       }
-      console.log('movedPosition', movedPosition);
       this.setState({ played: movedPosition });
       this.props.onCustomSeekBarChange(movedPosition);
     }
