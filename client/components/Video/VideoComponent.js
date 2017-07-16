@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
 
-import FlassContentLayoutComponent from '../Flass/FlassContent';
 import VideoButtonComponent from './VideoButtonComponent';
 import VideoSeekBarComponent from './VideoSeekBarComponent';
 import VideoVolumeBarComponent from './VideoVolumeBarComponent';
 import VideoProgressBarComponent from './VideoProgressBarComponent';
+import VideoCustomProgressBarComponent from './VideoCustomProgressBarComponent/VideoCustomProgressBarComponent';
 
 import '../../css/base/_row.scss';
+
+const propTypes = {};
+const defaultProps = {};
 
 class VideoComponent extends Component {
   constructor(props) {
@@ -35,6 +38,11 @@ class VideoComponent extends Component {
     this.onSeekBarChange = this.onSeekBarChange.bind(this);
     this.onSeekBarMouseUp = this.onSeekBarMouseUp.bind(this);
     this.onClickSetVolume = this.onClickSetVolume.bind(this);
+
+    /* VideoCustomProgressBarComponent와 관련된 함수 */
+    this.onCustomSeekBarMouseDown = this.onCustomSeekBarMouseDown.bind(this);
+    this.onCustomSeekBarChange = this.onCustomSeekBarChange.bind(this);
+    this.onCustomSeekBarMouseUp = this.onCustomSeekBarMouseUp.bind(this);
   }
 
   render() {
@@ -72,6 +80,15 @@ class VideoComponent extends Component {
           </div>
         </div>
 
+        <div>
+          <VideoCustomProgressBarComponent
+            duration={ duration }
+            playedPercentage={ played }
+            loadedPercentage={ loaded }
+            onCustomSeekBarMouseDown={ this.onCustomSeekBarMouseDown }
+            onCustomSeekBarChange={ this.onCustomSeekBarChange }
+            onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp } />
+        </div>
         <div>
           <div>
             <div>탐색바</div>
@@ -176,6 +193,10 @@ class VideoComponent extends Component {
     );
   }
 
+  onPlayedChange(changedPlayed) {
+    this.setState({ played: changedPlayed / 100 });
+  }
+
   onProgress(state) {
     if (!this.state.seeking) {
       this.setState(state);
@@ -214,10 +235,28 @@ class VideoComponent extends Component {
     this.player.seekTo(played);
   }
 
+  onCustomSeekBarMouseDown() {
+    this.setState({ seeking: true });
+  }
+
+  onCustomSeekBarChange(changedPlayed) {
+    const changedPlayedPercentage = changedPlayed / 100;
+    this.setState({ played: changedPlayedPercentage });
+  }
+
+  onCustomSeekBarMouseUp(changedPlayed) {
+    const changedPlayedPercentage = changedPlayed / 100;
+    this.setState({ seeking: false });
+    this.player.seekTo(changedPlayedPercentage);
+  }
+
   onClickSetVolume(e) {
     const volume = parseFloat(e.target.value);
     this.setState({ volume });
   }
 }
+
+VideoComponent.propTypes = propTypes;
+VideoComponent.defaultProps = defaultProps;
 
 export default VideoComponent;
