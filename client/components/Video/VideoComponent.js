@@ -3,6 +3,7 @@ import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
+import autobind from 'autobind-decorator';
 
 import VideoButtonComponent from './VideoButtonComponent';
 import VideoSeekBarComponent from './VideoSeekBarComponent';
@@ -87,7 +88,8 @@ class VideoComponent extends Component {
             loadedPercentage={ loaded }
             onCustomSeekBarMouseDown={ this.onCustomSeekBarMouseDown }
             onCustomSeekBarChange={ this.onCustomSeekBarChange }
-            onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp } />
+            onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
+            onCustomSeekBarClick={ this.onCustomSeekBarClick } />
         </div>
         <div>
           <div>
@@ -247,6 +249,13 @@ class VideoComponent extends Component {
   onCustomSeekBarMouseUp(changedPlayed) {
     const changedPlayedPercentage = changedPlayed / 100;
     this.setState({ seeking: false });
+    this.player.seekTo(changedPlayedPercentage);
+  }
+
+  @autobind
+  onCustomSeekBarClick(changedPlayed) {
+    const changedPlayedPercentage = changedPlayed / 100;
+    this.setState({ played: changedPlayedPercentage });
     this.player.seekTo(changedPlayedPercentage);
   }
 
