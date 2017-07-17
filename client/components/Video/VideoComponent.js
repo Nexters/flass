@@ -31,21 +31,6 @@ class VideoComponent extends Component {
       duration: 0,
       playbackRate: 1.0
     };
-
-    this.onProgress = this.onProgress.bind(this);
-    this.onClickStop = this.onClickStop.bind(this);
-    this.onClickPlayPause = this.onClickPlayPause.bind(this);
-    this.onClickFullscreen = this.onClickFullscreen.bind(this);
-    this.onClickSetPlaybackRate = this.onClickSetPlaybackRate.bind(this);
-    this.onSeekBarMouseDown = this.onSeekBarMouseDown.bind(this);
-    this.onSeekBarChange = this.onSeekBarChange.bind(this);
-    this.onSeekBarMouseUp = this.onSeekBarMouseUp.bind(this);
-    this.onClickSetVolume = this.onClickSetVolume.bind(this);
-
-    /* VideoCustomProgressBarComponent와 관련된 함수 */
-    this.onCustomSeekBarMouseDown = this.onCustomSeekBarMouseDown.bind(this);
-    this.onCustomSeekBarChange = this.onCustomSeekBarChange.bind(this);
-    this.onCustomSeekBarMouseUp = this.onCustomSeekBarMouseUp.bind(this);
   }
 
   render() {
@@ -89,7 +74,8 @@ class VideoComponent extends Component {
             onCustomSeekBarMouseDown={ this.onCustomSeekBarMouseDown }
             onCustomSeekBarChange={ this.onCustomSeekBarChange }
             onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
-            onCustomSeekBarClick={ this.onCustomSeekBarClick } />
+            onCustomSeekBarClick={ this.onCustomSeekBarClick }
+            onArrowKeyPressed={ this.onArrowKeyPressed } />
         </div>
         <div>
           <div>
@@ -195,57 +181,64 @@ class VideoComponent extends Component {
     );
   }
 
-  onPlayedChange(changedPlayed) {
-    this.setState({ played: changedPlayed / 100 });
-  }
-
+  @autobind
   onProgress(state) {
     if (!this.state.seeking) {
       this.setState(state);
     }
   }
 
+  @autobind
   onClickStop() {
     this.setState({ url: null, playing: false });
   }
 
+  @autobind
   onClickPlayPause() {
     this.setState({ playing: !this.state.playing });
   }
 
+  @autobind
   onClickFullscreen() {
     screenfull.request(findDOMNode(this.player));
   }
 
+  @autobind
   onClickSetPlaybackRate(e) {
     const rate = parseFloat(e.target.value);
     this.setState({ playbackRate: rate });
   }
 
+  @autobind
   onSeekBarMouseDown() {
     this.setState({ seeking: true });
   }
 
+  @autobind
   onSeekBarChange(e) {
     const played = parseFloat(e.target.value);
     this.setState({ played });
   }
 
+  @autobind
   onSeekBarMouseUp(e) {
     const played = parseFloat(e.target.value);
     this.setState({ seeking: false });
     this.player.seekTo(played);
   }
 
+  @autobind
   onCustomSeekBarMouseDown() {
     this.setState({ seeking: true });
   }
 
+  @autobind
   onCustomSeekBarChange(changedPlayed) {
     const changedPlayedPercentage = changedPlayed / 100;
     this.setState({ played: changedPlayedPercentage });
   }
 
+  @autobind
   onCustomSeekBarMouseUp(changedPlayed) {
     const changedPlayedPercentage = changedPlayed / 100;
     this.setState({ seeking: false });
@@ -259,9 +252,17 @@ class VideoComponent extends Component {
     this.player.seekTo(changedPlayedPercentage);
   }
 
+  @autobind
   onClickSetVolume(e) {
     const volume = parseFloat(e.target.value);
     this.setState({ volume });
+  }
+
+  @autobind
+  onArrowKeyPressed(changedPlayed) {
+    const changedPlayedPercentage = changedPlayed / 100;
+    this.setState({ played: changedPlayedPercentage });
+    this.player.seekTo(changedPlayedPercentage);
   }
 }
 

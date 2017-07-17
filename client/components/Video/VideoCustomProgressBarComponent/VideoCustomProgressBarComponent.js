@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
+import keydown from 'react-keydown';
 
 import VideoCustomBarComponent from './VideoCustomBarComponent';
 
@@ -14,6 +15,7 @@ const propTypes = {
   onCustomSeekBarChange: func.isRequired,
   onCustomSeekBarMouseUp: func.isRequired,
   onCustomSeekBarClick: func.isRequired,
+  onArrowKeyPressed: func.isRequired,
   duration: number,
   playedPercentage: number,
   loadedPercentage: number
@@ -27,6 +29,7 @@ const defaultProps = {
 
 const PROGRESS_MIN = 0;
 const PROGRESS_MAX = 100;
+const SHIFT_AMOUNT_PERCENTAGE = 0.15;
 
 class VideoCustomProgressBarComponent extends Component {
   constructor(props) {
@@ -117,6 +120,20 @@ class VideoCustomProgressBarComponent extends Component {
     }
 
     return movedPosition;
+  }
+
+  @autobind
+  @keydown('left')
+  onLeftArrowKeyPressed() {
+    const changedPlayed = this.state.played - SHIFT_AMOUNT_PERCENTAGE;
+    this.props.onArrowKeyPressed(changedPlayed);
+  }
+
+  @autobind
+  @keydown('right')
+  onRightArrowKeyPressed() {
+    const changedPlayed = this.state.played + SHIFT_AMOUNT_PERCENTAGE;
+    this.props.onArrowKeyPressed(changedPlayed);
   }
 }
 
