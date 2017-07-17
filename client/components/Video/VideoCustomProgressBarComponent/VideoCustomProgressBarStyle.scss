@@ -1,0 +1,10 @@
+@import "../../../css/base/mixins";
+
+.player-progress-bar {
+  @include clearfix;
+
+  @include atLarge {
+    width: 100%;
+    background-color: grey;
+  }
+}

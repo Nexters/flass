@@ -37,7 +37,14 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            'transform-decorators-legacy',
+            'transform-class-properties',
+            'transform-async-functions'
+          ]
+        }
       },
       {
         test: /\.scss$/,
