@@ -27,8 +27,9 @@ class FlassDrawer extends Component {
           <Link to="/channel/me">
             <FlassDrawerItem icon={ <ContentInbox /> }>내 채널</FlassDrawerItem>
           </Link>
-
-          <FlassDrawerItem icon={ <ActionGrade /> }>새 영상 만들기</FlassDrawerItem>
+          <Link to="/upload">
+            <FlassDrawerItem icon={ <ActionGrade /> }>새 영상 만들기</FlassDrawerItem>
+          </Link>
           <FlassDrawerItem icon={ <ContentSend /> }>구독 영상</FlassDrawerItem>
         </div>
         <div className="flass-drawer-bottom">
