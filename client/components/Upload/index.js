@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 
+import './upload.scss';
+
 // const propTypes = {};
 // const defaultProps = {};
 
@@ -15,27 +17,32 @@ class Upload extends Component {
     const { title, description } = this.state;
     return(
       <form>
-        <input
-          type="file"
-          onChange={this.handleUploadVideo}
-        />
-        <label>제목</label>
-        <input
-          name="title"
-          value={title}
-          onChange={this.handleChange}
-        />
-        <label>학습 목표</label>
-        <textarea
-          name="description"
-          value={description}
-          onChange={this.handleChange}
-        />
-        <input
-          type="submit"
-          value="다음"
-          onSubmit={this.handleSubmit}
-        />
+        <div className="left-col">
+          <input
+            type="file"
+            onChange={this.handleUploadVideo}
+          />
+        </div>
+        <div className="right-col">
+          <label>제목</label>
+          <input
+            name="title"
+            value={title}
+            onChange={this.handleChange}
+          />
+          <label>학습 목표</label>
+          <textarea
+            name="description"
+            value={description}
+            onChange={this.handleChange}
+          />
+          <input
+            className="next"
+            type="submit"
+            value="다음"
+            onSubmit={this.handleNext}
+          />
+        </div>
       </form>
     );
   }
@@ -50,7 +57,7 @@ class Upload extends Component {
     // upload video via youtube || server?
   }
 
-  handleSubmit = () => {
+  handleNext = () => {
     // dispatch action to update store with uploaded data
   }
 }
