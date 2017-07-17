@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
+import keydown from 'react-keydown';
 
 import VideoCustomBarComponent from './VideoCustomBarComponent';
 
@@ -13,6 +14,8 @@ const propTypes = {
   onCustomSeekBarMouseDown: func.isRequired,
   onCustomSeekBarChange: func.isRequired,
   onCustomSeekBarMouseUp: func.isRequired,
+  onCustomSeekBarClick: func.isRequired,
+  onArrowKeyPressed: func.isRequired,
   duration: number,
   playedPercentage: number,
   loadedPercentage: number
@@ -26,6 +29,7 @@ const defaultProps = {
 
 const PROGRESS_MIN = 0;
 const PROGRESS_MAX = 100;
+const SHIFT_AMOUNT_PERCENTAGE = 0.15;
 
 class VideoCustomProgressBarComponent extends Component {
   constructor(props) {
@@ -38,10 +42,6 @@ class VideoCustomProgressBarComponent extends Component {
       loaded: 0,
       isDragging: false
     };
-
-    //this.onCustomSeekBarMouseDown = this.onCustomSeekBarMouseDown.bind(this);
-    this.onCustomSeekBarChange = this.onCustomSeekBarChange.bind(this);
-    this.onCustomSeekBarMouseUp = this.onCustomSeekBarMouseUp.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,7 +62,8 @@ class VideoCustomProgressBarComponent extends Component {
         className="player-progress-bar"
         onMouseDown={ this.onCustomSeekBarMouseDown }
         onMouseMove={ this.onCustomSeekBarChange }
-        onMouseUp={ this.onCustomSeekBarMouseUp }>
+        onMouseUp={ this.onCustomSeekBarMouseUp }
+        onClick={ this.onCustomSeekBarClick }>
         <VideoCustomBarComponent
           played={ played }
           loaded={ loaded } />
@@ -70,27 +71,18 @@ class VideoCustomProgressBarComponent extends Component {
     );
   }
 
-  onCustomSeekBarMouseDown = e => {
+  @autobind
+  onCustomSeekBarMouseDown(e)  {
     this.setState({ isDragging: true });
     this.props.onCustomSeekBarMouseDown();
     e.stopPropagation();
     e.preventDefault;
   }
 
+  @autobind
   onCustomSeekBarChange(e) {
     if (this.state.isDragging) {
-      const { left, right } = ReactDOM.findDOMNode(this).getBoundingClientRect();
-      const rLeft = left - document.body.getBoundingClientRect().left;
-
-      console.log(left, right, rLeft);
-
-      let movedPosition = ((e.clientX - rLeft) / (right - rLeft)) * 100;
-      if (movedPosition < PROGRESS_MIN) {
-        movedPosition = min;
-      }
-      if (movedPosition > PROGRESS_MAX) {
-        movedPosition = max;
-      }
+      const movedPosition = this.calculateMovedPosition(e);
       this.setState({ played: movedPosition });
       this.props.onCustomSeekBarChange(movedPosition);
     }
@@ -98,11 +90,50 @@ class VideoCustomProgressBarComponent extends Component {
     e.preventDefault;
   }
 
+  @autobind
   onCustomSeekBarMouseUp(e) {
     this.setState({ isDragging: false });
     this.props.onCustomSeekBarMouseUp(this.state.played);
     e.stopPropagation();
     e.preventDefault;
+  }
+
+  @autobind
+  onCustomSeekBarClick(e) {
+    if (!this.state.isDragging) {
+      const movedPosition = this.calculateMovedPosition(e);
+      this.setState({ played: movedPosition });
+      this.props.onCustomSeekBarClick(movedPosition);
+    }
+  }
+
+  calculateMovedPosition(e) {
+    const { left, right } = ReactDOM.findDOMNode(this).getBoundingClientRect();
+    const rLeft = left - document.body.getBoundingClientRect().left;
+
+    let movedPosition = ((e.clientX - rLeft) / (right - rLeft)) * 100;
+    if (movedPosition < PROGRESS_MIN) {
+      movedPosition = min;
+    }
+    if (movedPosition > PROGRESS_MAX) {
+      movedPosition = max;
+    }
+
+    return movedPosition;
+  }
+
+  @autobind
+  @keydown('left')
+  onLeftArrowKeyPressed() {
+    const changedPlayed = this.state.played - SHIFT_AMOUNT_PERCENTAGE;
+    this.props.onArrowKeyPressed(changedPlayed);
+  }
+
+  @autobind
+  @keydown('right')
+  onRightArrowKeyPressed() {
+    const changedPlayed = this.state.played + SHIFT_AMOUNT_PERCENTAGE;
+    this.props.onArrowKeyPressed(changedPlayed);
   }
 }
 
