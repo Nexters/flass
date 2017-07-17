@@ -11,6 +11,8 @@ import VideoVolumeBarComponent from './VideoVolumeBarComponent';
 import VideoProgressBarComponent from './VideoProgressBarComponent';
 import VideoCustomProgressBarComponent from './VideoCustomProgressBarComponent/VideoCustomProgressBarComponent';
 
+import QuizComponent from '../Quiz/QuizComponent';
+
 import '../../css/base/_row.scss';
 
 const propTypes = {};
@@ -75,9 +77,7 @@ class VideoComponent extends Component {
           </div>
 
           <div className="row__large-4">
-            <div>
-              문제 추가
-            </div>
+            <QuizComponent />
           </div>
         </div>
 
