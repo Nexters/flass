@@ -14,6 +14,12 @@ const defaultProps = {
 };
 
 class VideoCustomBarComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { quizTime: [] };
+  }
+
   componentWillReceiveProps(nextProps) {
     const playedBar = document.getElementsByClassName('played-bar')[0];
     const loadedBar = document.getElementsByClassName('loaded-bar')[0];

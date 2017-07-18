@@ -62,7 +62,8 @@ class VideoComponent extends Component {
           </div>
 
           <div className="row__large-4">
-            <QuizComponent />
+            <QuizComponent
+              playedSeconds={ (duration * played).toFixed(3) } />
           </div>
         </div>
 

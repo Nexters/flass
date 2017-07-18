@@ -5,6 +5,7 @@ import autobind from 'autobind-decorator';
 import keydown from 'react-keydown';
 
 import VideoCustomBarComponent from './VideoCustomBarComponent';
+import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
 
 import './VideoCustomProgressBarStyle.scss';
 
@@ -55,7 +56,7 @@ class VideoCustomProgressBarComponent extends Component {
   }
 
   render() {
-    const { played, loaded } = this.state;
+    const { played, loaded, duration } = this.state;
 
     return (
       <div
@@ -67,6 +68,8 @@ class VideoCustomProgressBarComponent extends Component {
         <VideoCustomBarComponent
           played={ played }
           loaded={ loaded } />
+        <VideoCustomQuizBarComponent
+          duration={ duration } />
       </div>
     );
   }

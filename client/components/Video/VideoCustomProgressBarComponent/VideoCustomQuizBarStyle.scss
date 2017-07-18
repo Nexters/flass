@@ -1,0 +1,17 @@
+@import "../../../css/base/mixins";
+
+$quizIndicatorBarHeight: 30px;
+
+.quiz-indicator {
+  position: relative;
+  width: 100%;
+  height: $quizIndicatorBarHeight;
+  background-color: red;
+}
+
+.quiz-indicator-bar {
+  position: absolute;
+  width: 10px;
+  height: $quizIndicatorBarHeight;
+  background-color: yellow;
+}
