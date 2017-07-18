@@ -10,7 +10,7 @@ const defaultProps = {};
 class AnalysisItem extends Component {
 
   componentDidMount() {
-    const myChart = new Chart(this.refs.myChart, {
+    const myChart = new Chart(this.myChart, {
       type: 'bar',
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -52,7 +52,7 @@ class AnalysisItem extends Component {
     return (
       <div>
         <Subheader><span>03:25</span> 질문 내용1</Subheader>
-        <canvas id="myChart" width="300" height="200" ref="myChart" />
+        <canvas id="myChart" width="300" height="200" ref={chart => this.myChart = chart} />
       </div>
     );
   }

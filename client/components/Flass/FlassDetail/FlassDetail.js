@@ -4,9 +4,9 @@ import Subheader from 'material-ui/Subheader';
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import './FlassDetail.scss';
 import Comment from './Comment/Comment';
 import Analysis from './Analysis/Analysis';
+import './FlassDetail.scss';
 
 const propTypes = {
   match: PropTypes.object,
@@ -23,19 +23,17 @@ const defaultProps = {
 };
 
 class FlassDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 'a'
-    };
-  }
-
   componentDidMount() {}
 
   handleChange = value => {
-    this.setState({
-      value
-    });
+    switch(value) {
+      case 'question' :
+
+        break;
+      case 'anaylsis' :
+
+        break;
+    }
   };
 
   render() {
@@ -59,12 +57,11 @@ class FlassDetail extends Component {
         </div>
         <div className="flass-detail-tabs">
           <Tabs
-            value={ this.state.value }
             onChange={ this.handleChange }>
-            <Tab label={ `질문 ${commentCount}` } value="a">
+            <Tab label={ `질문 ${commentCount}` } value="question">
               <Comment />
             </Tab>
-            <Tab label="분석" value="b">
+            <Tab label="분석" value="anaylsis">
               <Analysis />
             </Tab>
           </Tabs>
