@@ -1,0 +1,16 @@
+
+.flass-post-comment {
+  height: 7rem;
+  .flass-post-comment-profile {
+    padding: 16px;
+    height: 40px;
+    width: 40px;
+    float: left;
+    border-radius: 50%;
+  }
+
+  .flass-post-comment-text {
+    display: inline-block;
+    width: 90%;
+  }
+}

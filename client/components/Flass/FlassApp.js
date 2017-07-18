@@ -43,7 +43,6 @@ class FlassApp extends Component {
             title="Flass"
             titleStyle={ { paddingTop: 10, paddingLeft: 3 } }
             iconElementRight={ <FlassUserAppBar /> } />
-
           <FlassContent>
             { this.props.children }
           </FlassContent>

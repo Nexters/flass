@@ -23,12 +23,9 @@ class FlassBadge extends Component {
     this.state = {
       open: false
     };
-
-    this.handleTouchTap = this.handleTouchTap.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
-  handleTouchTap(event) {
+  handleTouchTap = (event) => {
     // This prevents ghost click.
     event.preventDefault();
 
@@ -38,7 +35,7 @@ class FlassBadge extends Component {
     });
   }
 
-  handleRequestClose() {
+  handleRequestClose = () => {
     this.setState({
       open: false,
     });
