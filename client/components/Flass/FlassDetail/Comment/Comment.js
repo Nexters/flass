@@ -26,7 +26,6 @@ class Comment extends Component {
         </p>
       }
       secondaryTextLines={ 2 } />)).concat();
-    console.log(items);
     return (
       <List>
         <PostComment />

@@ -9,11 +9,7 @@ import Comment from './Comment/Comment';
 import Analysis from './Analysis/Analysis';
 
 const propTypes = {
-  match: PropTypes.shape({
-    params: {
-      id: PropTypes.number
-    }
-  }),
+  match: PropTypes.object,
   commentCount: PropTypes.number
 };
 

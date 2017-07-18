@@ -1,15 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Divider, Subheader} from 'material-ui';
+import { Divider, Subheader } from 'material-ui';
+import AnalysisItem from './AnalysisItem';
 
 const propTypes = {};
 
 const defaultProps = {};
 
 class Analysis extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {}
 
@@ -18,6 +16,7 @@ class Analysis extends Component {
       <div>
         <Subheader>답변자 수</Subheader>
         <Divider />
+        <AnalysisItem />
       </div>
     );
   }
