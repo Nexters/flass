@@ -1,10 +1,12 @@
 .played-bar {
+  position: absolute;
   width: 1%;
   height: 30px;
   background-color: green;
 }
 
 .loaded-bar {
+  position: absolute;
   width: 1%;
   height: 30px;
   background-color: blue;

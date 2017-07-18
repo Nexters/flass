@@ -28,7 +28,7 @@ class VideoCustomQuizBarComponent extends Component {
       <div
         key={ quizTime }
         className="quiz-indicator-bar"
-        style={ { left: `${(quizTime / this.props.duration) * 100}%`, position: 'absolute' } }>
+        style={ { left: `${(quizTime / this.props.duration) * 100}%` } }>
         { quizTime }
       </div>
     ));

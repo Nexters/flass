@@ -1,7 +1,7 @@
 @import "../../../css/base/mixins";
 
 .player-progress-bar {
-  @include clearfix;
+  position: relative;
 
   @include atLarge {
     width: 100%;

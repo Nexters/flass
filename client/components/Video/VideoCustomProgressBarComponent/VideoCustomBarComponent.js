@@ -30,8 +30,8 @@ class VideoCustomBarComponent extends Component {
   render() {
     return (
       <div>
-        <div id="played-bar" className="played-bar" />
         <div id="loaded-bar" className="loaded-bar" />
+        <div id="played-bar" className="played-bar" />
       </div>
     );
   }
