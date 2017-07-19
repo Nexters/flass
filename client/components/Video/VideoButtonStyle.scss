@@ -1,0 +1,10 @@
+.video-btn {
+  border: none;
+  padding: 0,inherit;
+  background: none;
+  z-index: 3;
+
+  &--right {
+    float: right;
+  }
+}

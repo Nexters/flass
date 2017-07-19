@@ -1,20 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import './VideoButtonStyle.scss';
+
+const { func, string, number, oneOfType, arrayOf } = PropTypes;
 
 const propTypes = {
-  onButtonClick: PropTypes.func.isRequired,
-  buttonTitle: PropTypes.string,
-  buttonClass: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ])
+  onButtonClick: func.isRequired,
+  buttonTitle: string,
+  buttonClass: oneOfType([string, arrayOf(string)]),
+  value: oneOfType([
+    string,
+    number
+  ]),
+  srcSet: string
 };
 
 const defaultProps = {
   buttonTitle: '',
   buttonClass: '',
-  value: ''
+  value: '',
+  srcSet: null
 };
 
 const VideoButtonComponent = props => {
@@ -22,15 +29,16 @@ const VideoButtonComponent = props => {
     buttonTitle,
     onButtonClick,
     buttonClass,
-    value
+    value,
+    srcSet
   } = props;
 
   return (
     <button
-      className={ buttonClass }
+      className={ classNames(buttonClass) }
       onClick={ onButtonClick }
       value={ value }>
-      { buttonTitle }
+      <img srcSet={ `${srcSet}` } alt="test alt" />
     </button>
   );
 };
