@@ -7,18 +7,18 @@
   float: right;
   margin-right: 10%;
 
-  label, input, textarea {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  textarea {
-    height: 400px;
-  }
-
   .next {
     width: 80px;
     float: right;
   }
+
+  .nextLabel {
+    color: white;
+  }
+}
+
+.noConnector {
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
 }
