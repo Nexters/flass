@@ -2,8 +2,8 @@
 
 .player-progress-bar {
   position: relative;
-  opacity: 1;
-  
+  opacity: 0.8;
+
   @include atLarge {
     width: 100%;
     background-color: grey;

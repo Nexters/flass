@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
+import screenfull from 'screenfull';
 
 import {
   VideoPlayerComponent,
   VideoButtonComponent,
   VideoVolumeBarComponent,
-  VideoCustomProgressBarComponent
+  VideoCustomProgressBarComponent,
+  VideoControllerWrapperComponent
 } from '../../../Video';
+
+import PlayBtnIcon from '../../../../../public/play_arrow_24dp_1x.png';
+import PauseBtnIcon from '../../../../../public/pause_24dp_1x.png';
+import FullscreenBtnIcon from '../../../../../public/web_asset_24dp_1x.png';
 
 const { string, oneOfType, arrayOf } = PropTypes;
 
@@ -20,7 +27,9 @@ const propTypes = {
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
-  VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)])
+  VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoPlayPauseBtnClassName: oneOfType([string, arrayOf(string)]),
+  VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)])
 };
 
 const defaultProps = {
@@ -31,7 +40,9 @@ const defaultProps = {
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
   VideoQuizIndicatorClassName: '',
-  VideoQuizIndicatorBarClassName: ''
+  VideoQuizIndicatorBarClassName: '',
+  VideoPlayPauseBtnClassName: '',
+  VideoFullscreenBtnClassName: ''
 };
 
 class Video extends Component {
@@ -45,8 +56,7 @@ class Video extends Component {
       played: 0,
       loaded: 0,
       duration: 0,
-      playbackRate: 1.0,
-      player: null
+      playbackRate: 1.0
     };
   }
 
@@ -60,7 +70,9 @@ class Video extends Component {
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
       VideoQuizIndicatorClassName,
-      VideoQuizIndicatorBarClassName
+      VideoQuizIndicatorBarClassName,
+      VideoPlayPauseBtnClassName,
+      VideoFullscreenBtnClassName
     } = this.props;
 
     return (
@@ -94,6 +106,17 @@ class Video extends Component {
             onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
             onCustomSeekBarClick={ this.onCustomSeekBarClick }
             onArrowKeyPressed={ this.onArrowKeyPressed } />
+
+          <VideoControllerWrapperComponent>
+            <VideoButtonComponent
+              buttonClass={ VideoPlayPauseBtnClassName }
+              srcSet={ PlayBtnIcon }
+              onButtonClick={ this.onClickPlayPause } />
+            <VideoButtonComponent
+              buttonClass={ VideoFullscreenBtnClassName }
+              srcSet={ FullscreenBtnIcon }
+              onButtonClick={ this.onClickFullscreen } />
+          </VideoControllerWrapperComponent>
         </div>
       </div>
     );
@@ -146,6 +169,16 @@ class Video extends Component {
     const changedPlayedPercentage = changedPlayed / 100;
     this.setState({ played: changedPlayedPercentage });
     this.player.seekTo(changedPlayedPercentage);
+  }
+
+  @autobind
+  onClickPlayPause() {
+    this.setState({ playing: !this.state.playing });
+  }
+
+  @autobind
+  onClickFullscreen() {
+    screenfull.request(findDOMNode(this.player));
   }
 }
 

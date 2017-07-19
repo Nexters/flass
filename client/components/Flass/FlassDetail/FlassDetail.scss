@@ -22,7 +22,7 @@ $playerWidth: 700px;
         width: $playerWidth;
         height: $progressbarHeight;
         position: absolute;
-        top: $playerHeight - $progressbarHeight;
+        top: $playerHeight - $progressbarHeight - 5px;
         z-index: 2;
       }
 
