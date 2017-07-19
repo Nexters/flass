@@ -10,18 +10,28 @@ import {
   VideoCustomProgressBarComponent
 } from '../../../Video';
 
-const { string } = PropTypes;
+const { string, oneOfType, arrayOf } = PropTypes;
 
 const propTypes = {
-  VideoContainerClassName: string,
-  VideoPlayerClassName: string,
-  VideoProgressBarClassName: string
+  VideoContainerClassName: oneOfType([string, arrayOf(string)]),
+  VideoPlayerClassName: oneOfType([string, arrayOf(string)]),
+  VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoControllerBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
+  VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)])
 };
 
 const defaultProps = {
   VideoContainerClassName: '',
   VideoPlayerClassName: '',
-  VideoProgressBarClassName: ''
+  VideoProgressBarClassName: '',
+  VideoControllerBarClassName: '',
+  VideoPlayedBarClassName: '',
+  VideoLoadedBarClassName: '',
+  VideoQuizIndicatorClassName: '',
+  VideoQuizIndicatorBarClassName: ''
 };
 
 class Video extends Component {
@@ -42,29 +52,40 @@ class Video extends Component {
 
   render() {
     const { url, playing, volume, played, loaded, duration, playbackRate, youtubeConfig } = this.state;
-    const { VideoContainerClassName, VideoPlayerClassName, VideoProgressBarClassName } = this.props;
+    const {
+      VideoContainerClassName,
+      VideoPlayerClassName,
+      VideoProgressBarClassName,
+      VideoControllerBarClassName,
+      VideoPlayedBarClassName,
+      VideoLoadedBarClassName,
+      VideoQuizIndicatorClassName,
+      VideoQuizIndicatorBarClassName
+    } = this.props;
 
     return (
       <div className={ classNames(VideoContainerClassName) }>
-        <div>
-          <VideoPlayerComponent
-            VideoPlayerClassName={ VideoPlayerClassName }
-            url={ url }
-            playing={ playing }
-            volume={ volume }
-            played={ played }
-            loaded={ loaded }
-            duration={ duration }
-            playbackRate={ playbackRate }
-            youtubeConfig={ youtubeConfig }
-            onProgress={ this.onProgress }
-            onDuration={ this.onDuration }
-            setPlayer={ this.setPlayer } />
-        </div>
+        <VideoPlayerComponent
+          VideoPlayerClassName={ VideoPlayerClassName }
+          url={ url }
+          playing={ playing }
+          volume={ volume }
+          played={ played }
+          loaded={ loaded }
+          duration={ duration }
+          playbackRate={ playbackRate }
+          youtubeConfig={ youtubeConfig }
+          onProgress={ this.onProgress }
+          onDuration={ this.onDuration }
+          setPlayer={ this.setPlayer } />
 
-        <div>
+        <div className={ VideoControllerBarClassName }>
           <VideoCustomProgressBarComponent
             VideoProgressBarClassName={ VideoProgressBarClassName }
+            VideoPlayedBarClassName={ VideoPlayedBarClassName }
+            VideoLoadedBarClassName={ VideoLoadedBarClassName }
+            VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
+            VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
             duration={ duration }
             playedPercentage={ played }
             loadedPercentage={ loaded }

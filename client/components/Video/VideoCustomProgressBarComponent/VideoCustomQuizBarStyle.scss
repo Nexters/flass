@@ -1,11 +1,14 @@
 @import "../../../css/base/mixins";
-
-$quizIndicatorBarHeight: 30px;
+@import "../VideoVariables";
 
 .quiz-indicator {
   position: relative;
   width: 100%;
   height: $quizIndicatorBarHeight;
+
+  &--thinner {
+    height: $quizIndicatorBarHeightThinner;
+  }
 }
 
 .quiz-indicator-bar {
@@ -13,4 +16,8 @@ $quizIndicatorBarHeight: 30px;
   width: 10px;
   height: $quizIndicatorBarHeight;
   background-color: yellow;
+
+  &--thinner {
+    height: $quizIndicatorBarHeightThinner;
+  }
 }

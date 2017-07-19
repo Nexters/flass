@@ -10,10 +10,14 @@ import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
 
 import './VideoCustomProgressBarStyle.scss';
 
-const { func, number, string } = PropTypes;
+const { func, number, string, oneOfType, arrayOf } = PropTypes;
 
 const propTypes = {
-  VideoProgressBarClassName: string,
+  VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
+  VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
   onCustomSeekBarMouseDown: func.isRequired,
   onCustomSeekBarChange: func.isRequired,
   onCustomSeekBarMouseUp: func.isRequired,
@@ -26,6 +30,11 @@ const propTypes = {
 
 const defaultProps = {
   VideoProgressBarClassName: '',
+  VideoPlayedBarClassName: '',
+  VideoLoadedBarClassName: '',
+  VideoQuizIndicatorClassName: '',
+  VideoQuizIndicatorBarClassName: '',
+  VideoBarClassName: '',
   duration: 1,
   playedPercentage: 0,
   loadedPercentage: 0
@@ -60,7 +69,13 @@ class VideoCustomProgressBarComponent extends Component {
 
   render() {
     const { played, loaded, duration } = this.state;
-    const { VideoProgressBarClassName } = this.props;
+    const {
+      VideoProgressBarClassName,
+      VideoPlayedBarClassName,
+      VideoLoadedBarClassName,
+      VideoQuizIndicatorClassName,
+      VideoQuizIndicatorBarClassName
+    } = this.props;
 
     return (
       <div
@@ -70,9 +85,13 @@ class VideoCustomProgressBarComponent extends Component {
         onMouseUp={ this.onCustomSeekBarMouseUp }
         onClick={ this.onCustomSeekBarClick }>
         <VideoCustomBarComponent
+          VideoPlayedBarClassName={ VideoPlayedBarClassName }
+          VideoLoadedBarClassName={ VideoLoadedBarClassName }
           played={ played }
           loaded={ loaded } />
         <VideoCustomQuizBarComponent
+          VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
+          VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
           duration={ duration } />
       </div>
     );

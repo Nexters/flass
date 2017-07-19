@@ -51,9 +51,16 @@ class FlassDetail extends Component {
           <div>
 
             <Video
-              VideoContainerClassName="flass-detail-media"
-              VideoPlayerClassName=""
-              VideoProgressBarClassName="" />
+              VideoContainerClassName={ [
+                'flass-detail-media',
+                'flass-detail-media--larger-height'
+              ] }
+              VideoPlayerClassName="flass-detail-media__player"
+              VideoControllerBarClassName="flass-detail-media__controller-bar"
+              VideoPlayedBarClassName="played-bar--thinner"
+              VideoLoadedBarClassName="loaded-bar--thinner"
+              VideoQuizIndicatorClassName="quiz-indicator--thinner"
+              VideoQuizIndicatorBarClassName="quiz-indicator--thinner" />
 
             <List className="flass-detail-question-list-container">
               <Subheader>질문 리스트</Subheader>

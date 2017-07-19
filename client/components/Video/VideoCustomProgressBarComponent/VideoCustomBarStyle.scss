@@ -1,13 +1,23 @@
+@import "../VideoVariables";
+
 .played-bar {
   position: absolute;
   width: 1%;
-  height: 30px;
+  height: $progressbarHeight;
   background-color: green;
+
+  &--thinner {
+    height: $progressbarHeightThinner;
+  }
 }
 
 .loaded-bar {
   position: absolute;
   width: 1%;
-  height: 30px;
+  height: $progressbarHeight;
   background-color: blue;
+
+  &--thinner {
+    height: $progressbarHeightThinner;
+  }
 }

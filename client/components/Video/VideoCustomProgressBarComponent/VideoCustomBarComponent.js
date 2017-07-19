@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import './VideoCustomBarStyle.scss';
 
+const { number, string, oneOfType, arrayOf } = PropTypes;
+
 const propTypes = {
-  played: PropTypes.number,
-  loaded: PropTypes.number
+  VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
+  played: number,
+  loaded: number
 };
 
 const defaultProps = {
+  VideoPlayedBarClassName: '',
+  VideoLoadedBarClassName: '',
   played: 0,
   loaded: 0
 };
@@ -29,10 +36,12 @@ class VideoCustomBarComponent extends Component {
   }
 
   render() {
+    const { VideoPlayedBarClassName, VideoLoadedBarClassName } = this.props;
+
     return (
       <div>
-        <div id="loaded-bar" className="loaded-bar" />
-        <div id="played-bar" className="played-bar" />
+        <div id="loaded-bar" className={ classNames('loaded-bar', VideoLoadedBarClassName) } />
+        <div id="played-bar" className={ classNames('played-bar', VideoPlayedBarClassName) } />
       </div>
     );
   }

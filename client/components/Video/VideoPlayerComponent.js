@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 
-const { func, string, number, bool, object } = PropTypes;
+const { func, string, number, bool, object, oneOfType, arrayOf } = PropTypes;
 
 const propTypes = {
   onProgress: func.isRequired,
@@ -15,7 +15,7 @@ const propTypes = {
   playbackRate: number.isRequired,
   volume: number.isRequired,
   youtubeConfig: object,
-  VideoPlayerClassName: string
+  VideoPlayerClassName: oneOfType([string, arrayOf(string)])
 };
 
 const defaultProps = {
@@ -40,10 +40,10 @@ class VideoPlayerComponent extends Component {
     } = this.props;
 
     return (
-      <div>
+      <div className={ classNames(VideoPlayerClassName) }>
         <ReactPlayer
           ref={ player => setPlayer(player) }
-          className={ classNames('react-player', VideoPlayerClassName) }
+          className="react-player"
           width="100%"
           height="100%"
           url={ url }
