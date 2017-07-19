@@ -3,10 +3,10 @@ import { findDOMNode } from 'react-dom';
 import screenfull from 'screenfull';
 import autobind from 'autobind-decorator';
 
-import VideoPlayerComponent from './VideoPlayerComponent';
-import VideoButtonComponent from './VideoButtonComponent';
-import VideoVolumeBarComponent from './VideoVolumeBarComponent';
-import VideoCustomProgressBarComponent from './VideoCustomProgressBarComponent/VideoCustomProgressBarComponent';
+import { VideoPlayerComponent } from './VideoPlayerComponent';
+import { VideoButtonComponent } from './VideoButtonComponent';
+import { VideoVolumeBarComponent } from './VideoVolumeBarComponent';
+import { VideoCustomProgressBarComponent } from './VideoCustomProgressBarComponent/VideoCustomProgressBarComponent';
 
 import QuizComponent from '../Quiz/QuizComponent';
 
@@ -132,24 +132,6 @@ class VideoComponent extends Component {
   onClickSetPlaybackRate(e) {
     const rate = parseFloat(e.target.value);
     this.setState({ playbackRate: rate });
-  }
-
-  @autobind
-  onSeekBarMouseDown() {
-    this.setState({ seeking: true });
-  }
-
-  @autobind
-  onSeekBarChange(e) {
-    const played = parseFloat(e.target.value);
-    this.setState({ played });
-  }
-
-  @autobind
-  onSeekBarMouseUp(e) {
-    const played = parseFloat(e.target.value);
-    this.setState({ seeking: false });
-    this.state.player.seekTo(played);
   }
 
   @autobind

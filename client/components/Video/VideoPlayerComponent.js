@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import autobind from 'autobind-decorator';
+import classNames from 'classnames';
 
 const { func, string, number, bool, object } = PropTypes;
 
@@ -13,25 +14,36 @@ const propTypes = {
   playing: bool,
   playbackRate: number.isRequired,
   volume: number.isRequired,
-  duration: number.isRequired,
-  youtubeConfig: object
+  youtubeConfig: object,
+  VideoPlayerClassName: string
 };
 
 const defaultProps = {
   url: null,
   playing: false,
-  youtubeConfig: undefined
+  youtubeConfig: undefined,
+  VideoPlayerClassName: ''
 };
 
 class VideoPlayerComponent extends Component {
   render() {
-    const { onProgress, onDuration, setPlayer, url, playing, playbackRate, volume, youtubeConfig, duration } = this.props;
+    const {
+      VideoPlayerClassName,
+      onProgress,
+      onDuration,
+      setPlayer,
+      url,
+      playing,
+      playbackRate,
+      volume,
+      youtubeConfig
+    } = this.props;
 
     return (
       <div>
         <ReactPlayer
           ref={ player => setPlayer(player) }
-          className="react-player"
+          className={ classNames('react-player', VideoPlayerClassName) }
           width="100%"
           height="100%"
           url={ url }
@@ -55,4 +67,4 @@ class VideoPlayerComponent extends Component {
 VideoPlayerComponent.propTypes = propTypes;
 VideoPlayerComponent.defaultProps = defaultProps;
 
-export default VideoPlayerComponent;
+export { VideoPlayerComponent };

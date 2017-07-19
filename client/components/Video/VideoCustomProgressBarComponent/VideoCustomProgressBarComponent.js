@@ -3,15 +3,17 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import keydown from 'react-keydown';
+import classNames from 'classnames';
 
 import VideoCustomBarComponent from './VideoCustomBarComponent';
 import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
 
 import './VideoCustomProgressBarStyle.scss';
 
-const { func, number } = PropTypes;
+const { func, number, string } = PropTypes;
 
 const propTypes = {
+  VideoProgressBarClassName: string,
   onCustomSeekBarMouseDown: func.isRequired,
   onCustomSeekBarChange: func.isRequired,
   onCustomSeekBarMouseUp: func.isRequired,
@@ -23,6 +25,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  VideoProgressBarClassName: '',
   duration: 1,
   playedPercentage: 0,
   loadedPercentage: 0
@@ -57,10 +60,11 @@ class VideoCustomProgressBarComponent extends Component {
 
   render() {
     const { played, loaded, duration } = this.state;
+    const { VideoProgressBarClassName } = this.props;
 
     return (
       <div
-        className="player-progress-bar"
+        className={ classNames('player-progress-bar', VideoProgressBarClassName) }
         onMouseDown={ this.onCustomSeekBarMouseDown }
         onMouseMove={ this.onCustomSeekBarChange }
         onMouseUp={ this.onCustomSeekBarMouseUp }
@@ -143,4 +147,4 @@ class VideoCustomProgressBarComponent extends Component {
 VideoCustomProgressBarComponent.propTypes = propTypes;
 VideoCustomProgressBarComponent.defaultProps = defaultProps;
 
-export default VideoCustomProgressBarComponent;
+export { VideoCustomProgressBarComponent };

@@ -49,6 +49,14 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(png|jpg|gif|eot|ttf|woff|woff2)$/,
+        loader: 'url-loader',
+        options: {
+          publicPath: './public/',
+          limit: 10000
+        }
       }
     ],
   },
