@@ -34,4 +34,4 @@ const VideoVolumeBarComponent = props => {
 VideoVolumeBarComponent.propTypes = propTypes;
 VideoVolumeBarComponent.defaultProps = defaultProps;
 
-export default VideoVolumeBarComponent;
+export { VideoVolumeBarComponent };

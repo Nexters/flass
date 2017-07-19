@@ -38,4 +38,4 @@ const VideoButtonComponent = props => {
 VideoButtonComponent.propTypes = propTypes;
 VideoButtonComponent.defaultProps = defaultProps;
 
-export default VideoButtonComponent;
+export { VideoButtonComponent };

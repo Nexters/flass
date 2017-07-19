@@ -6,6 +6,11 @@ import Divider from 'material-ui/Divider';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import Comment from './Comment/Comment';
 import Analysis from './Analysis/Analysis';
+
+/* 영상 컴포넌트 */
+import Video from './Video/Video';
+
+
 import './FlassDetail.scss';
 
 const propTypes = {
@@ -44,10 +49,12 @@ class FlassDetail extends Component {
         <div className="flass-detail-contents">
           <Subheader>영상제목</Subheader>
           <div>
-            <img
-              src="http://via.placeholder.com/450x200"
-              className="flass-detail-media"
-              alt="" />
+
+            <Video
+              VideoContainerClassName="flass-detail-media"
+              VideoPlayerClassName=""
+              VideoProgressBarClassName="" />
+
             <List className="flass-detail-question-list-container">
               <Subheader>질문 리스트</Subheader>
               <Divider />
