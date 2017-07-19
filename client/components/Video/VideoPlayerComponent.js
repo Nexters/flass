@@ -7,6 +7,7 @@ const { func, string, number, bool, object } = PropTypes;
 
 const propTypes = {
   onProgress: func.isRequired,
+  onDuration: func.isRequired,
   setPlayer: func.isRequired,
   url: string,
   playing: bool,
@@ -24,7 +25,7 @@ const defaultProps = {
 
 class VideoPlayerComponent extends Component {
   render() {
-    const { onProgress, setPlayer, url, playing, playbackRate, volume, youtubeConfig, duration } = this.props;
+    const { onProgress, onDuration, setPlayer, url, playing, playbackRate, volume, youtubeConfig, duration } = this.props;
 
     return (
       <div>
@@ -45,7 +46,7 @@ class VideoPlayerComponent extends Component {
           onEnded={ () => this.setState({ playing: false }) }
           onError={ e => console.log('onError', e) }
           onProgress={ onProgress }
-          onDuration={ duration => this.setState({ duration }) } />
+          onDuration={ onDuration } />
       </div>
     );
   }

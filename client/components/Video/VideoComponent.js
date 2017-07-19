@@ -32,8 +32,7 @@ class VideoComponent extends Component {
   }
 
   render() {
-    const { url, playing, volume, played, loaded, duration, playbackRate, youtubeConfig, fileConfig } = this.state;
-
+    const { url, playing, volume, played, loaded, duration, playbackRate, youtubeConfig } = this.state;
     return (
       <div>
         <div className="row--equal-height-at-large">
@@ -48,6 +47,7 @@ class VideoComponent extends Component {
               playbackRate={ playbackRate }
               youtubeConfig={ youtubeConfig }
               onProgress={ this.onProgress }
+              onDuration={ this.onDuration }
               setPlayer={ this.setPlayer } />
           </div>
 
@@ -100,6 +100,12 @@ class VideoComponent extends Component {
   setPlayer(player) {
     this.player = player;
   }
+
+  @autobind
+  onDuration(duration) {
+    this.setState({ duration });
+  }
+
   @autobind
   onProgress(state) {
     if (!this.state.seeking) {
