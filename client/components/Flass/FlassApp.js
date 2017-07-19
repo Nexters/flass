@@ -5,11 +5,23 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import { Route, Switch } from 'react-router-dom';
+
+import FlassGrid from './FlassGrid/FlassGrid';
+import VideoComponent from '../Video/VideoComponent';
+import FlassDetail from './FlassDetail/FlassDetail';
+import Upload from '../Upload';
 
 import FlassUserAppBar from './FlassAppBar/FlassUserAppBar';
 import FlassDrawer from './FlassDrawer/FlassDrawer';
 import FlassContent from './FlassContent';
 import './FlassApp.scss';
+
+const childContextTypes = {
+  muiTheme: PropTypes.object.isRequired
+};
+const propTypes = {};
+const defaultProps = {};
 
 const flassTheme = getMuiTheme({
   palette: {
@@ -19,14 +31,6 @@ const flassTheme = getMuiTheme({
     height: 40
   }
 });
-
-const childContextTypes = {
-  muiTheme: PropTypes.object.isRequired
-};
-const propTypes = {
-  children: PropTypes.element.isRequired
-};
-const defaultProps = {};
 
 class FlassApp extends Component {
   getChildContext() {
@@ -44,9 +48,14 @@ class FlassApp extends Component {
             titleStyle={ { paddingTop: 10, paddingLeft: 3 } }
             iconElementRight={ <FlassUserAppBar /> } />
           <FlassContent>
-            { this.props.children }
+            <Switch>
+              <Route exact path="/" component={ FlassGrid } />
+              <Route path="/channel/me" component={ FlassGrid } />
+              <Route path="/detail/:id" component={ FlassDetail } />
+              <Route path="/video" component={ VideoComponent } />
+              <Route path="/upload" component={ Upload } />
+            </Switch>
           </FlassContent>
-
           <FlassDrawer />
         </div>
       </MuiThemeProvider>
