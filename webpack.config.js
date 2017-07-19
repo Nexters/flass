@@ -54,8 +54,8 @@ module.exports = {
         test: /\.(png|jpg|gif|eot|ttf|woff|woff2)$/,
         loader: 'url-loader',
         options: {
-          publicPath: './public/',
-          limit: 10000
+          limit: 10000,
+          name: '[name].[ext]'
         }
       }
     ],

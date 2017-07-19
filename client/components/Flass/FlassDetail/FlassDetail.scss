@@ -1,12 +1,40 @@
+@import "../../Video/VideoVariables";
+
+$mediaHeight: 400px;
+$playerHeight: 300px;
+$playerWidth: 700px;
 
 .flass-detail {
   .flass-detail-contents {
     min-height: 21rem;
 
     .flass-detail-media {
+      position: relative;
       width: 60%;
       float: left;
+
+      &__player {
+        width: $playerWidth;
+        height: $playerHeight;
+      }
+
+      &__controller-bar {
+        width: $playerWidth;
+        height: $progressbarHeight;
+        position: absolute;
+        top: $playerHeight - $progressbarHeight - 5px;
+        opacity: 0;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      &--larger-height {
+        height: $mediaHeight;
+      }
     }
+
     .flass-detail-question-list-container {
       display: inline-block;
       width: 35%;
