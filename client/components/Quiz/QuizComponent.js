@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import VideoDurationComponent from '../Video/VideoDurationComponent';
+import './QuizStyle.scss';
 import * as actions from '../../modules/Quiz/quiz';
 
 const { func, bool, string, array } = PropTypes;
@@ -23,16 +24,27 @@ const defaultProps = {
 };
 
 class QuizComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isAddingQuizWindowOpen: false
+    };
+  }
   render() {
     const { isAddQuizSuccess } = this.props;
 
     return (
-      <div>
-        <button
+      <div className="quiz">
+        <div
+          className="quiz__button"
           onClick={ this.onAddQuizClick }>
-          퀴즈 추가하기
-        </button>
+          퀴즈 추가하기 버튼
+        </div>
         <div>{`퀴즈 추가 성공 여부: ${isAddQuizSuccess}`}</div>
+        <div>
+          { this.renderQuizWindow() }
+        </div>
         <div>{ this.renderQuizTimeArray() }</div>
       </div>
     );
@@ -40,8 +52,10 @@ class QuizComponent extends Component {
 
   @autobind
   onAddQuizClick() {
+    this.setState({ isAddingQuizWindowOpen: true });
     this.props.addQuiz({ playedSeconds: this.props.playedSeconds });
     setTimeout(() => {
+      this.setState({ isAddingQuizWindowOpen: false });
       this.props.resetQuizState();
     }, 1000);
   }
@@ -52,6 +66,16 @@ class QuizComponent extends Component {
         <VideoDurationComponent seconds={ parseFloat(quizTime) } />
       </div>
     ));
+  }
+
+  renderQuizWindow() {
+    if (this.state.isAddingQuizWindowOpen) {
+      return (
+        <div>
+          AddingQuizWindow
+        </div>
+      );
+    }
   }
 }
 
