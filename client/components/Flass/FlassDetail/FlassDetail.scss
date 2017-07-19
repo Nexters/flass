@@ -23,7 +23,11 @@ $playerWidth: 700px;
         height: $progressbarHeight;
         position: absolute;
         top: $playerHeight - $progressbarHeight - 5px;
-        z-index: 2;
+        opacity: 0;
+
+        &:hover {
+          opacity: 1;
+        }
       }
 
       &--larger-height {
