@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Flass from './Flass';
+import FlassApp from './FlassApp';
 
 
 function mapStateToProps(state) {
@@ -17,4 +17,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Flass);
+)(FlassApp);
