@@ -43,7 +43,9 @@ class FlassApp extends Component {
           />
           <div className="sign-app-content">
             <Intro />
-            { children }
+            <div className="sign-app-right-content">
+              { children }
+            </div>
           </div>
         </div>
       </MuiThemeProvider>

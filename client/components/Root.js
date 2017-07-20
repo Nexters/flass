@@ -3,8 +3,8 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import FlassApp from './Flass/FlassApp';
 import SignApp from './Sign/SignApp';
-import SignUp from './Sign/SignUp';
-import SignIn from './Sign/SignIn';
+import SignUp from './Sign/SignUp/SignUp';
+import SignIn from './Sign/SignIn/SignIn';
 
 class Root extends Component {
   signUp = () => (
