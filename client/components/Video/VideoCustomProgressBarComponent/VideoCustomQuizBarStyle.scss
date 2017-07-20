@@ -1,0 +1,23 @@
+@import "../../../css/base/mixins";
+@import "../VideoVariables";
+
+.quiz-indicator {
+  position: relative;
+  width: 100%;
+  height: $quizIndicatorBarHeight;
+
+  &--thinner {
+    height: $quizIndicatorBarHeightThinner;
+  }
+}
+
+.quiz-indicator-bar {
+  position: absolute;
+  width: 10px;
+  height: $quizIndicatorBarHeight;
+  background-color: yellow;
+
+  &--thinner {
+    height: $quizIndicatorBarHeightThinner;
+  }
+}

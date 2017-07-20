@@ -1,0 +1,11 @@
+@import "../../../css/base/mixins";
+
+.player-progress-bar {
+  position: relative;
+  opacity: 0.8;
+
+  @include atLarge {
+    width: 100%;
+    background-color: grey;
+  }
+}
