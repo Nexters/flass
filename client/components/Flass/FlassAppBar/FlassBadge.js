@@ -49,7 +49,7 @@ class FlassBadge extends Component {
       (badge) => (<MenuItem key={badge.id} primaryText={badge.content} />));
 
     return (
-      <div className="flass-badge-container">
+      <div className="flass-badge">
         <Badge
           badgeContent={ badges.length }
           primary

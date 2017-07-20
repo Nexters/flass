@@ -64,7 +64,7 @@ class FlassDetail extends Component {
               VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] } />
 
             <Question
-              QuestionListClassName="flass-detail-question-list-container" />
+              QuestionListClassName="flass-detail-question-list" />
           </div>
         </div>
         <div className="flass-detail-tabs">

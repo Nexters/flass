@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { cyan500 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import './SignApp.scss';
 import Intro from './Intro/Intro';
+import FlassAppBar from '../Flass/FlassAppBar/FlassAppBar';
 
 const signTheme = getMuiTheme({
   palette: {
@@ -35,12 +35,7 @@ class FlassApp extends Component {
     return (
       <MuiThemeProvider muiTheme={ signTheme }>
         <div>
-          <AppBar
-            className="sign-app-bar"
-            showMenuIconButton={ false }
-            title="Flass"
-            titleStyle={ { paddingTop: 10, paddingLeft: 3 } }
-          />
+          <FlassAppBar isLogin={false} />
           <div className="sign-app-content">
             <Intro />
             <div className="sign-app-right-content">
