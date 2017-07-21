@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :answers
   devise_for :users
   resources :questions
   get 'home/index'
