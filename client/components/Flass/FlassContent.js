@@ -9,7 +9,7 @@ const propTypes = {
 const defaultProps = {};
 
 const FlassContent = props => (
-  <div className="flass-content-container">
+  <div className="flass-content">
     { props.children }
   </div>
 );

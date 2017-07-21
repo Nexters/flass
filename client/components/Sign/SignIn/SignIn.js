@@ -32,7 +32,7 @@ class SignIn extends Component {
           name="loginStatus"
           label="로그인 상태 유지" />
         <RaisedButton className="signin-submit" label="로그인" primary />
-        <div className="signin-button-container">
+        <div className="signin-button-box">
           <FlatButton label="비밀번호 찾기" />
           <FlatButton label="회원 가입" />
         </div>

@@ -12,10 +12,10 @@ import VideoComponent from '../Video/VideoComponent';
 import FlassDetail from './FlassDetail/FlassDetail';
 import Upload from '../Upload';
 
-import FlassUserAppBar from './FlassAppBar/FlassUserAppBar';
 import FlassDrawer from './FlassDrawer/FlassDrawer';
 import FlassContent from './FlassContent';
 import './FlassApp.scss';
+import FlassAppBar from './FlassAppBar/FlassAppBar';
 
 const childContextTypes = {
   muiTheme: PropTypes.object.isRequired
@@ -41,12 +41,7 @@ class FlassApp extends Component {
     return (
       <MuiThemeProvider muiTheme={ flassTheme }>
         <div>
-          <AppBar
-            className="flass-app-bar"
-            showMenuIconButton={ false }
-            title="Flass"
-            titleStyle={ { paddingTop: 10, paddingLeft: 3 } }
-            iconElementRight={ <FlassUserAppBar /> } />
+          <FlassAppBar isLogin />
           <FlassContent>
             <Switch>
               <Route exact path="/" component={ FlassGrid } />

@@ -16,3 +16,4 @@ env:
 script:
   - npm run test
   - bundle exec rake
+  - rails db:migrate
