@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import './VideoControllerWrapperStyle.scss';
 
+const { arrayOf, element } = PropTypes;
+
 const propTypes = {
-  children: PropTypes.element.isRequired
+  children: arrayOf(element).isRequired
 };
 
 const VideoControllerWrapperComponent = props => (

@@ -37,6 +37,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'devise'
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
