@@ -6,6 +6,7 @@ default: &default
 development:
   <<: *default
   database: db/development.sqlite3
+  username: p1t1j1
 
 test:
   <<: *default
