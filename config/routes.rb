@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :lectures
   resources :answers
   resources :questions
   get 'home/index'

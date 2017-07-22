@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  username: MyString
+  title: MyString
+  content: MyText
+  url: MyString
+  thumbnail_url: MyString
+  duration: 2017-07-22 18:38:38
+
+two:
+  user_id: 1
+  username: MyString
+  title: MyString
+  content: MyText
+  url: MyString
+  thumbnail_url: MyString
+  duration: 2017-07-22 18:38:38
