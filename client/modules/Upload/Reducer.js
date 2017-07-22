@@ -1,7 +1,9 @@
 import * as actions from './Actions';
 
 const initialState = {
-  step: 0
+  step: 0,
+  title: '',
+  description: ''
 };
 
 const UploadReducer = (state = initialState, action) => {
@@ -10,6 +12,12 @@ const UploadReducer = (state = initialState, action) => {
       return {
         ...state,
         step: action.step
+      };
+    case actions.SET_VIDEO_DATA:
+      return {
+        ...state,
+        title: action.title,
+        description: action.description
       };
     default:
       return state;

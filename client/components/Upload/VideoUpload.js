@@ -48,7 +48,7 @@ class VideoUpload extends Component {
             rows={15}
           />
           <FlatButton
-            onTouchTap={ handleNext }
+            onTouchTap={ () => handleNext(title, description) }
             className="next"
             backgroundColor="#7dcdf8"
             hoverColor="#75a8da"
