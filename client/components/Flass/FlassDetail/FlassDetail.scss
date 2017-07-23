@@ -18,11 +18,21 @@ $playerWidth: 700px;
         height: $playerHeight;
       }
 
+      &__modal {
+        position: absolute;
+        top: 0;
+        width: $playerWidth;
+        height: $playerHeight;
+        z-index: 10;
+        background-color: rgba(0, 0, 0, .5);
+        color: white;
+      }
+
       &__controller-bar {
         width: $playerWidth;
         height: $progressbarHeight;
         position: absolute;
-        top: $playerHeight - $progressbarHeight - 5px;
+        top: $playerHeight - $progressbarHeight - 1px;
         opacity: 0;
 
         &:hover {

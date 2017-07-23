@@ -12,7 +12,8 @@ import {
   VideoButtonComponent,
   VideoVolumeBarComponent,
   VideoCustomProgressBarComponent,
-  VideoControllerWrapperComponent
+  VideoControllerWrapperComponent,
+  VideoModalComponent
 } from '../../../Video';
 
 // 팝업 테스트를 위한 더미 action
@@ -35,6 +36,7 @@ const propTypes = {
   VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayPauseBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
+  VideoModalClassName: oneOfType([string, arrayOf(string)]),
 
   // 팝업 테스트를 위한 더미 action
   loadQuizs: func.isRequired,
@@ -52,6 +54,7 @@ const defaultProps = {
   VideoQuizIndicatorBarClassName: '',
   VideoPlayPauseBtnClassName: '',
   VideoFullscreenBtnClassName: '',
+  VideoModalClassName: '',
 
   // 팝업 테스트를 위한 더미 array
   quizTimeArrayForPopupTest: []
@@ -90,6 +93,7 @@ class Video extends Component {
       VideoQuizIndicatorBarClassName,
       VideoPlayPauseBtnClassName,
       VideoFullscreenBtnClassName,
+      VideoModalClassName,
 
       // 팝업 테스트를 위한 더미 array
       quizTimeArrayForPopupTest
@@ -111,7 +115,12 @@ class Video extends Component {
           onDuration={ this.onDuration }
           setPlayer={ this.setPlayer } />
 
-        { isQuizSecs ? console.log('isQuizSecs is true!') : null }
+        {
+          isQuizSecs ?
+            <VideoModalComponent
+              VideoModalClassName={ VideoModalClassName } /> :
+            null
+        }
 
         <div className={ VideoControllerBarClassName }>
           <VideoCustomProgressBarComponent
