@@ -74,6 +74,7 @@ class VideoCustomProgressBarComponent extends Component {
     if (!isQuizSecs) {
       const playedSecs = parseInt(duration * playedPercentage);
       this.props.canChangeIsQuizSecs(playedSecs);
+      this.updateProgressbarStatus(duration, playedPercentage, loadedPercentage);
     } else {
       this.updateProgressbarStatus(duration, playedPercentage, loadedPercentage);
     }

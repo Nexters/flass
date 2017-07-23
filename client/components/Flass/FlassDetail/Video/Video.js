@@ -16,6 +16,11 @@ import {
   VideoModalComponent
 } from '../../../Video';
 
+import {
+  convertPercentageToSecs,
+  convertSecsToPercentage
+} from '../../../Video/VideoUtils';
+
 // 팝업 테스트를 위한 더미 action
 import * as actions from '../../../../modules/Quiz/quiz';
 
@@ -122,7 +127,8 @@ class Video extends Component {
           isQuizSecs ?
             <VideoModalComponent
               VideoModalClassName={ VideoModalClassName }
-              VideoModalQuestionClassName={ VideoModalQuestionClassName } /> :
+              VideoModalQuestionClassName={ VideoModalQuestionClassName }
+              onQuestionSolved={ this.onQuestionSolved } /> :
             null
         }
 
@@ -233,6 +239,17 @@ class Video extends Component {
   isEqlQuizSecsWithPlayedSecs(playedSecs, quizSecsArray) {
     return quizSecsArray.indexOf(playedSecs) !== -1;
   }
+
+  @autobind
+  onQuestionSolved() {
+    const { played, duration } = this.state;
+    const solvedSecs = convertPercentageToSecs(played, duration);
+    const secsAddOneFromSolvedSecs = solvedSecs + 1;
+    const changedPlayedPercentage = convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
+    this.setState({ isQuizSecs: false, playing: true, played: changedPlayedPercentage });
+    this.player.seekTo(changedPlayedPercentage);
+  }
+
 }
 
 Video.propTypes = propTypes;
