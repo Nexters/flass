@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Subheader from 'material-ui/Subheader';
-import { List, ListItem } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import Comment from './Comment/Comment';
 import Analysis from './Analysis/Analysis';
@@ -10,6 +8,7 @@ import Analysis from './Analysis/Analysis';
 /* 영상 컴포넌트 */
 import Video from './Video/Video';
 
+import Question from './Question/Question';
 
 import './FlassDetail.scss';
 
@@ -60,15 +59,14 @@ class FlassDetail extends Component {
               VideoPlayedBarClassName="played-bar--thinner"
               VideoLoadedBarClassName="loaded-bar--thinner"
               VideoQuizIndicatorClassName="quiz-indicator--thinner"
-              VideoQuizIndicatorBarClassName="quiz-indicator--thinner"
+              VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
               VideoPlayPauseBtnClassName="video-btn"
-              VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] } />
+              VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] }
+              VideoModalClassName="flass-detail-media__modal"
+              VideoModalQuestionClassName="flass-detail-media__modal__question" />
 
-            <List className="flass-detail-question-list-container">
-              <Subheader>질문 리스트</Subheader>
-              <Divider />
-              <ListItem primaryText="Inbox" />
-            </List>
+            <Question
+              QuestionListClassName="flass-detail-question-list-container" />
           </div>
         </div>
         <div className="flass-detail-tabs">
