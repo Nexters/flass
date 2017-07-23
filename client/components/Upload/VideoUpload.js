@@ -5,26 +5,25 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem  from 'material-ui/MenuItem';
 import PropTypes from 'prop-types';
 
+import * as actions from '../../modules/Upload/Actions';
+
 import './upload.scss';
 
 // constants
 const urlMethod = 0;
 const fileUploadMethod = 1;
-const noThumb = 0;
-const succThumb = 1;
-const failThumb = -1;
 
 const propTypes = {
   handleNext: PropTypes.func,
-  handleURLImport: PropTypes.func,
-  thumb: PropTypes.number,
-  thumbURL: PropTypes.string
+  handleVideoURL: PropTypes.func,
+  thumb: PropTypes.number.isRequired,
+  thumbURL: PropTypes.string.isRequired,
+  handleThumbFail: PropTypes.func
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
-  handleURLImport: () => handleError('handleURLImport'),
-  thumb: noThumb,
-  thumbURL: ''
+  handleVideoURL: () => handleError('handleVideoURL'),
+  handleThumbFail: () => handleError('handleThumbFail')
 };
 
 function handleError(func) {
@@ -36,7 +35,7 @@ class VideoUpload extends Component {
     title: '',
     description: '',
     method: urlMethod,
-    url: ''
+    videoURL: ''
   };
 
   render() {
@@ -93,19 +92,19 @@ class VideoUpload extends Component {
   }
 
   renderURLField = () => {
-    const { handleURLImport } = this.props;
-    const { url } = this.state;
+    const { handleVideoURL } = this.props;
+    const { videoURL } = this.state;
 
     return (
       <div>
         <TextField
           floatingLabelText="URL"
-          name="url"
-          value={ url }
+          name="videoURL"
+          value={ videoURL }
           onChange={ this.handleChange }
         />
         <FlatButton
-          onTouchTap={ () => handleURLImport(url) }
+          onTouchTap={ () => handleVideoURL(videoURL) }
           backgroundColor="#7dcdf8"
           hoverColor="#75a8da">
           <span className="buttonLabel">
@@ -128,15 +127,15 @@ class VideoUpload extends Component {
 
   renderThumbnail = () => {
     switch(this.props.thumb) {
-      case noThumb:
+      case actions.noThumb:
         return;
-      case succThumb:
+      case actions.succThumb:
         return (
           <img
             src={ this.props.thumbURL }
             alt="succeeded importing video" />
         );
-      case failThumb:
+      case actions.failThumb:
       default:
         return (
           <img

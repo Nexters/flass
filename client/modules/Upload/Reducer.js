@@ -3,7 +3,8 @@ import * as actions from './Actions';
 const initialState = {
   step: 0,
   title: '',
-  description: ''
+  description: '',
+  thumbURL: ''
 };
 
 const UploadReducer = (state = initialState, action) => {
@@ -18,6 +19,17 @@ const UploadReducer = (state = initialState, action) => {
         ...state,
         title: action.title,
         description: action.description
+      };
+    case actions.SET_THUMB_URL:
+      return {
+        ...state,
+        thumb: action.thumb,
+        thumbURL: action.thumbURL
+      };
+    case actions.SET_VIDEO_URL:
+      return {
+        ...state,
+        videoURL: action.videoURL
       };
     default:
       return state;

@@ -11,14 +11,20 @@ const propTypes = {
   step: PropTypes.number,
   setStep: PropTypes.func,
   setVideoData: PropTypes.func,
-  title: PropTypes.string
+  title: PropTypes.string,
+  thumb: PropTypes.number,
+  thumbURL: PropTypes.string,
+  displayVideoPreview: PropTypes.func
 };
 
 const defaultProps = {
   step: 0,
   setStep: () => handleError('setStep'),
   setVideoData: () => handleError('setVideoData'),
-  title: ''
+  title: '',
+  thumb: actions.noThumb,
+  thumbURL: '',
+  displayVideoPreview: () => handleError('displayVideoPreview')
 };
 
 function handleError(func) {
@@ -27,11 +33,21 @@ function handleError(func) {
 
 class Upload extends Component {
   render() {
+    const {
+      thumb,
+      thumbURL,
+      displayVideoPreview
+    } = this.props;
+
     switch(this.props.step) {
       // step 1
       case 0:
         return (
-          <VideoUpload handleNext={ (title, description) => this.goToStepTwo(title, description) } />
+          <VideoUpload
+            handleNext={ (title, description) => this.goToStepTwo(title, description) }
+            thumb={ thumb }
+            thumbURL={ thumbURL }
+            handleVideoURL={ videoURL => displayVideoPreview(videoURL) } />
         );
 
       // step 2
@@ -68,12 +84,15 @@ Upload.defaultProps = defaultProps;
 
 const mapStateToProps = state => ({
   step: state.upload.step,
-  title: state.upload.title
+  title: state.upload.title,
+  thumb: state.upload.thumb,
+  thumbURL: state.upload.thumbURL
 });
 
 const mapDispatchToProps = dispatch => ({
   setStep: step => dispatch(actions.setStep(step)),
-  setVideoData: (title, description) => dispatch(actions.setVideoData(title, description))
+  setVideoData: (title, description) => dispatch(actions.setVideoData(title, description)),
+  displayVideoPreview: videoURL => dispatch(actions.displayVideoPreview(videoURL))
 });
 
 export default connect(
