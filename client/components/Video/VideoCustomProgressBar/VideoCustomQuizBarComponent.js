@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
 
 import './VideoCustomQuizBarStyle.scss';
 
-const { array, number, string, oneOfType, arrayOf } = PropTypes;
+const { number, string, oneOfType, arrayOf } = PropTypes;
 
 const propTypes = {
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
-  quizTimeArray: array,
-  duration: number.isRequired
+  duration: number.isRequired,
+
+  quizTimeArray: arrayOf(number)
 };
 const defaultProps = {
   VideoQuizIndicatorClassName: '',
   VideoQuizIndicatorBarClassName: '',
+
   quizTimeArray: []
 };
 
@@ -48,10 +49,4 @@ class VideoCustomQuizBarComponent extends Component {
 VideoCustomQuizBarComponent.propTypes = propTypes;
 VideoCustomQuizBarComponent.defaultProps = defaultProps;
 
-function mapStateToProps(state) {
-  const { quiz: { quizTimeArray } } = state;
-
-  return { quizTimeArray };
-}
-
-export default connect(mapStateToProps)(VideoCustomQuizBarComponent);
+export default VideoCustomQuizBarComponent;

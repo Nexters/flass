@@ -3,10 +3,12 @@ import { findDOMNode } from 'react-dom';
 import screenfull from 'screenfull';
 import autobind from 'autobind-decorator';
 
-import { VideoPlayerComponent } from './VideoPlayerComponent';
-import { VideoButtonComponent } from './VideoButtonComponent';
-import { VideoVolumeBarComponent } from './VideoVolumeBarComponent';
-import { VideoCustomProgressBarComponent } from './VideoCustomProgressBarComponent/VideoCustomProgressBarComponent';
+import {
+  VideoPlayerComponent,
+  VideoButtonComponent,
+  VideoVolumeBarComponent,
+  VideoCustomProgressBarComponent
+} from './index';
 
 import QuizComponent from '../Quiz/QuizComponent';
 

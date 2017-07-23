@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
-import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 
 const { func, string, number, bool, object, oneOfType, arrayOf } = PropTypes;
