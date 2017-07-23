@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :replay_ats
   resources :comments
   resources :notifications
   resources :choices

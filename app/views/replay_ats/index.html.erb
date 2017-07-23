@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Replay Ats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Lecture</th>
+      <th>Playtime</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @replay_ats.each do |replay_at| %>
+      <tr>
+        <td><%= replay_at.user_id %></td>
+        <td><%= replay_at.lecture_id %></td>
+        <td><%= replay_at.playtime %></td>
+        <td><%= link_to 'Show', replay_at %></td>
+        <td><%= link_to 'Edit', edit_replay_at_path(replay_at) %></td>
+        <td><%= link_to 'Destroy', replay_at, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Replay At', new_replay_at_path %>
