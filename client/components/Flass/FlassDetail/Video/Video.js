@@ -37,6 +37,7 @@ const propTypes = {
   VideoPlayPauseBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoModalClassName: oneOfType([string, arrayOf(string)]),
+  VideoModalQuestionClassName: oneOfType([string, arrayOf(string)]),
 
   // 팝업 테스트를 위한 더미 action
   loadQuizs: func.isRequired,
@@ -55,6 +56,7 @@ const defaultProps = {
   VideoPlayPauseBtnClassName: '',
   VideoFullscreenBtnClassName: '',
   VideoModalClassName: '',
+  VideoModalQuestionClassName: '',
 
   // 팝업 테스트를 위한 더미 array
   quizTimeArrayForPopupTest: []
@@ -94,6 +96,7 @@ class Video extends Component {
       VideoPlayPauseBtnClassName,
       VideoFullscreenBtnClassName,
       VideoModalClassName,
+      VideoModalQuestionClassName,
 
       // 팝업 테스트를 위한 더미 array
       quizTimeArrayForPopupTest
@@ -118,7 +121,8 @@ class Video extends Component {
         {
           isQuizSecs ?
             <VideoModalComponent
-              VideoModalClassName={ VideoModalClassName } /> :
+              VideoModalClassName={ VideoModalClassName }
+              VideoModalQuestionClassName={ VideoModalQuestionClassName } /> :
             null
         }
 

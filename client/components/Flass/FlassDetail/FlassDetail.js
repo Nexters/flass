@@ -62,7 +62,8 @@ class FlassDetail extends Component {
               VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
               VideoPlayPauseBtnClassName="video-btn"
               VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] }
-              VideoModalClassName="flass-detail-media__modal" />
+              VideoModalClassName="flass-detail-media__modal"
+              VideoModalQuestionClassName="flass-detail-media__modal__question" />
 
             <Question
               QuestionListClassName="flass-detail-question-list-container" />

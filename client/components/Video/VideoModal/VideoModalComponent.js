@@ -5,19 +5,28 @@ import classNames from 'classnames';
 const { oneOfType, arrayOf, string } = PropTypes;
 
 const propTypes = {
-  VideoModalClassName: oneOfType([string, arrayOf(string)])
+  VideoModalClassName: oneOfType([string, arrayOf(string)]),
+  VideoModalQuestionClassName: oneOfType([string, arrayOf(string)])
 };
 const defaultProps = {
-  VideoModalClassName: ''
+  VideoModalClassName: '',
+  VideoModalQuestionClassName: ''
 };
 
 class VideoModalComponent extends Component {
   render() {
-    const { VideoModalClassName } = this.props;
+    const {
+      VideoModalClassName,
+      VideoModalQuestionClassName
+    } = this.props;
+
+    console.log('VideoModalQuestionClassName', VideoModalQuestionClassName);
 
     return (
       <div className={ classNames(VideoModalClassName) }>
-        VideoModalComponent!
+        <div className={ classNames(VideoModalQuestionClassName) }>
+          ModalQuestionComponent!
+        </div>
       </div>
     );
   }
