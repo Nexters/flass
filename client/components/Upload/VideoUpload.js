@@ -118,7 +118,9 @@ class VideoUpload extends Component {
       <FlatButton
         backgroundColor="#7dcdf8"
         hoverColor="#75a8da">
-        구글로 로그인
+        <span className="buttonLabel">
+          구글 로그인
+        </span>
       </FlatButton>
     </div>
   )
@@ -155,10 +157,6 @@ class VideoUpload extends Component {
     this.setState({
       method
     });
-  }
-
-  handleUploadVideo = () => {
-    // upload video via youtube || server?
   }
 }
 
