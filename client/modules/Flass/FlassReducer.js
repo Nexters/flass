@@ -1,13 +1,7 @@
-import {} from './FlassActions';
+import { combineReducers } from 'redux';
 
-const initialState = {};
+import grid from './FlassGrid/FlassGridReducer';
 
-const FlassReducer = (state = initialState, action) => {
-  // console.log(state, action);
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
-
-export default FlassReducer;
+export default combineReducers({
+  grid
+});

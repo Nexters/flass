@@ -7,7 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import { Route, Switch } from 'react-router-dom';
 
-import FlassGrid from './FlassGrid/FlassGrid';
+import FlassGrid from './FlassGrid/FlassGridWithMapping';
 import VideoComponent from '../Video/VideoComponent';
 import FlassDetail from './FlassDetail/FlassDetail';
 import Upload from '../Upload';
