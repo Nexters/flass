@@ -9,67 +9,39 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import './FlassGrid.scss';
 
 
-const propTypes = {};
+const propTypes = {
+  items: PropTypes.array.isRequired,
+  fetchRequestMyChannelItems: PropTypes.func.isRequired
+};
 
-const defaultProps = {};
-
-const tilesData = [
-  {
-    key: 1,
-    img: 'http://via.placeholder.com/350x150',
-    title: 'Breakfast',
-    author: 'jill111'
-  },
-  {
-    key: 2,
-    img: 'http://via.placeholder.com/350x150',
-    title: 'Tasty burger',
-    author: 'pashminu'
-  },
-  {
-    key: 3,
-    img: 'http://via.placeholder.com/350x150',
-    title: 'Camera',
-    author: 'Danson67'
-  },
-  {
-    key: 4,
-    img: 'http://via.placeholder.com/350x150',
-    title: 'Morning',
-    author: 'fancycrave1'
-  },
-  {
-    key: 5,
-    img: 'http://via.placeholder.com/350x150',
-    title: 'Hats',
-    author: 'Hans'
-  },
-  {
-    key: 6,
-    img: 'http://via.placeholder.com/350x150',
-    title: 'Honey',
-    author: 'fancycravel'
-  },
-  {
-    key: 7,
-    img: 'http://via.placeholder.com/350x150',
-    title: 'Vegetables',
-    author: 'jill111'
-  },
-  {
-    key: 8,
-    img: 'http://via.placeholder.com/350x150',
-    title: 'Water plant',
-    author: 'BkrmadtyaKarki'
-  }
-];
+const defaultProps = {
+};
 
 class FlassGrid extends Component {
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.fetchRequestMyChannelItems('1');
+  }
 
   getChildContext() {
     return { muiTheme: getMuiTheme(baseTheme) };
+  }
+
+  renderChild() {
+    const { items } = this.props;
+    return items.map(item => (
+      <Link to={ `/detail/${item.key}` }>
+        <GridTile
+          key={ item.key }
+          className="flass-grid-item"
+          title={ item.title }
+          subtitle={ <span>by <b>{item.author}</b></span> }
+          actionIcon={ <IconButton><StarBorder
+            color="white" /></IconButton> }>
+          <img alt="" src={ item.img } />
+        </GridTile>
+      </Link>
+    ));
   }
 
   render() {
@@ -79,19 +51,7 @@ class FlassGrid extends Component {
         cols={ 3 }
         padding={ 20 }
         className="flass-grid-list">
-        {tilesData.map(tile => (
-          <Link to={ `/detail/${tile.key}` }>
-            <GridTile
-              key={ tile.key }
-              className="flass-grid-item"
-              title={ tile.title }
-              subtitle={ <span>by <b>{tile.author}</b></span> }
-              actionIcon={ <IconButton><StarBorder
-                color="white" /></IconButton> }>
-              <img alt="" src={ tile.img } />
-            </GridTile>
-          </Link>
-        ))}
+        {this.renderChild()}
       </GridList>
     );
   }
