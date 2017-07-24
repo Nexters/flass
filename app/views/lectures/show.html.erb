@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @lecture.user_id %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @lecture.username %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @lecture.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @lecture.content %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @lecture.url %>
+</p>
+
+<p>
+  <strong>Thumbnail url:</strong>
+  <%= @lecture.thumbnail_url %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @lecture.duration %>
+</p>
+
+<%= link_to 'Edit', edit_lecture_path(@lecture) %> |
+<%= link_to 'Back', lectures_path %>

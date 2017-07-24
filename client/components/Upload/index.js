@@ -1,66 +1,101 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-import {
-  Step,
-  Stepper,
-  StepContent
-} from 'material-ui/Stepper';
+import { connect } from 'react-redux';
+import * as actions from '../../modules/Upload/Actions';
 
 import VideoUpload from './VideoUpload';
 import './upload.scss';
 
-// const propTypes = {};
-// const defaultProps = {};
-
-// 스테퍼의 코넥터를 없애기위한 스타일
-// scss의 className프롭대신 style프롭을 써야해서 styles 생성함
-var styles = {
-  noConnector: {
-    border: 0,
-    margin: 0,
-    padding: 0
-  }
+const propTypes = {
+  step: PropTypes.number,
+  setStep: PropTypes.func,
+  setVideoData: PropTypes.func,
+  title: PropTypes.string,
+  thumb: PropTypes.number,
+  thumbURL: PropTypes.string,
+  displayVideoPreview: PropTypes.func
 };
 
+const defaultProps = {
+  step: 0,
+  setStep: () => handleError('setStep'),
+  setVideoData: () => handleError('setVideoData'),
+  title: '',
+  thumb: actions.noThumb,
+  thumbURL: '',
+  displayVideoPreview: () => handleError('displayVideoPreview')
+};
+
+function handleError(func) {
+  console.error(`${func} is not defined`);
+}
+
 class Upload extends Component {
-  state = {
-    stepIndex: 0
-  };
-
   render() {
-    const { stepIndex } = this.state;
+    const {
+      thumb,
+      thumbURL,
+      displayVideoPreview
+    } = this.props;
 
-    return(
-      <Stepper
-        activeStep={stepIndex}
-        orientation="vertical"
-      >
-        <Step>
-          <StepContent style={styles.noConnector}>
-            <VideoUpload
-              handleNext={this.handleNext}
-            />
-          </StepContent>
-        </Step>
-        <Step>
-          <StepContent style={styles.noConnector}>
+    switch(this.props.step) {
+      // step 1
+      case 0:
+        return (
+          <VideoUpload
+            handleNext={ (title, description) => this.goToStepTwo(title, description) }
+            thumb={ thumb }
+            thumbURL={ thumbURL }
+            handleVideoURL={ videoURL => displayVideoPreview(videoURL) } />
+        );
+
+      // step 2
+      case 1:
+      default:
+        return (
+          <div>
             <p>두번째 페이지</p>
-            <p>handleNext를 불러주면 넘어갑니다</p>
-          </StepContent>
-        </Step>
-      </Stepper>
-    );
+            <p>title: {this.props.title}</p>
+            <button onClick={this.goToStepOne}>PREV</button>
+          </div>
+        );
+    }
   }
 
-  handleNext = () => {
-    this.setState({
-      stepIndex: this.state.stepIndex + 1
-    });
+  goToStepTwo = (title, description) => {
+    if(title == '') {
+      console.log('MUST HAVE A TITLE!');
+      return;
+    }
+    const step = 1;
+    this.props.setStep(step);
+    this.props.setVideoData(title, description);
+  }
+
+  goToStepOne = () => {
+    const step = 0;
+    this.props.setStep(step);
   }
 }
 
-// Upload.propTypes = propTypes;
-// Upload.defaultProps = defaultProps;
+Upload.propTypes = propTypes;
+Upload.defaultProps = defaultProps;
 
-export default Upload;
+const mapStateToProps = state => ({
+  step: state.upload.step,
+  title: state.upload.title,
+  thumb: state.upload.thumb,
+  thumbURL: state.upload.thumbURL
+});
+
+const mapDispatchToProps = dispatch => ({
+  setStep: step => dispatch(actions.setStep(step)),
+  setVideoData: (title, description) => dispatch(actions.setVideoData(title, description)),
+  displayVideoPreview: videoURL => dispatch(actions.displayVideoPreview(videoURL))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Upload);

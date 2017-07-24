@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @replay_at.user_id %>
+</p>
+
+<p>
+  <strong>Lecture:</strong>
+  <%= @replay_at.lecture_id %>
+</p>
+
+<p>
+  <strong>Playtime:</strong>
+  <%= @replay_at.playtime %>
+</p>
+
+<%= link_to 'Edit', edit_replay_at_path(@replay_at) %> |
+<%= link_to 'Back', replay_ats_path %>

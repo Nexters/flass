@@ -85,6 +85,8 @@ QuizComponent.defaultProps = defaultProps;
 
 function mapStateToProps(state) {
   const { quiz: { isAddQuizSuccess, quizTimeArray } } = state;
+  console.log('qTimeArray', quizTimeArray);
+
   return {
     isAddQuizSuccess,
     quizTimeArray

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  lecture_id: 1
+  playtime: 2017-07-23 13:16:39
+
+two:
+  user_id: 1
+  lecture_id: 1
+  playtime: 2017-07-23 13:16:39

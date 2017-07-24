@@ -1,0 +1,32 @@
+<%= form_with(model: replay_at, local: true) do |form| %>
+  <% if replay_at.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(replay_at.errors.count, "error") %> prohibited this replay_at from being saved:</h2>
+
+      <ul>
+      <% replay_at.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.number_field :user_id, id: :replay_at_user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lecture_id %>
+    <%= form.number_field :lecture_id, id: :replay_at_lecture_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :playtime %>
+    <%= form.time_select :playtime, id: :replay_at_playtime %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

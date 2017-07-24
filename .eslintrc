@@ -98,6 +98,7 @@
     "import/no-named-as-default-member": 0,
     "import/no-extraneous-dependencies": 0,
     "global-require": 0,
+    "prefer-const": ["error", {"ignoreReadBeforeAssign": true}],
     ////////// React //////////
     "react/jsx-curly-spacing": [1, "always"],
     "react/sort-comp": [1, {

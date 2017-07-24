@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import classNames from 'classnames';
@@ -10,14 +12,23 @@ import {
   VideoButtonComponent,
   VideoVolumeBarComponent,
   VideoCustomProgressBarComponent,
-  VideoControllerWrapperComponent
+  VideoControllerWrapperComponent,
+  VideoModalComponent
 } from '../../../Video';
+
+import {
+  convertPercentageToSecs,
+  convertSecsToPercentage
+} from '../../../Video/VideoUtils';
+
+// 팝업 테스트를 위한 더미 action
+import * as actions from '../../../../modules/Quiz/quiz';
 
 import PlayBtnIcon from '../../../../../public/play_arrow_24dp_1x.png';
 import PauseBtnIcon from '../../../../../public/pause_24dp_1x.png';
 import FullscreenBtnIcon from '../../../../../public/web_asset_24dp_1x.png';
 
-const { string, oneOfType, arrayOf } = PropTypes;
+const { string, oneOfType, arrayOf, func, number } = PropTypes;
 
 const propTypes = {
   VideoContainerClassName: oneOfType([string, arrayOf(string)]),
@@ -29,7 +40,13 @@ const propTypes = {
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayPauseBtnClassName: oneOfType([string, arrayOf(string)]),
-  VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)])
+  VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
+  VideoModalClassName: oneOfType([string, arrayOf(string)]),
+  VideoModalQuestionClassName: oneOfType([string, arrayOf(string)]),
+
+  // 팝업 테스트를 위한 더미 action
+  loadQuizs: func.isRequired,
+  quizTimeArrayForPopupTest: arrayOf(number)
 };
 
 const defaultProps = {
@@ -42,7 +59,12 @@ const defaultProps = {
   VideoQuizIndicatorClassName: '',
   VideoQuizIndicatorBarClassName: '',
   VideoPlayPauseBtnClassName: '',
-  VideoFullscreenBtnClassName: ''
+  VideoFullscreenBtnClassName: '',
+  VideoModalClassName: '',
+  VideoModalQuestionClassName: '',
+
+  // 팝업 테스트를 위한 더미 array
+  quizTimeArrayForPopupTest: []
 };
 
 class Video extends Component {
@@ -56,12 +78,17 @@ class Video extends Component {
       played: 0,
       loaded: 0,
       duration: 0,
-      playbackRate: 1.0
+      playbackRate: 1.0,
+      isQuizSecs: false
     };
   }
 
+  componentWillMount() {
+    this.props.loadQuizs();
+  }
+
   render() {
-    const { url, playing, volume, played, loaded, duration, playbackRate, youtubeConfig } = this.state;
+    const { url, playing, volume, played, loaded, duration, playbackRate, youtubeConfig, isQuizSecs } = this.state;
     const {
       VideoContainerClassName,
       VideoPlayerClassName,
@@ -72,7 +99,12 @@ class Video extends Component {
       VideoQuizIndicatorClassName,
       VideoQuizIndicatorBarClassName,
       VideoPlayPauseBtnClassName,
-      VideoFullscreenBtnClassName
+      VideoFullscreenBtnClassName,
+      VideoModalClassName,
+      VideoModalQuestionClassName,
+
+      // 팝업 테스트를 위한 더미 array
+      quizTimeArrayForPopupTest
     } = this.props;
 
     return (
@@ -91,6 +123,15 @@ class Video extends Component {
           onDuration={ this.onDuration }
           setPlayer={ this.setPlayer } />
 
+        {
+          isQuizSecs ?
+            <VideoModalComponent
+              VideoModalClassName={ VideoModalClassName }
+              VideoModalQuestionClassName={ VideoModalQuestionClassName }
+              onQuestionSolved={ this.onQuestionSolved } /> :
+            null
+        }
+
         <div className={ VideoControllerBarClassName }>
           <VideoCustomProgressBarComponent
             VideoProgressBarClassName={ VideoProgressBarClassName }
@@ -98,6 +139,7 @@ class Video extends Component {
             VideoLoadedBarClassName={ VideoLoadedBarClassName }
             VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
             VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
+
             duration={ duration }
             playedPercentage={ played }
             loadedPercentage={ loaded }
@@ -105,7 +147,11 @@ class Video extends Component {
             onCustomSeekBarChange={ this.onCustomSeekBarChange }
             onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
             onCustomSeekBarClick={ this.onCustomSeekBarClick }
-            onArrowKeyPressed={ this.onArrowKeyPressed } />
+            onArrowKeyPressed={ this.onArrowKeyPressed }
+
+            quizTimeArray={ quizTimeArrayForPopupTest }
+            canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
+            isQuizSecs={ isQuizSecs } />
 
           <VideoControllerWrapperComponent>
             <VideoButtonComponent
@@ -180,9 +226,45 @@ class Video extends Component {
   onClickFullscreen() {
     screenfull.request(findDOMNode(this.player));
   }
+
+  @autobind
+  canChangeIsQuizSecs(playedSecs) {
+    const { quizTimeArrayForPopupTest } = this.props;
+
+    if (this.isEqlQuizSecsWithPlayedSecs(playedSecs, quizTimeArrayForPopupTest)) {
+      this.setState({ isQuizSecs: true, playing: false });
+    }
+  }
+
+  isEqlQuizSecsWithPlayedSecs(playedSecs, quizSecsArray) {
+    return quizSecsArray.indexOf(playedSecs) !== -1;
+  }
+
+  @autobind
+  onQuestionSolved() {
+    const { played, duration } = this.state;
+    const solvedSecs = convertPercentageToSecs(played, duration);
+    const secsAddOneFromSolvedSecs = solvedSecs + 1;
+    const changedPlayedPercentage = convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
+    this.setState({ isQuizSecs: false, playing: true, played: changedPlayedPercentage });
+    this.player.seekTo(changedPlayedPercentage);
+  }
+
 }
 
 Video.propTypes = propTypes;
 Video.defaultProps = defaultProps;
 
-export default Video;
+function mapStateToProps(state) {
+  const { quiz: { quizTimeArrayForPopupTest } } = state;
+  return { quizTimeArrayForPopupTest };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actions, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Video);
