@@ -24,7 +24,7 @@ export const fetchCommentError = err => ({
 export const ADDD_COMMENT = 'ADD_COMMENT';
 
 export const addComment = (comment) => dispatch => {
-  // TODO
+  // TODO 낙관적인 업데이트
   dispatch(() => ({ type: ADDD_COMMENT }));
   fetch('/json/FlassComment.json', {
     data: comment

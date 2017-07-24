@@ -5,7 +5,7 @@ import _ from 'lodash';
 import PostComment from './PostComment';
 
 const propTypes = {
-  comments: PropTypes.arrayOf()
+  comments: PropTypes.array
 };
 
 const defaultProps = {

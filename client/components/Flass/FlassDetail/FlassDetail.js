@@ -19,6 +19,7 @@ const propTypes = {
     totalCount: PropTypes.number
   }).isRequired,
   fetchRequestDetail: PropTypes.func.isRequired,
+  fetchRequestQuestion: PropTypes.func.isRequired,
   fetchRequestComment: PropTypes.func.isRequired,
 };
 
@@ -34,6 +35,7 @@ class FlassDetail extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchRequestDetail(id);
+    this.props.fetchRequestQuestion(id);
     this.props.fetchRequestComment(id);
   }
 
@@ -47,7 +49,7 @@ class FlassDetail extends Component {
   };
 
   render() {
-    const { detail } = this.props;
+    const { detail, question } = this.props;
 
     return (
       <div className="flass-detail">
@@ -71,6 +73,7 @@ class FlassDetail extends Component {
               VideoModalQuestionClassName="flass-detail-media__modal__question" />
 
             <Question
+              questions={question.questions}
               QuestionListClassName="flass-detail-question-list" />
           </div>
           <p>
