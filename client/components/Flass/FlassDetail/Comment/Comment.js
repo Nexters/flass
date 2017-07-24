@@ -9,43 +9,32 @@ const propTypes = {
 };
 
 const defaultProps = {
-  comments: [
-    {
-      userId: '',
-      profileUrl: 'http://via.placeholder.com/128x128',
-      userName: '질문자 이름',
-      content: `<p>
-          <span>to me, Scott, Jennifer</span>
-          --
-          Wish I could come, but I&apos;m out of town this weekend.
-        </p>`
-    }
-  ]
+  comments: []
 };
 
 class Comment extends Component {
   componentDidMount() {}
 
+  renderChild() {
+    const { comments } = this.props;
+    return comments.map(comment => {
+      const profile = <Avatar src={ comment.profileUrl } />;
+      const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
+      return (<ListItem
+        key={ comment.id }
+        leftAvatar={ profile }
+        primaryText={ comment.userName }
+        secondaryText={ content }
+        secondaryTextLines={ 2 } />);
+    });
+  }
+
   render() {
-    const items = _.times(5, i => (<ListItem
-      key={ i }
-      leftAvatar={ <Avatar src="http://via.placeholder.com/128x128" /> }
-      primaryText={
-        <p>질문자 이름</p>
-      }
-      secondaryText={
-        <p>
-          <span>to me, Scott, Jennifer</span>
-          --
-          Wish I could come, but I&apos;m out of town this weekend.
-        </p>
-      }
-      secondaryTextLines={ 2 } />)).concat();
     return (
       <List>
         <PostComment />
         <Divider />
-        {items}
+        {this.renderChild()}
       </List>
     );
   }
