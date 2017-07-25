@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
   resources :replay_ats
-  resources :comments
   resources :notifications
   resources :choices
-  devise_for :users
-  resources :lectures
   resources :answers
   resources :questions
   get 'home/index'
