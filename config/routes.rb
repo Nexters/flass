@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resources :comments
   resources :notifications
   resources :choices
-  devise_for :users
   resources :lectures
   resources :answers
   resources :questions
