@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :users
+  resources :comments
+  resources :lectures
   resources :replay_ats
   resources :notifications
   resources :choices
