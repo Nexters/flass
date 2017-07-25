@@ -11,8 +11,8 @@ export const fetchRequestDetailAll = detailId => dispatch => {
   dispatch(() => ({ type: FETCH_DETAIL }));
   return fetch.all([
     fetch('/json/FlassDetail.json'),
-    fetchRequestQuestion(detailId)(dispatch),
-    fetchRequestComment(detailId)(dispatch)]).then((res) => {
+    dispatch(fetchRequestQuestion(detailId)),
+    dispatch(fetchRequestComment(detailId))]).then((res) => {
       return dispatch(fetchDetailSuccess(res[0].data));
     }).catch(err => {
       return dispatch(fetchDetailError(err));
