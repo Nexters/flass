@@ -22,7 +22,7 @@ const defaultProps = {
   setStep: () => handleError('setStep'),
   setVideoData: () => handleError('setVideoData'),
   title: '',
-  thumb: actions.noThumb,
+  thumb: actions.NO_THUMB,
   thumbURL: '',
   displayVideoPreview: () => handleError('displayVideoPreview')
 };

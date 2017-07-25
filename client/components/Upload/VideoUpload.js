@@ -127,16 +127,16 @@ class VideoUpload extends Component {
 
   renderThumbnail = () => {
     switch(this.props.thumb) {
-      case actions.noThumb:
+      case actions.NO_THUMB:
         return;
-      case actions.succThumb:
+      case actions.SUCC_THUMB:
         return (
           <img
             src={ this.props.thumbURL }
             alt="succeeded importing video"
             className="thumbnail" />
         );
-      case actions.failThumb:
+      case actions.FAIL_THUMB:
       default:
         return (
           <img
