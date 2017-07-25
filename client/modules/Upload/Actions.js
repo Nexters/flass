@@ -46,7 +46,7 @@ export const displayVideoPreview = videoURL => (dispatch => {
   }).then(({ data }) => {
     // video doesn't exist
     if(data.pageInfo.totalResults != 1) {
-      throw error;
+      throw new Error('VIDEO_NOT_FOUND');
     }
     // video exists
     thumbURL = data.items[0].snippet.thumbnails.standard.url;
