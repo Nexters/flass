@@ -3,11 +3,9 @@
 one:
   user_id: 1
   lecture_id: 1
-  myProfileURL: MyString
   content: MyString
 
 two:
   user_id: 1
   lecture_id: 1
-  myProfileURL: MyString
   content: MyString

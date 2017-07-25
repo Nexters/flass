@@ -14,7 +14,10 @@ const propTypes = {
   title: PropTypes.string,
   thumb: PropTypes.number,
   thumbURL: PropTypes.string,
-  displayVideoPreview: PropTypes.func
+  displayVideoPreview: PropTypes.func,
+  method: PropTypes.number,
+  setUploadMethod: PropTypes.func,
+  resetVideo: PropTypes.func
 };
 
 const defaultProps = {
@@ -22,9 +25,12 @@ const defaultProps = {
   setStep: () => handleError('setStep'),
   setVideoData: () => handleError('setVideoData'),
   title: '',
-  thumb: actions.noThumb,
+  thumb: actions.NO_THUMB,
   thumbURL: '',
-  displayVideoPreview: () => handleError('displayVideoPreview')
+  displayVideoPreview: () => handleError('displayVideoPreview'),
+  method: actions.URL_METHOD,
+  setUploadMethod: () => handleError('setUploadMethod'),
+  resetVideo: () => handleError('resetVideo')
 };
 
 function handleError(func) {
@@ -36,7 +42,10 @@ class Upload extends Component {
     const {
       thumb,
       thumbURL,
-      displayVideoPreview
+      displayVideoPreview,
+      method,
+      setUploadMethod,
+      resetVideo
     } = this.props;
 
     switch(this.props.step) {
@@ -47,7 +56,10 @@ class Upload extends Component {
             handleNext={ (title, description) => this.goToStepTwo(title, description) }
             thumb={ thumb }
             thumbURL={ thumbURL }
-            handleVideoURL={ videoURL => displayVideoPreview(videoURL) } />
+            handleVideoURL={ videoURL => displayVideoPreview(videoURL) }
+            method={ method }
+            setUploadMethod={ nextMethod => setUploadMethod(nextMethod) }
+            resetVideo={ resetVideo } />
         );
 
       // step 2
@@ -86,13 +98,16 @@ const mapStateToProps = state => ({
   step: state.upload.step,
   title: state.upload.title,
   thumb: state.upload.thumb,
-  thumbURL: state.upload.thumbURL
+  thumbURL: state.upload.thumbURL,
+  method: state.upload.method
 });
 
 const mapDispatchToProps = dispatch => ({
   setStep: step => dispatch(actions.setStep(step)),
   setVideoData: (title, description) => dispatch(actions.setVideoData(title, description)),
-  displayVideoPreview: videoURL => dispatch(actions.displayVideoPreview(videoURL))
+  displayVideoPreview: videoURL => dispatch(actions.displayVideoPreview(videoURL)),
+  setUploadMethod: method => dispatch(actions.setUploadMethod(method)),
+  resetVideo: () => dispatch(actions.resetVideo())
 });
 
 export default connect(

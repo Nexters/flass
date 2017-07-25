@@ -7,7 +7,6 @@
     <tr>
       <th>User</th>
       <th>Lecture</th>
-      <th>Myprofileurl</th>
       <th>Content</th>
       <th colspan="3"></th>
     </tr>
@@ -18,7 +17,6 @@
       <tr>
         <td><%= comment.user_id %></td>
         <td><%= comment.lecture_id %></td>
-        <td><%= comment.myProfileURL %></td>
         <td><%= comment.content %></td>
         <td><%= link_to 'Show', comment %></td>
         <td><%= link_to 'Edit', edit_comment_path(comment) %></td>

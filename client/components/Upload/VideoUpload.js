@@ -3,25 +3,27 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem  from 'material-ui/MenuItem';
+import Dialog from 'material-ui/Dialog';
 import PropTypes from 'prop-types';
 
 import * as actions from '../../modules/Upload/Actions';
 
 import './upload.scss';
 
-// constants
-const urlMethod = 0;
-const fileUploadMethod = 1;
-
 const propTypes = {
   handleNext: PropTypes.func,
   handleVideoURL: PropTypes.func,
   thumb: PropTypes.number.isRequired,
-  thumbURL: PropTypes.string.isRequired
+  thumbURL: PropTypes.string.isRequired,
+  method: PropTypes.number.isRequired,
+  setUploadMethod: PropTypes.func,
+  resetVideo: PropTypes.func
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
-  handleVideoURL: () => handleError('handleVideoURL')
+  handleVideoURL: () => handleError('handleVideoURL'),
+  setUploadMethod: () => handleError('setUploadMethod'),
+  resetVideo: () => handleError('resetVideo')
 };
 
 function handleError(func) {
@@ -32,13 +34,26 @@ class VideoUpload extends Component {
   state = {
     title: '',
     description: '',
-    method: urlMethod,
-    videoURL: ''
+    videoURL: '',
+    dialog: false,
+    nextMethod: actions.URL_METHOD
   };
 
   render() {
-    const { handleNext } = this.props;
-    const { title, description, method } = this.state;
+    const { handleNext, method } = this.props;
+    const { title, description, dialog } = this.state;
+
+    const dialogButtons = [
+      <FlatButton
+        label="취소"
+        primary
+        onTouchTap={ this.handleDialogClose } />,
+      <FlatButton
+        label="계속"
+        primary
+        keyboardFocused
+        onTouchTap={ () => this.handleUploadMethodChange(this.state.nextMethod) } />
+    ];
 
     return (
       <div>
@@ -46,13 +61,13 @@ class VideoUpload extends Component {
           <SelectField
             floatingLabelText="업로드 방식"
             value={ method }
-            onChange={ this.handleMethodChange }>
-            <MenuItem value={ urlMethod } primaryText="동영상 URL" />
-            <MenuItem value={ fileUploadMethod } primaryText="동영상 업로드" />
+            onChange={ this.handleDialogOpen }>
+            <MenuItem value={ actions.URL_METHOD } primaryText="동영상 URL" />
+            <MenuItem value={ actions.FILE_METHOD } primaryText="동영상 업로드" />
           </SelectField>
           {
-            method == urlMethod ?
-            this.renderURLField() : this.renderfileUploadField()
+            method == actions.URL_METHOD ?
+            this.renderURLField() : this.renderfileField()
           }
           {
             this.renderThumbnail()
@@ -85,6 +100,14 @@ class VideoUpload extends Component {
             </span>
           </FlatButton>
         </div>
+        <Dialog
+          title="업로드한 동영상이 사라집니다."
+          actions={ dialogButtons }
+          modal
+          open={ dialog }
+          onRequestClose={ this.handleDialogClose }>
+          계속하시겠습니까?
+        </Dialog>
       </div>
     );
   }
@@ -113,7 +136,7 @@ class VideoUpload extends Component {
     );
   }
 
-  renderfileUploadField = () => (
+  renderfileField = () => (
     <div>
       <FlatButton
         backgroundColor="#7dcdf8"
@@ -127,16 +150,16 @@ class VideoUpload extends Component {
 
   renderThumbnail = () => {
     switch(this.props.thumb) {
-      case actions.noThumb:
+      case actions.NO_THUMB:
         return;
-      case actions.succThumb:
+      case actions.SUCC_THUMB:
         return (
           <img
             src={ this.props.thumbURL }
             alt="succeeded importing video"
             className="thumbnail" />
         );
-      case actions.failThumb:
+      case actions.FAIL_THUMB:
       default:
         return (
           <img
@@ -153,10 +176,35 @@ class VideoUpload extends Component {
     });
   }
 
-  handleMethodChange = (e, method) => {
+  handleDialogOpen = (e, nextMethod) => {
+    const { method, thumb } = this.props;
+
+    if (method == nextMethod) {
+      return;
+    }
+    if (thumb != actions.SUCC_THUMB) {
+      this.handleUploadMethodChange(nextMethod);
+      return;
+    }
     this.setState({
-      method
+      dialog: true,
+      nextMethod
     });
+  }
+
+  handleDialogClose = () => {
+    this.setState({
+      dialog: false
+    });
+  }
+
+  handleUploadMethodChange = nextMethod => {
+    this.setState({
+      videoURL: ''
+    });
+    this.props.resetVideo();
+    this.props.setUploadMethod(nextMethod);
+    this.handleDialogClose();
   }
 }
 
