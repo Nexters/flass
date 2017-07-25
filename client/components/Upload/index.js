@@ -16,7 +16,8 @@ const propTypes = {
   thumbURL: PropTypes.string,
   displayVideoPreview: PropTypes.func,
   method: PropTypes.number,
-  setUploadMethod: PropTypes.func
+  setUploadMethod: PropTypes.func,
+  resetVideo: PropTypes.func
 };
 
 const defaultProps = {
@@ -28,7 +29,8 @@ const defaultProps = {
   thumbURL: '',
   displayVideoPreview: () => handleError('displayVideoPreview'),
   method: actions.URL_METHOD,
-  setUploadMethod: () => handleError('setUploadMethod')
+  setUploadMethod: () => handleError('setUploadMethod'),
+  resetVideo: () => handleError('resetVideo')
 };
 
 function handleError(func) {
@@ -42,7 +44,8 @@ class Upload extends Component {
       thumbURL,
       displayVideoPreview,
       method,
-      setUploadMethod
+      setUploadMethod,
+      resetVideo
     } = this.props;
 
     switch(this.props.step) {
@@ -55,7 +58,8 @@ class Upload extends Component {
             thumbURL={ thumbURL }
             handleVideoURL={ videoURL => displayVideoPreview(videoURL) }
             method={ method }
-            setUploadMethod={ nextMethod => setUploadMethod(nextMethod) } />
+            setUploadMethod={ nextMethod => setUploadMethod(nextMethod) }
+            resetVideo={ resetVideo } />
         );
 
       // step 2
@@ -102,7 +106,8 @@ const mapDispatchToProps = dispatch => ({
   setStep: step => dispatch(actions.setStep(step)),
   setVideoData: (title, description) => dispatch(actions.setVideoData(title, description)),
   displayVideoPreview: videoURL => dispatch(actions.displayVideoPreview(videoURL)),
-  setUploadMethod: method => dispatch(actions.setUploadMethod(method))
+  setUploadMethod: method => dispatch(actions.setUploadMethod(method)),
+  resetVideo: () => dispatch(actions.resetVideo())
 });
 
 export default connect(

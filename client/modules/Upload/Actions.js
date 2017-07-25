@@ -72,3 +72,8 @@ export const setUploadMethod = method => ({
   type: SET_UPLOAD_METHOD,
   method
 });
+
+export const resetVideo = () => (dispatch => {
+  dispatch(setVideoURL(''));
+  dispatch(setThumbURL(NO_THUMB, ''));
+});

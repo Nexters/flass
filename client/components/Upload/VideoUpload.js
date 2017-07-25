@@ -16,12 +16,14 @@ const propTypes = {
   thumb: PropTypes.number.isRequired,
   thumbURL: PropTypes.string.isRequired,
   method: PropTypes.number.isRequired,
-  setUploadMethod: PropTypes.func
+  setUploadMethod: PropTypes.func,
+  resetVideo: PropTypes.func
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
   handleVideoURL: () => handleError('handleVideoURL'),
-  setUploadMethod: () => handleError('setUploadMethod')
+  setUploadMethod: () => handleError('setUploadMethod'),
+  resetVideo: () => handleError('resetVideo')
 };
 
 function handleError(func) {
@@ -33,23 +35,24 @@ class VideoUpload extends Component {
     title: '',
     description: '',
     videoURL: '',
-    open: false
+    dialog: false,
+    nextMethod: actions.URL_METHOD
   };
 
   render() {
     const { handleNext, method } = this.props;
-    const { title, description } = this.state;
+    const { title, description, dialog } = this.state;
 
     const dialogButtons = [
       <FlatButton
         label="취소"
         primary
-        onTouchTap={ this.handleClose } />,
+        onTouchTap={ this.handleDialogClose } />,
       <FlatButton
         label="계속"
         primary
         keyboardFocused
-        onTouchTap={ this.handleClose } />
+        onTouchTap={ () => this.handleUploadMethodChange(this.state.nextMethod) } />
     ];
 
     return (
@@ -58,7 +61,7 @@ class VideoUpload extends Component {
           <SelectField
             floatingLabelText="업로드 방식"
             value={ method }
-            onChange={ this.handleMethodChange }>
+            onChange={ this.handleDialogOpen }>
             <MenuItem value={ actions.URL_METHOD } primaryText="동영상 URL" />
             <MenuItem value={ actions.FILE_METHOD } primaryText="동영상 업로드" />
           </SelectField>
@@ -101,8 +104,8 @@ class VideoUpload extends Component {
           title="업로드한 동영상이 사라집니다."
           actions={ dialogButtons }
           modal
-          open={ this.state.open }
-          onRequestClose={ this.handleClose }>
+          open={ dialog }
+          onRequestClose={ this.handleDialogClose }>
           계속하시겠습니까?
         </Dialog>
       </div>
@@ -173,17 +176,35 @@ class VideoUpload extends Component {
     });
   }
 
-  handleMethodChange = (e, nextMethod) => {
+  handleDialogOpen = (e, nextMethod) => {
+    const { method, thumb } = this.props;
+
+    if (method == nextMethod) {
+      return;
+    }
+    if (thumb != actions.SUCC_THUMB) {
+      this.handleUploadMethodChange(nextMethod);
+      return;
+    }
     this.setState({
-      open: true
+      dialog: true,
+      nextMethod
     });
-    this.props.setUploadMethod(nextMethod);
   }
 
-  handleClose = () => {
+  handleDialogClose = () => {
     this.setState({
-      open: false
+      dialog: false
     });
+  }
+
+  handleUploadMethodChange = nextMethod => {
+    this.setState({
+      videoURL: ''
+    });
+    this.props.resetVideo();
+    this.props.setUploadMethod(nextMethod);
+    this.handleDialogClose();
   }
 }
 
