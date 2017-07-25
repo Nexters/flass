@@ -9,19 +9,18 @@ import * as actions from '../../modules/Upload/Actions';
 
 import './upload.scss';
 
-// constants
-const urlMethod = 0;
-const fileUploadMethod = 1;
-
 const propTypes = {
   handleNext: PropTypes.func,
   handleVideoURL: PropTypes.func,
   thumb: PropTypes.number.isRequired,
-  thumbURL: PropTypes.string.isRequired
+  thumbURL: PropTypes.string.isRequired,
+  method: PropTypes.number.isRequired,
+  setUploadMethod: PropTypes.func
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
-  handleVideoURL: () => handleError('handleVideoURL')
+  handleVideoURL: () => handleError('handleVideoURL'),
+  setUploadMethod: () => handleError('setUploadMethod')
 };
 
 function handleError(func) {
@@ -32,13 +31,12 @@ class VideoUpload extends Component {
   state = {
     title: '',
     description: '',
-    method: urlMethod,
     videoURL: ''
   };
 
   render() {
-    const { handleNext } = this.props;
-    const { title, description, method } = this.state;
+    const { handleNext, method } = this.props;
+    const { title, description } = this.state;
 
     return (
       <div>
@@ -47,12 +45,12 @@ class VideoUpload extends Component {
             floatingLabelText="업로드 방식"
             value={ method }
             onChange={ this.handleMethodChange }>
-            <MenuItem value={ urlMethod } primaryText="동영상 URL" />
-            <MenuItem value={ fileUploadMethod } primaryText="동영상 업로드" />
+            <MenuItem value={ actions.URL_METHOD } primaryText="동영상 URL" />
+            <MenuItem value={ actions.FILE_METHOD } primaryText="동영상 업로드" />
           </SelectField>
           {
-            method == urlMethod ?
-            this.renderURLField() : this.renderfileUploadField()
+            method == actions.URL_METHOD ?
+            this.renderURLField() : this.renderfileField()
           }
           {
             this.renderThumbnail()
@@ -113,7 +111,7 @@ class VideoUpload extends Component {
     );
   }
 
-  renderfileUploadField = () => (
+  renderfileField = () => (
     <div>
       <FlatButton
         backgroundColor="#7dcdf8"
@@ -153,10 +151,8 @@ class VideoUpload extends Component {
     });
   }
 
-  handleMethodChange = (e, method) => {
-    this.setState({
-      method
-    });
+  handleMethodChange = (e, nextMethod) => {
+    this.props.setUploadMethod(nextMethod);
   }
 }
 

@@ -6,10 +6,14 @@ export const SET_STEP = 'SET_STEP';
 export const SET_VIDEO_DATA = 'SET_VIDEO_DATA';
 export const SET_VIDEO_URL = 'SET_VIDEO_URL';
 export const SET_THUMB_URL = 'SET_THUMB_URL';
+export const SET_UPLOAD_METHOD = 'SET_UPLOAD_METHOD';
 
 export const NO_THUMB = 0;
 export const SUCC_THUMB = 1;
 export const FAIL_THUMB = -1;
+
+export const URL_METHOD = 0;
+export const FILE_METHOD = 1;
 
 export const setStep = step => ({
   type: SET_STEP,
@@ -63,3 +67,8 @@ const parseYoutubeVideoId = videoURL => {
   const match = videoURL.match(regExp);
   return (match && match[1].length == 11) ? match[1] : '';
 };
+
+export const setUploadMethod = method => ({
+  type: SET_UPLOAD_METHOD,
+  method
+});

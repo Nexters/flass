@@ -4,7 +4,8 @@ const initialState = {
   step: 0,
   title: '',
   description: '',
-  thumbURL: ''
+  thumbURL: '',
+  method: actions.URL_METHOD
 };
 
 const UploadReducer = (state = initialState, action) => {
@@ -30,6 +31,11 @@ const UploadReducer = (state = initialState, action) => {
       return {
         ...state,
         videoURL: action.videoURL
+      };
+    case actions.SET_UPLOAD_METHOD:
+      return {
+        ...state,
+        method: action.method
       };
     default:
       return state;
