@@ -6,10 +6,14 @@ export const SET_STEP = 'SET_STEP';
 export const SET_VIDEO_DATA = 'SET_VIDEO_DATA';
 export const SET_VIDEO_URL = 'SET_VIDEO_URL';
 export const SET_THUMB_URL = 'SET_THUMB_URL';
+export const SET_UPLOAD_METHOD = 'SET_UPLOAD_METHOD';
 
-export const noThumb = 0;
-export const succThumb = 1;
-export const failThumb = -1;
+export const NO_THUMB = 0;
+export const SUCC_THUMB = 1;
+export const FAIL_THUMB = -1;
+
+export const URL_METHOD = 0;
+export const FILE_METHOD = 1;
 
 export const setStep = step => ({
   type: SET_STEP,
@@ -35,7 +39,7 @@ export const setVideoURL = videoURL => ({
 
 export const displayVideoPreview = videoURL => (dispatch => {
   const youtubeVideoId = parseYoutubeVideoId(videoURL);
-  let thumb = succThumb;
+  let thumb = SUCC_THUMB;
   let thumbURL = '';
   axios.get('https://www.googleapis.com/youtube/v3/videos', {
     params: {
@@ -52,7 +56,7 @@ export const displayVideoPreview = videoURL => (dispatch => {
     thumbURL = data.items[0].snippet.thumbnails.standard.url;
     dispatch(setVideoURL(videoURL));
   }).catch(error => {
-    thumb = failThumb;
+    thumb = FAIL_THUMB;
   }).then(() => {
     dispatch(setThumbURL(thumb, thumbURL));
   });
@@ -63,3 +67,13 @@ const parseYoutubeVideoId = videoURL => {
   const match = videoURL.match(regExp);
   return (match && match[1].length == 11) ? match[1] : '';
 };
+
+export const setUploadMethod = method => ({
+  type: SET_UPLOAD_METHOD,
+  method
+});
+
+export const resetVideo = () => (dispatch => {
+  dispatch(setVideoURL(''));
+  dispatch(setThumbURL(NO_THUMB, ''));
+});
