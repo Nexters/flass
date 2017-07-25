@@ -5,5 +5,5 @@ import grid from './FlassGrid/FlassGridReducer';
 
 export default combineReducers({
   grid,
-  detail
+  detail,
 });

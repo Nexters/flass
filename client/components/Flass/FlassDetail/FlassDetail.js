@@ -2,25 +2,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Subheader from 'material-ui/Subheader';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import CircularProgress from 'material-ui/CircularProgress';
+import Question from './Question/Question';
 import Comment from './Comment/Comment';
 import Analysis from './Analysis/Analysis';
-
 import Video from './Video/Video';
-
-import Question from './Question/Question';
 
 import './FlassDetail.scss';
 
 const propTypes = {
   match: PropTypes.object,
   detail: PropTypes.object.isRequired,
+  question: PropTypes.object.isRequired,
   comment: PropTypes.shape({
     comments: PropTypes.array,
     totalCount: PropTypes.number
   }).isRequired,
-  fetchRequestDetail: PropTypes.func.isRequired,
-  fetchRequestQuestion: PropTypes.func.isRequired,
-  fetchRequestComment: PropTypes.func.isRequired,
+  fetchRequestDetailAll: PropTypes.func.isRequired
+  // fetchRequestDetail: PropTypes.func.isRequired,
+  // fetchRequestQuestion: PropTypes.func.isRequired,
+  // fetchRequestComment: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -34,9 +35,7 @@ const defaultProps = {
 class FlassDetail extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.fetchRequestDetail(id);
-    this.props.fetchRequestQuestion(id);
-    this.props.fetchRequestComment(id);
+    this.props.fetchRequestDetailAll(id);
   }
 
   handleChange = value => {
@@ -51,6 +50,13 @@ class FlassDetail extends Component {
   render() {
     const { detail, question } = this.props;
 
+    if (detail.isLoading) {
+      return (
+        <div style={ { textAlign: 'center' } }>
+          <CircularProgress size={ 80 } thickness={ 5 } />
+        </div>
+      );
+    }
     return (
       <div className="flass-detail">
         <div className="flass-detail-contents">
@@ -73,7 +79,7 @@ class FlassDetail extends Component {
               VideoModalQuestionClassName="flass-detail-media__modal__question" />
 
             <Question
-              questions={question.questions}
+              questions={ question.questions }
               QuestionListClassName="flass-detail-question-list" />
           </div>
           <p>

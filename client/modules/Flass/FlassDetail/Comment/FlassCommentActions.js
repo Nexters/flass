@@ -6,7 +6,7 @@ export const FETCH_COMMENT_ERROR = 'FETCH_COMMENT_ERROR';
 
 export const fetchRequestComment = detailId => dispatch => {
   dispatch(() => ({ type: FETCH_COMMENT }));
-  fetch('/json/FlassComment.json')
+  return fetch('/json/FlassComment.json')
   .then(res => dispatch(fetchCommentSuccess(res.data)))
   .catch(err => dispatch(fetchCommentError(err)));
 };

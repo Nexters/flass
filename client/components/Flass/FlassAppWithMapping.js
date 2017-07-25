@@ -4,13 +4,11 @@ import FlassApp from './FlassApp';
 
 function mapStateToProps(state) {
   return {
-    ...state.flass
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-
   };
 }
 

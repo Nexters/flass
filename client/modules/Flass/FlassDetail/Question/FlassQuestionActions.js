@@ -6,7 +6,7 @@ export const FETCH_QUESTION_ERROR = 'FETCH_QUESTION_ERROR';
 
 export const fetchRequestQuestion = detailId => dispatch => {
   dispatch(() => ({ type: FETCH_QUESTION }));
-  fetch('/json/FlassQuestion.json')
+  return fetch('/json/FlassQuestion.json')
   .then(res => dispatch(fetchQuestionSuccess(res.data)))
   .catch(err => dispatch(fetchQuestionError(err)));
 };

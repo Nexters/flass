@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const FlassQuestionReducer = (state = initialState, action) => {
-  console.log(state, action);
   switch(action.type) {
     case FETCH_QUESTION:
       // TODO open loading bar
