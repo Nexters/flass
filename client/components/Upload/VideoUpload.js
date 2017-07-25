@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem  from 'material-ui/MenuItem';
+import Dialog from 'material-ui/Dialog';
 import PropTypes from 'prop-types';
 
 import * as actions from '../../modules/Upload/Actions';
@@ -31,12 +32,25 @@ class VideoUpload extends Component {
   state = {
     title: '',
     description: '',
-    videoURL: ''
+    videoURL: '',
+    open: false
   };
 
   render() {
     const { handleNext, method } = this.props;
     const { title, description } = this.state;
+
+    const dialogButtons = [
+      <FlatButton
+        label="취소"
+        primary
+        onTouchTap={ this.handleClose } />,
+      <FlatButton
+        label="계속"
+        primary
+        keyboardFocused
+        onTouchTap={ this.handleClose } />
+    ];
 
     return (
       <div>
@@ -83,6 +97,14 @@ class VideoUpload extends Component {
             </span>
           </FlatButton>
         </div>
+        <Dialog
+          title="업로드한 동영상이 사라집니다."
+          actions={ dialogButtons }
+          modal
+          open={ this.state.open }
+          onRequestClose={ this.handleClose }>
+          계속하시겠습니까?
+        </Dialog>
       </div>
     );
   }
@@ -152,7 +174,16 @@ class VideoUpload extends Component {
   }
 
   handleMethodChange = (e, nextMethod) => {
+    this.setState({
+      open: true
+    });
     this.props.setUploadMethod(nextMethod);
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false
+    });
   }
 }
 

@@ -4,6 +4,7 @@ const initialState = {
   step: 0,
   title: '',
   description: '',
+  thumb: actions.NO_THUMB,
   thumbURL: '',
   method: actions.URL_METHOD
 };
