@@ -9,7 +9,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import FlassGrid from './FlassGrid/FlassGridWithMapping';
 import VideoComponent from '../Video/VideoComponent';
-import FlassDetail from './FlassDetail/FlassDetail';
+import FlassDetail from './FlassDetail/FlassDetailWithMapping';
 import Upload from '../Upload';
 
 import FlassDrawer from './FlassDrawer/FlassDrawer';

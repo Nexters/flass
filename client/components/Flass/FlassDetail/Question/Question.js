@@ -9,13 +9,28 @@ import Divider from 'material-ui/Divider';
 const { string, oneOfType, arrayOf } = PropTypes;
 
 const propTypes = {
-  QuestionListClassName: oneOfType([string, arrayOf(string)])
+  QuestionListClassName: oneOfType([string, arrayOf(string)]),
+  questions: PropTypes.array.isRequired
 };
 const defaultProps = {
   QuestionListClassName: ''
 };
 
 class Question extends Component {
+
+  renderChild() {
+    const { questions } = this.props;
+    return questions.map(question => {
+      const content = (
+        <div><span>{question.questionAt}</span> - {question.content}</div>);
+      return (
+        <ListItem
+          key={question.id}
+          primaryText={content} />
+      );
+    });
+  }
+
   render() {
     const { QuestionListClassName } = this.props;
 
@@ -23,7 +38,7 @@ class Question extends Component {
       <List className={ classNames(QuestionListClassName) }>
         <Subheader>질문 리스트</Subheader>
         <Divider />
-        <ListItem primaryText="Inbox" />
+        {this.renderChild()}
       </List>
     );
   }
