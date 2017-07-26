@@ -53,7 +53,7 @@ export const displayVideoPreview = videoURL => (dispatch => {
       throw new Error('VIDEO_NOT_FOUND');
     }
     // video exists
-    thumbURL = data.items[0].snippet.thumbnails.standard.url;
+    thumbURL = data.items[0].snippet.thumbnails.high.url;
     dispatch(setVideoURL(videoURL));
   }).catch(error => {
     thumb = FAIL_THUMB;
