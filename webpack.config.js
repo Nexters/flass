@@ -5,6 +5,7 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     app: [
+      'babel-polyfill',
       'react-hot-loader/patch',
       './client/index'
     ]
