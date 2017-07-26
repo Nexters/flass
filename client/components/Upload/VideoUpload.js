@@ -17,13 +17,18 @@ const propTypes = {
   thumbURL: PropTypes.string.isRequired,
   method: PropTypes.number.isRequired,
   setUploadMethod: PropTypes.func,
-  resetVideo: PropTypes.func
+  resetVideo: PropTypes.func,
+  isGoogleSignedIn: PropTypes.bool.isRequired,
+  initYoutubeUpload: PropTypes.func,
+  signIn: PropTypes.func
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
   handleVideoURL: () => handleError('handleVideoURL'),
   setUploadMethod: () => handleError('setUploadMethod'),
-  resetVideo: () => handleError('resetVideo')
+  resetVideo: () => handleError('resetVideo'),
+  initYoutubeUpload: () => handleError('initYoutubeUpload'),
+  signIn: () => handleError('signIn')
 };
 
 function handleError(func) {
@@ -67,7 +72,7 @@ class VideoUpload extends Component {
           </SelectField>
           {
             method == actions.URL_METHOD ?
-            this.renderURLField() : this.renderfileField()
+            this.renderURLField() : this.renderFileField()
           }
           {
             this.renderThumbnail()
@@ -136,17 +141,31 @@ class VideoUpload extends Component {
     );
   }
 
-  renderfileField = () => (
-    <div>
-      <FlatButton
-        backgroundColor="#7dcdf8"
-        hoverColor="#75a8da">
-        <span className="buttonLabel">
-          구글 로그인
-        </span>
-      </FlatButton>
-    </div>
-  )
+  renderFileField = () => {
+    this.props.initYoutubeUpload();
+    switch(this.props.isGoogleSignedIn) {
+      case true:
+        return (
+          <div>
+            로그인됨!
+          </div>
+        );
+      case false:
+      default:
+        return (
+          <div>
+            <FlatButton
+              backgroundColor="#7dcdf8"
+              hoverColor="#75a8da"
+              onTouchTap={ this.props.signIn }>
+              <span className="buttonLabel">
+                구글 로그인
+              </span>
+            </FlatButton>
+          </div>
+        );
+    }
+  }
 
   renderThumbnail = () => {
     switch(this.props.thumb) {

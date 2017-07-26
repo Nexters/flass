@@ -6,7 +6,8 @@ const initialState = {
   description: '',
   thumb: actions.NO_THUMB,
   thumbURL: '',
-  method: actions.URL_METHOD
+  method: actions.URL_METHOD,
+  isGoogleSignedIn: false
 };
 
 const UploadReducer = (state = initialState, action) => {
@@ -37,6 +38,11 @@ const UploadReducer = (state = initialState, action) => {
       return {
         ...state,
         method: action.method
+      };
+    case actions.SET_GOOGLE_SIGN_IN_STATUS:
+      return {
+        ...state,
+        isGoogleSignedIn: action.isGoogleSignedIn
       };
     default:
       return state;
