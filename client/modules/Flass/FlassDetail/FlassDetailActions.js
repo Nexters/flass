@@ -1,5 +1,5 @@
 import fetch from 'axios';
-import { changeLoadingStatus } from '../../../modules/Flass/FlassActions';
+import { delay } from 'redux-saga';
 import { fetchRequestComment } from '../../../modules/Flass/FlassDetail/Comment/FlassCommentActions';
 import { fetchRequestQuestion } from '../../../modules/Flass/FlassDetail/Question/FlassQuestionActions';
 
@@ -12,11 +12,11 @@ export const fetchRequestDetailAll = detailId => dispatch => {
   return fetch.all([
     fetch('/json/FlassDetail.json'),
     dispatch(fetchRequestQuestion(detailId)),
-    dispatch(fetchRequestComment(detailId))]).then((res) => {
-      return dispatch(fetchDetailSuccess(res[0].data));
-    }).catch(err => {
-      return dispatch(fetchDetailError(err));
-    });
+    dispatch(fetchRequestComment(detailId))])
+      .then(res => {
+        dispatch(fetchDetailSuccess(res[0].data));
+      })
+      .catch(err => dispatch(fetchDetailError(err)));
 };
 
 export const fetchRequestDetail = detailId => dispatch => {
@@ -35,3 +35,7 @@ export const fetchDetailError = err => ({
   type: FETCH_DETAIL_ERROR,
   message: err.message
 });
+
+export function* test() {
+  console.log('sdfsd');
+}

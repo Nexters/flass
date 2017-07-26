@@ -1,6 +1,8 @@
+import 'babel-polyfill';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -12,7 +14,6 @@ import Root from './components/Root';
 
 import FireBaseConfig from './config/FirebaseConfig';
 
-
 const render = Component => {
   console.log('init() :: App starts booting...');
   injectTapEventPlugin();
@@ -22,7 +23,7 @@ const render = Component => {
     window.devToolsExtension()(createStore) : createStore;
 
   // Apply thunk and additional middleware if applicable
-  const createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(create);
+  const createStoreWithMiddleware = applyMiddleware(thunkMiddleware, createSagaMiddleware())(create);
 
   // Init store
   const store = createStoreWithMiddleware(rootReducer);

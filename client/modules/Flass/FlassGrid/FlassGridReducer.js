@@ -5,7 +5,6 @@ const initialState = {
 };
 
 const FlassGridReducer = (state = initialState, action) => {
-  console.log(state, action);
   switch(action.type) {
     case FETCH_MY_CHANNEL:
       // TODO open loading bar
