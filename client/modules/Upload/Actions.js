@@ -39,33 +39,35 @@ export const setVideoURL = videoURL => ({
 
 export const displayVideoPreview = videoURL => (dispatch => {
   const youtubeVideoId = parseYoutubeVideoId(videoURL);
-  let thumb = SUCC_THUMB;
+  let thumb = FAIL_THUMB;
   let thumbURL = '';
-  axios.get('https://www.googleapis.com/youtube/v3/videos', {
-    params: {
-      id: youtubeVideoId,
-      part: 'snippet',
-      key: GOOGLE_API_KEY
-    }
-  }).then(({ data }) => {
-    // video doesn't exist
-    if(data.pageInfo.totalResults != 1) {
-      throw new Error('VIDEO_NOT_FOUND');
-    }
-    // video exists
-    thumbURL = data.items[0].snippet.thumbnails.high.url;
-    dispatch(setVideoURL(videoURL));
-  }).catch(error => {
-    thumb = FAIL_THUMB;
-  }).then(() => {
-    dispatch(setThumbURL(thumb, thumbURL));
+  gapi.load('client', () => {
+    gapi.client.init({
+      apiKey: GOOGLE_API_KEY
+    }).then(() => {
+      gapi.client.request({
+        method: 'GET',
+        path: '/youtube/v3/videos',
+        params: {
+          part: 'snippet',
+          id: youtubeVideoId
+        }
+      }).then(({ result }) => {
+        if (result.pageInfo.totalResults == 1) {
+          thumb = SUCC_THUMB;
+          thumbURL = result.items[0].snippet.thumbnails.high.url;
+          dispatch(setVideoURL(videoURL));
+        }
+        dispatch(setThumbURL(thumb, thumbURL));
+      });
+    });
   });
 });
 
 const parseYoutubeVideoId = videoURL => {
-  const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i;
+  const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
   const match = videoURL.match(regExp);
-  return (match && match[1].length == 11) ? match[1] : '';
+  return (match && match[2].length == 11) ? match[2] : '';
 };
 
 export const setUploadMethod = method => ({
