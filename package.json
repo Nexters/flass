@@ -10,7 +10,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --require ./client/spec/helper.js \"./client/**/*.spec.js\"",
+    "test": "mocha --compilers js:babel-core/register --require babel-polyfill ./client/spec/helper.js \"./client/**/*.spec.js\"",
     "test:watch": "npm run test -- --watch",
     "dev": "webpack-dev-server --hot --history-api-fallback --open",
     "webpack": "./node_modules/webpack/bin/webpack.js --progress --colors",
