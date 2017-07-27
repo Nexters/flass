@@ -1,7 +1,7 @@
 import fetch from 'axios';
-import { delay } from 'redux-saga';
 import { fetchRequestComment } from '../../../modules/Flass/FlassDetail/Comment/FlassCommentActions';
 import { fetchRequestQuestion } from '../../../modules/Flass/FlassDetail/Question/FlassQuestionActions';
+import {takeEvery} from 'redux-saga';
 
 export const FETCH_DETAIL = 'FETCH_DETAIL';
 export const FETCH_DETAIL_SUCCESS = 'FETCH_DETAIL_SUCCESS';
@@ -35,7 +35,3 @@ export const fetchDetailError = err => ({
   type: FETCH_DETAIL_ERROR,
   message: err.message
 });
-
-export function* test() {
-  console.log('sdfsd');
-}

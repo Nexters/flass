@@ -19,7 +19,6 @@ const propTypes = {
     totalCount: PropTypes.number
   }).isRequired,
   fetchRequestDetailAll: PropTypes.func.isRequired,
-  test1: PropTypes.func.isRequired
   // fetchRequestDetail: PropTypes.func.isRequired,
   // fetchRequestQuestion: PropTypes.func.isRequired,
   // fetchRequestComment: PropTypes.func.isRequired
@@ -37,7 +36,6 @@ class FlassDetail extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchRequestDetailAll(id);
-    this.props.test1();
   }
 
   handleChange = value => {

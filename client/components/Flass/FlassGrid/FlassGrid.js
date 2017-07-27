@@ -30,9 +30,8 @@ class FlassGrid extends Component {
   renderChild() {
     const { items } = this.props;
     return items.map(item => (
-      <Link to={ `/detail/${item.key}` }>
+      <Link key={ item.key } to={ `/detail/${item.key}` }>
         <GridTile
-          key={ item.key }
           className="flass-grid-item"
           title={ item.title }
           subtitle={ <span>by <b>{item.author}</b></span> }
