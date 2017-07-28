@@ -18,9 +18,9 @@ const propTypes = {
   method: PropTypes.number,
   setUploadMethod: PropTypes.func,
   resetVideo: PropTypes.func,
-  isGoogleSignedIn: PropTypes.bool,
   initYoutubeUpload: PropTypes.func,
-  signIn: PropTypes.func
+  isGoogleAuth: PropTypes.bool,
+  goToGoogleAuthPage: PropTypes.func
 };
 
 const defaultProps = {
@@ -34,9 +34,9 @@ const defaultProps = {
   method: actions.URL_METHOD,
   setUploadMethod: () => handleError('setUploadMethod'),
   resetVideo: () => handleError('resetVideo'),
-  isGoogleSignedIn: false,
   initYoutubeUpload: () => handleError('initYoutubeUpload'),
-  signIn: () => handleError('signIn')
+  isGoogleAuth: false,
+  goToGoogleAuthPage: () => handleError('goToGoogleAuthPage')
 };
 
 function handleError(func) {
@@ -52,9 +52,9 @@ class Upload extends Component {
       method,
       setUploadMethod,
       resetVideo,
-      isGoogleSignedIn,
       initYoutubeUpload,
-      signIn
+      isGoogleAuth,
+      goToGoogleAuthPage
     } = this.props;
 
     switch(this.props.step) {
@@ -69,9 +69,9 @@ class Upload extends Component {
             method={ method }
             setUploadMethod={ nextMethod => setUploadMethod(nextMethod) }
             resetVideo={ resetVideo }
-            isGoogleSignedIn={ isGoogleSignedIn }
             initYoutubeUpload={ initYoutubeUpload }
-            signIn={ signIn } />
+            isGoogleAuth={ isGoogleAuth }
+            goToGoogleAuthPage={ goToGoogleAuthPage } />
         );
 
       // step 2
@@ -81,14 +81,14 @@ class Upload extends Component {
           <div>
             <p>두번째 페이지</p>
             <p>title: {this.props.title}</p>
-            <button onClick={this.goToStepOne}>PREV</button>
+            <button onClick={ this.goToStepOne }>PREV</button>
           </div>
         );
     }
   }
 
   goToStepTwo = (title, description) => {
-    if(title == '') {
+    if (title == '') {
       console.log('MUST HAVE A TITLE!');
       return;
     }
