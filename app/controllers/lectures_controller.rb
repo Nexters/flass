@@ -4,7 +4,7 @@ class LecturesController < ApplicationController
   # GET /lectures
   # GET /lectures.json
   def index
-    @lectures = Lecture.find_by(user_id: session[:user_id])
+    @lectures = Lecture.where(user_id: session[:user_id])
   end
 
   # GET /lectures/1
