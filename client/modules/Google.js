@@ -20,7 +20,8 @@ export default class Google {
     });
   }
 
-  static initUploadClient = () => (
+  static initUploadClient = callback => {
+    let isAuthenticated;
     gapi.load('client:auth2', () => {
       gapi.client.init({
         apiKey: GOOGLE_API_KEY,
@@ -29,11 +30,12 @@ export default class Google {
       }).then(() => {
         const auth = gapi.auth2.getAuthInstance();
         const user = auth.currentUser.get();
-        const isAuthenticated = user.hasGrantedScopes(UPLOAD_SCOPE);
-        return isAuthenticated;
+        isAuthenticated = user.hasGrantedScopes(UPLOAD_SCOPE);
+      }).then(() => {
+        callback(isAuthenticated);
       });
-    })
-  );
+    });
+  };
 
   static requestThumbClient = youtubeVideoId => (
     gapi.client.request({

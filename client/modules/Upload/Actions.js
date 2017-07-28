@@ -50,7 +50,7 @@ export const changeUploadMethod = method => (dispatch => {
       break;
     case FILE_METHOD:
     default:
-      Google.initUploadClient();
+      dispatch(initYoutubeUpload());
   }
   dispatch(setUploadMethod(method));
 });
@@ -86,9 +86,10 @@ const setGoogleAuthStatus = isGoogleAuth => ({
   isGoogleAuth
 });
 
-export const initYoutubeUpload = () => (async dispatch => {
-  const isGoogleAuth = await Google.initUploadClient();
-  dispatch(setGoogleAuthStatus(isGoogleAuth));
+export const initYoutubeUpload = () => (dispatch => {
+  Google.initUploadClient(isGoogleAuth => {
+    dispatch(setGoogleAuthStatus(isGoogleAuth));
+  });
 });
 
 export const goToGoogleAuthPage = () => (() => {

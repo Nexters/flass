@@ -18,15 +18,16 @@ const propTypes = {
   method: PropTypes.number.isRequired,
   changeUploadMethod: PropTypes.func,
   resetVideo: PropTypes.func,
-  isGoogleSignedIn: PropTypes.bool.isRequired,
-  signIn: PropTypes.func
+  isGoogleAuth: PropTypes.bool,
+  goToGoogleAuthPage: PropTypes.func
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
   handleVideoURL: () => handleError('handleVideoURL'),
   changeUploadMethod: () => handleError('changeUploadMethod'),
   resetVideo: () => handleError('resetVideo'),
-  signIn: () => handleError('signIn')
+  isGoogleAuth: null,
+  goToGoogleAuthPage: () => handleError('goToGoogleAuthPage')
 };
 
 function handleError(func) {
@@ -137,9 +138,7 @@ class VideoUpload extends Component {
   }
 
   renderFileField = () => {
-    switch(this.props.isGoogleSignedIn) {
-      case null:
-        return;
+    switch(this.props.isGoogleAuth) {
       case true:
         return (
           <div>
@@ -147,17 +146,22 @@ class VideoUpload extends Component {
           </div>
         );
       case false:
-      default:
         return (
           <div>
             <FlatButton
               backgroundColor="#7dcdf8"
               hoverColor="#75a8da"
-              onTouchTap={ this.props.signIn }>
+              onTouchTap={ this.props.goToGoogleAuthPage }>
               <span className="buttonLabel">
                 구글 로그인
               </span>
             </FlatButton>
+          </div>
+        );
+      default:
+        return (
+          <div>
+            로딩중...
           </div>
         );
     }
