@@ -16,9 +16,8 @@ const propTypes = {
   thumbURL: PropTypes.string,
   getThumbnail: PropTypes.func,
   method: PropTypes.number,
-  setUploadMethod: PropTypes.func,
+  changeUploadMethod: PropTypes.func,
   resetVideo: PropTypes.func,
-  initYoutubeUpload: PropTypes.func,
   isGoogleAuth: PropTypes.bool,
   goToGoogleAuthPage: PropTypes.func
 };
@@ -32,10 +31,9 @@ const defaultProps = {
   thumbURL: '',
   getThumbnail: () => handleError('getThumbnail'),
   method: actions.URL_METHOD,
-  setUploadMethod: () => handleError('setUploadMethod'),
+  changeUploadMethod: () => handleError('changeUploadMethod'),
   resetVideo: () => handleError('resetVideo'),
-  initYoutubeUpload: () => handleError('initYoutubeUpload'),
-  isGoogleAuth: false,
+  isGoogleAuth: null,
   goToGoogleAuthPage: () => handleError('goToGoogleAuthPage')
 };
 
@@ -44,15 +42,19 @@ function handleError(func) {
 }
 
 class Upload extends Component {
+  componentDidMount() {
+    // set URL method as default
+    this.props.changeUploadMethod(actions.URL_METHOD);
+  }
+
   render() {
     const {
       thumb,
       thumbURL,
       getThumbnail,
       method,
-      setUploadMethod,
+      changeUploadMethod,
       resetVideo,
-      initYoutubeUpload,
       isGoogleAuth,
       goToGoogleAuthPage
     } = this.props;
@@ -67,9 +69,8 @@ class Upload extends Component {
             thumbURL={ thumbURL }
             handleVideoURL={ videoURL => getThumbnail(videoURL) }
             method={ method }
-            setUploadMethod={ nextMethod => setUploadMethod(nextMethod) }
+            changeUploadMethod={ nextMethod => changeUploadMethod(nextMethod) }
             resetVideo={ resetVideo }
-            initYoutubeUpload={ initYoutubeUpload }
             isGoogleAuth={ isGoogleAuth }
             goToGoogleAuthPage={ goToGoogleAuthPage } />
         );
@@ -112,17 +113,16 @@ const mapStateToProps = state => ({
   thumb: state.upload.thumb,
   thumbURL: state.upload.thumbURL,
   method: state.upload.method,
-  isGoogleSignedIn: state.upload.isGoogleSignedIn
+  isGoogleAuth: state.upload.isGoogleAuth
 });
 
 const mapDispatchToProps = dispatch => ({
   setStep: step => dispatch(actions.setStep(step)),
   setVideoData: (title, description) => dispatch(actions.setVideoData(title, description)),
   getThumbnail: videoURL => dispatch(actions.getThumbnail(videoURL)),
-  setUploadMethod: method => dispatch(actions.setUploadMethod(method)),
+  changeUploadMethod: method => dispatch(actions.changeUploadMethod(method)),
   resetVideo: () => dispatch(actions.resetVideo()),
-  initYoutubeUpload: () => dispatch(actions.initYoutubeUpload()),
-  signIn: () => dispatch(actions.signIn())
+  goToGoogleAuthPage: () => dispatch(actions.goToGoogleAuthPage())
 });
 
 export default connect(

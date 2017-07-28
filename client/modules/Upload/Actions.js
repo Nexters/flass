@@ -5,6 +5,7 @@ export const SET_VIDEO_DATA = 'SET_VIDEO_DATA';
 export const SET_VIDEO_URL = 'SET_VIDEO_URL';
 export const SET_THUMB_URL = 'SET_THUMB_URL';
 export const SET_UPLOAD_METHOD = 'SET_UPLOAD_METHOD';
+export const CHANGE_UPLOAD_METHOD = 'CHANGE_UPLOAD_METHOD';
 export const SET_GOOGLE_AUTH_STATUS = 'SET_GOOGLE_AUTH_STATUS';
 
 export const NO_THUMB = 0;
@@ -36,9 +37,22 @@ export const setVideoURL = videoURL => ({
   videoURL
 });
 
-export const setUploadMethod = method => ({
+const setUploadMethod = method => ({
   type: SET_UPLOAD_METHOD,
   method
+});
+
+// changes upload method and takes care of google api set up for the change
+export const changeUploadMethod = method => (dispatch => {
+  switch(method) {
+    case URL_METHOD:
+      Google.initThumbClient();
+      break;
+    case FILE_METHOD:
+    default:
+      Google.initUploadClient();
+  }
+  dispatch(setUploadMethod(method));
 });
 
 export const getThumbnail = videoURL => (dispatch => {
@@ -77,6 +91,6 @@ export const initYoutubeUpload = () => (async dispatch => {
   dispatch(setGoogleAuthStatus(isGoogleAuth));
 });
 
-export const goToGoogleAuthPage = () => {
+export const goToGoogleAuthPage = () => (() => {
   Google.authenticate();
-};
+});

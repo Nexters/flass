@@ -16,18 +16,16 @@ const propTypes = {
   thumb: PropTypes.number.isRequired,
   thumbURL: PropTypes.string.isRequired,
   method: PropTypes.number.isRequired,
-  setUploadMethod: PropTypes.func,
+  changeUploadMethod: PropTypes.func,
   resetVideo: PropTypes.func,
   isGoogleSignedIn: PropTypes.bool.isRequired,
-  initYoutubeUpload: PropTypes.func,
   signIn: PropTypes.func
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
   handleVideoURL: () => handleError('handleVideoURL'),
-  setUploadMethod: () => handleError('setUploadMethod'),
+  changeUploadMethod: () => handleError('changeUploadMethod'),
   resetVideo: () => handleError('resetVideo'),
-  initYoutubeUpload: () => handleError('initYoutubeUpload'),
   signIn: () => handleError('signIn')
 };
 
@@ -84,8 +82,7 @@ class VideoUpload extends Component {
             name="title"
             value={ title }
             onChange={ this.handleChange }
-            fullWidth
-          />
+            fullWidth />
           <TextField
             floatingLabelText="학습 목표"
             name="description"
@@ -93,8 +90,7 @@ class VideoUpload extends Component {
             onChange={ this.handleChange }
             multiLine
             fullWidth
-            rows={ 15 }
-          />
+            rows={ 15 } />
           <FlatButton
             onTouchTap={ () => handleNext(title, description) }
             className="next"
@@ -127,8 +123,7 @@ class VideoUpload extends Component {
           floatingLabelText="URL"
           name="videoURL"
           value={ videoURL }
-          onChange={ this.handleChange }
-        />
+          onChange={ this.handleChange } />
         <FlatButton
           onTouchTap={ () => handleVideoURL(videoURL) }
           backgroundColor="#7dcdf8"
@@ -142,8 +137,9 @@ class VideoUpload extends Component {
   }
 
   renderFileField = () => {
-    this.props.initYoutubeUpload();
     switch(this.props.isGoogleSignedIn) {
+      case null:
+        return;
       case true:
         return (
           <div>
@@ -222,7 +218,7 @@ class VideoUpload extends Component {
       videoURL: ''
     });
     this.props.resetVideo();
-    this.props.setUploadMethod(nextMethod);
+    this.props.changeUploadMethod(nextMethod);
     this.handleDialogClose();
   }
 }
