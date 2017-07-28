@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    @questions = Question.where(lecture_id: params[:lecture_id])
   end
 
   # GET /questions/1
