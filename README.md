@@ -70,14 +70,16 @@ Simply override the `Rails.application.config.assets.root_path` property on the 
 Of course during the deployment script and after the `npm run webpack-production` command, `public/*` output files should be copied to the target dir or infrastructure.
 
 ## Library
-redux-saga, thunk : saga는 수월하게 액션 묶음을 동기적으로 처리하기 위함. 
-- https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html
-redux-form 
-- http://redux-form.com/7.0.1/docs/GettingStarted.md/
-fetch api : axios - 다른 API과 다르게 cancelable 방법을 제시해주고 있음. 
-- https://medium.com/little-big-programming/%EB%82%B4%EA%B0%80-fetch-api%EB%A5%BC-%EC%93%B0%EC%A7%80-%EB%AA%BB%ED%96%88%EB%8D%98-%EC%9D%B4%EC%9C%A0-3c23f0ec6b82
-lodash : 함수형 작성에 있어 서포트해주는 라이브러리
-material-ui : 가장 인지도 있는 material ui 라이브러리.
-- https://www.vobour.com/book/view/LCETueEN7i3MjvEcz
-moment : 날짜 조작 관련 라이브러리
-chart.js : 그래프 라이브러리
+- redux-saga, thunk : saga는 수월하게 액션 묶음을 동기적으로 처리하기 위함. 
+https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html
+- redux-form 
+http://redux-form.com/7.0.1/docs/GettingStarted.md/
+- fetch api : axios - 다른 API과 다르게 cancelable 방법을 제시해주고 있음. 
+https://medium.com/little-big-programming/%EB%82%B4%EA%B0%80-fetch-api%EB%A5%BC-%EC%93%B0%EC%A7%80-%EB%AA%BB%ED%96%88%EB%8D%98-%EC%9D%B4%EC%9C%A0-3c23f0ec6b82
+- lodash : 함수형 작성에 있어 서포트해주는 라이브러리
+- material-ui : 가장 인지도 있는 material ui 라이브러리.
+https://www.vobour.com/book/view/LCETueEN7i3MjvEcz
+- moment : 날짜 조작 관련 라이브러리
+- chart.js : 그래프 라이브러리
+
+## Heroku
