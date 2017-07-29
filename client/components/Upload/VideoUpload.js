@@ -142,7 +142,12 @@ class VideoUpload extends Component {
       case true:
         return (
           <div>
-            로그인됨!
+            <input type="file" id="file" accept="*/video" className="fileUpload" />
+            <label htmlFor="file">
+              <div className="uploadButton buttonLabel">
+                영상 업로드
+              </div>
+            </label>
           </div>
         );
       case false:
