@@ -20,19 +20,25 @@ export default class Google {
     });
   }
 
-  static initUploadClient = callback => {
-    let isAuthenticated;
+  static isAuthenticated() {
+    const auth = gapi.auth2.getAuthInstance();
+    const user = auth.currentUser.get();
+    console.log(user.hasGrantedScopes(UPLOAD_SCOPE));
+    return user.hasGrantedScopes(UPLOAD_SCOPE);
+  }
+
+  static initUploadClient = setGoogleAuthStatus => {
     gapi.load('client:auth2', () => {
       gapi.client.init({
         apiKey: GOOGLE_API_KEY,
         clientId: GOOGLE_CLIENT_KEY,
         scope: UPLOAD_SCOPE
       }).then(() => {
-        const auth = gapi.auth2.getAuthInstance();
-        const user = auth.currentUser.get();
-        isAuthenticated = user.hasGrantedScopes(UPLOAD_SCOPE);
-      }).then(() => {
-        callback(isAuthenticated);
+        setGoogleAuthStatus(Google.isAuthenticated());
+        // update auth status when signIn status changes
+        gapi.auth2.getAuthInstance().isSignedIn.listen(() => {
+          setGoogleAuthStatus(Google.isAuthenticated());
+        });
       });
     });
   };
