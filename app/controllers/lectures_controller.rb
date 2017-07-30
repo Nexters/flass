@@ -26,28 +26,20 @@ class LecturesController < ApplicationController
   def create
     @lecture = Lecture.new(lecture_params)
 
-    respond_to do |format|
-      if @lecture.save
-        format.html { redirect_to @lecture, notice: 'Lecture was successfully created.' }
-        format.json { render :show, status: :created, location: @lecture }
-      else
-        format.html { render :new }
-        format.json { render json: @lecture.errors, status: :unprocessable_entity }
-      end
+    if @lecture.save
+      render json: @lecture, status: :created
+    else
+      render json: @lecture.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /lectures/1
   # PATCH/PUT /lectures/1.json
   def update
-    respond_to do |format|
-      if @lecture.update(lecture_params)
-        format.html { redirect_to @lecture, notice: 'Lecture was successfully updated.' }
-        format.json { render :show, status: :ok, location: @lecture }
-      else
-        format.html { render :edit }
-        format.json { render json: @lecture.errors, status: :unprocessable_entity }
-      end
+    if @lecture.update(lecture_params)
+      render json: @lecture, status: :ok
+    else
+      render json: @lecture.errors, status: :unprocessable_entity
     end
   end
 
@@ -55,10 +47,7 @@ class LecturesController < ApplicationController
   # DELETE /lectures/1.json
   def destroy
     @lecture.destroy
-    respond_to do |format|
-      format.html { redirect_to lectures_url, notice: 'Lecture was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
