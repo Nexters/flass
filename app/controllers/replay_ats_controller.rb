@@ -4,7 +4,7 @@ class ReplayAtsController < ApplicationController
   # GET /replay_ats
   # GET /replay_ats.json
   def index
-    @replay_ats = ReplayAt.all
+    @replay_ats = ReplayAt.where(user_id: session[:user_id])
   end
 
   # GET /replay_ats/1
@@ -26,28 +26,20 @@ class ReplayAtsController < ApplicationController
   def create
     @replay_at = ReplayAt.new(replay_at_params)
 
-    respond_to do |format|
-      if @replay_at.save
-        format.html { redirect_to @replay_at, notice: 'Replay at was successfully created.' }
-        format.json { render :show, status: :created, location: @replay_at }
-      else
-        format.html { render :new }
-        format.json { render json: @replay_at.errors, status: :unprocessable_entity }
-      end
+    if @replay_at.save
+      render :show, status: :created
+    else
+      render json: @replay_at.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /replay_ats/1
   # PATCH/PUT /replay_ats/1.json
   def update
-    respond_to do |format|
-      if @replay_at.update(replay_at_params)
-        format.html { redirect_to @replay_at, notice: 'Replay at was successfully updated.' }
-        format.json { render :show, status: :ok, location: @replay_at }
-      else
-        format.html { render :edit }
-        format.json { render json: @replay_at.errors, status: :unprocessable_entity }
-      end
+    if @replay_at.update(replay_at_params)
+      render json: @replay_at, status: :ok
+    else
+      render json: @replay_at.errors, status: :unprocessable_entity
     end
   end
 
@@ -55,10 +47,13 @@ class ReplayAtsController < ApplicationController
   # DELETE /replay_ats/1.json
   def destroy
     @replay_at.destroy
-    respond_to do |format|
-      format.html { redirect_to replay_ats_url, notice: 'Replay at was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
+  end
+
+  def lecture
+    @replay_at = ReplayAt.where(user_id: session[:user_id],
+                                lecture_id: params[:lecture_id])
+    render json: @replay_at
   end
 
   private
