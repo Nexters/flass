@@ -4,7 +4,7 @@ class LecturesController < ApplicationController
   # GET /lectures
   # GET /lectures.json
   def index
-    @lectures = Lecture.where(user_id: session[:user_id])
+    @lectures = Lecture.where(user_id: session[:user_id]).order(created_at: :desc)
   end
 
   # GET /lectures/1
@@ -19,6 +19,11 @@ class LecturesController < ApplicationController
 
   # GET /lectures/1/edit
   def edit
+    if @lecture.user_id == session[:user_id]
+      render json: @lecture, status: :ok
+    else
+      render json: {message: "이 글의 작성자만 수정할 권한이 있습니다.", data:@lecture.errors}, status: :forbidden
+    end
   end
 
   # POST /lectures
