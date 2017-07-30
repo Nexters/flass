@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import FlassDetail from './FlassDetail';
-import { fetchRequestDetailAll, fetchRequestDetail, FLASS_DETAIL_TEST } from '../../../modules/Flass/FlassDetail/FlassDetailActions';
-import { fetchRequestComment } from '../../../modules/Flass/FlassDetail/Comment/FlassCommentActions';
-import { fetchRequestQuestion } from '../../../modules/Flass/FlassDetail/Question/FlassQuestionActions';
+import FlassDetail from '../../../components/Flass/FlassDetail/FlassDetail';
+import { fetchRequestDetailAll, fetchRequestDetail, FLASS_DETAIL_TEST } from './FlassDetailActions';
+import { fetchRequestComment } from './Comment/CommentActions';
+import { fetchRequestQuestion } from './Question/QuestionActions';
 
 function mapStateToProps(state) {
   return {
@@ -23,9 +23,6 @@ function mapDispatchToProps(dispatch) {
     },
     fetchRequestQuestion: detailId => {
       dispatch(fetchRequestQuestion(detailId));
-    },
-    addComment: comment => {
-
     }
   };
 }

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-
+import { reducer as formReducer } from 'redux-form';
 import memo from './modules/MemoWithEslint/MemoReducer';
 import flass from './modules/Flass/reducers';
 import TestTutorialReducer from './modules/TestTutorialModule/TestTutorialReducer';
@@ -11,5 +11,6 @@ export default combineReducers({
   flass,
   quiz: quizReducer,
   comments: TestTutorialReducer,
-  upload: UploadReducer
+  upload: UploadReducer,
+  form: formReducer
 });

@@ -82,4 +82,6 @@ https://www.vobour.com/book/view/LCETueEN7i3MjvEcz
 - moment : 날짜 조작 관련 라이브러리
 - chart.js : 그래프 라이브러리
 
-## Heroku
+## for test
+https://medium.com/@sangboaklee/react-%ED%85%8C%EC%8A%A4%ED%8C%85-%EC%BD%94%EB%93%9C-%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0-1c3719cee5af
+

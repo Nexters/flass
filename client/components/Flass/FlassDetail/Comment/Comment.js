@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Divider, List, ListItem } from 'material-ui';
 import _ from 'lodash';
-import PostComment from './PostComment';
+import PostComment from '../../../../modules/Flass/FlassDetail/Comment/PostCommentContainer';
 
 const propTypes = {
   comments: PropTypes.array
