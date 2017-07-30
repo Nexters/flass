@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
 import detail from './FlassDetailReducer';
-import question from './Question/FlassQuestionReducer';
-import comment from './Comment/FlassCommentReducer';
+import question from './Question/QuestionReducer';
+import comment from './Comment/CommentReducer';
 
 export default combineReducers({
   detail,

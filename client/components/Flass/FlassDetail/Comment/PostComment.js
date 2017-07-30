@@ -12,7 +12,7 @@ class PostComment extends Component {
 
   render() {
     return (
-      <div className="flass-post-comment">
+      <form className="flass-post-comment">
         <img
           className="flass-post-comment-profile"
           src="http://via.placeholder.com/128x128"
@@ -25,7 +25,7 @@ class PostComment extends Component {
             fullWidth
             rows={ 2 } />
         </div>
-      </div>
+      </form>
     );
   }
 }

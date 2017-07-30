@@ -1,6 +1,6 @@
 import fetch from 'axios';
-import { fetchRequestComment } from '../../../modules/Flass/FlassDetail/Comment/FlassCommentActions';
-import { fetchRequestQuestion } from '../../../modules/Flass/FlassDetail/Question/FlassQuestionActions';
+import { fetchRequestComment } from './Comment/CommentActions';
+import { fetchRequestQuestion } from './Question/QuestionActions';
 
 export const FETCH_DETAIL = 'FETCH_DETAIL';
 export const FETCH_DETAIL_SUCCESS = 'FETCH_DETAIL_SUCCESS';

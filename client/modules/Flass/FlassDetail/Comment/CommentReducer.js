@@ -1,11 +1,11 @@
-import { FETCH_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_ERROR } from './FlassCommentActions';
+import { FETCH_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_ERROR } from './CommentActions';
 
 const initialState = {
   totalCount: 0,
   comments: []
 };
 
-const FlassCommentReducer = (state = initialState, action) => {
+const CommentReducer = (state = initialState, action) => {
   switch(action.type) {
     case FETCH_COMMENT:
       // TODO open loading bar
@@ -23,4 +23,4 @@ const FlassCommentReducer = (state = initialState, action) => {
   }
 };
 
-export default FlassCommentReducer;
+export default CommentReducer;
