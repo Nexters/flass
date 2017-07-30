@@ -2,18 +2,16 @@
 
 one:
   user_id: 1
-  username: MyString
   title: MyString
   content: MyText
   url: MyString
   thumbnail_url: MyString
-  duration: 2017-07-22 18:38:38
+  duration: 2017-07-25 17:24:06
 
 two:
   user_id: 1
-  username: MyString
   title: MyString
   content: MyText
   url: MyString
   thumbnail_url: MyString
-  duration: 2017-07-22 18:38:38
+  duration: 2017-07-25 17:24:06

@@ -255,3 +255,6 @@ public/css/*.map
 *.lock
 *-lock.json
 .idea/*
+
+# Ignore API keys
+config/Constants.js

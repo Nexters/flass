@@ -6,7 +6,6 @@
   <thead>
     <tr>
       <th>User</th>
-      <th>Username</th>
       <th>Title</th>
       <th>Content</th>
       <th>Url</th>
@@ -20,7 +19,6 @@
     <% @lectures.each do |lecture| %>
       <tr>
         <td><%= lecture.user_id %></td>
-        <td><%= lecture.username %></td>
         <td><%= lecture.title %></td>
         <td><%= lecture.content %></td>
         <td><%= lecture.url %></td>

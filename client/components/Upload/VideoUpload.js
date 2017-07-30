@@ -17,13 +17,11 @@ const propTypes = {
   handleNext: PropTypes.func,
   handleVideoURL: PropTypes.func,
   thumb: PropTypes.number.isRequired,
-  thumbURL: PropTypes.string.isRequired,
-  handleThumbFail: PropTypes.func
+  thumbURL: PropTypes.string.isRequired
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
-  handleVideoURL: () => handleError('handleVideoURL'),
-  handleThumbFail: () => handleError('handleThumbFail')
+  handleVideoURL: () => handleError('handleVideoURL')
 };
 
 function handleError(func) {
@@ -120,7 +118,9 @@ class VideoUpload extends Component {
       <FlatButton
         backgroundColor="#7dcdf8"
         hoverColor="#75a8da">
-        구글로 로그인
+        <span className="buttonLabel">
+          구글 로그인
+        </span>
       </FlatButton>
     </div>
   )
@@ -133,14 +133,16 @@ class VideoUpload extends Component {
         return (
           <img
             src={ this.props.thumbURL }
-            alt="succeeded importing video" />
+            alt="succeeded importing video"
+            className="thumbnail" />
         );
       case actions.failThumb:
       default:
         return (
           <img
             src={ 'http://iamaperformer.com/userphotos/no-video-available.jpg' }
-            alt="failed at importing video" />
+            alt="failed at importing video"
+            className="thumbnail" />
         );
     }
   }
@@ -155,10 +157,6 @@ class VideoUpload extends Component {
     this.setState({
       method
     });
-  }
-
-  handleUploadVideo = () => {
-    // upload video via youtube || server?
   }
 }
 

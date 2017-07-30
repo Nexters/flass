@@ -18,11 +18,31 @@ $playerWidth: 700px;
         height: $playerHeight;
       }
 
+      &__modal {
+        position: absolute;
+        top: 0;
+        width: $playerWidth;
+        height: $playerHeight;
+        z-index: 10;
+        background-color: rgba(0, 0, 0, .5);
+
+        &__question {
+          width: $playerWidth * 0.6;
+          height: $playerHeight;
+          float: right;
+          background-color: rgba(255, 255, 255, .9);
+          color: black;
+          z-index: 20;
+          transition: background-color 1s ease-out;
+          animation: move 1s ease-out;
+        }
+      }
+
       &__controller-bar {
         width: $playerWidth;
         height: $progressbarHeight;
         position: absolute;
-        top: $playerHeight - $progressbarHeight - 5px;
+        top: $playerHeight - $progressbarHeight - 1px;
         opacity: 0;
 
         &:hover {
@@ -38,12 +58,23 @@ $playerWidth: 700px;
     .flass-detail-question-list {
       display: inline-block;
       width: 35%;
+      height: $playerHeight;
       margin: 0 1rem;
-      float: right;
     }
   }
 
   .flass-detail-tabs {
 
   }
+}
+
+@keyframes move {
+    0% {
+      transform: translateX(50%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
 }

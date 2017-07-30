@@ -10,7 +10,7 @@ import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
 
 import './VideoCustomProgressBarStyle.scss';
 
-const { func, number, string, oneOfType, arrayOf } = PropTypes;
+const { func, number, string, oneOfType, arrayOf, bool } = PropTypes;
 
 const propTypes = {
   VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
@@ -25,7 +25,11 @@ const propTypes = {
   onArrowKeyPressed: func.isRequired,
   duration: number,
   playedPercentage: number,
-  loadedPercentage: number
+  loadedPercentage: number,
+
+  quizTimeArray: arrayOf(number),
+  canChangeIsQuizSecs: func.isRequired,
+  isQuizSecs: bool.isRequired
 };
 
 const defaultProps = {
@@ -37,7 +41,9 @@ const defaultProps = {
   VideoBarClassName: '',
   duration: 1,
   playedPercentage: 0,
-  loadedPercentage: 0
+  loadedPercentage: 0,
+
+  quizTimeArray: []
 };
 
 const PROGRESS_MIN = 0;
@@ -58,13 +64,20 @@ class VideoCustomProgressBarComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { duration, playedPercentage, loadedPercentage } = nextProps;
-
-    this.setState({
+    const {
       duration,
-      played: playedPercentage * 100,
-      loaded: loadedPercentage * 100
-    });
+      playedPercentage,
+      loadedPercentage,
+      isQuizSecs
+    } = nextProps;
+
+    if (!isQuizSecs) {
+      const playedSecs = parseInt(duration * playedPercentage);
+      this.props.canChangeIsQuizSecs(playedSecs);
+      this.updateProgressbarStatus(duration, playedPercentage, loadedPercentage);
+    } else {
+      this.updateProgressbarStatus(duration, playedPercentage, loadedPercentage);
+    }
   }
 
   render() {
@@ -74,7 +87,9 @@ class VideoCustomProgressBarComponent extends Component {
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
       VideoQuizIndicatorClassName,
-      VideoQuizIndicatorBarClassName
+      VideoQuizIndicatorBarClassName,
+
+      quizTimeArray
     } = this.props;
 
     return (
@@ -92,9 +107,19 @@ class VideoCustomProgressBarComponent extends Component {
         <VideoCustomQuizBarComponent
           VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
           VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
-          duration={ duration } />
+          duration={ duration }
+
+          quizTimeArray={ quizTimeArray } />
       </div>
     );
+  }
+
+  updateProgressbarStatus(duration, playedPercentage, loadedPercentage) {
+    this.setState({
+      duration,
+      played: playedPercentage * 100,
+      loaded: loadedPercentage * 100
+    });
   }
 
   @autobind

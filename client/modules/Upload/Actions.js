@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+import { GOOGLE_API_KEY } from '../../../config/Constants';
+
 export const SET_STEP = 'SET_STEP';
 export const SET_VIDEO_DATA = 'SET_VIDEO_DATA';
 export const SET_VIDEO_URL = 'SET_VIDEO_URL';
@@ -32,16 +36,30 @@ export const setVideoURL = videoURL => ({
 export const displayVideoPreview = videoURL => (dispatch => {
   const youtubeVideoId = parseYoutubeVideoId(videoURL);
   let thumb = succThumb;
-  if (!youtubeVideoId) {
+  let thumbURL = '';
+  axios.get('https://www.googleapis.com/youtube/v3/videos', {
+    params: {
+      id: youtubeVideoId,
+      part: 'snippet',
+      key: GOOGLE_API_KEY
+    }
+  }).then(({ data }) => {
+    // video doesn't exist
+    if(data.pageInfo.totalResults != 1) {
+      throw new Error('VIDEO_NOT_FOUND');
+    }
+    // video exists
+    thumbURL = data.items[0].snippet.thumbnails.standard.url;
+    dispatch(setVideoURL(videoURL));
+  }).catch(error => {
     thumb = failThumb;
-  }
-  const thumbURL = `https://img.youtube.com/vi/${youtubeVideoId}/0.jpg`;
-  dispatch(setThumbURL(thumb, thumbURL));
-  dispatch(setVideoURL(videoURL));
+  }).then(() => {
+    dispatch(setThumbURL(thumb, thumbURL));
+  });
 });
 
 const parseYoutubeVideoId = videoURL => {
   const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i;
   const match = videoURL.match(regExp);
-  return (match && match[1].length == 11) ? match[1] : false;
+  return (match && match[1].length == 11) ? match[1] : '';
 };
