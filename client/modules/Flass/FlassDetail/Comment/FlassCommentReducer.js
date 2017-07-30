@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const FlassCommentReducer = (state = initialState, action) => {
-  console.log(state, action);
   switch(action.type) {
     case FETCH_COMMENT:
       // TODO open loading bar

@@ -51,6 +51,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout
+    reset_session
+    redirect_to "/"
+  end
+
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy

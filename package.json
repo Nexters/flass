@@ -10,12 +10,14 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --require ./client/spec/helper.js \"./client/**/*.spec.js\"",
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "test": "mocha --compilers js:babel-core/register --require babel-polyfill ./client/spec/helper.js \"./client/**/*.spec.js\"",
     "test:watch": "npm run test -- --watch",
     "dev": "webpack-dev-server --hot --history-api-fallback --open",
     "webpack": "./node_modules/webpack/bin/webpack.js --progress --colors",
     "webpack-watch": "./node_modules/webpack/bin/webpack.js --progress --colors --watch",
-    "webpack-production": "./node_modules/webpack/bin/webpack.js --colors --config webpack.config.prod"
+    "webpack-production": "./node_modules/webpack/bin/webpack.js --colors --config webpack.config.prod",
+    "postinstall": "webpack -p"
   },
   "author": "IP",
   "license": "MIT",
@@ -24,6 +26,7 @@
   "dependencies": {
     "autobind-decorator": "^2.1.0",
     "axios": "^0.16.2",
+    "babel-polyfill": "^6.23.0",
     "chart.js": "^2.6.0",
     "classnames": "^2.2.5",
     "firebase": "^4.1.3",
@@ -43,6 +46,9 @@
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.1",
+    "redux-form": "^7.0.2",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^0.15.6",
     "redux-thunk": "2.2.0",
     "screenfull": "^3.3.1"
   },

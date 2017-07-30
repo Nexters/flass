@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import FlassDetail from './FlassDetail';
-import { fetchRequestDetail } from '../../../modules/Flass/FlassDetail/FlassDetailActions';
+import { fetchRequestDetailAll, fetchRequestDetail, FLASS_DETAIL_TEST } from '../../../modules/Flass/FlassDetail/FlassDetailActions';
 import { fetchRequestComment } from '../../../modules/Flass/FlassDetail/Comment/FlassCommentActions';
 import { fetchRequestQuestion } from '../../../modules/Flass/FlassDetail/Question/FlassQuestionActions';
 
@@ -12,6 +12,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    fetchRequestDetailAll: detailId => {
+      dispatch(fetchRequestDetailAll(detailId));
+    },
     fetchRequestDetail: detailId => {
       dispatch(fetchRequestDetail(detailId));
     },

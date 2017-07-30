@@ -1,22 +1,26 @@
 import { FETCH_DETAIL, FETCH_DETAIL_SUCCESS, FETCH_DETAIL_ERROR } from './FlassDetailActions';
 
 const initialState = {
+  isLoading: false,
 };
 
 const FlassDetailReducer = (state = initialState, action) => {
   switch(action.type) {
     case FETCH_DETAIL:
-      // TODO open loading bar
-      return state;
+      return {
+        isLoading: true,
+      }
     case FETCH_DETAIL_SUCCESS:
       return {
-        ...state,
+        isLoading: false,
         ...action.detail
       };
     case FETCH_DETAIL_ERROR:
-    // TODO close loading bar
     default:
-      return state;
+      return {
+        ...state,
+        isLoading: false,
+      };
   }
 };
 

@@ -14,7 +14,13 @@ const propTypes = {
   title: PropTypes.string,
   thumb: PropTypes.number,
   thumbURL: PropTypes.string,
-  displayVideoPreview: PropTypes.func
+  getThumbnail: PropTypes.func,
+  method: PropTypes.number,
+  setUploadMethod: PropTypes.func,
+  resetVideo: PropTypes.func,
+  isGoogleSignedIn: PropTypes.bool,
+  initYoutubeUpload: PropTypes.func,
+  signIn: PropTypes.func
 };
 
 const defaultProps = {
@@ -22,9 +28,15 @@ const defaultProps = {
   setStep: () => handleError('setStep'),
   setVideoData: () => handleError('setVideoData'),
   title: '',
-  thumb: actions.noThumb,
+  thumb: actions.NO_THUMB,
   thumbURL: '',
-  displayVideoPreview: () => handleError('displayVideoPreview')
+  getThumbnail: () => handleError('getThumbnail'),
+  method: actions.URL_METHOD,
+  setUploadMethod: () => handleError('setUploadMethod'),
+  resetVideo: () => handleError('resetVideo'),
+  isGoogleSignedIn: false,
+  initYoutubeUpload: () => handleError('initYoutubeUpload'),
+  signIn: () => handleError('signIn')
 };
 
 function handleError(func) {
@@ -36,7 +48,13 @@ class Upload extends Component {
     const {
       thumb,
       thumbURL,
-      displayVideoPreview
+      getThumbnail,
+      method,
+      setUploadMethod,
+      resetVideo,
+      isGoogleSignedIn,
+      initYoutubeUpload,
+      signIn
     } = this.props;
 
     switch(this.props.step) {
@@ -47,7 +65,13 @@ class Upload extends Component {
             handleNext={ (title, description) => this.goToStepTwo(title, description) }
             thumb={ thumb }
             thumbURL={ thumbURL }
-            handleVideoURL={ videoURL => displayVideoPreview(videoURL) } />
+            handleVideoURL={ videoURL => getThumbnail(videoURL) }
+            method={ method }
+            setUploadMethod={ nextMethod => setUploadMethod(nextMethod) }
+            resetVideo={ resetVideo }
+            isGoogleSignedIn={ isGoogleSignedIn }
+            initYoutubeUpload={ initYoutubeUpload }
+            signIn={ signIn } />
         );
 
       // step 2
@@ -86,13 +110,19 @@ const mapStateToProps = state => ({
   step: state.upload.step,
   title: state.upload.title,
   thumb: state.upload.thumb,
-  thumbURL: state.upload.thumbURL
+  thumbURL: state.upload.thumbURL,
+  method: state.upload.method,
+  isGoogleSignedIn: state.upload.isGoogleSignedIn
 });
 
 const mapDispatchToProps = dispatch => ({
   setStep: step => dispatch(actions.setStep(step)),
   setVideoData: (title, description) => dispatch(actions.setVideoData(title, description)),
-  displayVideoPreview: videoURL => dispatch(actions.displayVideoPreview(videoURL))
+  getThumbnail: videoURL => dispatch(actions.getThumbnail(videoURL)),
+  setUploadMethod: method => dispatch(actions.setUploadMethod(method)),
+  resetVideo: () => dispatch(actions.resetVideo()),
+  initYoutubeUpload: () => dispatch(actions.initYoutubeUpload()),
+  signIn: () => dispatch(actions.signIn())
 });
 
 export default connect(

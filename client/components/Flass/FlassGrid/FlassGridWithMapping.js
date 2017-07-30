@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import FlassGrid from './FlassGrid';
-import { fetchRequestMyChannelItems } from '../../../modules/Flass/FlassGrid/FlassGridActions';
+import { FETCH_MY_CHANNEL } from '../../../modules/Flass/FlassGrid/FlassGridActions';
 
 function mapStateToProps(state) {
   return {
@@ -11,8 +11,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchRequestMyChannelItems: userId => {
-      dispatch(fetchRequestMyChannelItems(userId));
-    },
+      dispatch({ type: FETCH_MY_CHANNEL, payload: { userId } });
+    }
   };
 }
 
