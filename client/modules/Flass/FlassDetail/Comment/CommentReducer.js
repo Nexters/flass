@@ -1,4 +1,4 @@
-import { FETCH_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_ERROR } from './CommentActions';
+import { FETCH_READY_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_ERROR } from './CommentActions';
 
 const initialState = {
   totalCount: 0,
@@ -7,9 +7,6 @@ const initialState = {
 
 const CommentReducer = (state = initialState, action) => {
   switch(action.type) {
-    case FETCH_COMMENT:
-      // TODO open loading bar
-      return state;
     case FETCH_COMMENT_SUCCESS:
       return {
         ...state,
@@ -17,7 +14,7 @@ const CommentReducer = (state = initialState, action) => {
         comments: action.comments
       };
     case FETCH_COMMENT_ERROR:
-    // TODO close loading bar
+    case FETCH_READY_COMMENT:
     default:
       return state;
   }
