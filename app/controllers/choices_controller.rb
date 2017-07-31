@@ -12,10 +12,11 @@ class ChoicesController < ApplicationController
   end
   
 
-  # # GET /choices/1
-  # # GET /choices/1.json
-  # def show
-  # end
+  # GET /choices/1
+  # GET /choices/1.json
+  def show
+    
+  end
 
   # GET /choices/new
   def new
