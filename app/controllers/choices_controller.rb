@@ -1,21 +1,12 @@
 class ChoicesController < ApplicationController
   before_action :set_choice, only: [:show, :edit, :update, :destroy]
 
-  # GET /choices
-  # GET /choices.json
-  def index
-    @choices = Choice.where(user_id: session[:user_id],lecture_id: params[:lecture_id])
-  end
 
-  def answer
-    @choices = Choice.where(lecture_id: params[:lecture_id])
-  end
-  
 
   # GET /choices/1
   # GET /choices/1.json
   def show
-    
+    @choices = Choice.where(lecture_id: params[:lecture_id])
   end
 
   # GET /choices/new
