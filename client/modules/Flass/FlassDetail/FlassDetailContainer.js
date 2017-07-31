@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
 import FlassDetail from '../../../components/Flass/FlassDetail/FlassDetail';
-import { fetchRequestDetailAll, fetchRequestDetail, FLASS_DETAIL_TEST } from './FlassDetailActions';
-import { fetchRequestComment } from './Comment/CommentActions';
-import { fetchRequestQuestion } from './Question/QuestionActions';
+import { fetchRequestDetailAll, FETCH_DETAIL } from './FlassDetailActions';
 
 function mapStateToProps(state) {
   return {
@@ -13,16 +11,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchRequestDetailAll: detailId => {
-      dispatch(fetchRequestDetailAll(detailId));
-    },
-    fetchRequestDetail: detailId => {
-      dispatch(fetchRequestDetail(detailId));
-    },
-    fetchRequestComment: detailId => {
-      dispatch(fetchRequestComment(detailId));
-    },
-    fetchRequestQuestion: detailId => {
-      dispatch(fetchRequestQuestion(detailId));
+      dispatch({
+        type: FETCH_DETAIL,
+        detailId
+      });
     }
   };
 }

@@ -1,29 +1,31 @@
 import fetch from 'axios';
+import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 
 export const FETCH_COMMENT = 'FETCH_COMMENT';
+export const FETCH_READY_COMMENT = 'FETCH_READY_COMMENT';
 export const FETCH_COMMENT_SUCCESS = 'FETCH_COMMENT_SUCCESS';
 export const FETCH_COMMENT_ERROR = 'FETCH_COMMENT_ERROR';
 
-export const fetchRequestComment = detailId => dispatch => {
-  dispatch(() => ({ type: FETCH_COMMENT }));
-  return fetch('/json/FlassComment.json')
-  .then(res => dispatch(fetchCommentSuccess(res.data)))
-  .catch(err => dispatch(fetchCommentError(err)));
-};
+function* fetchRequestComment({ detailId }) {
+  yield put({ type: FETCH_READY_COMMENT });
 
-export const fetchCommentSuccess = (comments => ({
-  type: FETCH_COMMENT_SUCCESS,
-  comments
-}));
-
-export const fetchCommentError = err => ({
-  type: FETCH_COMMENT_ERROR,
-  message: err.message
-});
+  try {
+    const response = yield call(fetch, '/json/FlassComment.json');
+    yield put({
+      type: FETCH_COMMENT_SUCCESS,
+      comments: response.data
+    });
+  } catch (err) {
+    yield put({
+      type: FETCH_COMMENT_ERROR,
+      message: err.message
+    });
+  }
+}
 
 export const ADDD_COMMENT = 'ADD_COMMENT';
 
-export const addComment = (comment) => dispatch => {
+export const addComment = comment => dispatch => {
   // TODO 낙관적인 업데이트
   dispatch(() => ({ type: ADDD_COMMENT }));
   fetch('/json/FlassComment.json', {
@@ -32,3 +34,7 @@ export const addComment = (comment) => dispatch => {
   .then(res => dispatch(fetchCommentSuccess(res.data)))
   .catch(err => dispatch(fetchCommentError(err)));
 };
+
+export default function* rootSaga() {
+  yield takeLatest(FETCH_COMMENT, fetchRequestComment);
+}

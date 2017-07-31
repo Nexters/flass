@@ -19,9 +19,6 @@ const propTypes = {
     totalCount: PropTypes.number
   }).isRequired,
   fetchRequestDetailAll: PropTypes.func.isRequired,
-  // fetchRequestDetail: PropTypes.func.isRequired,
-  // fetchRequestQuestion: PropTypes.func.isRequired,
-  // fetchRequestComment: PropTypes.func.isRequired
 };
 
 const defaultProps = {
