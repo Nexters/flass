@@ -1,15 +1,9 @@
 class ReplayAtsController < ApplicationController
-  before_action :set_replay_at, only: [:show, :edit, :update, :destroy]
+  before_action :set_replay_at, only: [:edit, :update, :destroy]
 
-  # GET /replay_ats
-  # GET /replay_ats.json
-  def index
-    @replay_ats = ReplayAt.where(user_id: session[:user_id])
-  end
-
-  # GET /replay_ats/1
-  # GET /replay_ats/1.json
   def show
+    @replay_at = ReplayAt.where(user_id: session[:user_id], lecture_id: params['lecture_id'])
+    render json: @replay_at
   end
 
   # GET /replay_ats/new
