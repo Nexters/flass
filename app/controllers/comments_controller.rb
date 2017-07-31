@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.where(user_id: session[:user_id])
+    @comments = Comment.where(lecture_id: params[:lecture_id])
   end
 
   # GET /comments/1
