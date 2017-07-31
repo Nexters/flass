@@ -4,7 +4,7 @@ class ChoicesController < ApplicationController
   # GET /choices
   # GET /choices.json
   def index
-    @choices = Choice.all
+    @choices = Choice.where(user_id: session[:user_id])
   end
 
   # # GET /choices/1
@@ -34,29 +34,6 @@ class ChoicesController < ApplicationController
     end
   end
 
-  # # PATCH/PUT /choices/1
-  # # PATCH/PUT /choices/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @choice.update(choice_params)
-  #       format.html { redirect_to @choice, notice: 'Choice was successfully updated.' }
-  #       format.json { render :show, status: :ok, location: @choice }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @choice.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-  # # DELETE /choices/1
-  # # DELETE /choices/1.json
-  # def destroy
-  #   @choice.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to choices_url, notice: 'Choice was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
