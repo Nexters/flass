@@ -7,9 +7,9 @@ class ChoicesController < ApplicationController
     @choices = Choice.where(user_id: session[:user_id],lecture_id: params[:lecture_id])
   end
 
-  # def index
-  #   @choices = Choice.where(lecture_id: params[:lecture_id])
-  # end
+  def answer
+    @choices = Choice.where(lecture_id: params[:lecture_id])
+  end
   
 
   # # GET /choices/1
