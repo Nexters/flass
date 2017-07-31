@@ -4,7 +4,7 @@ class NotificationsController < ApplicationController
   # GET /notifications
   # GET /notifications.json
   def index
-    @notifications = Notification.all
+    @notifications = Notification.where(user_id: session[:user_id]).order(created_at: :desc)
   end
 
   # GET /notifications/1
@@ -26,28 +26,20 @@ class NotificationsController < ApplicationController
   def create
     @notification = Notification.new(notification_params)
 
-    respond_to do |format|
-      if @notification.save
-        format.html { redirect_to @notification, notice: 'Notification was successfully created.' }
-        format.json { render :show, status: :created, location: @notification }
-      else
-        format.html { render :new }
-        format.json { render json: @notification.errors, status: :unprocessable_entity }
-      end
+    if @notification.save
+      render :show, status: :created, location: @notification
+    else
+      render json: @notification.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /notifications/1
   # PATCH/PUT /notifications/1.json
   def update
-    respond_to do |format|
-      if @notification.update(notification_params)
-        format.html { redirect_to @notification, notice: 'Notification was successfully updated.' }
-        format.json { render :show, status: :ok, location: @notification }
-      else
-        format.html { render :edit }
-        format.json { render json: @notification.errors, status: :unprocessable_entity }
-      end
+    if @notification.update(notification_params)
+      render :show, status: :ok, location: @notification
+    else
+      render json: @notification.errors, status: :unprocessable_entity
     end
   end
 
@@ -55,10 +47,7 @@ class NotificationsController < ApplicationController
   # DELETE /notifications/1.json
   def destroy
     @notification.destroy
-    respond_to do |format|
-      format.html { redirect_to notifications_url, notice: 'Notification was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
