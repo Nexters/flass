@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments = Comment.where(lecture_id: lecture[:lecture_id])
   end
 
   # GET /comments/1
@@ -52,6 +52,12 @@ class CommentsController < ApplicationController
     head :no_content
     end
   end
+
+
+  def recommend
+  
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
