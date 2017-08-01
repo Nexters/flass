@@ -3,12 +3,6 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
-  def index
-    @users = User.all
-  end
-
-  # GET /users/1
-  # GET /users/1.json
   def show
   end
 
@@ -17,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  # GET /users/1/edit
+  # GET /users/edit
   def edit
   end
 
@@ -37,8 +31,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # PATCH/PUT /users
+  # PATCH/PUT /users.json
   def update
     respond_to do |format|
       if @user.update(user_params)

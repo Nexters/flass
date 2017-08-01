@@ -3,13 +3,8 @@ class QuestionsController < ApplicationController
 
   # GET /questions
   # GET /questions.json
-  def index
-    @questions = Question.where(lecture_id: params[:lecture_id])
-  end
-
-  # GET /questions/1
-  # GET /questions/1.json
   def show
+    @questions = Question.where(lecture_id: params[:lecture_id])
   end
 
   # GET /questions/new
@@ -17,7 +12,7 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
-  # GET /questions/1/edit
+  # GET /questions/edit
   def edit
   end
 
@@ -33,8 +28,8 @@ class QuestionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /questions/1
-  # PATCH/PUT /questions/1.json
+  # PATCH/PUT /questions
+  # PATCH/PUT /questions.json
   def update
     if @question.update(question_params)
       render json: @question, status: :ok
@@ -43,8 +38,8 @@ class QuestionsController < ApplicationController
     end
   end
 
-  # DELETE /questions/1
-  # DELETE /questions/1.json
+  # DELETE /questions
+  # DELETE /questions.json
   def destroy
     @question.destroy
     head :no_content

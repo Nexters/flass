@@ -3,13 +3,8 @@ class LecturesController < ApplicationController
 
   # GET /lectures
   # GET /lectures.json
-  def index
-    @lectures = Lecture.where(user_id: session[:user_id]).order(created_at: :desc)
-  end
-
-  # GET /lectures/1
-  # GET /lectures/1.json
   def show
+    @lectures = Lecture.where(user_id: session[:user_id]).order(created_at: :desc)
   end
 
   # GET /lectures/new
@@ -17,7 +12,7 @@ class LecturesController < ApplicationController
     @lecture = Lecture.new
   end
 
-  # GET /lectures/1/edit
+  # GET /lectures/edit
   def edit
     if @lecture.user_id == session[:user_id]
       render json: @lecture, status: :ok
@@ -38,8 +33,8 @@ class LecturesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /lectures/1
-  # PATCH/PUT /lectures/1.json
+  # PATCH/PUT /lectures
+  # PATCH/PUT /lectures.json
   def update
     if @lecture.update(lecture_params)
       render json: @lecture, status: :ok
@@ -48,8 +43,8 @@ class LecturesController < ApplicationController
     end
   end
 
-  # DELETE /lectures/1
-  # DELETE /lectures/1.json
+  # DELETE /lectures
+  # DELETE /lectures.json
   def destroy
     @lecture.destroy
     head :no_content
