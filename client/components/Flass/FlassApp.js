@@ -52,10 +52,10 @@ class FlassApp extends Component {
       <MuiThemeProvider muiTheme={ flassTheme }>
         <div>
           <FlassAppBar isLogin />
+          <FlassDrawer />
           <FlassContent>
             {this.renderContent()}
           </FlassContent>
-          <FlassDrawer />
         </div>
       </MuiThemeProvider>
     );

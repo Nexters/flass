@@ -1,27 +1,14 @@
 @import "../FlassApp";
 
-$flassDrawerWidth: 6rem;
+$flassDrawerWidth: 8rem;
 
 .flass-drawer {
-  position: fixed;
-  top: 0;
-  padding-top: $flassAppBarHeight !important;
+  position: relative;
   width: $flassDrawerWidth;
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
   background-color: #eee;
-  height: 100%;
-  min-height: 20rem;
-}
-
-.flass-drawer-top {
-  height: 100%;
-}
-
-$drawerBottomHeight: 13rem;
-
-.flass-drawer-bottom {
-  position: relative;
-  bottom: $drawerBottomHeight;
-  height: $drawerBottomHeight;
+  min-height: 40rem;
+  float: left;
+  z-index: 9999;
 }

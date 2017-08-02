@@ -1,6 +1,6 @@
 @import "../../Video/VideoVariables";
 
-$mediaHeight: 400px;
+$mediaHeight: 320px;
 $playerHeight: 300px;
 $playerWidth: 700px;
 
@@ -9,10 +9,6 @@ $playerWidth: 700px;
     min-height: 21rem;
 
     .flass-detail-media {
-      position: relative;
-      width: 60%;
-      float: left;
-
       &__player {
         width: $playerWidth;
         height: $playerHeight;
@@ -54,17 +50,16 @@ $playerWidth: 700px;
         height: $mediaHeight;
       }
     }
-
-    .flass-detail-question-list {
-      display: inline-block;
-      width: 35%;
-      height: $playerHeight;
-      margin: 0 1rem;
-    }
   }
 
   .flass-detail-tabs {
+    padding: 1rem;
+    background-color: #fff;
 
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+      border: 0px;
+      border-bottom: 1px solid #000;
+    }
   }
 }
 
