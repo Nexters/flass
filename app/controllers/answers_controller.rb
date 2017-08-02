@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
   # GET /answers/1
   # GET /answers/1.json
   def show
+    @answers = Answer.where(user_id: session[:user_id], question_id: params[:question_id])
     
   end
 
@@ -22,9 +23,7 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(answer_params)
 
-    respond_to do |format|
-      if @answer.save
-        
+      if @answer.save 
         render :show, status: :created, location: @answer 
       else
        render json: @answer.errors, status: :unprocessable_entity 
