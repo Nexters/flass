@@ -1,4 +1,4 @@
-import { FETCH_QUESTION, FETCH_QUESTION_SUCCESS, FETCH_QUESTION_ERROR } from './FlassQuestionActions';
+import { FETCH_READY_QUESTION, FETCH_QUESTION_SUCCESS, FETCH_QUESTION_ERROR } from './QuestionActions';
 
 const initialState = {
   totalCount: 0,
@@ -7,16 +7,13 @@ const initialState = {
 
 const FlassQuestionReducer = (state = initialState, action) => {
   switch(action.type) {
-    case FETCH_QUESTION:
-      // TODO open loading bar
-      return state;
     case FETCH_QUESTION_SUCCESS:
       return {
         ...state,
         questions: action.questions
       };
+    case FETCH_READY_QUESTION:
     case FETCH_QUESTION_ERROR:
-    // TODO close loading bar
     default:
       return state;
   }

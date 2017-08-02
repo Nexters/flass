@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Divider, Subheader } from 'material-ui';
+import {Grid, Row, Col, Panel} from 'react-bootstrap';
 import AnalysisItem from './AnalysisItem';
+
 
 const propTypes = {};
 
@@ -14,8 +16,30 @@ class Analysis extends Component {
   render() {
     return (
       <div>
-        <Subheader>답변자 수</Subheader>
-        <Divider />
+        <Grid>
+          <Row>
+            <Col xs={3} md={3}>
+              <Panel>
+                Basic panel example
+              </Panel>
+            </Col>
+            <Col xs={3} md={3}>
+              <Panel>
+                Basic panel example
+              </Panel>
+            </Col>
+            <Col xs={3} md={3}>
+              <Panel>
+                Basic panel example
+              </Panel>
+            </Col>
+            <Col xs={3} md={3}>
+              <Panel>
+                Basic panel example
+              </Panel>
+            </Col>
+          </Row>
+        </Grid>
         <AnalysisItem />
       </div>
     );

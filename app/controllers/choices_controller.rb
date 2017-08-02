@@ -3,11 +3,18 @@ class ChoicesController < ApplicationController
 
 
 
+
   # GET /choices/1
   # GET /choices/1.json
   def show
     @choices = Choice.where(lecture_id: params[:lecture_id])
   end
+
+
+  # # GET /choices/1
+  # # GET /choices/1.json
+  # def show
+  # end
 
   # GET /choices/new
   def new
@@ -31,7 +38,10 @@ class ChoicesController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
  
+=======
+>>>>>>> 006b8268e23e4ba8bc4f0e631aeccdb76722235f
 
   private
     # Use callbacks to share common setup or constraints between actions.

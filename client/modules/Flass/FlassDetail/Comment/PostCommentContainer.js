@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import FlassApp from './FlassApp';
-
+import { reduxForm } from 'redux-form';
+import PostComment from '../../../../components/Flass/FlassDetail/Comment/PostComment';
 
 function mapStateToProps(state) {
   return {
@@ -15,4 +15,6 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FlassApp);
+)(reduxForm({
+  form: 'postComment',
+})(PostComment));

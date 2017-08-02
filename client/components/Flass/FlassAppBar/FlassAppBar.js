@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import AppBar from 'material-ui/AppBar';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import FlassUserAppBar from './FlassUserAppBar';
 import './FlassAppBar.scss';
 
+
 const propTypes = {
-  isLogin: PropTypes.bool,
+  isLogin: PropTypes.bool
 };
 
 const defaultProps = {
-  isLogin: false,
+  isLogin: false
 };
 
 class FlassAppBar extends Component {
@@ -19,12 +20,18 @@ class FlassAppBar extends Component {
     const { isLogin } = this.props;
 
     return (
-      <AppBar
-        className="flass-app-bar"
-        showMenuIconButton={ false }
-        title={ <a href="/" className="flass-app-bar-title">Flass</a> }
-        titleStyle={ { paddingTop: 10, paddingLeft: 3 } }
-        iconElementRight={ isLogin ? <FlassUserAppBar /> : '' } />
+      <Navbar className="flass-app-bar" staticTop>
+        <Navbar.Header className="flass-app-bar-title">
+          <Navbar.Brand>
+            First Flip Learning Platform
+          </Navbar.Brand>
+        </Navbar.Header>
+        <Nav pullRight>
+          <NavItem>
+            { isLogin ? <FlassUserAppBar /> : '' }
+          </NavItem>
+        </Nav>
+      </Navbar>
     );
   }
 }

@@ -36,12 +36,9 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-<<<<<<< HEAD
-
-=======
 #gem 'devise'
->>>>>>> 9ee686b6d5b3e4c90a4e3b6814be9b3ce43fb0d4
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem 'will_paginate'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
