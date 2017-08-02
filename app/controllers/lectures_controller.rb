@@ -4,12 +4,7 @@ class LecturesController < ApplicationController
   # GET /lectures
   # GET /lectures.json
   def show
-    @lectures = Lecture.where(user_id: session[:user_id]).order(created_at: :desc)
-  end
-
-  # GET /lectures/new
-  def new
-    @lecture = Lecture.new
+    @lectures = Lecture.where(user_id: session[:user_id]).order(created_at: :desc).paginate(page: params[:page], per_page: 10)
   end
 
   # GET /lectures/edit
