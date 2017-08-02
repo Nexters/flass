@@ -1,15 +1,11 @@
 
 .flass-post-comment {
-  .flass-post-comment-profile {
-    padding: 16px;
-    height: 40px;
-    width: 40px;
+  height: 14rem;
+  text-align: left;
+  .flass-post-comment-label {
     float: left;
-    border-radius: 50%;
   }
-
-  .flass-post-comment-text {
-    display: inline-block;
-    width: 90%;
+  .flass-post-comment-btn {
+    float: right;
   }
 }

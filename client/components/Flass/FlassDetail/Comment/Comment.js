@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Avatar, Divider, List, ListItem } from 'material-ui';
 import _ from 'lodash';
 import PostComment from '../../../../modules/Flass/FlassDetail/Comment/PostCommentContainer';
+import CommentItem from './CommentItem';
 
 const propTypes = {
   comments: PropTypes.array
@@ -18,14 +19,12 @@ class Comment extends Component {
   renderChild() {
     const { comments } = this.props;
     return comments.map(comment => {
-      const profile = <Avatar src={ comment.profileUrl } />;
       const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
-      return (<ListItem
+      return (<CommentItem
         key={ comment.id }
-        leftAvatar={ profile }
-        primaryText={ comment.userName }
-        secondaryText={ content }
-        secondaryTextLines={ 2 } />);
+        userName={ comment.userName }
+        content={ content }
+      />);
     });
   }
 
