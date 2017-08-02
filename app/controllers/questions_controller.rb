@@ -7,11 +7,6 @@ class QuestionsController < ApplicationController
     @questions = Question.where(lecture_id: params[:lecture_id])
   end
 
-  # GET /questions/new
-  def new
-    @question = Question.new
-  end
-
   # GET /questions/edit
   def edit
   end
