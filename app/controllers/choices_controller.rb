@@ -11,11 +11,6 @@ class ChoicesController < ApplicationController
   end
 
 
-  # # GET /choices/1
-  # # GET /choices/1.json
-  # def show
-  # end
-
   # GET /choices/new
   def new
     @choice = Choice.new
@@ -37,11 +32,6 @@ class ChoicesController < ApplicationController
       end
     end
   end
-
-<<<<<<< HEAD
- 
-=======
->>>>>>> 006b8268e23e4ba8bc4f0e631aeccdb76722235f
 
   private
     # Use callbacks to share common setup or constraints between actions.
