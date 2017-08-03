@@ -1,15 +1,8 @@
 @import "./FlassApp";
-@import "FlassDrawer/FlassDrawer";
-
-$flassContentPadding: 1.5rem;
+@import "./FlassDrawer/FlassDrawer";
+@import './FlassAppVariables';
 
 .flass-content {
-  position: relative;
-  top: $flassAppBarHeight;
-  left: $flassDrawerWidth;
-  padding: $flassContentPadding;
-  width: 85%;
-  min-width: 50rem;
-  max-width: 150rem;
-  overflow: auto;
+  margin-top: $AppBarMinHeight;
+  padding-left: $flassDrawerWidth;
 }

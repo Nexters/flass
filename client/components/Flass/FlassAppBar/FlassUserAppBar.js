@@ -21,14 +21,11 @@ class FlassUserAppBar extends Component {
 
   render() {
     return (
-      <div className="flass-user-app-bar">
-        <FlassBadge badges={ this.props.badges } />
+      <div>
+        <FlassBadge />
         <span>
         이름
         </span>
-        <SvgIcon>
-          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-        </SvgIcon>
       </div>
     );
   }

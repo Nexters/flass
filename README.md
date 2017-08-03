@@ -82,4 +82,7 @@ https://www.vobour.com/book/view/LCETueEN7i3MjvEcz
 - moment : 날짜 조작 관련 라이브러리
 - chart.js : 그래프 라이브러리
 
+## Issue
+add "transform-class-properties" // https://stackoverflow.com/questions/31362292/how-to-use-arrow-functions-public-class-fields-as-class-methods
+
 ## Heroku

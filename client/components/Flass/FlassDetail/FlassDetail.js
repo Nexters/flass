@@ -1,14 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Subheader from 'material-ui/Subheader';
-import { Tabs, Tab } from 'material-ui/Tabs';
 import CircularProgress from 'material-ui/CircularProgress';
-import Question from './Question/Question';
+import { Tab, Tabs } from 'react-bootstrap';
+import styled from 'styled-components';
+
+import Content from './Content/Content';
 import Comment from './Comment/Comment';
 import Analysis from './Analysis/Analysis';
 import Video from './Video/Video';
+import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
 
+import color from '../common/colors.scss';
 import './FlassDetail.scss';
+
+const TabIcon = styled.div`
+  width: 20.1px;
+  height: 20.1px;
+  border: solid 2px #176d99;
+  border: solid 2px var(--light-navy);
+`;
+
+const TabTitle = styled.span`
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: ${color['slate-grey']};
+`;
 
 const propTypes = {
   match: PropTypes.object,
@@ -18,7 +34,7 @@ const propTypes = {
     comments: PropTypes.array,
     totalCount: PropTypes.number
   }).isRequired,
-  fetchRequestDetailAll: PropTypes.func.isRequired,
+  fetchRequestDetailAll: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -30,19 +46,21 @@ const defaultProps = {
 };
 
 class FlassDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      key: 2
+    };
+  }
+
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchRequestDetailAll(id);
   }
 
-  handleChange = value => {
-    switch(value) {
-      case 'question' :
-        break;
-      case 'anaylsis' :
-        break;
-    }
-  };
+  handleSelect = key => {
+    this.setState({ key });
+  }
 
   render() {
     const { detail, question } = this.props;
@@ -56,34 +74,25 @@ class FlassDetail extends Component {
     }
     return (
       <div className="flass-detail">
+        <FlassContentTitleComponent title="Watching Video" />
         <div className="flass-detail-contents">
-          <Subheader>{detail.title}</Subheader>
-          <div>
-            <Video
-              VideoContainerClassName={ [
-                'flass-detail-media',
-                'flass-detail-media--larger-height'
-              ] }
-              VideoPlayerClassName="flass-detail-media__player"
-              VideoControllerBarClassName="flass-detail-media__controller-bar"
-              VideoPlayedBarClassName="played-bar--thinner"
-              VideoLoadedBarClassName="loaded-bar--thinner"
-              VideoQuizIndicatorClassName="quiz-indicator--thinner"
-              VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
-              VideoPlayPauseBtnClassName="video-btn"
-              VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] }
-              VideoModalClassName="flass-detail-media__modal"
-              VideoModalQuestionClassName="flass-detail-media__modal__question" />
+          <Video
+            VideoContainerClassName={ 'flass-detail-media' }
+            VideoPlayerClassName="flass-detail-media__player"
+            VideoControllerBarClassName="flass-detail-media__controller-bar"
+            VideoPlayedBarClassName="played-bar--thinner"
+            VideoLoadedBarClassName="loaded-bar--thinner"
+            VideoQuizIndicatorClassName="quiz-indicator--thinner"
+            VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
+            VideoPlayPauseBtnClassName="video-btn"
+            VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] }
+            VideoModalClassName="flass-detail-media__modal"
+            VideoModalQuestionClassName="flass-detail-media__modal__question" />
 
-            <Question
-              questions={ question.questions }
-              QuestionListClassName="flass-detail-question-list" />
+          <div className="flass-detail-tabs">
+            {this.renderTabs()}
           </div>
-          <p>
-            {detail.content}
-          </p>
         </div>
-        {this.renderTabs()}
       </div>
     );
   }
@@ -91,13 +100,17 @@ class FlassDetail extends Component {
   renderTabs() {
     const { comment } = this.props;
 
+    const tabTitle = (title, src) => <TabTitle>{title}</TabTitle>;
+    const src = 'http://via.placeholder.com/25x25';
     return (<div className="flass-detail-tabs">
-      <Tabs
-        onChange={ this.handleChange }>
-        <Tab label={ `질문 ${comment.totalCount}` } value="question">
+      <Tabs activeKey={ this.state.key } onSelect={ this.handleSelect }>
+        <Tab eventKey={ 1 } title={ tabTitle('강의 정보', src) }>
+          <Content />
+        </Tab>
+        <Tab eventKey={ 2 } title={ tabTitle(`학생 질문 - ${comment.totalCount}`, src) }>
           <Comment comments={ comment.comments } />
         </Tab>
-        <Tab label="분석" value="anaylsis">
+        <Tab eventKey={ 3 } title={ tabTitle('분석', src) }>
           <Analysis />
         </Tab>
       </Tabs>

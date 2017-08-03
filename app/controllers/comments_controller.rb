@@ -1,11 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
-  # GET /comments
-  # GET /comments.json
-  def index
-    @comments = Comment.where(lecture_id: lecture[:lecture_id])
-  end
+ 
 
   # GET /comments/1
   # GET /comments/1.json

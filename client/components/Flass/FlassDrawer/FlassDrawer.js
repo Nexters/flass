@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { ListGroup, ListGroupItem, Nav, Navbar, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentSend from 'material-ui/svg-icons/content/send';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
-import { List, ListItem } from 'material-ui/List';
-import FlassDrawerItem from './FlassDrawerItem';
 import './FlassDrawer.scss';
 
 const propTypes = {
@@ -22,22 +21,33 @@ class FlassDrawer extends Component {
 
   render() {
     return (
-      <List className="flass-drawer">
-        <div className="flass-drawer-top">
-          <Link to="/channel/me">
-            <FlassDrawerItem icon={ <ContentInbox /> }>내 채널</FlassDrawerItem>
-          </Link>
-          <Link to="/upload">
-            <FlassDrawerItem icon={ <ActionGrade /> }>새 영상 만들기</FlassDrawerItem>
-          </Link>
-          <FlassDrawerItem icon={ <ContentSend /> }>구독 영상</FlassDrawerItem>
-        </div>
-        <div className="flass-drawer-bottom">
-          <Divider className="flass-drawer-bottom-divider" />
-          <FlassDrawerItem icon={ <ContentDrafts /> }>설정</FlassDrawerItem>
-          <FlassDrawerItem icon={ <ContentInbox /> }>로그아웃</FlassDrawerItem>
-        </div>
-      </List>
+      <Navbar className="flass-drawer" fluid>
+        <Navbar.Header>
+          <LinkContainer to="/">
+            <Navbar.Brand>
+              <ContentInbox />
+            </Navbar.Brand>
+          </LinkContainer>
+        </Navbar.Header>
+        <Nav>
+          <LinkContainer to="/channel/me">
+            <NavItem>
+              <ContentInbox />
+            </NavItem>
+          </LinkContainer>
+          <LinkContainer to="/upload">
+            <NavItem>
+              <ActionGrade />
+            </NavItem>
+          </LinkContainer>
+          <NavItem>
+            <ContentDrafts />
+          </NavItem>
+          <NavItem>
+            <ContentInbox />
+          </NavItem>
+        </Nav>
+      </Navbar>
     );
   }
 }
