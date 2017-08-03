@@ -38,7 +38,7 @@ const VideoButtonComponent = props => {
       className={ classNames(buttonClass) }
       onClick={ onButtonClick }
       value={ value }>
-      <img srcSet={ `${srcSet}` } alt="test alt" />
+      <img srcSet={ `${srcSet}` } className="video-btn__icon" alt="Video controller button" />
     </button>
   );
 };

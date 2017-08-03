@@ -26,6 +26,8 @@ import * as actions from '../../../../modules/Quiz/quiz';
 
 import PlayBtnIcon from '../../../../../public/play_arrow_24dp_1x.png';
 import PauseBtnIcon from '../../../../../public/pause_24dp_1x.png';
+import VolumeOnBtnIcon from '../../../../../public/volume_up_24dp_1x.png';
+import VolumeOffBtnIcon from '../../../../../public/volume_off_24dp_1x.png';
 import FullscreenBtnIcon from '../../../../../public/web_asset_24dp_1x.png';
 
 const { string, oneOfType, arrayOf, func, number } = PropTypes;
@@ -43,6 +45,8 @@ const propTypes = {
   VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoModalClassName: oneOfType([string, arrayOf(string)]),
   VideoModalQuestionClassName: oneOfType([string, arrayOf(string)]),
+  VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
+  VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
 
   // 팝업 테스트를 위한 더미 action
   loadQuizs: func.isRequired,
@@ -62,6 +66,8 @@ const defaultProps = {
   VideoFullscreenBtnClassName: '',
   VideoModalClassName: '',
   VideoModalQuestionClassName: '',
+  VideoVolumeBtnClassName: '',
+  VideoVolumeBarClassName: '',
 
   // 팝업 테스트를 위한 더미 array
   quizTimeArrayForPopupTest: []
@@ -79,6 +85,8 @@ class Video extends Component {
       loaded: 0,
       duration: 0,
       playbackRate: 1.0,
+      isMute: false,
+      volumeBeforeMute: 0,
       isQuizSecs: false
     };
   }
@@ -88,7 +96,18 @@ class Video extends Component {
   }
 
   render() {
-    const { url, playing, volume, played, loaded, duration, playbackRate, youtubeConfig, isQuizSecs } = this.state;
+    const {
+      url,
+      playing,
+      volume,
+      isMute,
+      played,
+      loaded,
+      duration,
+      playbackRate,
+      youtubeConfig,
+      isQuizSecs
+    } = this.state;
     const {
       VideoContainerClassName,
       VideoPlayerClassName,
@@ -102,6 +121,8 @@ class Video extends Component {
       VideoFullscreenBtnClassName,
       VideoModalClassName,
       VideoModalQuestionClassName,
+      VideoVolumeBtnClassName,
+      VideoVolumeBarClassName,
 
       // 팝업 테스트를 위한 더미 array
       quizTimeArrayForPopupTest
@@ -159,6 +180,16 @@ class Video extends Component {
               srcSet={ PlayBtnIcon }
               onButtonClick={ this.onClickPlayPause } />
             <VideoButtonComponent
+              buttonClass={ VideoVolumeBtnClassName }
+              srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }
+              onButtonClick={ this.onClickVolumeBtn } />
+
+            <VideoVolumeBarComponent
+              onVolumeBarChange={ this.setVolume }
+              barClass={ VideoVolumeBarClassName }
+              volume={ volume } />
+
+            <VideoButtonComponent
               buttonClass={ VideoFullscreenBtnClassName }
               srcSet={ FullscreenBtnIcon }
               onButtonClick={ this.onClickFullscreen } />
@@ -182,6 +213,21 @@ class Video extends Component {
   onProgress(state) {
     if (!this.state.seeking) {
       this.setState(state);
+    }
+  }
+
+  @autobind
+  setVolume(e) {
+    this.setState({ volume: parseFloat(e.target.value) });
+  }
+
+  @autobind
+  onClickVolumeBtn() {
+    if (this.state.isMute) {
+      this.setState({ isMute: false, volume: this.state.volumeBeforeMute });
+    } else {
+      const volumeBeforeMute = this.state.volume;
+      this.setState({ isMute: true, volumeBeforeMute, volume: 0 });
     }
   }
 

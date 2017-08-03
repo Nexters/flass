@@ -1,11 +1,20 @@
 .video-btn {
+  display: inline-block;
   border: none;
   padding: 0,inherit;
   background: none;
   z-index: 3;
-  height: 100%;
 
   &--right {
     float: right;
+  }
+
+  &--l-margin {
+    margin-left: 10px;
+  }
+
+  &__icon {
+    height: 30px;
+    width: 30px;
   }
 }
