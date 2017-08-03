@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from 'material-ui/CircularProgress';
 import { Tab, Tabs } from 'react-bootstrap';
+import styled from 'styled-components';
+
 import Content from './Content/Content';
 import Comment from './Comment/Comment';
 import Analysis from './Analysis/Analysis';
@@ -33,7 +35,7 @@ class FlassDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: 2,
+      key: 1
     };
   }
 
@@ -84,7 +86,14 @@ class FlassDetail extends Component {
   renderTabs() {
     const { comment } = this.props;
 
-    const tabTitle = (title, src) => <span><img alt="" src={ src } /> {title}</span>;
+    const TabIcon = styled.div`
+      width: 20.1px;
+      height: 20.1px;
+      border: solid 2px #176d99;
+      border: solid 2px var(--light-navy);
+    `;
+
+    const tabTitle = (title, src) => <span>{title}</span>;
     const src = 'http://via.placeholder.com/25x25';
     return (<div className="flass-detail-tabs">
       <Tabs activeKey={ this.state.key } onSelect={ this.handleSelect }>
