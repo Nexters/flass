@@ -60,26 +60,22 @@ class FlassDetail extends Component {
       <div className="flass-detail">
         <FlassContentTitleComponent title="Watching Video" />
         <div className="flass-detail-contents">
-          <div>
-            <Video
-              VideoContainerClassName={ [
-                'flass-detail-media',
-                'flass-detail-media--larger-height'
-              ] }
-              VideoPlayerClassName="flass-detail-media__player"
-              VideoControllerBarClassName="flass-detail-media__controller-bar"
-              VideoPlayedBarClassName="played-bar--thinner"
-              VideoLoadedBarClassName="loaded-bar--thinner"
-              VideoQuizIndicatorClassName="quiz-indicator--thinner"
-              VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
-              VideoPlayPauseBtnClassName="video-btn"
-              VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] }
-              VideoModalClassName="flass-detail-media__modal"
-              VideoModalQuestionClassName="flass-detail-media__modal__question" />
+          <Video
+            VideoContainerClassName={ 'flass-detail-media' }
+            VideoPlayerClassName="flass-detail-media__player"
+            VideoControllerBarClassName="flass-detail-media__controller-bar"
+            VideoPlayedBarClassName="played-bar--thinner"
+            VideoLoadedBarClassName="loaded-bar--thinner"
+            VideoQuizIndicatorClassName="quiz-indicator--thinner"
+            VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
+            VideoPlayPauseBtnClassName="video-btn"
+            VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] }
+            VideoModalClassName="flass-detail-media__modal"
+            VideoModalQuestionClassName="flass-detail-media__modal__question" />
+
+          <div className="flass-detail-tabs">
+            {this.renderTabs()}
           </div>
-        </div>
-        <div className="flass-detail-tabs">
-          {this.renderTabs()}
         </div>
       </div>
     );
