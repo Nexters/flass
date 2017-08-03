@@ -6,6 +6,9 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
+
 import './FlassGrid.scss';
 
 
@@ -45,13 +48,17 @@ class FlassGrid extends Component {
 
   render() {
     return (
-      <GridList
-        cellHeight={ 200 }
-        cols={ 3 }
-        padding={ 20 }
-        className="flass-grid-list">
-        {this.renderChild()}
-      </GridList>
+      <div>
+        <FlassContentTitleComponent title="Home Channel" />
+
+        <GridList
+          cellHeight={ 200 }
+          cols={ 3 }
+          padding={ 20 }
+          className="flass-grid-list">
+          {this.renderChild()}
+        </GridList>
+      </div>
     );
   }
 }

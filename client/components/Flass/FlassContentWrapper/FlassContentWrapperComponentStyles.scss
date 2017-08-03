@@ -1,0 +1,7 @@
+@import '../FlassAppVariables';
+
+$FlassContentWrapperPadding: 70px;
+
+.flass-content-wrapper {
+  padding: 0 $FlassContentWrapperPadding;
+}
