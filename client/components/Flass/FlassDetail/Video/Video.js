@@ -36,6 +36,7 @@ const { string, oneOfType, arrayOf, func, number } = PropTypes;
 
 const propTypes = {
   VideoContainerClassName: oneOfType([string, arrayOf(string)]),
+  VideoPlayerWrapperClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayerClassName: oneOfType([string, arrayOf(string)]),
   VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
   VideoControllerBarClassName: oneOfType([string, arrayOf(string)]),
@@ -57,6 +58,7 @@ const propTypes = {
 
 const defaultProps = {
   VideoContainerClassName: '',
+  VideoPlayerWrapperClassName: '',
   VideoPlayerClassName: '',
   VideoProgressBarClassName: '',
   VideoControllerBarClassName: '',
@@ -114,6 +116,7 @@ class Video extends Component {
     } = this.state;
     const {
       VideoContainerClassName,
+      VideoPlayerWrapperClassName,
       VideoPlayerClassName,
       VideoProgressBarClassName,
       VideoControllerBarClassName,
@@ -135,6 +138,7 @@ class Video extends Component {
     return (
       <div className={ classNames(VideoContainerClassName) }>
         <VideoPlayerComponent
+          VideoPlayerWrapperClassName={ VideoPlayerWrapperClassName }
           VideoPlayerClassName={ VideoPlayerClassName }
           url={ url }
           playing={ playing }

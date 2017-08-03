@@ -79,6 +79,7 @@ class FlassDetail extends Component {
         <div className="flass-detail-contents">
           <Video
             VideoContainerClassName={ 'flass-detail-media' }
+            VideoPlayerWrapperClassName="flass-detail-media__player-wrapper"
             VideoPlayerClassName="flass-detail-media__player"
             VideoControllerBarClassName="flass-detail-media__controller-bar"
             VideoPlayedBarClassName="played-bar--thinner"
