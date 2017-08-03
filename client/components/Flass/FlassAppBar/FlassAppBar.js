@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import { Navbar, NavItem } from 'react-bootstrap';
+import NavbarComponent from './Navbar/NavbarComponent';
+import NavComponent from './Nav/NavComponent';
 import FlassUserAppBar from './FlassUserAppBar';
 import './FlassAppBar.scss';
 
@@ -20,18 +22,18 @@ class FlassAppBar extends Component {
     const { isLogin } = this.props;
 
     return (
-      <Navbar className="flass-app-bar" staticTop>
+      <NavbarComponent>
         <Navbar.Header className="flass-app-bar-title">
           <Navbar.Brand>
             First Flip Learning Platform
           </Navbar.Brand>
         </Navbar.Header>
-        <Nav pullRight>
+        <NavComponent isRight>
           <NavItem>
             { isLogin ? <FlassUserAppBar /> : '' }
           </NavItem>
-        </Nav>
-      </Navbar>
+        </NavComponent>
+      </NavbarComponent>
     );
   }
 }

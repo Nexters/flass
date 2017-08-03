@@ -6,6 +6,7 @@ import Content from './Content/Content';
 import Comment from './Comment/Comment';
 import Analysis from './Analysis/Analysis';
 import Video from './Video/Video';
+import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
 
 import './FlassDetail.scss';
 
@@ -57,7 +58,7 @@ class FlassDetail extends Component {
     }
     return (
       <div className="flass-detail">
-        <h2>{detail.title}</h2>
+        <FlassContentTitleComponent title="Watching Video" />
         <div className="flass-detail-contents">
           <div>
             <Video

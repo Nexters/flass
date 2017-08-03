@@ -1,0 +1,17 @@
+$FlassContentTitleMargin: 33px;
+$FlassContentTitleColor: #3f4a4b;
+
+.flass-content-title {
+  display: block;
+  width: 100%;
+  margin: $FlassContentTitleMargin 0;
+  font-size: 3rem;
+  font-weight: bold;
+  color: $FlassContentTitleColor;
+
+  &::before {
+    display: block;
+    content: "";
+    height: $FlassContentTitleMargin;
+  }
+}

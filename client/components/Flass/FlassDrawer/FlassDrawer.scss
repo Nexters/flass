@@ -1,14 +1,13 @@
 @import "../FlassApp";
-
-$flassDrawerWidth: 8rem;
+@import "../FlassAppVariables";
 
 .flass-drawer {
-  position: relative;
+  height: 100%;
+  position: fixed;
   width: $flassDrawerWidth;
+  top: 0;
+  left: 0;
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
   background-color: #eee;
-  min-height: 40rem;
-  float: left;
-  z-index: 9999;
 }

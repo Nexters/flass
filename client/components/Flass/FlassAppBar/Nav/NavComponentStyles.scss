@@ -1,0 +1,11 @@
+@import '../../FlassAppVariables';
+
+.flass-nav {
+  top: 0;
+  position: absolute;
+  list-style: none;
+
+  &--right {
+    right: $flassDrawerWidth;
+  }
+}

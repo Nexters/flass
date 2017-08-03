@@ -5,6 +5,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem  from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import PropTypes from 'prop-types';
+import FlassContentTitleComponent from '../Flass/FlassContentTitle/FlassContentTitleComponent';
 
 import * as actions from '../../modules/Upload/Actions';
 
@@ -62,6 +63,7 @@ class VideoUpload extends Component {
 
     return (
       <div>
+        <FlassContentTitleComponent title="Upload new video" />
         <div className="left-col">
           <SelectField
             floatingLabelText="업로드 방식"
