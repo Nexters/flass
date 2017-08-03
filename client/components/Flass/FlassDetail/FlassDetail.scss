@@ -15,10 +15,21 @@ $playerWidth: 100%;
       height: $playerHeight;
       border-radius: 3px;
 
-      &__player {
+      &__player-wrapper {
         width: $playerWidth;
         height: $playerHeight;
         border-radius: 3px;
+      }
+
+      &__player {
+        &::after {
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: transparent;
+          content: ""
+        }
       }
 
       &__modal {

@@ -14,6 +14,7 @@ const propTypes = {
   playbackRate: number.isRequired,
   volume: number.isRequired,
   youtubeConfig: object,
+  VideoPlayerWrapperClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayerClassName: oneOfType([string, arrayOf(string)])
 };
 
@@ -21,12 +22,14 @@ const defaultProps = {
   url: null,
   playing: false,
   youtubeConfig: undefined,
+  VideoPlayerWrapperClassName: '',
   VideoPlayerClassName: ''
 };
 
 class VideoPlayerComponent extends Component {
   render() {
     const {
+      VideoPlayerWrapperClassName,
       VideoPlayerClassName,
       onProgress,
       onDuration,
@@ -39,10 +42,10 @@ class VideoPlayerComponent extends Component {
     } = this.props;
 
     return (
-      <div className={ classNames(VideoPlayerClassName) }>
+      <div className={ classNames(VideoPlayerWrapperClassName) }>
         <ReactPlayer
           ref={ player => setPlayer(player) }
-          className="react-player"
+          className={ classNames('react-player', VideoPlayerClassName) }
           width="100%"
           height="100%"
           url={ url }
