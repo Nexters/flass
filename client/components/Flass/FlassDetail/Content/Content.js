@@ -7,6 +7,7 @@ import './Content.scss';
 
 const DetailContent = styled(Grid)`
   padding-top: 3rem;
+  padding-bottom: 4rem;
 `;
 
 const Title = styled.div`

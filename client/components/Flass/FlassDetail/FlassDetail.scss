@@ -53,7 +53,10 @@ $playerWidth: 100%;
   }
 
   .flass-detail-tabs {
-    background-color: #fff;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    background-color: $white;
+    box-shadow: 2px 4px 10px 0 rgba(79, 79, 79, 0.2);
 
     .nav-tabs {
       padding: 2rem 0 0 3rem;
@@ -61,7 +64,7 @@ $playerWidth: 100%;
     }
 
     .nav>li {
-      padding: 0 0 2rem 0;
+      padding: 0 0 1.5rem 0;
       margin-right: 2rem;
     }
 

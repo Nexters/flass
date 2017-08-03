@@ -10,7 +10,21 @@ import Analysis from './Analysis/Analysis';
 import Video from './Video/Video';
 import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
 
+import color from '../common/colors.scss';
 import './FlassDetail.scss';
+
+const TabIcon = styled.div`
+  width: 20.1px;
+  height: 20.1px;
+  border: solid 2px #176d99;
+  border: solid 2px var(--light-navy);
+`;
+
+const TabTitle = styled.span`
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: ${color['slate-grey']};
+`;
 
 const propTypes = {
   match: PropTypes.object,
@@ -35,7 +49,7 @@ class FlassDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: 1
+      key: 2
     };
   }
 
@@ -86,14 +100,7 @@ class FlassDetail extends Component {
   renderTabs() {
     const { comment } = this.props;
 
-    const TabIcon = styled.div`
-      width: 20.1px;
-      height: 20.1px;
-      border: solid 2px #176d99;
-      border: solid 2px var(--light-navy);
-    `;
-
-    const tabTitle = (title, src) => <span>{title}</span>;
+    const tabTitle = (title, src) => <TabTitle>{title}</TabTitle>;
     const src = 'http://via.placeholder.com/25x25';
     return (<div className="flass-detail-tabs">
       <Tabs activeKey={ this.state.key } onSelect={ this.handleSelect }>
