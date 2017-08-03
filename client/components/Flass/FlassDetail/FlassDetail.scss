@@ -1,14 +1,17 @@
 @import "../../Video/VideoVariables";
 
 $mediaHeight: 320px;
-$playerHeight: 300px;
-$playerWidth: 700px;
+$playerHeight: 650px;
+$playerWidth: 100%;
 
 .flass-detail {
   .flass-detail-contents {
     min-height: 21rem;
 
     .flass-detail-media {
+      position: relative;
+      height: $playerHeight;
+
       &__player {
         width: $playerWidth;
         height: $playerHeight;
@@ -44,10 +47,6 @@ $playerWidth: 700px;
         &:hover {
           opacity: 1;
         }
-      }
-
-      &--larger-height {
-        height: $mediaHeight;
       }
     }
   }
