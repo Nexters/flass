@@ -1,13 +1,8 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
-
-
+  protect_from_forgery prepend: true
   def login_check
-    @current_user = nil
-    if !session[:user_id]=nil?
-      @current_user = User.find(session[:user_id])
-    else
-      redirect_to "/users/login" #url은 바뀔 수 있음
+    if session[:user]=nil?
+      puts "로그인하세요"
     end
   end
 end
