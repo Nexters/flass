@@ -5,18 +5,21 @@ import './NavComponentStyles.scss';
 
 const propTypes = {
   children: PropTypes.element.isRequired,
-  isRight: PropTypes.string
+  isRight: PropTypes.bool,
+  Header: PropTypes.bool
 };
 
 const defaultProps = {
-  isRight: false
+  isRight: false,
+  Header: false
 };
 
 const NavComponent = props => (
   <div
     className={ classNames(
       'flass-nav',
-      { 'flass-nav--right': props.isRight }
+      { 'flass-nav--right': props.isRight },
+      { 'flass-nav__header': props.Header }
     ) }>
     { props.children }
   </div>

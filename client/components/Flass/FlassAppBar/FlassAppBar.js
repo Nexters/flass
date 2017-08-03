@@ -23,11 +23,10 @@ class FlassAppBar extends Component {
 
     return (
       <NavbarComponent>
-        <Navbar.Header className="flass-app-bar-title">
-          <Navbar.Brand>
-            First Flip Learning Platform
-          </Navbar.Brand>
-        </Navbar.Header>
+        <NavComponent Header>
+          First Flip Learning Platform
+        </NavComponent>
+
         <NavComponent isRight>
           <NavItem>
             { isLogin ? <FlassUserAppBar /> : '' }
