@@ -1,0 +1,10 @@
+body {
+  font-family: NotoSansCJKkr;
+  margin: 0;
+  background-color: #eee;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+}

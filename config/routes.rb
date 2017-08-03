@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   resource :users
   resource :comments
   resource :lectures
@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resource :choices
   resource :answers
   resource :questions
+
+  get 'users/logout'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
