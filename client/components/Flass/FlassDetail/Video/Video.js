@@ -11,9 +11,11 @@ import {
   VideoPlayerComponent,
   VideoButtonComponent,
   VideoVolumeBarComponent,
+  VideoTimePanelComponent,
   VideoCustomProgressBarComponent,
   VideoControllerWrapperComponent,
-  VideoModalComponent
+  VideoModalComponent,
+  VideoControllerAndBarWrapperComponent
 } from '../../../Video';
 
 import {
@@ -26,6 +28,8 @@ import * as actions from '../../../../modules/Quiz/quiz';
 
 import PlayBtnIcon from '../../../../../public/play_arrow_24dp_1x.png';
 import PauseBtnIcon from '../../../../../public/pause_24dp_1x.png';
+import VolumeOnBtnIcon from '../../../../../public/volume_up_24dp_1x.png';
+import VolumeOffBtnIcon from '../../../../../public/volume_off_24dp_1x.png';
 import FullscreenBtnIcon from '../../../../../public/web_asset_24dp_1x.png';
 
 const { string, oneOfType, arrayOf, func, number } = PropTypes;
@@ -43,6 +47,8 @@ const propTypes = {
   VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoModalClassName: oneOfType([string, arrayOf(string)]),
   VideoModalQuestionClassName: oneOfType([string, arrayOf(string)]),
+  VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
+  VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
 
   // 팝업 테스트를 위한 더미 action
   loadQuizs: func.isRequired,
@@ -62,6 +68,8 @@ const defaultProps = {
   VideoFullscreenBtnClassName: '',
   VideoModalClassName: '',
   VideoModalQuestionClassName: '',
+  VideoVolumeBtnClassName: '',
+  VideoVolumeBarClassName: '',
 
   // 팝업 테스트를 위한 더미 array
   quizTimeArrayForPopupTest: []
@@ -79,6 +87,9 @@ class Video extends Component {
       loaded: 0,
       duration: 0,
       playbackRate: 1.0,
+      isMute: false,
+      volumeBeforeMute: 0,
+      isVolumeBtnMouseOver: false,
       isQuizSecs: false
     };
   }
@@ -88,7 +99,19 @@ class Video extends Component {
   }
 
   render() {
-    const { url, playing, volume, played, loaded, duration, playbackRate, youtubeConfig, isQuizSecs } = this.state;
+    const {
+      url,
+      playing,
+      volume,
+      isMute,
+      isVolumeBtnMouseOver,
+      played,
+      loaded,
+      duration,
+      playbackRate,
+      youtubeConfig,
+      isQuizSecs
+    } = this.state;
     const {
       VideoContainerClassName,
       VideoPlayerClassName,
@@ -102,6 +125,8 @@ class Video extends Component {
       VideoFullscreenBtnClassName,
       VideoModalClassName,
       VideoModalQuestionClassName,
+      VideoVolumeBtnClassName,
+      VideoVolumeBarClassName,
 
       // 팝업 테스트를 위한 더미 array
       quizTimeArrayForPopupTest
@@ -133,36 +158,55 @@ class Video extends Component {
         }
 
         <div className={ VideoControllerBarClassName }>
-          <VideoCustomProgressBarComponent
-            VideoProgressBarClassName={ VideoProgressBarClassName }
-            VideoPlayedBarClassName={ VideoPlayedBarClassName }
-            VideoLoadedBarClassName={ VideoLoadedBarClassName }
-            VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
-            VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
+          <VideoControllerAndBarWrapperComponent>
+            <VideoCustomProgressBarComponent
+              VideoProgressBarClassName={ VideoProgressBarClassName }
+              VideoPlayedBarClassName={ VideoPlayedBarClassName }
+              VideoLoadedBarClassName={ VideoLoadedBarClassName }
+              VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
+              VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
 
-            duration={ duration }
-            playedPercentage={ played }
-            loadedPercentage={ loaded }
-            onCustomSeekBarMouseDown={ this.onCustomSeekBarMouseDown }
-            onCustomSeekBarChange={ this.onCustomSeekBarChange }
-            onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
-            onCustomSeekBarClick={ this.onCustomSeekBarClick }
-            onArrowKeyPressed={ this.onArrowKeyPressed }
+              duration={ duration }
+              playedPercentage={ played }
+              loadedPercentage={ loaded }
+              onCustomSeekBarMouseDown={ this.onCustomSeekBarMouseDown }
+              onCustomSeekBarChange={ this.onCustomSeekBarChange }
+              onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
+              onCustomSeekBarClick={ this.onCustomSeekBarClick }
+              onArrowKeyPressed={ this.onArrowKeyPressed }
 
-            quizTimeArray={ quizTimeArrayForPopupTest }
-            canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
-            isQuizSecs={ isQuizSecs } />
+              quizTimeArray={ quizTimeArrayForPopupTest }
+              canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
+              isQuizSecs={ isQuizSecs } />
 
-          <VideoControllerWrapperComponent>
-            <VideoButtonComponent
-              buttonClass={ VideoPlayPauseBtnClassName }
-              srcSet={ PlayBtnIcon }
-              onButtonClick={ this.onClickPlayPause } />
-            <VideoButtonComponent
-              buttonClass={ VideoFullscreenBtnClassName }
-              srcSet={ FullscreenBtnIcon }
-              onButtonClick={ this.onClickFullscreen } />
-          </VideoControllerWrapperComponent>
+            <VideoControllerWrapperComponent>
+              <VideoButtonComponent
+                buttonClass={ VideoPlayPauseBtnClassName }
+                srcSet={ playing ? PlayBtnIcon : PauseBtnIcon }
+                onButtonClick={ this.onClickPlayPause } />
+              <VideoButtonComponent
+                buttonClass={ VideoVolumeBtnClassName }
+                srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }
+                onButtonClick={ this.onClickVolumeBtn }
+                onButtonMouseOver={ this.onVolumeBtnMouseOver }
+                onButtonMouseLeave={ this.onVolumeBtnMouseLeave } />
+
+              <VideoVolumeBarComponent
+                onVolumeBarChange={ this.setVolume }
+                barClass={ VideoVolumeBarClassName }
+                volume={ volume }
+                visible={ isVolumeBtnMouseOver } />
+
+              <VideoTimePanelComponent
+                duration={ duration }
+                elapsed={ played * duration } />
+
+              <VideoButtonComponent
+                buttonClass={ VideoFullscreenBtnClassName }
+                srcSet={ FullscreenBtnIcon }
+                onButtonClick={ this.onClickFullscreen } />
+            </VideoControllerWrapperComponent>
+          </VideoControllerAndBarWrapperComponent>
         </div>
       </div>
     );
@@ -183,6 +227,31 @@ class Video extends Component {
     if (!this.state.seeking) {
       this.setState(state);
     }
+  }
+
+  @autobind
+  setVolume(e) {
+    this.setState({ volume: parseFloat(e.target.value) });
+  }
+
+  @autobind
+  onClickVolumeBtn() {
+    if (this.state.isMute) {
+      this.setState({ isMute: false, volume: this.state.volumeBeforeMute });
+    } else {
+      const volumeBeforeMute = this.state.volume;
+      this.setState({ isMute: true, volumeBeforeMute, volume: 0 });
+    }
+  }
+
+  @autobind
+  onVolumeBtnMouseOver() {
+    this.setState({ isVolumeBtnMouseOver: true });
+  }
+
+  @autobind
+  onVolumeBtnMouseLeave() {
+    this.setState({ isVolumeBtnMouseOver: false });
   }
 
   @autobind

@@ -8,6 +8,8 @@ const { func, string, number, oneOfType, arrayOf } = PropTypes;
 
 const propTypes = {
   onButtonClick: func.isRequired,
+  onButtonMouseOver: func,
+  onButtonMouseLeave: func,
   buttonTitle: string,
   buttonClass: oneOfType([string, arrayOf(string)]),
   value: oneOfType([
@@ -18,6 +20,8 @@ const propTypes = {
 };
 
 const defaultProps = {
+  onButtonMouseOver: null,
+  onButtonMouseLeave: null,
   buttonTitle: '',
   buttonClass: '',
   value: '',
@@ -28,6 +32,8 @@ const VideoButtonComponent = props => {
   const {
     buttonTitle,
     onButtonClick,
+    onButtonMouseOver,
+    onButtonMouseLeave,
     buttonClass,
     value,
     srcSet
@@ -37,8 +43,10 @@ const VideoButtonComponent = props => {
     <button
       className={ classNames(buttonClass) }
       onClick={ onButtonClick }
+      onMouseOver={ onButtonMouseOver }
+      onMouseLeave={ onButtonMouseLeave }
       value={ value }>
-      <img srcSet={ `${srcSet}` } alt="test alt" />
+      <img srcSet={ `${srcSet}` } className="video-btn__icon" alt="Video controller button" />
     </button>
   );
 };

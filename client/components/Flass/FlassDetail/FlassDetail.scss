@@ -1,3 +1,4 @@
+@import "../../../css/base/mixins";
 @import "../../Video/VideoVariables";
 @import '../common/colors';
 
@@ -12,10 +13,12 @@ $playerWidth: 100%;
     .flass-detail-media {
       position: relative;
       height: $playerHeight;
+      border-radius: 3px;
 
       &__player {
         width: $playerWidth;
         height: $playerHeight;
+        border-radius: 3px;
       }
 
       &__modal {
@@ -25,6 +28,7 @@ $playerWidth: 100%;
         height: $playerHeight;
         z-index: 10;
         background-color: rgba(0, 0, 0, .5);
+        border-radius: 3px;
 
         &__question {
           width: $playerWidth * 0.6;
@@ -39,14 +43,17 @@ $playerWidth: 100%;
       }
 
       &__controller-bar {
+        position: absolute;
         width: $playerWidth;
         height: $progressbarHeight;
-        position: absolute;
         top: $playerHeight - $progressbarHeight - 1px;
-        opacity: 0;
+        background-color: rgba(0, 0, 0, .32);
 
-        &:hover {
-          opacity: 1;
+        @include atPlayerLarge {
+          width: $playerWindowWidthAtLarge;
+          margin: 0 auto;
+          left: 0;
+          right: 0;
         }
       }
     }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import CircularProgress from 'material-ui/CircularProgress';
 import { Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -84,8 +85,10 @@ class FlassDetail extends Component {
             VideoLoadedBarClassName="loaded-bar--thinner"
             VideoQuizIndicatorClassName="quiz-indicator--thinner"
             VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
-            VideoPlayPauseBtnClassName="video-btn"
-            VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] }
+            VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
+            VideoVolumeBtnClassName="video-btn"
+            VideoVolumeBarClassName={ classNames('video-volume-bar') }
+            VideoFullscreenBtnClassName={ classNames('video-btn', 'video-btn--right', 'video-btn--r-margin') }
             VideoModalClassName="flass-detail-media__modal"
             VideoModalQuestionClassName="flass-detail-media__modal__question" />
 
