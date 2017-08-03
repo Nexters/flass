@@ -40,6 +40,7 @@ class VideoCustomBarComponent extends Component {
 
     return (
       <div>
+        <div className={ classNames('bar', 'bar--thinner') } />
         <div id="loaded-bar" className={ classNames('loaded-bar', VideoLoadedBarClassName) } />
         <div id="played-bar" className={ classNames('played-bar', VideoPlayedBarClassName) } />
       </div>

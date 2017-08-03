@@ -72,7 +72,7 @@ class FlassDetail extends Component {
             VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
             VideoVolumeBtnClassName="video-btn"
             VideoVolumeBarClassName={ classNames('video-volume-bar') }
-            VideoFullscreenBtnClassName={ ['video-btn', 'video-btn--right'] }
+            VideoFullscreenBtnClassName={ classNames('video-btn', 'video-btn--right', 'video-btn--r-margin') }
             VideoModalClassName="flass-detail-media__modal"
             VideoModalQuestionClassName="flass-detail-media__modal__question" />
 
