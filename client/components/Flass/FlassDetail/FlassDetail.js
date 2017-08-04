@@ -24,7 +24,7 @@ import './FlassDetail.scss';
 
 const TabIcon = styled.img`
   width: 15px;
-  margin-right: 3px;
+  margin-right: 1rem;
   margin-bottom: 2px;
 `;
 
@@ -57,7 +57,7 @@ class FlassDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 1
+      selected: 3
     };
   }
 
@@ -112,17 +112,29 @@ class FlassDetail extends Component {
     const { comment } = this.props;
     const { selected } = this.state;
 
-    const tabTitle = (title, src) => <TabTitle><TabIcon alt="" src={ src } /> {title}</TabTitle>;
-    const src = 'http://via.placeholder.com/25x25';
+    const tabTitle = (title, src) => (
+      <TabTitle>
+        <TabIcon alt="" src={ src } />
+        {title}
+      </TabTitle>);
     return (<div className="flass-detail-tabs">
-      <Tabs activeKey={ this.state.key } onSelect={ this.handleSelect }>
-        <Tab eventKey={ 1 } title={ tabTitle('강의 정보', selected === 1 ? contentImageActive : contentImage) }>
+      <Tabs activeKey={ selected } onSelect={ this.handleSelect }>
+        <Tab
+          eventKey={ 1 }
+          title={ tabTitle('강의 정보',
+          selected === 1 ? contentImageActive : contentImage) }>
           <Content />
         </Tab>
-        <Tab eventKey={ 2 } title={ tabTitle(`학생 질문 - ${comment.totalCount}`, selected === 2 ? commentImageActive : commentImage) }>
+        <Tab
+          eventKey={ 2 }
+          title={ tabTitle(`학생 질문 - ${comment.totalCount}`,
+          selected === 2 ? commentImageActive : commentImage) }>
           <Comment comments={ comment.comments } />
         </Tab>
-        <Tab eventKey={ 3 } title={ tabTitle('분석', selected === 3 ? analysisImageActive : analysisImage) }>
+        <Tab
+          eventKey={ 3 }
+          title={ tabTitle('분석',
+          selected === 3 ? analysisImageActive : analysisImage) }>
           <Analysis />
         </Tab>
       </Tabs>

@@ -18,7 +18,7 @@ const CommentMenu = styled.span`
   float: right;
 `;
 
-const Content = styled.p`
+const Content = styled.div`
   padding-top: 1rem;
   font-size: 1.4rem;
 `;
