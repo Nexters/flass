@@ -22,22 +22,20 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
 
-      if @comment.save
-        render :show, status: :created, location: @comment
-      else
-        render json: @comment.errors, status: :unprocessable_entity 
-      end
+    if @comment.save
+      render :show, status: :created, location: @comment
+    else
+      render json: @comment.errors, status: :unprocessable_entity 
     end
   end
 
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-      if @comment.update(comment_params)
-        render :show, status: :ok, location: @comment
-      else
-        render json: @comment.errors, status: :unprocessable_entity
-      end
+    if @comment.update(comment_params)
+      render :show, status: :ok, location: @comment
+    else
+      render json: @comment.errors, status: :unprocessable_entity
     end
   end
 
@@ -46,7 +44,6 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     head :no_content
-    end
   end
 
 

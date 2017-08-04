@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+User.delete_all
+Lecture.delete_all
+
+1.upto(10) do |i|
+	User.create({username: 'user_' + i.to_s, email: 'user_' + i.to_s, myprofileurl: 'user_' + i.to_s})
+end
+
+1.upto(10) do |i|
+	user = User.where(username: 'user_' + i.to_s).first
+	Lecture.create({user_id: user.id, title: 'lecture_' + i.to_s, content: 'lecture_' + i.to_s, url: 'lecture_' + i.to_s, thumbnail_url: 'lecture_' + i.to_s, duration: rand(10).to_s + ':' + rand(60).to_s})
+end

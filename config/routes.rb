@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  apipie
   resource :users
   resource :comments
   resource :lectures

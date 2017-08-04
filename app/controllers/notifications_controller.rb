@@ -1,50 +1,41 @@
 class NotificationsController < ApplicationController
-  before_action :set_notification, only: [:show, :edit, :update, :destroy]
+  before_action :set_notification, only: [:update, :destroy]
 
-  # GET /notifications
-  # GET /notifications.json
-  def index
-    @notifications = Notification.where(user_id: session[:user_id]).order(created_at: :desc)
-  end
-
-  # GET /notifications/1
-  # GET /notifications/1.json
+  api :GET, '/notifications', '유저 알림'
   def show
+    @notifications = Notification.where(user_id: session[:user]['id']).order(created_at: :desc)
+    render json: @notifications
   end
 
-  # GET /notifications/new
-  def new
-    @notification = Notification.new
-  end
-
-  # GET /notifications/1/edit
-  def edit
-  end
-
-  # POST /notifications
-  # POST /notifications.json
+  api :POST, '/notifications', '유저 알림 생성'
+  param :notification_type, String, :desc => "알림 타입", :required => true
+  param :content, String, :desc => "알림 내용", :required => true
+  param :url, String, :desc => "알림 url 정보", :required => true
   def create
     @notification = Notification.new(notification_params)
 
     if @notification.save
-      render :show, status: :created, location: @notification
+      render json: @notification, status: :ok
     else
       render json: @notification.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /notifications/1
-  # PATCH/PUT /notifications/1.json
+  api :PUT, '/notifications', '유저 알림 업데이트'
+  param :id, :number, :desc => "notification ID", :required => true
+  param :notification_type, String, :desc => "알림 타입", :required => false
+  param :content, String, :desc => "알림 내용", :required => false
+  param :url, String, :desc => "알림 url 정보", :required => false
   def update
     if @notification.update(notification_params)
-      render :show, status: :ok, location: @notification
+      render json: @notification, status: :ok
     else
       render json: @notification.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /notifications/1
-  # DELETE /notifications/1.json
+  api :DELETE, '/notifications', '유저 알림 삭제'
+  param :id, :number, :desc => "notification ID", :required => true
   def destroy
     @notification.destroy
     head :no_content
@@ -53,11 +44,12 @@ class NotificationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_notification
-      @notification = Notification.find(params[:id])
+      @notification = Notification.find(params['id'])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def notification_params
-      params.require(:notification).permit(:user_id, :type, :content, :url)
+      params['user_id'] = session[:user]['id']
+      params.permit(:user_id, :notification_type, :content, :url)
     end
 end
