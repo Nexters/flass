@@ -1,15 +1,15 @@
 class LecturesController < ApplicationController
-  before_action :set_lecture, only: [:show, :edit, :update, :destroy]
+  before_action :set_lecture, only: [:edit, :update, :destroy]
 
   # GET /lectures
   # GET /lectures.json
-  api :GET, '/lectures', '특정 유저가 업로드한 강의 불러오기'
+  api :GET, '/lectures', '(특정 유저가 업로드한) 강의 불러오기'
   def show
     @lectures = Lecture.where(user_id: session[:user_id]).order(created_at: :desc).paginate(page: params[:page], per_page: 12)
     render json: @lectures
   end
 
-  api :GET '/lectures/edit', '강의 수정 페이지'
+  api :GET, '/lectures/edit', '강의 수정 페이지'
   param :id, :number, :desc => "lecture ID", :required => true
   def edit
     if @lecture.user_id == session[:user_id]
@@ -39,9 +39,9 @@ class LecturesController < ApplicationController
   param :id, :number, :desc => "lecture ID", :required => true
   param :title, String, :desc => "강의 제목", :required => true
   param :content, String, :desc => "강의 내용", :required => true
-  param :url, String, :desc => "강의 url", :required => false
-  param :thumbnail_url, String, :desc => "강의 thumbnail_url", :required => false
-  param :duration, Time,
+  param :url, String, :desc => "강의 url", :required => true
+  param :thumbnail_url, String, :desc => "강의 thumbnail_url", :required => true
+  param :duration, Time, :desc => "강의 시간", :required => true
   def update
     if @lecture.update(lecture_params)
       render json: @lecture, status: :ok

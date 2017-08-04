@@ -1,14 +1,14 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:edit, :update, :destroy]
 
-  api :GET, '/questions', '특정 강의의 질문 불러오기'
+  api :GET, '/questions', '강의 질문 불러오기'
   param :lecture_id, :number, :desc => "lecture ID", :required => true
   def show
     @questions = Question.where(lecture_id: params[:lecture_id])
     render json: @questions
   end
 
-  api :GET '/questions/edit', '질문 수정 페이지'
+  api :GET, '/questions/edit', '강의 질문 수정 페이지'
   param :id, :number, :desc => "question ID", :required => true
     def edit
       if @question.user_id == session[:user_id]
@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
     end
 
   # POST /questions.json
-  api :POST, '/questions', '강의에 질문 생성하기'
+  api :POST, '/questions', '강의 질문 생성'
   param :lecture_id, :number, :desc => "lecture ID", :required => true
   param :content, String, :desc => "질문 내용", :required => true
   param :correct_answer, String, :desc => "질문 정답", :required => true
@@ -37,7 +37,7 @@ class QuestionsController < ApplicationController
 
   # PATCH/PUT /questions
   # PATCH/PUT /questions.json
-  api :PUT, '/questions', '강의 질문 업데이트하기'
+  api :PUT, '/questions', '강의 질문 업데이트'
   param :id, :number, :desc => "question ID", :required => true
   param :question, String, :desc => "질문 내용", :required => true
   param :correct_answer, String, :desc => "질문 정답", :required => true
@@ -51,7 +51,7 @@ class QuestionsController < ApplicationController
     end
   end
 
-  api :DELETE, '/questions', '질문 삭제하기'
+  api :DELETE, '/questions', '강의 질문 삭제'
   param :id, :number, :desc => "question ID", :required => true
   def destroy
     @question.destroy
