@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:edit, :update, :destroy]
 
-  api :GET, '/questions', '강의 질문 불러오기'
+  api :GET, '/questions', '(특정) 강의 질문들 불러오기'
   param :lecture_id, :number, :desc => "lecture ID", :required => true
   def show
     @questions = Question.where(lecture_id: params[:lecture_id])
@@ -39,7 +39,7 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions.json
   api :PUT, '/questions', '강의 질문 업데이트'
   param :id, :number, :desc => "question ID", :required => true
-  param :question, String, :desc => "질문 내용", :required => true
+  param :content, String, :desc => "질문 내용", :required => true
   param :correct_answer, String, :desc => "질문 정답", :required => true
   param :question_at, Time, :desc => "질문 등장 시간", :required => true
   param :hint, String, :desc => "힌트", :required => false
