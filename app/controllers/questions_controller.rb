@@ -1,18 +1,30 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
-  # GET /questions
-  # GET /questions.json
+  api :GET, '/questions', '특정 강의의 질문 불러오기'
+  param :lecture_id, :number, :desc => "lecture ID", :required => true
   def show
     @questions = Question.where(lecture_id: params[:lecture_id])
+    render json: @questions
   end
 
-  # GET /questions/edit
-  def edit
-  end
+  api :GET '/questions/edit', '질문 수정 페이지'
+  param :id, :number, :desc => "question ID", :required => true
+    def edit
+      if @question.user_id == session[:user_id]
+        render json: @question, status: :ok
+      else
+        render json: @question.errors, status: :forbidden
+      end
+    end
 
-  # POST /questions
   # POST /questions.json
+  api :POST, '/questions', '강의에 질문 생성하기'
+  param :lecture_id, :number, :desc => "lecture ID", :required => true
+  param :content, String, :desc => "질문 내용", :required => true
+  param :correct_answer, String, :desc => "질문 정답", :required => true
+  param :question_at, Time, :desc => "질문 등장 시간", :required => true
+  param :hint, String, :desc => "힌트", :required => false
   def create
     @question = Question.new(question_params)
 
@@ -25,6 +37,12 @@ class QuestionsController < ApplicationController
 
   # PATCH/PUT /questions
   # PATCH/PUT /questions.json
+  api :PUT, '/questions', '강의 질문 업데이트하기'
+  param :id, :number, :desc => "question ID", :required => true
+  param :question, String, :desc => "질문 내용", :required => true
+  param :correct_answer, String, :desc => "질문 정답", :required => true
+  param :question_at, Time, :desc => "질문 등장 시간", :required => true
+  param :hint, String, :desc => "힌트", :required => false
   def update
     if @question.update(question_params)
       render json: @question, status: :ok
@@ -33,8 +51,8 @@ class QuestionsController < ApplicationController
     end
   end
 
-  # DELETE /questions
-  # DELETE /questions.json
+  api :DELETE, '/questions', '질문 삭제하기'
+  param :id, :number, :desc => "question ID", :required => true
   def destroy
     @question.destroy
     head :no_content
@@ -48,6 +66,7 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:lecture_id, :content, :correct_answer, :question_at, :hint)
+      params[:user_id] = session[:user_id]
+      params.permit(:user_id, :lecture_id, :content, :correct_answer, :question_at, :hint)
     end
 end
