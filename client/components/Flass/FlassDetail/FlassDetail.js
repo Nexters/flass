@@ -57,7 +57,7 @@ class FlassDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 2
+      selected: 1
     };
   }
 

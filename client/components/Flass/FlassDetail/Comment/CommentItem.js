@@ -31,7 +31,7 @@ const Bottom = styled.span`
 
 const propTypes = {
   userName: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired
+  content: PropTypes.object.isRequired
 };
 const defaultProps = {};
 

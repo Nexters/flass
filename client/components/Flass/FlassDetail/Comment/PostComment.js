@@ -20,6 +20,8 @@ const Label = styled(ControlLabel)`
 
 const TextArea = styled(FormControl)`
   border: 0;
+  box-shadow: none;
+  resize: none;
 `;
 
 const Bottom = styled.div`
