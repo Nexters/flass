@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import autobind from 'autobind-decorator';
 import classNames from 'classnames';
+import autobind from 'autobind-decorator';
 import screenfull from 'screenfull';
 
 import {
@@ -22,9 +19,6 @@ import {
   convertPercentageToSecs,
   convertSecsToPercentage
 } from '../../../Video/VideoUtils';
-
-// 팝업 테스트를 위한 더미 action
-import * as actions from '../../../../modules/Quiz/quiz';
 
 import PlayBtnIcon from '../../../../../public/play_arrow_24dp_1x.png';
 import PauseBtnIcon from '../../../../../public/pause_24dp_1x.png';
@@ -49,13 +43,8 @@ const propTypes = {
   VideoModalClassName: oneOfType([string, arrayOf(string)]),
   VideoModalQuestionClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
-  VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
-
-  // 팝업 테스트를 위한 더미 action
-  loadQuizs: func.isRequired,
-  quizTimeArrayForPopupTest: arrayOf(number)
+  VideoVolumeBarClassName: oneOfType([string, arrayOf(string)])
 };
-
 const defaultProps = {
   VideoContainerClassName: '',
   VideoPlayerWrapperClassName: '',
@@ -72,12 +61,9 @@ const defaultProps = {
   VideoModalQuestionClassName: '',
   VideoVolumeBtnClassName: '',
   VideoVolumeBarClassName: '',
-
-  // 팝업 테스트를 위한 더미 array
-  quizTimeArrayForPopupTest: []
 };
 
-class Video extends Component {
+class VideoComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -96,10 +82,6 @@ class Video extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.loadQuizs();
-  }
-
   render() {
     const {
       url,
@@ -114,6 +96,7 @@ class Video extends Component {
       youtubeConfig,
       isQuizSecs
     } = this.state;
+
     const {
       VideoContainerClassName,
       VideoPlayerWrapperClassName,
@@ -129,10 +112,7 @@ class Video extends Component {
       VideoModalClassName,
       VideoModalQuestionClassName,
       VideoVolumeBtnClassName,
-      VideoVolumeBarClassName,
-
-      // 팝업 테스트를 위한 더미 array
-      quizTimeArrayForPopupTest
+      VideoVolumeBarClassName
     } = this.props;
 
     return (
@@ -151,15 +131,6 @@ class Video extends Component {
           onProgress={ this.onProgress }
           onDuration={ this.onDuration }
           setPlayer={ this.setPlayer } />
-
-        {
-          isQuizSecs ?
-            <VideoModalComponent
-              VideoModalClassName={ VideoModalClassName }
-              VideoModalQuestionClassName={ VideoModalQuestionClassName }
-              onQuestionSolved={ this.onQuestionSolved } /> :
-            null
-        }
 
         <div className={ VideoControllerBarClassName }>
           <VideoControllerAndBarWrapperComponent>
@@ -180,7 +151,6 @@ class Video extends Component {
                 onCustomSeekBarClick={ this.onCustomSeekBarClick }
                 onArrowKeyPressed={ this.onArrowKeyPressed }
 
-                quizTimeArray={ quizTimeArrayForPopupTest }
                 canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
                 isQuizSecs={ isQuizSecs } />
 
@@ -304,7 +274,8 @@ class Video extends Component {
 
   @autobind
   canChangeIsQuizSecs(playedSecs) {
-    const { quizTimeArrayForPopupTest } = this.props;
+    // const { quizTimeArrayForPopupTest } = this.props;
+    const quizTimeArrayForPopupTest = [];
 
     if (this.isEqlQuizSecsWithPlayedSecs(playedSecs, quizTimeArrayForPopupTest)) {
       this.setState({ isQuizSecs: true, playing: false });
@@ -324,22 +295,9 @@ class Video extends Component {
     this.setState({ isQuizSecs: false, playing: true, played: changedPlayedPercentage });
     this.player.seekTo(changedPlayedPercentage);
   }
-
 }
 
-Video.propTypes = propTypes;
-Video.defaultProps = defaultProps;
+VideoComponent.propTypes = propTypes;
+VideoComponent.defaultProps = defaultProps;
 
-function mapStateToProps(state) {
-  const { quiz: { quizTimeArrayForPopupTest } } = state;
-  return { quizTimeArrayForPopupTest };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actions, dispatch);
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Video);
+export default VideoComponent;

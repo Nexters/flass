@@ -25,4 +25,16 @@
       width: 33.33%;
     }
   }
+
+  @include atPlayerLarge {
+    &__player-large-8 {
+      float: left;
+      width: 66.66%;
+    }
+
+    &__player-large-4 {
+      float: left;
+      width: 33.33%;
+    }
+  }
 }

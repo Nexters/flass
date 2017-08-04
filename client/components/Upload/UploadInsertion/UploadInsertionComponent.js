@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import FlassContentTitleComponent from '../../Flass/FlassContentTitle/FlassContentTitleComponent';
+import VideoComponent from './Video/VideoComponent';
+
+import './UploadInsertionComponentStyles.scss';
 
 const { func, string } = PropTypes;
 
@@ -18,8 +24,31 @@ class UploadInsertionComponent extends Component {
 
     return (
       <div>
-        <p>두번째 페이지</p>
-        <p>title: { videoTitle }</p>
+        <FlassContentTitleComponent title="Upload new video" />
+        <div className="row">
+          <div className="row__player-large-8">
+            <VideoComponent
+              VideoContainerClassName={ 'flass-upload-insertion-media' }
+              VideoPlayerWrapperClassName="flass-upload-insertion-media__player-wrapper"
+              VideoPlayerClassName="flass-upload-insertion-media__player"
+              VideoControllerBarClassName="flass-upload-insertion-media__controller-bar"
+              VideoPlayedBarClassName="played-bar--thinner"
+              VideoLoadedBarClassName="loaded-bar--thinner"
+              VideoQuizIndicatorClassName="quiz-indicator--thinner"
+              VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
+              VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
+              VideoVolumeBtnClassName="video-btn"
+              VideoVolumeBarClassName={ classNames('video-volume-bar') }
+              VideoFullscreenBtnClassName={ classNames('video-btn', 'video-btn--right', 'video-btn--r-margin') } />
+          </div>
+
+          <div className="row__player-large-4">
+            Quiz
+          </div>
+        </div>
+        <div className="row">
+          Controller Bar
+        </div>
         <button onClick={ goToStepOne }>PREV</button>
       </div>
     );
