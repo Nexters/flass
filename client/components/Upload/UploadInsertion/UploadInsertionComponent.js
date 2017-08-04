@@ -5,6 +5,7 @@ import autobind from 'autobind-decorator';
 
 import FlassContentTitleComponent from '../../Flass/FlassContentTitle/FlassContentTitleComponent';
 import VideoComponent from './Video/VideoComponent';
+import IndicatorBarWrapperComponent from './IndicatorBarWrapper/IndicatorBarWrapperComponent';
 import IndicatorBarComponent from './IndicatorBar/IndicatorBarComponent';
 
 import './UploadInsertionComponentStyles.scss';
@@ -85,20 +86,22 @@ class UploadInsertionComponent extends Component {
           </div>
         </div>
         <div className={ classNames('row', 'row--t-margin') }>
-          <IndicatorBarComponent
-            VideoPlayedBarClassName={ classNames('played-bar', 'played-bar--thinner') }
-            VideoLoadedBarClassName={ classNames('loaded-bar', 'loaded-bar--thinner') }
-            VideoQuizIndicatorClassName={ classNames('quiz-indicator', 'quiz-indicator--thinner') }
-            VideoQuizIndicatorBarClassName={ classNames('quiz-indicator-bar', 'quiz-indicator-bar--thinner') }
-            playerSeekTo={ this.playerSeekTo }
-            setSeekingState={ this.setSeekingState }
-            setPlayingState={ this.setPlayingState }
-            setPlayedState={ this.setPlayedState }
-            setIsQuizSecsState={ this.setIsQuizSecsState }
-            duration={ duration }
-            played={ played }
-            loaded={ loaded }
-            isQuizSecs={ isQuizSecs } />
+          <IndicatorBarWrapperComponent>
+            <IndicatorBarComponent
+              VideoPlayedBarClassName={ classNames('played-bar', 'played-bar--thicker') }
+              VideoLoadedBarClassName={ classNames('loaded-bar', 'loaded-bar--thicker') }
+              VideoQuizIndicatorClassName={ classNames('quiz-indicator', 'quiz-indicator--thicker') }
+              VideoQuizIndicatorBarClassName={ classNames('quiz-indicator-bar', 'quiz-indicator-bar--thinner') }
+              playerSeekTo={ this.playerSeekTo }
+              setSeekingState={ this.setSeekingState }
+              setPlayingState={ this.setPlayingState }
+              setPlayedState={ this.setPlayedState }
+              setIsQuizSecsState={ this.setIsQuizSecsState }
+              duration={ duration }
+              played={ played }
+              loaded={ loaded }
+              isQuizSecs={ isQuizSecs } />
+          </IndicatorBarWrapperComponent>
         </div>
         <button onClick={ goToStepOne }>PREV</button>
       </div>

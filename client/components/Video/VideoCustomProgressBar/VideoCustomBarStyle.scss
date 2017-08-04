@@ -10,6 +10,10 @@
   &--thinner {
     height: $progressbarHeightThinner;
   }
+
+  &--thicker {
+    height: $progressbarHeightThicker;
+  }
 }
 
 .played-bar {
@@ -22,6 +26,10 @@
   &--thinner {
     height: $progressbarHeightThinner;
   }
+
+  &--thicker {
+    height: $progressbarHeightThicker;
+  }
 }
 
 .loaded-bar {
@@ -30,8 +38,12 @@
   height: $progressbarHeight;
   background-color: blue;
   border-radius: 1px;
-  
+
   &--thinner {
     height: $progressbarHeightThinner;
+  }
+
+  &--thicker {
+    height: $progressbarHeightThicker;
   }
 }
