@@ -7,13 +7,13 @@ class ChoicesController < ApplicationController
   # GET /choices/1
   # GET /choices/1.json
   def show
-    @choices = Choice.where(lecture_id: params[:lecture_id])
+    @choices = Choice.where(question_id: params[:question_id])
   end
-
+ 
 
   # GET /choices/new
   def new
-    @choice = Choice.new
+    #@choice = Choice.new
   end
 
   # # GET /choices/1/edit
