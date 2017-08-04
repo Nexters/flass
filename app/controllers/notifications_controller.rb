@@ -3,7 +3,7 @@ class NotificationsController < ApplicationController
 
   api :GET, '/notifications', '유저 알림'
   def show
-    @notifications = Notification.where(user_id: session[:user]['id']).order(created_at: :desc)
+    @notifications = Notification.where(user_id: session[:user_id]).order(created_at: :desc)
     render json: @notifications
   end
 
@@ -49,7 +49,7 @@ class NotificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def notification_params
-      params['user_id'] = session[:user]['id']
+      params['user_id'] = session[:user_id]
       params.permit(:user_id, :notification_type, :content, :url)
     end
 end

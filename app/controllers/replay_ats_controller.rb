@@ -4,7 +4,7 @@ class ReplayAtsController < ApplicationController
   api :GET, '/replay_ats', '유저의 해당 강의 재생시간 정보'
   param :lecture_id, :number, :desc => "강의 ID", :required => true
   def show
-    @replay_at = ReplayAt.where(user_id: session[:user]['id'], lecture_id: params['lecture_id'])
+    @replay_at = ReplayAt.where(user_id: session[:user_id], lecture_id: params['lecture_id'])
     render json: @replay_at
   end
 
@@ -47,7 +47,7 @@ class ReplayAtsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def replay_at_params
-      params['user_id'] = session[:user]['id']
+      params['user_id'] = session[:user_id]
       params.permit(:user_id, :lecture_id, :playtime)
     end
 end
