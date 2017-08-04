@@ -10,14 +10,21 @@ import Analysis from './Analysis/Analysis';
 import Video from './Video/Video';
 import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
 
+import contentImageActive from './images/tab-content-active.png';
+import contentImage from './images/tab-content.png';
+import commentImageActive from './images/tab-comment-active.png';
+import commentImage from './images/tab-comment.png';
+import analysisImageActive from './images/tab-analysis-active.png';
+import analysisImage from './images/tab-analysis.png';
+
+
 import color from '../common/colors.scss';
 import './FlassDetail.scss';
 
-const TabIcon = styled.div`
-  width: 20.1px;
-  height: 20.1px;
-  border: solid 2px #176d99;
-  border: solid 2px var(--light-navy);
+const TabIcon = styled.img`
+  width: 15px;
+  margin-right: 3px;
+  margin-bottom: 2px;
 `;
 
 const TabTitle = styled.span`
@@ -49,7 +56,7 @@ class FlassDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: 2
+      selected: 2
     };
   }
 
@@ -58,8 +65,8 @@ class FlassDetail extends Component {
     this.props.fetchRequestDetailAll(id);
   }
 
-  handleSelect = key => {
-    this.setState({ key });
+  handleSelect = selected => {
+    this.setState({ selected });
   }
 
   render() {
@@ -99,18 +106,19 @@ class FlassDetail extends Component {
 
   renderTabs() {
     const { comment } = this.props;
+    const { selected } = this.state;
 
-    const tabTitle = (title, src) => <TabTitle>{title}</TabTitle>;
+    const tabTitle = (title, src) => <TabTitle><TabIcon alt="" src={ src } /> {title}</TabTitle>;
     const src = 'http://via.placeholder.com/25x25';
     return (<div className="flass-detail-tabs">
       <Tabs activeKey={ this.state.key } onSelect={ this.handleSelect }>
-        <Tab eventKey={ 1 } title={ tabTitle('강의 정보', src) }>
+        <Tab eventKey={ 1 } title={ tabTitle('강의 정보', selected === 1 ? contentImageActive : contentImage) }>
           <Content />
         </Tab>
-        <Tab eventKey={ 2 } title={ tabTitle(`학생 질문 - ${comment.totalCount}`, src) }>
+        <Tab eventKey={ 2 } title={ tabTitle(`학생 질문 - ${comment.totalCount}`, selected === 2 ? commentImageActive : commentImage) }>
           <Comment comments={ comment.comments } />
         </Tab>
-        <Tab eventKey={ 3 } title={ tabTitle('분석', src) }>
+        <Tab eventKey={ 3 } title={ tabTitle('분석', selected === 3 ? analysisImageActive : analysisImage) }>
           <Analysis />
         </Tab>
       </Tabs>

@@ -6,6 +6,7 @@ import PostComment from '../../../../modules/Flass/FlassDetail/Comment/PostComme
 import CommentItem from './CommentItem';
 
 const DetailComment = styled.div`
+  width: 100%;
   padding-top: 3rem;
   padding-bottom: 4rem;
 `;

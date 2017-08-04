@@ -6,6 +6,7 @@ import color from '../../common/colors.scss';
 import './Content.scss';
 
 const DetailContent = styled(Grid)`
+  width: 100%;
   padding-top: 3rem;
   padding-bottom: 4rem;
 `;
@@ -61,7 +62,7 @@ const Content = props => {
             Basic panel example
           </LeftContent>
         </Col>
-        <Col xs={ 6 } md={ 4 }>
+        <Col xs={ 4 } md={ 4 }>
           <Title>학습 목표</Title>
           <RightContent>
             Look I'm in a well!
