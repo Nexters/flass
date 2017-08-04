@@ -29,10 +29,16 @@ class VideoCustomBarComponent extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { played, loaded } = nextProps;
-    const playedBar = document.getElementsByClassName('played-bar')[0];
-    const loadedBar = document.getElementsByClassName('loaded-bar')[0];
-    playedBar.style.width = `${played}%`;
-    loadedBar.style.width = `${loaded}%`;
+    const playedBars = document.getElementsByClassName('played-bar');
+    const loadedBars = document.getElementsByClassName('loaded-bar');
+
+    Object.keys(playedBars).forEach(key => {
+      playedBars[key].style.width = `${played}%`;
+    });
+
+    Object.keys(loadedBars).forEach(key => {
+      loadedBars[key].style.width = `${loaded}%`;
+    });
   }
 
   render() {
@@ -40,6 +46,7 @@ class VideoCustomBarComponent extends Component {
 
     return (
       <div>
+        <div className={ classNames('bar', 'bar--thinner') } />
         <div id="loaded-bar" className={ classNames('loaded-bar', VideoLoadedBarClassName) } />
         <div id="played-bar" className={ classNames('played-bar', VideoPlayedBarClassName) } />
       </div>

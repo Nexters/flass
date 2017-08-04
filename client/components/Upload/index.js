@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../modules/Upload/Actions';
 
 import VideoUpload from './VideoUpload';
+import UploadInsertionComponent from './UploadInsertion/UploadInsertionComponent';
 import './upload.scss';
 
 const propTypes = {
@@ -46,6 +47,7 @@ function handleError(func) {
 class Upload extends Component {
   render() {
     const {
+      title,
       thumb,
       thumbURL,
       getThumbnail,
@@ -78,11 +80,9 @@ class Upload extends Component {
       case 1:
       default:
         return (
-          <div>
-            <p>두번째 페이지</p>
-            <p>title: {this.props.title}</p>
-            <button onClick={this.goToStepOne}>PREV</button>
-          </div>
+          <UploadInsertionComponent
+            videoTitle={ title }
+            goToStepOne={ this.goToStepOne } />
         );
     }
   }

@@ -31,11 +31,10 @@ class ChoicesController < ApplicationController
   def create
     @choice = Choice.new(choice_params)
  
-      if @choice.save
-        render json: @choice, status: :created
-      else
-        render json: @choice.errors, status: :unprocessable_entity
-      end
+    if @choice.save
+      render json: @choice, status: :created
+    else
+      render json: @choice.errors, status: :unprocessable_entity
     end
   end
 

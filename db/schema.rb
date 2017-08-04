@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725082720) do
+ActiveRecord::Schema.define(version: 20170804052901) do
 
   create_table "answers", force: :cascade do |t|
     t.integer "user_id"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20170725082720) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer "user_id"
-    t.string "type"
+    t.string "notification_type"
     t.string "content"
     t.string "url"
     t.datetime "created_at", null: false

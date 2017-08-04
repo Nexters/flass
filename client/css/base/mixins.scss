@@ -16,6 +16,18 @@
   }
 }
 
+@mixin atPlayerLarge {
+  @media (min-width: 1400px) {
+    @content;
+  }
+}
+
+@mixin atPlayerMedium {
+  @media (min-width: 818px) {
+    @content;
+  }
+}
+
 @mixin clearfix {
   &::after {
     content: "";
