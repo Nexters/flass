@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
   # GET /comments/1
   # GET /comments/1.json
   def show
-    @comments = Comment.where(lecture_id: params[:lecture_id])
+    @comments = Comment.where(lecture_id: params[:lecture_id]).paginate(page: params[:page], per_page:20)
   end
 
   # GET /comments/new
