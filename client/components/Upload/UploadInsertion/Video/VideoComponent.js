@@ -26,7 +26,7 @@ import VolumeOnBtnIcon from '../../../../../public/volume_up_24dp_1x.png';
 import VolumeOffBtnIcon from '../../../../../public/volume_off_24dp_1x.png';
 import FullscreenBtnIcon from '../../../../../public/web_asset_24dp_1x.png';
 
-const { string, oneOfType, arrayOf, func, number } = PropTypes;
+const { string, oneOfType, arrayOf, func, number, bool } = PropTypes;
 
 const propTypes = {
   VideoContainerClassName: oneOfType([string, arrayOf(string)]),
@@ -40,10 +40,22 @@ const propTypes = {
   VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayPauseBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
-  VideoModalClassName: oneOfType([string, arrayOf(string)]),
-  VideoModalQuestionClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
-  VideoVolumeBarClassName: oneOfType([string, arrayOf(string)])
+  VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
+
+  setPlayer: func.isRequired,
+  playerSeekTo: func.isRequired,
+  onProgress: func.isRequired,
+  onDuration: func.isRequired,
+  setSeekingState: func.isRequired,
+  setPlayingState: func.isRequired,
+  setIsQuizSecsState: func.isRequired,
+  setPlayedState: func.isRequired,
+  duration: number,
+  played: number,
+  loaded: number,
+  playing: bool,
+  isQuizSecs: bool
 };
 const defaultProps = {
   VideoContainerClassName: '',
@@ -61,6 +73,12 @@ const defaultProps = {
   VideoModalQuestionClassName: '',
   VideoVolumeBtnClassName: '',
   VideoVolumeBarClassName: '',
+
+  duration: 0,
+  played: 0,
+  loaded: 0,
+  playing: true,
+  isQuizSecs: false
 };
 
 class VideoComponent extends Component {
@@ -69,32 +87,22 @@ class VideoComponent extends Component {
 
     this.state = {
       url: 'https://www.youtube.com/watch?v=PTkKJI27NlE',
-      playing: true,
       volume: 0.8,
-      played: 0,
-      loaded: 0,
-      duration: 0,
       playbackRate: 1.0,
       isMute: false,
       volumeBeforeMute: 0,
-      isVolumeBtnMouseOver: false,
-      isQuizSecs: false
+      isVolumeBtnMouseOver: false
     };
   }
 
   render() {
     const {
       url,
-      playing,
       volume,
       isMute,
       isVolumeBtnMouseOver,
-      played,
-      loaded,
-      duration,
       playbackRate,
       youtubeConfig,
-      isQuizSecs
     } = this.state;
 
     const {
@@ -109,10 +117,17 @@ class VideoComponent extends Component {
       VideoQuizIndicatorBarClassName,
       VideoPlayPauseBtnClassName,
       VideoFullscreenBtnClassName,
-      VideoModalClassName,
-      VideoModalQuestionClassName,
       VideoVolumeBtnClassName,
-      VideoVolumeBarClassName
+      VideoVolumeBarClassName,
+
+      setPlayer,
+      onProgress,
+      onDuration,
+      duration,
+      played,
+      loaded,
+      playing,
+      isQuizSecs
     } = this.props;
 
     return (
@@ -128,9 +143,9 @@ class VideoComponent extends Component {
           duration={ duration }
           playbackRate={ playbackRate }
           youtubeConfig={ youtubeConfig }
-          onProgress={ this.onProgress }
-          onDuration={ this.onDuration }
-          setPlayer={ this.setPlayer } />
+          onProgress={ onProgress }
+          onDuration={ onDuration }
+          setPlayer={ setPlayer } />
 
         <div className={ VideoControllerBarClassName }>
           <VideoControllerAndBarWrapperComponent>
@@ -189,23 +204,6 @@ class VideoComponent extends Component {
   }
 
   @autobind
-  setPlayer(player) {
-    this.player = player;
-  }
-
-  @autobind
-  onDuration(duration) {
-    this.setState({ duration });
-  }
-
-  @autobind
-  onProgress(state) {
-    if (!this.state.seeking) {
-      this.setState(state);
-    }
-  }
-
-  @autobind
   setVolume(e) {
     this.setState({ volume: parseFloat(e.target.value) });
   }
@@ -232,44 +230,45 @@ class VideoComponent extends Component {
 
   @autobind
   onCustomSeekBarMouseDown() {
-    this.setState({ seeking: true });
+    this.props.setSeekingState(true);
   }
 
   @autobind
   onCustomSeekBarChange(changedPlayed) {
     const changedPlayedPercentage = changedPlayed / 100;
-    this.setState({ played: changedPlayedPercentage });
+    this.props.setPlayedState(changedPlayedPercentage);
   }
 
   @autobind
   onCustomSeekBarMouseUp(changedPlayed) {
     const changedPlayedPercentage = changedPlayed / 100;
-    this.setState({ seeking: false });
-    this.player.seekTo(changedPlayedPercentage);
+    this.props.setSeekingState(false);
+    this.props.playerSeekTo(changedPlayedPercentage);
   }
 
   @autobind
   onCustomSeekBarClick(changedPlayed) {
     const changedPlayedPercentage = changedPlayed / 100;
-    this.setState({ played: changedPlayedPercentage });
-    this.player.seekTo(changedPlayedPercentage);
+    this.props.setPlayedState(changedPlayedPercentage);
+    this.props.playerSeekTo(changedPlayedPercentage);
   }
 
   @autobind
   onArrowKeyPressed(changedPlayed) {
     const changedPlayedPercentage = changedPlayed / 100;
-    this.setState({ played: changedPlayedPercentage });
-    this.player.seekTo(changedPlayedPercentage);
+    this.props.setPlayedState(changedPlayedPercentage);
+    this.props.playerSeekTo(changedPlayedPercentage);
   }
 
   @autobind
   onClickPlayPause() {
-    this.setState({ playing: !this.state.playing });
+    this.props.setPlayingState(!this.props.playing);
   }
 
   @autobind
   onClickFullscreen() {
-    screenfull.request(findDOMNode(this.player));
+    // screenfull.request(findDOMNode(this.player));
+    alert('Warn: This function still not define');
   }
 
   @autobind
@@ -278,7 +277,8 @@ class VideoComponent extends Component {
     const quizTimeArrayForPopupTest = [];
 
     if (this.isEqlQuizSecsWithPlayedSecs(playedSecs, quizTimeArrayForPopupTest)) {
-      this.setState({ isQuizSecs: true, playing: false });
+      this.props.setIsQuizSecsState(true);
+      this.props.setPlayingState(false);
     }
   }
 
@@ -288,12 +288,14 @@ class VideoComponent extends Component {
 
   @autobind
   onQuestionSolved() {
-    const { played, duration } = this.state;
+    const { played, duration } = this.props;
     const solvedSecs = convertPercentageToSecs(played, duration);
     const secsAddOneFromSolvedSecs = solvedSecs + 1;
     const changedPlayedPercentage = convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
-    this.setState({ isQuizSecs: false, playing: true, played: changedPlayedPercentage });
-    this.player.seekTo(changedPlayedPercentage);
+    this.props.setIsQuizSecsState(false);
+    this.props.setPlayingState(true);
+    this.props.setPlayedState(changedPlayedPercentage);
+    this.props.playerSeekTo(changedPlayedPercentage);
   }
 }
 
