@@ -1,23 +1,17 @@
 class ChoicesController < ApplicationController
-  before_action :set_choice, only: [:show, :edit, :update, :destroy]
+  before_action :set_choice, only: [:edit, :update, :destroy]
 
-  # GET /choices/1
-  # GET /choices/1.json
+
+  api :GET, '/choices', '특정 Question에 대한 보기(선지)'
+  param :question_id, :number, :desc => "질문 ID", :required => true
   def show
-    @choices = Choice.where(lecture_id: params[:lecture_id])  
+    @choices = Choice.where(question_id: params[:question_id])  
   end
 
-  # GET /choices/new
-  def new
-    @choice = Choice.new
-  end
 
-  # GET /choices/1/edit
-  def edit
-  end
-
-  # POST /choices
-  # POST /choices.json
+  api :POST, '/choices', '특정 Question에 대한 선지 생성'
+  param :question_id, :number, :desc => "Question ID", :required => true
+  param :answer, String, :desc => "선지 내용", :required => true
   def create
     @choice = Choice.new(choice_params)
  
@@ -28,7 +22,20 @@ class ChoicesController < ApplicationController
     end
   end
 
-  #PATCH/PUT /choices/1.json
+
+  api :GET, '/choices/edit', '특정 Question에 대한 선지 수정 페이지'
+  param :id, :number, :desc => "Choice ID", :required => true
+    def edit
+      if @question.user_id == session[:user_id]
+        render json: @choice, status: :ok
+      else
+        render json: @choice.errors, status: :forbidden
+      end
+    end
+
+  api :PUT, '/choices', '특정 Question에 대한 선지 엡데이트'
+  param :id, :number, :desc => "Choice ID", :required => true
+  param :answer, String, :desc => "선지 내용", :required => true
   def update
     if @choice.update(choice_params)
       render :show, status: :ok, location: @choice
@@ -37,8 +44,8 @@ class ChoicesController < ApplicationController
     end
   end
 
-  # DELETE /choices/1
-  # DELETE /choices/1.json
+  api :DELETE, '/choices', '특정 Question에 대한 선지 삭제'
+  param :id, :number, :desc => "Choice ID", :required => true
   def destroy
     @choice.destroy
     head :no_content

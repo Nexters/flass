@@ -1,25 +1,16 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:edit, :update, :destroy]
 
- 
-
-  # GET /comments/1
-  # GET /comments/1.json
+  api :GET, '/comments', '특정 lecture에 대한 댓글'
+  param :lecture_id, :number, :desc => "강의 ID", :required => true
   def show
     @comments = Comment.where(lecture_id: params[:lecture_id]).paginate(page: params[:page], per_page:20)
   end
 
-  # GET /comments/new
-  def new
-    #@comment = Comment.new
-  end
 
-  # GET /comments/1/edit
-  def edit
-  end
-
-  # POST /comments
-  # POST /comments.json
+  api :POST, '/comments', '특정 lecture에 대한 댓글 생성'
+  param :lecture_id, :number, :desc => "강의 ID", :required => true
+  param :content, String, :desc => "댓글 내용", :required => true
   def create
     @comment = Comment.new(comment_params)
 
@@ -30,8 +21,20 @@ class CommentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /comments/1
-  # PATCH/PUT /comments/1.json
+  api :GET, '/comments/edit', '댓글 수정 페이지'
+  param :id, :number, :desc => "Comment ID", :required => true
+    def edit
+      if @comment.user_id == session[:user_id]
+        render json: @comment, status: :ok
+      else
+        render json: @comment.errors, status: :forbidden
+      end
+    end
+
+  # PATCH/PUT /comments.json
+  api :PUT, '/comments', '특정 lecture에 대한 댓글 수정'
+  param :id, :number, :desc => "Comment ID", :required => true
+  param :content, String, :desc => "댓글 내용", :required => true
   def update
     if @comment.update(comment_params)
       render :show, status: :ok, location: @comment
@@ -40,16 +43,12 @@ class CommentsController < ApplicationController
     end
   end
 
-  # DELETE /comments/1
-  # DELETE /comments/1.json
+
+  api :DELETE, '/comments', '특정 lecture에 대한 댓글 삭제'
+  param :id, :number, :desc => "Comment ID", :required => true
   def destroy
     @comment.destroy
     head :no_content
-  end
-
-
-  def recommend
-  
   end
 
 
