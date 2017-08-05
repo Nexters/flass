@@ -9,6 +9,10 @@
   &--thinner {
     height: $quizIndicatorBarHeightThinner;
   }
+
+  &--thicker {
+    height: $quizIndicatorBarHeightThicker;
+  }
 }
 
 .quiz-indicator-bar {

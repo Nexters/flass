@@ -6,6 +6,7 @@ import autobind from 'autobind-decorator';
 import {
   VideoCustomProgressBarComponent
 } from '../../../Video';
+import RulerComponent from './Ruler/RulerComponent';
 
 import './IndicatorBarComponentStyles.scss';
 
@@ -76,6 +77,8 @@ class IndicatorBarComponent extends Component {
 
           canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
           isQuizSecs={ isQuizSecs } />
+        
+        <RulerComponent />
       </div>
     );
   }

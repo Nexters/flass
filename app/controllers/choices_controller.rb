@@ -1,30 +1,20 @@
 class ChoicesController < ApplicationController
   before_action :set_choice, only: [:show, :edit, :update, :destroy]
 
-  # GET /choices
-  # GET /choices.json
-  def index
-    @choices = Choice.where(user_id: session[:user_id])
-  end
-
-  def answer
+  # GET /choices/1
+  # GET /choices/1.json
+  def show
     @choices = Choice.where(lecture_id: params[:lecture_id])  
   end
-
-
-  # # GET /choices/1
-  # # GET /choices/1.json
-  # def show
-  # end
 
   # GET /choices/new
   def new
     @choice = Choice.new
   end
 
-  # # GET /choices/1/edit
-  # def edit
-  # end
+  # GET /choices/1/edit
+  def edit
+  end
 
   # POST /choices
   # POST /choices.json
@@ -36,6 +26,22 @@ class ChoicesController < ApplicationController
     else
       render json: @choice.errors, status: :unprocessable_entity
     end
+  end
+
+  #PATCH/PUT /choices/1.json
+  def update
+    if @choice.update(choice_params)
+      render :show, status: :ok, location: @choice
+    else
+      render json: @choice.errors, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE /choices/1
+  # DELETE /choices/1.json
+  def destroy
+    @choice.destroy
+    head :no_content
   end
 
 
