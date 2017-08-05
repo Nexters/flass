@@ -6,19 +6,31 @@ require 'openssl'
 class UsersController < ApplicationController
   before_action :login_check, only: [:show, :edit, :logout, :destroy]
   before_action :set_user, only: [:show, :edit, :destroy]
+
   # GET /users
   # GET /users.json
+  api :GET, '/users', '회원 정보 불러오기'
   def show
+    render json: @user
   end
 
   # GET /users/edit
+  api :GET, '/users/edit', '회원 정보 수정'
   def edit
+    if @user.id == session[:user_id]
+      render json: @user, status: :ok
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
   end
+
 
   # POST /users
   # POST /users.json
+  api :POST, '/users', '회원 정보 생성 및 업데이트하기'
+  param :id_token, String, '구글 발급용 id_token 값'
   def create
-    uri = URI('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=???')
+    uri = URI("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=#{params[:id_token]}")
     Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
       request = Net::HTTP::Get.new uri
       response = http.request request # Net::HTTPResponse object
@@ -45,15 +57,18 @@ class UsersController < ApplicationController
     end
   end
 
+  api :GET, '/users/logout', '회원 로그아웃'
   def logout
     reset_session
+    render json: {url: "https://www.flass.com"}
   end
 
   # DELETE /users/1
   # DELETE /users/1.json
+  api :DELETE, '/users', '회원 탈퇴'
   def destroy
     @user.destroy
-    format.json { head :no_content }
+    head :no_content
   end
 
   private

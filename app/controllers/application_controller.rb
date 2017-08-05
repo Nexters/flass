@@ -1,10 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true
   def login_check
-    begin
-      session[:user_id].nil?
-    rescue ActiveRecord::RecordNotFound => e
-      @error = {message: "Exception Message: #{e.message}", code: "401"}
+    if session[:user_id].nil?
+      @error = {message: "로그인이 필요합니다", url: "https://www.flass.com/users/login"}
       render json: @error, status: :unauthorized
     end
   end
