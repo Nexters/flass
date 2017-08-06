@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if @user.id == session[:user_id]
       render json: @user, status: :ok
     else
-      render json: {message: "", url: ""}, status: :forbidden
+      render json: {message: "해당 경로에 접근 권한이 없습니다."}, status: :forbidden
     end
   end
 

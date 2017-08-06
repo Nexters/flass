@@ -39,7 +39,7 @@ class LecturesController < ApplicationController
     if @lecture.save
       render json: @lecture, status: :created
     else
-      render json: {message: @lecture.errors.values.flatten.join(' ')}, status: :bad_request
+      render json: {message: "강의 제목과 강의 파일은 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
@@ -54,7 +54,7 @@ class LecturesController < ApplicationController
     if @lecture.update(lecture_params)
       render json: @lecture, status: :ok
     else
-      render json: {message: @lecture.errors.values.flatten.join(' ')}, status: :bad_request
+      render json: {message: "강의 제목과 강의 파일은 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 

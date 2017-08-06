@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:edit, :update, :destroy]
   before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
+  before_action :set_question, only: [:edit, :update, :destroy]
 
   api :GET, '/questions', '(특정) 강의 문제들 불러오기'
   param :lecture_id, :number, :desc => "lecture ID", :required => true
@@ -32,7 +32,7 @@ class QuestionsController < ApplicationController
     if @question.save
       render json: @question, status: :created
     else
-      render json: {message: @question.errors.values.flatten.join(' ')}, status: :bad_request
+      render json: {message: "문제와 정답은 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
@@ -48,7 +48,7 @@ class QuestionsController < ApplicationController
     if @question.update(question_params)
       render json: @question, status: :ok
     else
-      render json: {message: @question.errors.values.flatten.join(' ')}, status: :bad_request
+      render json: {message: "문제와 정답은 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
