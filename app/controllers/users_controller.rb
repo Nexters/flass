@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if @user.id == session[:user_id]
       render json: @user, status: :ok
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: {message: "", url: ""}, status: :forbidden
     end
   end
 

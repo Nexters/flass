@@ -3,5 +3,6 @@ class Question < ApplicationRecord
   has_many :choices
   has_many :answers
 
-  validates_presence_of :content, :correct_answer, message: '질문과 정답을 입력해주세요!'
+  validates :content, presense: {message: '문제를 입력해주세요!'}
+  validates :correct_answer, presense: {message: '정답을 입력해주세요!'}
 end

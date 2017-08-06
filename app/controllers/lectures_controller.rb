@@ -1,8 +1,9 @@
 class LecturesController < ApplicationController
-  before_action :set_lecture, only: [:show, :edit, :update, :destroy]
   before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
+  before_action :set_lecture, only: [:show, :edit, :update, :destroy]
 
   api :GET, '/lectures', '(특정 유저가 업로드한) 강의들 불러오기'
+  param :page, :number, :desc => "강의 페이지", :required => true
   def index
     @lectures = Lecture.where(user_id: session[:user_id]).order(created_at: :desc).paginate(page: params[:page], per_page: 12)
     render json: @lectures
@@ -11,6 +12,7 @@ class LecturesController < ApplicationController
   # GET /lectures
   # GET /lectures.json
   api :GET, '/lectures/:id', '특정 강의 불러오기'
+  param :id, :number, :desc=> "lecture ID", :required => true
   def show
     render json: @lecture
   end
@@ -21,7 +23,7 @@ class LecturesController < ApplicationController
     if @lecture.user_id == session[:user_id]
       render json: @lecture, status: :ok
     else
-      render json: @lecture.errors, status: :unprocessable_entity
+      render json: {message: "게시물을 수정할 권한이 없습니다."}, status: :forbidden
     end
   end
 
@@ -37,7 +39,7 @@ class LecturesController < ApplicationController
     if @lecture.save
       render json: @lecture, status: :created
     else
-      render json: @lecture.errors, status: :unprocessable_entity
+      render json: {message: @lecture.errors.values.flatten.join(' ')}, status: :bad_request
     end
   end
 
@@ -52,17 +54,17 @@ class LecturesController < ApplicationController
     if @lecture.update(lecture_params)
       render json: @lecture, status: :ok
     else
-      render json: @lecture.errors, status: :unprocessable_entity
+      render json: {message: @lecture.errors.values.flatten.join(' ')}, status: :bad_request
     end
   end
 
   # DELETE /lectures
   # DELETE /lectures.json
-  api :DELETE, '/lectures/:id', '강의 삭제'
-  param :id, :number, :desc => "lecture ID", :required => true
-  def destroy
-    @lecture.destroy
-    head :no_content
+    api :DELETE, '/lectures/:id', '강의 삭제'
+    param :id, :number, :desc => "lecture ID", :required => true
+    def destroy
+      @lecture.destroy
+      head :no_content
   end
 
   private
