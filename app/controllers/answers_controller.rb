@@ -1,29 +1,20 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
 
-  # GET /answers
-  # GET /answers.json
-  # def index
-  #   @answers = Answer.all
-  # end
 
-  # GET /answers/1
-  # GET /answers/1.json
+ api :GET, '/answers', '특정 question에 대한 학생의 답'
+  param :question_id, :number, :desc => "질문 ID", :required => true
   def show
     @answers = Answer.where(user_id: session[:user_id], question_id: params[:question_id])
-  end
-
-  # GET /answers/new
-  def new
-    @answer = Answer.new
   end
 
   # GET /answers/1/edit
   def edit
   end
 
-  # POST /answers
-  # POST /answers.json
+  api :POST, '/answers', '특정 question에 대한 학생의 답 생성'
+  param :question_id, :number, :desc => "질문 ID", :required => true
+  param :answer, String, :desc => "학생 답", :required => true
   def create
     @answer = Answer.new(answer_params)
 
