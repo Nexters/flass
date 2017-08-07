@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:edit, :update, :destroy]
+  before_action :set_comment, only: [:like, :edit, :update, :destroy]
 
   api :GET, '/comments', '특정 lecture에 대한 댓글'
   param :lecture_id, :number, :desc => "강의 ID", :required => true
@@ -49,6 +49,13 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     head :no_content
+  end
+
+  def like
+    if current_user
+      @comment.liked_by(current_user)
+    end    
+      render :show, status: :ok, location: @comment
   end
 
 
