@@ -16,7 +16,7 @@ class QuestionsController < ApplicationController
       if @question.user_id == session[:user_id]
         render json: @question, status: :ok
       else
-        render json: {message: "문제를 수정할 권한이 없습니다."}, status: :forbidden
+        render json: {message: "문제를 수정할 권한이 없습니다."}, status: :unauthorized
       end
     end
 
@@ -56,8 +56,11 @@ class QuestionsController < ApplicationController
   api :DELETE, '/questions', '강의 질문 삭제'
   param :id, :number, :desc => "question ID", :required => true
   def destroy
-    @question.destroy
-    head :no_content
+    if @question.user_id == session[:user_id]
+      @question.destroy
+      head :ok
+    else
+      render json: {message: "문제를 삭제할 권한이 없습니다."}, status: :unauthorized
   end
 
   private

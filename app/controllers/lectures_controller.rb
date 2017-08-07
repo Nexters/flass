@@ -23,13 +23,13 @@ class LecturesController < ApplicationController
     if @lecture.user_id == session[:user_id]
       render json: @lecture, status: :ok
     else
-      render json: {message: "게시물을 수정할 권한이 없습니다."}, status: :forbidden
+      render json: {message: "게시물을 수정할 권한이 없습니다."}, status: :unauthorized
     end
   end
 
   api :POST, '/lectures', '강의 생성'
   param :title, String, :desc => "강의 제목", :required => true
-  param :content, String, :desc => "강의 내용", :required => true
+  param :content, String, :desc => "강의 내용", :required => false
   param :url, String, :desc => "강의 url 정보", :required => true
   param :thumbnail_url, String, :desc => "강의 thumbnail_url 정보", :required => true
   param :duration, Time, :desc => "강의 시간", :required => true
@@ -37,9 +37,9 @@ class LecturesController < ApplicationController
     @lecture = Lecture.new(lecture_params)
 
     if @lecture.save
-      render json: @lecture, status: :created
+      render json: @lecture, status: :ok
     else
-      render json: {message: "강의 제목과 강의 파일은 반드시 입력하셔야 합니다."}, status: :bad_request
+      render json: {message: "강의 제목과 영상은 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
@@ -51,21 +51,25 @@ class LecturesController < ApplicationController
   param :thumbnail_url, String, :desc => "강의 thumbnail_url", :required => true
   param :duration, Time, :desc => "강의 시간", :required => true
   def update
-    if @lecture.update(lecture_params)
-      render json: @lecture, status: :ok
-    else
-      render json: {message: "강의 제목과 강의 파일은 반드시 입력하셔야 합니다."}, status: :bad_request
-    end
+      if @lecture.update(lecture_params)
+        render json: @lecture, status: :ok
+      else
+        render json: {message: "강의 제목과 영상을 반드시 입력하셔야 합니다."}, status: :bad_request
+      end
   end
 
   # DELETE /lectures
   # DELETE /lectures.json
-  api :DELETE, '/lectures/:id', '강의 삭제'
-  param :id, :number, :desc => "lecture ID", :required => true
-  def destroy
-    @lecture.destroy
-    head :no_content
-  end
+    api :DELETE, '/lectures/:id', '강의 삭제'
+    param :id, :number, :desc => "lecture ID", :required => true
+    def destroy
+      if @lecture.user_id == session[:user_id]
+        @lecture.destroy
+        head :ok
+      else
+        render json: {message: "게시물을 삭제할 권한이 없습니다."}, status: :unauthorized
+      end
+    end
 
   private
     # Use callbacks to share common setup or constraints between actions.
