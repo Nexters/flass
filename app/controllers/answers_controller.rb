@@ -1,12 +1,15 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:edit, :update, :destroy]
 
- 
 
   api :GET, '/answers', '특정 question에 대한 학생의 답'
   param :question_id, :number, :desc => "질문 ID", :required => true
   def show
     @answers = Answer.where(user_id: session[:user_id], question_id: params[:question_id])
+  end
+
+  # GET /answers/1/edit
+  def edit
   end
 
   api :POST, '/answers', '특정 question에 대한 학생의 답 생성'
