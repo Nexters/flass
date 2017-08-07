@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  has_many :lectures, dependent: :destroy
-  has_many :answers, dependent: :destroy
-  has_many :comments, dependent: :destroy
+  has_many :lectures
+  has_many :answers
+  has_many :comments
   has_many :replay_ats, dependent: :destroy
   has_many :notifications, dependent: :destroy
 

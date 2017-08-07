@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if @user.id == session[:user_id]
       render json: @user, status: :ok
     else
-      render json: {message: "해당 경로에 접근 권한이 없습니다."}, status: :forbidden
+      render json: {message: "해당 경로에 접근 권한이 없습니다."}, status: :unauthorized
     end
   end
 
@@ -35,6 +35,9 @@ class UsersController < ApplicationController
       request = Net::HTTP::Get.new uri
       response = http.request request # Net::HTTPResponse object
       about_user_list = JSON.parse(response.body)
+      if about_user_list["email"].nil?
+        render {message: "유효하지 않은 토큰값입니다."}, status: :unauthorized
+      end
       @user = User.find_by(email: about_user_list["email"])
       if @user.nil?
         @user = User.new
@@ -46,21 +49,24 @@ class UsersController < ApplicationController
           session[:user_id] = @user.id
           render json: @user, status: :created
         else
-          #에러메시지
+          render json: {message: "회원 정보를 저장할 수 없습니다."}, status: :internal_server_error
         end
       else
         @user.username = about_user_list["name"]
         @user.myprofileurl = about_user_list["picture"]
-        session[:user_id] = @user.id
-        render json: @user, status: :ok
-      end
+          if @user.save
+            session[:user_id] = @user.id
+            render json: @user, status: :ok
+          else
+            render json: {message: "회원 정보를 저장할 수 없습니다."}, status: :internal_server_error
+          end
     end
   end
 
   api :GET, '/users/logout', '회원 로그아웃'
   def logout
     reset_session
-    render json: {url: "https://www.flass.com"}
+    render status: :accepted
   end
 
   # DELETE /users/1
@@ -68,7 +74,7 @@ class UsersController < ApplicationController
   api :DELETE, '/users', '회원 탈퇴'
   def destroy
     @user.destroy
-    head :no_content
+    head :ok
   end
 
   private
