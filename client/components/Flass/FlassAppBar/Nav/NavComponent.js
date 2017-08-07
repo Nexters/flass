@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import './NavComponentStyles.scss';
 
 const propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.any.isRequired,
   isRight: PropTypes.bool,
   Header: PropTypes.bool
 };
