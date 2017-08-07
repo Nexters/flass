@@ -67,8 +67,9 @@ class LecturesController < ApplicationController
         @lecture.destroy
         head :ok
       else
-        render json: {message: "게시물을 삭제할 권한이 없습니다."}, status: :forbidden
-  end
+        render json: {message: "게시물을 삭제할 권한이 없습니다."}, status: :unauthorized
+      end
+    end
 
   private
     # Use callbacks to share common setup or constraints between actions.

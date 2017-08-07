@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
   before_action :set_question, only: [:edit, :update, :destroy]
+  before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
 
   api :GET, '/questions', '(특정) 강의 문제들 불러오기'
   param :lecture_id, :number, :desc => "lecture ID", :required => true
