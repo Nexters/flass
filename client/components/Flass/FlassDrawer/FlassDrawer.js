@@ -20,14 +20,34 @@ const FlassMark = styled.div`
   padding-bottom: 2rem;
 `;
 
-const FlassMenuIcon = styled(Link)`
+const FlassMenu = styled(Link)`
   display: block;
+  position: relative;
+  width: 100%;
+  height: 7rem;
   text-align: center;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
 `;
 
-const FlassMenuIconImage = styled.img`
-  vertical-align: center;
+const FlassMenuImage = styled.img`
+  max-height: 100%;  
+  max-width: 100%; 
+  width: 17px;
+  height: auto;
+  position: absolute;  
+  top: 0;  
+  bottom: 0;  
+  left: 0;  
+  right: 0;  
+  margin: auto;
+`;
+
+const ClickLine = styled.div`
+  width: 5px;
+  height: 100%;
+  border-radius: 100px;
+  background-color: ${color['light-navy']};
+  float: right;
 `;
 
 
@@ -51,19 +71,21 @@ class FlassDrawer extends Component {
           path="/home"
           children={({ match }) =>
             (
-              <FlassMenuIcon
+              <FlassMenu
                 to="/home" >
-                <img alt="" src={ match ? SideHomeActive : SideHome } />
-              </FlassMenuIcon>
+                <FlassMenuImage alt="" width="17" src={ match ? SideHomeActive : SideHome } />
+                {match ? <ClickLine /> : ''}
+              </FlassMenu>
             )} />
         <Route
           path="/upload"
           children={({ match }) =>
             (
-              <FlassMenuIcon
+              <FlassMenu
                 to="/upload" >
-                <img alt="" src={ match ? SideUploadActive : SideUpload } />
-              </FlassMenuIcon>
+                <FlassMenuImage alt="" width="17" src={ match ? SideUploadActive : SideUpload } />
+                {match ? <ClickLine /> : ''}
+              </FlassMenu>
             )} />
       </div>
     );
