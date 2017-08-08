@@ -12,7 +12,7 @@ class LecturesController < ApplicationController
   # GET /lectures
   # GET /lectures.json
   api :GET, '/lectures/:id', '특정 강의 불러오기'
-  param :id, :number, :desc=> "lecture ID", :required => true
+  param :id, :number, :desc => "lecture ID", :required => true
   def show
     render json: @lecture
   end

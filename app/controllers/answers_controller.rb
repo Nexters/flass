@@ -1,7 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:edit, :update, :destroy]
 
-
   api :GET, '/answers', '특정 question에 대한 학생의 답'
   param :question_id, :number, :desc => "질문 ID", :required => true
   def show
