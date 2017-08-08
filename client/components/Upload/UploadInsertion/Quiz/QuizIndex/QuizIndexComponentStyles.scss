@@ -2,7 +2,7 @@
 
 .quiz-index {
   &__content {
-    padding-top: 120px;
+    padding-top: 170px;
   }
 
   &__icon {
@@ -31,5 +31,6 @@
     text-decoration: none;
     font-size: 2rem;
     color: $FlassGreenColor;
+    cursor: pointer;
   }
 }
