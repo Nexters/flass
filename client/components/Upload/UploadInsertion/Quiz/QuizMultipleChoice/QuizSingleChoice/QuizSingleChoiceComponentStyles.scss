@@ -1,0 +1,18 @@
+.quiz-single-choice {
+  &__checkbox {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    padding: 3.5px 3.5px;
+    border: solid 1.5px #3f4a4b;
+    border-radius: 50%;
+  }
+
+  &__check {
+    width: 20px;
+    height: 20px;
+    border: solid 1.5px #9abf32;
+    border-radius: 50%;
+    background-color: #9abf32;
+  }
+}

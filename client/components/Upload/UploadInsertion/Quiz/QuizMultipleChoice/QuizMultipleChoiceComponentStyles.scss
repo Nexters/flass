@@ -28,6 +28,13 @@
     }
   }
 
+  &__q-add-btn {
+    float: right;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+
   &__btn {
     padding: .75rem 1.2rem;
     display: inline-block;
