@@ -2,11 +2,11 @@ require 'net/http'
 require 'json'
 require 'openssl'
 
-#OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class UsersController < ApplicationController
+  protect_from_forgery prepend: :true, with: :exception
   before_action :login_check, only: [:show, :edit, :logout, :destroy]
   before_action :set_user, only: [:show, :edit, :destroy]
-
   # GET /users
   # GET /users.json
   api :GET, '/users', '회원 정보 불러오기'
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       response = http.request request # Net::HTTPResponse object
       about_user_list = JSON.parse(response.body)
       if about_user_list["email"].nil?
-        render {message: "유효하지 않은 토큰값입니다."}, status: :unauthorized
+        render json: {message: "유효하지 않은 토큰값입니다."}, status: :unauthorized
       end
       @user = User.find_by(email: about_user_list["email"])
       if @user.nil?
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
         #user생성되었을 경우와 그렇지 않은 경우 추가해야함
         if @user.save
           session[:user_id] = @user.id
-          render json: @user, status: :created
+          render json: @user, status: :ok
         else
           render json: {message: "회원 정보를 저장할 수 없습니다."}, status: :internal_server_error
         end
@@ -60,13 +60,14 @@ class UsersController < ApplicationController
           else
             render json: {message: "회원 정보를 저장할 수 없습니다."}, status: :internal_server_error
           end
+      end
     end
   end
 
   api :GET, '/users/logout', '회원 로그아웃'
   def logout
     reset_session
-    render status: :accepted
+    head :ok
   end
 
   # DELETE /users/1
