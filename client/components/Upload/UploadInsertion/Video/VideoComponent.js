@@ -34,6 +34,7 @@ const propTypes = {
   VideoPlayerClassName: oneOfType([string, arrayOf(string)]),
   VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
   VideoControllerBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
@@ -63,6 +64,7 @@ const defaultProps = {
   VideoPlayerClassName: '',
   VideoProgressBarClassName: '',
   VideoControllerBarClassName: '',
+  VideoBarClassName: '',
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
   VideoQuizIndicatorClassName: '',
@@ -110,6 +112,7 @@ class VideoComponent extends Component {
       VideoPlayerWrapperClassName,
       VideoPlayerClassName,
       VideoProgressBarClassName,
+      VideoBarClassName,
       VideoControllerBarClassName,
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
@@ -152,6 +155,7 @@ class VideoComponent extends Component {
             <div>
               <VideoCustomProgressBarComponent
                 VideoProgressBarClassName={ VideoProgressBarClassName }
+                VideoBarClassName={ VideoBarClassName }
                 VideoPlayedBarClassName={ VideoPlayedBarClassName }
                 VideoLoadedBarClassName={ VideoLoadedBarClassName }
                 VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }

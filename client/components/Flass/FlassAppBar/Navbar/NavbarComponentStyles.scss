@@ -4,7 +4,7 @@
 .flass-app-bar {
   position: absolute;
   top: 0;
-  left: $flassDrawerWidth;
+  padding-left: $flassDrawerWidth;
   width: 100%;
   min-height: $AppBarMinHeight;
   border: 1px solid transparent;
