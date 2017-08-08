@@ -7,10 +7,6 @@ class AnswersController < ApplicationController
     @answers = Answer.where(user_id: session[:user_id], question_id: params[:question_id])
   end
 
-  # GET /answers/1/edit
-  def edit
-  end
-
   api :POST, '/answers', '특정 question에 대한 학생의 답 생성'
   param :question_id, :number, :desc => "질문 ID", :required => true
   param :answer, String, :desc => "학생 답", :required => true
@@ -21,16 +17,6 @@ class AnswersController < ApplicationController
         render :show, status: :created, location: @answer
       else
         render json: @answer.errors, status: :unprocessable_entity
-      end
-  end
-
-  # PATCH/PUT /answers/1
-  # PATCH/PUT /answers/1.json
-  def update
-      if @answer.update(answer_params)
-        render :show, status: :ok, location: @answer
-      else
-       render json: @answer.errors, status: :unprocessable_entity
       end
   end
 
