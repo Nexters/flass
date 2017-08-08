@@ -9,6 +9,7 @@ const { string, bool, func, number } = PropTypes;
 
 const propTypes = {
   onCheckboxClick: func.isRequired,
+  onChoiceInputChange: func.isRequired,
   numberingKeyword: string.isRequired,
   isChecked: bool,
   quizIndex: number.isRequired
@@ -68,7 +69,10 @@ class QuizSingleChoiceComponent extends Component {
 
   @autobind
   onChoiceInputChange(e) {
+    const { quizIndex } = this.props;
+
     this.setState({ ChoiceInputValue: e.target.value });
+    this.props.onChoiceInputChange(quizIndex, e.target.value);
   }
 
   @autobind
