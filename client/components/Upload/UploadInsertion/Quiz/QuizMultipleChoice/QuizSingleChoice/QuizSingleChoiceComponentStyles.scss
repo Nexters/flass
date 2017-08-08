@@ -1,6 +1,15 @@
 .quiz-single-choice {
+  margin-top: 35px;
+  /* div끼리 같은 높이 맞추기 위해서 */
+  display: flex;
+
+  & > div {
+    display: flex;
+    float: none;
+  }
+  /***/
+
   &__checkbox {
-    display: inline-block;
     width: 30px;
     height: 30px;
     padding: 3.5px 3.5px;
@@ -14,5 +23,18 @@
     border: solid 1.5px #9abf32;
     border-radius: 50%;
     background-color: #9abf32;
+  }
+
+  &__q-text {
+    margin-left: 20px;
+    font-size: 20px;
+    border: none;
+    height: 30px;
+    color: #cacdcd;
+    width: 250px;
+
+    &--font-black {
+      color: #3f4a4b;
+    }
   }
 }

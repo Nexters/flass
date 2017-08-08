@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
+import classNames from 'classnames';
 
 import './QuizSingleChoiceComponentStyles.scss';
 
@@ -17,11 +18,22 @@ const defaultProps = {
 };
 
 class QuizSingleChoiceComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isChoiceDirty: false,
+      ChoiceInputValue: ''
+    };
+  }
+
+  componentWillMount() {
+    this.setState({ ChoiceInputValue: `${this.props.numberingKeyword} 문항을 입력하세요.` });
+  }
+
   render() {
-    const {
-      numberingKeyword,
-      isChecked
-    } = this.props;
+    const { isChoiceInputDirty, ChoiceInputValue } = this.state;
+    const { isChecked } = this.props;
 
     return (
       <div className="quiz-single-choice">
@@ -33,17 +45,34 @@ class QuizSingleChoiceComponent extends Component {
           }
         </div>
 
-        <span>
-          { `${numberingKeyword} 문항을 입력하세요.` }
-        </span>
+        <div>
+          <input
+            type="text"
+            className={ classNames(
+              'quiz-single-choice__q-text',
+              { 'quiz-single-choice__q-text--font-black': isChoiceInputDirty }
+            ) }
+            value={ ChoiceInputValue }
+            onClick={ this.onChoiceInputClick }
+            onChange={ this.onChoiceInputChange } />
+        </div>
       </div>
     );
+  }
+  @autobind
+  onChoiceInputClick() {
+    if (!this.state.isChoiceInputDirty) {
+      this.setState({ isChoiceInputDirty: true, ChoiceInputValue: '' });
+    }
+  }
+
+  @autobind
+  onChoiceInputChange(e) {
+    this.setState({ ChoiceInputValue: e.target.value });
   }
 
   @autobind
   onCheckboxClick() {
-    console.log('key', this.props.quizIndex);
-    console.log(typeof this.props.quizIndex);
     const quizIndex = parseInt(this.props.quizIndex);
     this.props.onCheckboxClick(quizIndex);
   }

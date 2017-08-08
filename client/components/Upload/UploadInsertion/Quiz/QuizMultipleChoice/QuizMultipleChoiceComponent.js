@@ -62,16 +62,16 @@ class QuizMultipleChoiceComponent extends Component {
         <div className="quiz-multiple-choice__footer">
           <div className={ classNames(
             'quiz-multiple-choice__btn',
+            'quiz-multiple-choice__btn--right'
+            ) }>
+            입력
+          </div>
+          <div className={ classNames(
+            'quiz-multiple-choice__btn',
             'quiz-multiple-choice__btn--gray',
             'quiz-multiple-choice__btn--right'
           ) }>
             삭제
-          </div>
-          <div className={ classNames(
-            'quiz-multiple-choice__btn',
-            'quiz-multiple-choice__btn--right'
-            ) }>
-            입력
           </div>
         </div>
       </div>
