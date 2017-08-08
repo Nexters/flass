@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { GridList, GridTile } from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
-import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
+import { Col, Grid, Row } from 'react-bootstrap';
+import _ from 'lodash';
+import styled from 'styled-components';
+import color from '../common/colors.scss';
+import FlassGridItem from './FlassGridItem';
 import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
-
 import './FlassGrid.scss';
-
 
 const propTypes = {
   items: PropTypes.array.isRequired,
@@ -26,38 +22,29 @@ class FlassGrid extends Component {
     this.props.fetchRequestMyChannelItems('1');
   }
 
-  getChildContext() {
-    return { muiTheme: getMuiTheme(baseTheme) };
-  }
-
-  renderChild() {
-    const { items } = this.props;
+  renderChildren(items) {
     return items.map(item => (
-      <Link key={ item.key } to={ `/detail/${item.key}` }>
-        <GridTile
-          className="flass-grid-item"
-          title={ item.title }
-          subtitle={ <span>by <b>{item.author}</b></span> }
-          actionIcon={ <IconButton><StarBorder
-            color="white" /></IconButton> }>
-          <img alt="" src={ item.img } />
-        </GridTile>
-      </Link>
+      <Col key={item.key} md={ 3 }>
+        <FlassGridItem { ...item } />
+      </Col>
     ));
   }
 
   render() {
+    const { items } = this.props;
+    const renderAllItems = _.chunk(items, 4).map(splitItems => {
+      return (
+        <Row>
+          {this.renderChildren(splitItems)}
+        </Row>
+      );
+    });
     return (
       <div>
         <FlassContentTitleComponent title="Home Channel" />
-
-        <GridList
-          cellHeight={ 200 }
-          cols={ 3 }
-          padding={ 20 }
-          className="flass-grid-list">
-          {this.renderChild()}
-        </GridList>
+        <Grid>
+          {renderAllItems}
+        </Grid>
       </div>
     );
   }

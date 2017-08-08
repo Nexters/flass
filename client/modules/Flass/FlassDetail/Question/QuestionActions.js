@@ -23,11 +23,11 @@ function* fetchRequestQuestion({ detailId }) {
   }
 }
 
-export const ADDD_QUESTION = 'ADD_QUESTION';
+export const ADD_QUESTION = 'ADD_QUESTION';
 
 export const addQuestion = question => dispatch => {
   // TODO
-  dispatch(() => ({ type: ADDD_QUESTION }));
+  dispatch(() => ({ type: ADD_QUESTION }));
   fetch('/json/FlassQuestion.json', {
     data: question
   })
