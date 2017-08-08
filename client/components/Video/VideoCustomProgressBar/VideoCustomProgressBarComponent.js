@@ -14,6 +14,7 @@ const { func, number, string, oneOfType, arrayOf, bool } = PropTypes;
 
 const propTypes = {
   VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
@@ -34,11 +35,11 @@ const propTypes = {
 
 const defaultProps = {
   VideoProgressBarClassName: '',
+  VideoBarClassName: '',
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
   VideoQuizIndicatorClassName: '',
   VideoQuizIndicatorBarClassName: '',
-  VideoBarClassName: '',
   duration: 1,
   playedPercentage: 0,
   loadedPercentage: 0,
@@ -83,6 +84,7 @@ class VideoCustomProgressBarComponent extends Component {
   render() {
     const { played, loaded, duration } = this.state;
     const {
+      VideoBarClassName,
       VideoProgressBarClassName,
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
@@ -100,6 +102,7 @@ class VideoCustomProgressBarComponent extends Component {
         onMouseUp={ this.onCustomSeekBarMouseUp }
         onClick={ this.onCustomSeekBarClick }>
         <VideoCustomBarComponent
+          VideoBarClassName={ VideoBarClassName }
           VideoPlayedBarClassName={ VideoPlayedBarClassName }
           VideoLoadedBarClassName={ VideoLoadedBarClassName }
           played={ played }

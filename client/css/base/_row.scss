@@ -7,6 +7,10 @@
     margin-top: 30px;
   }
 
+  &--t-margin-larger {
+    margin-top: 214px;
+  }
+
   &--equal-height-at-large {
     @include atLarge {
       display: flex;
@@ -39,6 +43,11 @@
     &__player-large-4 {
       float: left;
       width: 33.33%;
+    }
+
+    &__player-large-5 {
+      float: left;
+      width: 50%;
     }
   }
 }
