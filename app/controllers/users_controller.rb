@@ -4,7 +4,6 @@ require 'openssl'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class UsersController < ApplicationController
-  protect_from_forgery prepend: :true, with: :exception
   before_action :login_check, only: [:show, :edit, :logout, :destroy]
   before_action :set_user, only: [:show, :edit, :destroy]
   # GET /users
