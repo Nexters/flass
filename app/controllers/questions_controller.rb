@@ -1,20 +1,22 @@
 class QuestionsController < ApplicationController
+  before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
   before_action :set_question, only: [:edit, :update, :destroy]
+  before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
 
-  api :GET, '/questions', '(특정) 강의 질문들 불러오기'
+  api :GET, '/questions', '(특정) 강의 문제들 불러오기'
   param :lecture_id, :number, :desc => "lecture ID", :required => true
   def show
     @questions = Question.where(lecture_id: params[:lecture_id])
     render json: @questions
   end
 
-  api :GET, '/questions/edit', '강의 질문 수정 페이지'
+  api :GET, '/questions/edit', '강의 문제 수정 페이지'
   param :id, :number, :desc => "question ID", :required => true
     def edit
       if @question.user_id == session[:user_id]
         render json: @question, status: :ok
       else
-        render json: @question.errors, status: :forbidden
+        render json: {message: "문제를 수정할 권한이 없습니다."}, status: :unauthorized
       end
     end
 
@@ -31,7 +33,7 @@ class QuestionsController < ApplicationController
     if @question.save
       render json: @question, status: :created
     else
-      render json: @question.errors, status: :unprocessable_entity
+      render json: {message: "문제와 정답은 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
@@ -47,15 +49,18 @@ class QuestionsController < ApplicationController
     if @question.update(question_params)
       render json: @question, status: :ok
     else
-      render json: @question.errors, status: :unprocessable_entity
+      render json: {message: "문제와 정답은 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
   api :DELETE, '/questions', '강의 질문 삭제'
   param :id, :number, :desc => "question ID", :required => true
   def destroy
-    @question.destroy
-    head :no_content
+    if @question.user_id == session[:user_id]
+      @question.destroy
+      head :ok
+    else
+      render json: {message: "문제를 삭제할 권한이 없습니다."}, status: :unauthorized
   end
 
   private

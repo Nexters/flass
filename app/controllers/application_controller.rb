@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery prepend: true
+
   def login_check
-    if session[:user_id]=nil?
-      puts "로그인하세요"
+    if session[:user_id].nil?
+      @error = {message: "로그인이 필요합니다"}
+      render json: @error, status: :unauthorized
     end
   end
 end
