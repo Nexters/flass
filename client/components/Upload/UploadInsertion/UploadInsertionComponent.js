@@ -5,8 +5,7 @@ import autobind from 'autobind-decorator';
 
 import FlassContentTitleComponent from '../../Flass/FlassContentTitle/FlassContentTitleComponent';
 import VideoComponent from './Video/VideoComponent';
-import IndicatorBarWrapperComponent from './IndicatorBarWrapper/IndicatorBarWrapperComponent';
-import IndicatorBarComponent from './IndicatorBar/IndicatorBarComponent';
+import QuizComponent from './Quiz/QuizComponent';
 
 import './UploadInsertionComponentStyles.scss';
 
@@ -51,12 +50,13 @@ class UploadInsertionComponent extends Component {
       <div>
         <FlassContentTitleComponent title="Upload new video" />
         <div className="row">
-          <div className="row__player-large-8">
+          <div className="row__player-large-5">
             <VideoComponent
               VideoContainerClassName={ 'flass-upload-insertion-media' }
               VideoPlayerWrapperClassName="flass-upload-insertion-media__player-wrapper"
               VideoPlayerClassName="flass-upload-insertion-media__player"
               VideoControllerBarClassName="flass-upload-insertion-media__controller-bar"
+              VideoBarClassName="bar--thinner"
               VideoPlayedBarClassName="played-bar--thinner"
               VideoLoadedBarClassName="loaded-bar--thinner"
               VideoQuizIndicatorClassName="quiz-indicator--thinner"
@@ -81,29 +81,16 @@ class UploadInsertionComponent extends Component {
               isQuizSecs={ isQuizSecs } />
           </div>
 
-          <div className="row__player-large-4">
-            Quiz
+          <div className="row__player-large-5">
+            <QuizComponent />
           </div>
         </div>
-        <div className={ classNames('row', 'row--t-margin') }>
-          <IndicatorBarWrapperComponent>
-            <IndicatorBarComponent
-              VideoPlayedBarClassName={ classNames('played-bar', 'played-bar--thicker') }
-              VideoLoadedBarClassName={ classNames('loaded-bar', 'loaded-bar--thicker') }
-              VideoQuizIndicatorClassName={ classNames('quiz-indicator', 'quiz-indicator--thicker') }
-              VideoQuizIndicatorBarClassName={ classNames('quiz-indicator-bar', 'quiz-indicator-bar--thinner') }
-              playerSeekTo={ this.playerSeekTo }
-              setSeekingState={ this.setSeekingState }
-              setPlayingState={ this.setPlayingState }
-              setPlayedState={ this.setPlayedState }
-              setIsQuizSecsState={ this.setIsQuizSecsState }
-              duration={ duration }
-              played={ played }
-              loaded={ loaded }
-              isQuizSecs={ isQuizSecs } />
-          </IndicatorBarWrapperComponent>
+
+        <div className="row row--t-margin-larger">
+          <div className="flass-upload-insertion-media__btn">
+            업 로 드
+          </div>
         </div>
-        <button onClick={ goToStepOne }>PREV</button>
       </div>
     );
   }

@@ -4,8 +4,18 @@ import { Navbar, NavItem } from 'react-bootstrap';
 import NavbarComponent from './Navbar/NavbarComponent';
 import NavComponent from './Nav/NavComponent';
 import FlassUserAppBar from './FlassUserAppBar';
+import styled from 'styled-components';
+import color from '../common/colors.scss';
 import './FlassAppBar.scss';
 
+
+const NavTitle = styled.span`
+  font-family: NotoSansCJKkr;
+  font-size: 20px;
+  font-weight: 100;
+  color: ${color['cool-grey']};
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.26);
+`;
 
 const propTypes = {
   isLogin: PropTypes.bool
@@ -24,7 +34,9 @@ class FlassAppBar extends Component {
     return (
       <NavbarComponent>
         <NavComponent Header>
-          First Flip Learning Platform
+          <NavTitle>
+            First Flip Learning Platform
+          </NavTitle>
         </NavComponent>
 
         <NavComponent isRight>

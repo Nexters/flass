@@ -1,14 +1,10 @@
 @import '../../../css/base/_row';
 @import "../../../css/base/mixins";
 @import "../../Video/VideoVariables";
-
-$playerHeight: 350px;
-$playerWidth: 100%;
-
+@import '../variables';
 
 .flass-upload-insertion-media {
   position: relative;
-  padding-right: 10px;
   height: $playerHeight;
   border-radius: 3px;
 
@@ -63,5 +59,19 @@ $playerWidth: 100%;
       left: 0;
       right: 0;
     }
+  }
+
+  &__btn {
+    float: right;
+    padding: .75rem 1.2rem;
+    display: block;
+    width: 133px;
+    height: 47px;
+    border: solid 1.5px $FlassBlueColor;
+    border-radius: 100px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 2rem;
+    color: $FlassBlueColor;
   }
 }

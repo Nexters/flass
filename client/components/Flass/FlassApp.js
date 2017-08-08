@@ -40,7 +40,7 @@ class FlassApp extends Component {
     return (
       <Switch>
         <Route exact path="/" component={ FlassGrid } />
-        <Route path="/channel/me" component={ FlassGrid } />
+        <Route path="/home" component={ FlassGrid } />
         <Route path="/detail/:id" component={ FlassDetail } />
         <Route path="/video" component={ VideoComponent } />
         <Route path="/upload" component={ Upload } />

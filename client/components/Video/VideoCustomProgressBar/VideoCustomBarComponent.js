@@ -7,6 +7,7 @@ import './VideoCustomBarStyle.scss';
 const { number, string, oneOfType, arrayOf } = PropTypes;
 
 const propTypes = {
+  VideoBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
   played: number,
@@ -14,6 +15,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  VideoBarClassName: '',
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
   played: 0,
@@ -42,11 +44,15 @@ class VideoCustomBarComponent extends Component {
   }
 
   render() {
-    const { VideoPlayedBarClassName, VideoLoadedBarClassName } = this.props;
+    const {
+      VideoBarClassName,
+      VideoPlayedBarClassName,
+      VideoLoadedBarClassName
+    } = this.props;
 
     return (
       <div>
-        <div className={ classNames('bar', 'bar--thinner') } />
+        <div className={ classNames('bar', VideoBarClassName) } />
         <div id="loaded-bar" className={ classNames('loaded-bar', VideoLoadedBarClassName) } />
         <div id="played-bar" className={ classNames('played-bar', VideoPlayedBarClassName) } />
       </div>

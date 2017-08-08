@@ -14,6 +14,7 @@ const { string, oneOfType, arrayOf, func, number, bool } = PropTypes;
 
 const propTypes = {
   VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
@@ -31,6 +32,7 @@ const propTypes = {
 };
 const defaultProps = {
   VideoProgressBarClassName: '',
+  VideoBarClassName: '',
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
   VideoQuizIndicatorClassName: '',
@@ -46,6 +48,7 @@ class IndicatorBarComponent extends Component {
   render() {
     const {
       VideoProgressBarClassName,
+      VideoBarClassName,
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
       VideoQuizIndicatorClassName,
@@ -61,6 +64,7 @@ class IndicatorBarComponent extends Component {
       <div>
         <VideoCustomProgressBarComponent
           VideoProgressBarClassName={ VideoProgressBarClassName }
+          VideoBarClassName={ VideoBarClassName }
           VideoPlayedBarClassName={ VideoPlayedBarClassName }
           VideoLoadedBarClassName={ VideoLoadedBarClassName }
           VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
@@ -77,7 +81,7 @@ class IndicatorBarComponent extends Component {
 
           canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
           isQuizSecs={ isQuizSecs } />
-        
+
         <RulerComponent />
       </div>
     );
