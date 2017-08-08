@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import color from '../common/colors.scss';
-import FlassBadge from './FlassBadge';
+import Badge from '../../../modules/Flass/FlassBadge/FlassBadgeContainer';
+
+const FlassUserAppBarView = styled.div`
+  width: 180px;
+`;
 
 const UserName = styled.span`
   font-family: NotoSansCJKkr;
@@ -16,28 +20,25 @@ const UserName = styled.span`
   color: ${color['slate-grey-two']};
 `;
 
-const propTypes = {
-  badges: PropTypes.array
-};
+const Divider = styled.span`
+  width: 1px;
+  border-left: solid 2px #afbfc1;
+  margin: 0 2rem;
+`;
 
-const defaultProps = {
-  badges: [
-    { id: 1, content: 'Refresh' },
-    { id: 2, content: 'Help &amp; feedback' },
-    { id: 3, content: 'Settings' },
-    { id: 4, content: 'Sign out' }
-  ]
-};
+const propTypes = {};
+const defaultProps = {};
 
 class FlassUserAppBar extends Component {
   componentDidMount() {}
 
   render() {
     return (
-      <div>
-        <FlassBadge />
+      <FlassUserAppBarView>
+        <Badge />
+        <Divider />
         <UserName>최혜민</UserName>
-      </div>
+      </FlassUserAppBarView>
     );
   }
 }
