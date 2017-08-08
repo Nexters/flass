@@ -10,6 +10,9 @@ $dusty-orange: #f28021;
 $sick-green: #9abf32;
 $pale-grey: #f1f3f4;
 $white: #fff;
+
+@value white #{$white};
+
 $charcoal-grey: #3f4a4b;
 $steel-grey: #848b8c;
 

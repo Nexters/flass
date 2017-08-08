@@ -2,8 +2,7 @@ $FlassContentTitleMargin: 33px;
 $FlassContentTitleColor: #3f4a4b;
 
 .flass-content-title {
-  display: block;
-  width: 100%;
+  display: inline-block;
   margin: $FlassContentTitleMargin 0;
   font-size: 3rem;
   font-weight: bold;
