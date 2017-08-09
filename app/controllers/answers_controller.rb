@@ -23,6 +23,8 @@ class AnswersController < ApplicationController
 
   # DELETE /answers/1
   # DELETE /answers/1.json
+  api :DELETE, '/answers', '특정 question에 대한 학생 답 삭제'
+  param :id, :number, :desc => "학생 답 ID", :required => true
   def destroy
     @answer.destroy
     head :ok
