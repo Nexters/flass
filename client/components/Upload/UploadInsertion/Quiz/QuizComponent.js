@@ -15,6 +15,7 @@ const propTypes = {
   saveMultipleChoiceQuestion: func.isRequired,
   setPlayingState: func.isRequired,
   cancelAddingQuestion: func.isRequired,
+  completeAddingQuestion: func.isRequired,
   isAdding: bool
 };
 const defaultProps = {
@@ -48,7 +49,8 @@ class QuizComponent extends Component {
         <QuizMultipleChoiceComponent
           saveMultipleChoiceQuestion={ this.saveMultipleChoiceQuestion }
           setPlayingState={ this.setPlayingState }
-          cancelAddingQuestion={ this.cancelAddingQuestion } />
+          cancelAddingQuestion={ this.cancelAddingQuestion }
+          completeAddingQuestion={ this.completeAddingQuestion } />
       );
     }
   }
@@ -78,6 +80,11 @@ class QuizComponent extends Component {
   @autobind
   cancelAddingQuestion() {
     this.props.cancelAddingQuestion();
+  }
+
+  @autobind
+  completeAddingQuestion() {
+    this.props.completeAddingQuestion();
   }
 }
 

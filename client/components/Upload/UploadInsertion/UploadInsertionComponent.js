@@ -18,6 +18,7 @@ const propTypes = {
   saveMultipleChoiceQuestion: func.isRequired,
   cancelAddingQuestion: func.isRequired,
   addMultipleChoiceQuestion: func.isRequired,
+  completeAddingQuestion: func.isRequired,
   addQuestionSecs: func.isRequired,
   isAdding: bool,
   questionSecsArray: arrayOf(number)
@@ -95,6 +96,7 @@ class UploadInsertionComponent extends Component {
               saveMultipleChoiceQuestion={ this.saveMultipleChoiceQuestion }
               setPlayingState={ this.setPlayingState }
               cancelAddingQuestion={ this.cancelAddingQuestion }
+              completeAddingQuestion={ this.completeAddingQuestion }
               addMultipleChoiceQuestion={ this.addMultipleChoiceQuestion }
 
               isAdding={ isAdding } />
@@ -179,6 +181,11 @@ class UploadInsertionComponent extends Component {
       secsOfQuiz
     });
     this.props.addQuestionSecs({ playedSeconds: secsOfQuiz });
+  }
+
+  @autobind
+  completeAddingQuestion() {
+    this.props.completeAddingQuestion();
   }
 }
 

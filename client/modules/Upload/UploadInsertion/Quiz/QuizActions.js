@@ -1,6 +1,7 @@
 export const ADD_MULTIPLE_CHIOICE_QUESTION = 'add_multiple_choice_question';
 export const ADD_ANSWER_QUESTION = 'add_answer_question';
 export const CANCEL_ADDING_QUESTION = 'cancel_adding_question';
+export const COMPLETE_ADDING_QUESTION = 'complete_adding_question';
 export const SAVE_MULTIPLE_CHOICE_QUESTION = 'save_multiple_choice_question';
 export const ADD_QUESTION_SECS = 'add_question_secs';
 
@@ -14,6 +15,10 @@ export function addAnswerQuestion() {
 
 export function cancelAddingQuestion() {
   return { type: CANCEL_ADDING_QUESTION };
+}
+
+export function completeAddingQuestion() {
+  return { type: COMPLETE_ADDING_QUESTION };
 }
 
 export function saveMultipleChoiceQuestion({  numOfQuiz,

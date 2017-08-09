@@ -135,8 +135,7 @@ class VideoComponent extends Component {
       isQuizSecs,
       questionSecsArray
     } = this.props;
-    console.log('questionSecsArray');
-    console.log(questionSecsArray);
+
     return (
       <div className={ classNames(VideoContainerClassName) }>
         <VideoPlayerComponent

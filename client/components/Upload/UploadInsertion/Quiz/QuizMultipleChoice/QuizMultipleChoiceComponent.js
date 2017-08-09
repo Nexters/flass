@@ -15,6 +15,7 @@ import './QuizMultipleChoiceComponentStyles.scss';
 const { func } = PropTypes;
 const propTypes = {
   cancelAddingQuestion: func.isRequired,
+  completeAddingQuestion: func.isRequired,
   saveMultipleChoiceQuestion: func.isRequired,
   setPlayingState: func.isRequired
 };
@@ -31,6 +32,8 @@ const COMPONENT_INITIAL_STATE = {
     choiceTextValue: ''
   }]
 };
+const EMPTY_STRING = '';
+
 class QuizMultipleChoiceComponent extends Component {
   constructor(props) {
     super(props);
@@ -96,7 +99,7 @@ class QuizMultipleChoiceComponent extends Component {
   @autobind
   onTitleInputClick() {
     if (!this.state.isTitleInputDirty) {
-      this.setState({ isTitleInputDirty: true, TitleInputValue: '' });
+      this.setState({ isTitleInputDirty: true, TitleInputValue: EMPTY_STRING });
     }
   }
 
@@ -177,7 +180,7 @@ class QuizMultipleChoiceComponent extends Component {
   updateNumAndValuesOfChoice(numOfChoice, SingleChoiceValues) {
     const newSingleChoiceValue = {
       isAnswer: false,
-      choiceTextValue: ''
+      choiceTextValue: EMPTY_STRING
     };
 
     this.setState({
@@ -199,13 +202,52 @@ class QuizMultipleChoiceComponent extends Component {
   @autobind
   onRegisterBtnClick() {
     const { numOfQuiz, numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = this.state;
-    this.props.saveMultipleChoiceQuestion({
-      numOfQuiz,
-      numOfChoice,
-      checkedQuizIndex,
-      TitleInputValue,
-      SingleChoiceValues
-    });
+
+    if (this.isMultiChoiceFormFilled()) {
+      this.props.setPlayingState(true);
+      this.props.saveMultipleChoiceQuestion({
+        numOfQuiz,
+        numOfChoice,
+        checkedQuizIndex,
+        TitleInputValue,
+        SingleChoiceValues
+      });
+      this.props.completeAddingQuestion();
+    }
+  }
+
+  isMultiChoiceFormFilled() {
+    if (!this.isMultiChoiceTitleInputFilled()) {
+      alert('제목이 비었습니다.');
+      return false;
+    }
+    if (!this.isMultiChoiceBodyInputFilled()) {
+      alert('선택지가 입력되지않았습니다.');
+      return false;
+    }
+    if (!this.isCheckboxChecked()) {
+      alert('정답을 체크해주세요.');
+      return false;
+    }
+    return true;
+  }
+
+  isMultiChoiceTitleInputFilled() {
+    return (
+      this.state.TitleInputValue !== COMPONENT_INITIAL_STATE.TitleInputValue &&
+      this.state.TitleInputValue !== EMPTY_STRING &&
+      this.state.isTitleInputDirty
+    );
+  }
+
+  isMultiChoiceBodyInputFilled() {
+    return this.state.SingleChoiceValues
+      .filter(singleChoice => singleChoice.choiceTextValue !== EMPTY_STRING)
+      .length === this.state.SingleChoiceValues.length;
+  }
+
+  isCheckboxChecked() {
+    return this.state.checkedQuizIndex !== -1;
   }
 }
 

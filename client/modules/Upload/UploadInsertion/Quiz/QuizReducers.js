@@ -3,6 +3,7 @@ import {
   ADD_MULTIPLE_CHIOICE_QUESTION,
   ADD_ANSWER_QUESTION,
   CANCEL_ADDING_QUESTION,
+  COMPLETE_ADDING_QUESTION,
   SAVE_MULTIPLE_CHOICE_QUESTION,
   ADD_QUESTION_SECS
 } from './QuizActions';
@@ -24,6 +25,8 @@ export default function(state = INITIAL_STATE, action) {
     case ADD_ANSWER_QUESTION:
       return { ...state, type: ANSWER_QUESTION_TYPE, isAdding: true };
     case CANCEL_ADDING_QUESTION:
+      return { ...state, type: null, isAdding: false };
+    case COMPLETE_ADDING_QUESTION:
       return { ...state, type: null, isAdding: false };
     case SAVE_MULTIPLE_CHOICE_QUESTION: {
       const {
