@@ -2,10 +2,8 @@ import _ from 'lodash';
 import { List } from 'immutable';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
-import * as actions from '../../../../../modules/Upload/UploadInsertion/Quiz/QuizActions';
 
 import QuizSingleChoiceComponent from './QuizSingleChoice/QuizSingleChoiceComponent';
 
@@ -16,26 +14,28 @@ import './QuizMultipleChoiceComponentStyles.scss';
 
 const { func } = PropTypes;
 const propTypes = {
-  cancelAddingQuestion: func.isRequired
+  cancelAddingQuestion: func.isRequired,
+  saveMultipleChoiceQuestion: func.isRequired,
+  setPlayingState: func.isRequired
 };
 const defaultProps = {};
 const NUMBERING_KEYWORD = ['첫 번째', '두 번째', '세 번째', '네 번째'];
-
+const COMPONENT_INITIAL_STATE = {
+  numOfQuiz: 1,
+  numOfChoice: 1,
+  checkedQuizIndex: -1,
+  isTitleInputDirty: false,
+  TitleInputValue: '문제를 입력하세요.',
+  SingleChoiceValues: [{
+    isAnswer: false,
+    choiceTextValue: ''
+  }]
+};
 class QuizMultipleChoiceComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      numOfQuiz: 1,
-      numOfChoice: 1,
-      checkedQuizIndex: -1,
-      isTitleInputDirty: false,
-      TitleInputValue: '문제를 입력하세요.',
-      SingleChoiceValues: [{
-        isAnswer: false,
-        choiceTextValue: ''
-      }]
-    };
+    this.state = COMPONENT_INITIAL_STATE;
   }
 
   render() {
@@ -193,15 +193,23 @@ class QuizMultipleChoiceComponent extends Component {
     }
 
     this.props.cancelAddingQuestion();
+    this.props.setPlayingState(true);
   }
 
   @autobind
   onRegisterBtnClick() {
-
+    const { numOfQuiz, numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = this.state;
+    this.props.saveMultipleChoiceQuestion({
+      numOfQuiz,
+      numOfChoice,
+      checkedQuizIndex,
+      TitleInputValue,
+      SingleChoiceValues
+    });
   }
 }
 
 QuizMultipleChoiceComponent.propTypes = propTypes;
 QuizMultipleChoiceComponent.defaultProps = defaultProps;
 
-export default connect(null, actions)(QuizMultipleChoiceComponent);
+export default QuizMultipleChoiceComponent;

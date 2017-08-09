@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
@@ -6,16 +7,20 @@ import autobind from 'autobind-decorator';
 import FlassContentTitleComponent from '../../Flass/FlassContentTitle/FlassContentTitleComponent';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
+import * as actions from '../../../modules/Upload/UploadInsertion/Quiz/QuizActions';
 
 import './UploadInsertionComponentStyles.scss';
 
-const { func, string, number } = PropTypes;
+const { func, string, bool } = PropTypes;
 
 const propTypes = {
-  goToStepOne: func.isRequired,
-  videoTitle: string.isRequired,
+  saveMultipleChoiceQuestion: func.isRequired,
+  cancelAddingQuestion: func.isRequired,
+  addMultipleChoiceQuestion: func.isRequired,
+  isAdding: bool
 };
 const defaultProps = {
+  isAdding: false
 };
 
 class UploadInsertionComponent extends Component {
@@ -42,8 +47,7 @@ class UploadInsertionComponent extends Component {
     } = this.state;
 
     const {
-      videoTitle,
-      goToStepOne
+      isAdding
     } = this.props;
 
     return (
@@ -82,7 +86,13 @@ class UploadInsertionComponent extends Component {
           </div>
 
           <div className="row__player-large-5">
-            <QuizComponent />
+            <QuizComponent
+              saveMultipleChoiceQuestion={ this.saveMultipleChoiceQuestion }
+              setPlayingState={ this.setPlayingState }
+              cancelAddingQuestion={ this.cancelAddingQuestion }
+              addMultipleChoiceQuestion={ this.addMultipleChoiceQuestion }
+
+              isAdding={ isAdding } />
           </div>
         </div>
 
@@ -136,9 +146,45 @@ class UploadInsertionComponent extends Component {
   setPlayedState(played) {
     this.setState({ played });
   }
+
+  @autobind
+  addMultipleChoiceQuestion() {
+    this.props.addMultipleChoiceQuestion();
+  }
+
+  @autobind
+  cancelAddingQuestion() {
+    this.props.cancelAddingQuestion();
+  }
+
+  @autobind
+  saveMultipleChoiceQuestion(quizState) {
+    const { numOfQuiz, numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = quizState;
+    const { duration, played } = this.state;
+
+    this.props.saveMultipleChoiceQuestion({
+      numOfQuiz,
+      numOfChoice,
+      checkedQuizIndex,
+      TitleInputValue,
+      SingleChoiceValues,
+      duration,
+      played,
+      secsOfQuiz: (duration * played)
+    });
+  }
 }
 
 UploadInsertionComponent.propTypes = propTypes;
 UploadInsertionComponent.defaultProps = defaultProps;
 
-export default UploadInsertionComponent;
+function mapStateToProps({ quizInsertion }) {
+  const { isAdding, type } = quizInsertion;
+
+  return {
+    isAdding,
+    type
+  };
+}
+
+export default connect(mapStateToProps, actions)(UploadInsertionComponent);
