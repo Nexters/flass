@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-import { connect } from 'react-redux';
-import * as actions from '../../../../modules/Upload/UploadInsertion/Quiz/QuizActions';
-
 
 import QuizWrapperComponent from './QuizWrapper/QuizWrapperComponent';
 import QuizIndexComponent from './QuizIndex/QuizIndexComponent';
@@ -15,6 +12,10 @@ const { bool, func } = PropTypes;
 
 const propTypes = {
   addMultipleChoiceQuestion: func.isRequired,
+  saveMultipleChoiceQuestion: func.isRequired,
+  setPlayingState: func.isRequired,
+  cancelAddingQuestion: func.isRequired,
+  completeAddingQuestion: func.isRequired,
   isAdding: bool
 };
 const defaultProps = {
@@ -34,7 +35,9 @@ class QuizComponent extends Component {
 
   @autobind
   renderQuizComponent() {
-    const { isAdding } = this.props;
+    const {
+      isAdding
+    } = this.props;
 
     if (!isAdding) {
       return (
@@ -43,7 +46,11 @@ class QuizComponent extends Component {
       );
     } else {
       return (
-        <QuizMultipleChoiceComponent />
+        <QuizMultipleChoiceComponent
+          saveMultipleChoiceQuestion={ this.saveMultipleChoiceQuestion }
+          setPlayingState={ this.setPlayingState }
+          cancelAddingQuestion={ this.cancelAddingQuestion }
+          completeAddingQuestion={ this.completeAddingQuestion } />
       );
     }
   }
@@ -51,19 +58,37 @@ class QuizComponent extends Component {
   @autobind
   onAddMultipleChoiceQuizBtnClick() {
     this.props.addMultipleChoiceQuestion();
+    this.props.setPlayingState(false);
+  }
+
+  @autobind
+  saveMultipleChoiceQuestion({ numOfQuiz, numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues }) {
+    this.props.saveMultipleChoiceQuestion({
+      numOfQuiz,
+      numOfChoice,
+      checkedQuizIndex,
+      TitleInputValue,
+      SingleChoiceValues
+    });
+  }
+
+  @autobind
+  setPlayingState(playingState) {
+    this.props.setPlayingState(playingState);
+  }
+
+  @autobind
+  cancelAddingQuestion() {
+    this.props.cancelAddingQuestion();
+  }
+
+  @autobind
+  completeAddingQuestion() {
+    this.props.completeAddingQuestion();
   }
 }
 
 QuizComponent.propTypes = propTypes;
 QuizComponent.defaultProps = defaultProps;
 
-function mapStateToProps({ quizInsertion }) {
-  const { isAdding, type } = quizInsertion;
-
-  return {
-    isAdding,
-    type
-  };
-}
-
-export default connect(mapStateToProps, actions)(QuizComponent);
+export default QuizComponent;

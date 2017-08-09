@@ -1,6 +1,10 @@
 @import "../../../css/base/mixins";
 @import "../VideoVariables";
 
+$tooltipWidth: 40px;
+$tooltipHeight: 43px;
+$tooltipTextColor: #9abf32;
+
 .quiz-indicator {
   position: relative;
   width: 100%;
@@ -23,5 +27,41 @@
 
   &--thinner {
     height: $quizIndicatorBarHeightThinner;
+  }
+
+  .tooltiptext {
+    opacity: 0;
+    position: absolute;
+    width: $tooltipWidth;
+    height: $tooltipHeight;
+    margin-left: -($tooltipWidth / 2);
+    padding: 5px 0;
+    bottom: 150%;
+    left: 50%;
+    background-color: white;
+    color: $tooltipTextColor;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    border-radius: 6px;
+    z-index: -999;
+    box-shadow: 3px 4px 20px 0 rgba(79, 79, 79, 0.05), 3px 4px 20px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .tooltiptext::after {
+    content: "";
+    margin-left: -5px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+  }
+
+  &:hover .tooltiptext {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity .3s;
   }
 }

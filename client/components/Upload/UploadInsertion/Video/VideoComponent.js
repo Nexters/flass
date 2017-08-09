@@ -56,7 +56,8 @@ const propTypes = {
   played: number,
   loaded: number,
   playing: bool,
-  isQuizSecs: bool
+  isQuizSecs: bool,
+  questionSecsArray: arrayOf(number)
 };
 const defaultProps = {
   VideoContainerClassName: '',
@@ -80,7 +81,8 @@ const defaultProps = {
   played: 0,
   loaded: 0,
   playing: true,
-  isQuizSecs: false
+  isQuizSecs: false,
+  questionSecsArray: []
 };
 
 class VideoComponent extends Component {
@@ -130,7 +132,8 @@ class VideoComponent extends Component {
       played,
       loaded,
       playing,
-      isQuizSecs
+      isQuizSecs,
+      questionSecsArray
     } = this.props;
 
     return (
@@ -170,6 +173,7 @@ class VideoComponent extends Component {
                 onCustomSeekBarClick={ this.onCustomSeekBarClick }
                 onArrowKeyPressed={ this.onArrowKeyPressed }
 
+                quizTimeArray={ questionSecsArray }
                 canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
                 isQuizSecs={ isQuizSecs } />
 
