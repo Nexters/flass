@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import VideoTooltipComponent from './VideoTooltip/VideoTooltipComponent';
 import './VideoCustomQuizBarStyle.scss';
 
 const { number, string, oneOfType, arrayOf } = PropTypes;
@@ -39,7 +40,7 @@ class VideoCustomQuizBarComponent extends Component {
           key={ quizTime }
           className={ classNames('quiz-indicator-bar', VideoQuizIndicatorBarClassName) }
           style={ { left: `${(quizTime / this.props.duration) * 100}%` } }>
-          { quizTime }
+          <VideoTooltipComponent content={ quizTime } />
         </div>
       );
     });

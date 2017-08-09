@@ -7,20 +7,24 @@ import autobind from 'autobind-decorator';
 import FlassContentTitleComponent from '../../Flass/FlassContentTitle/FlassContentTitleComponent';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
+
 import * as actions from '../../../modules/Upload/UploadInsertion/Quiz/QuizActions';
 
 import './UploadInsertionComponentStyles.scss';
 
-const { func, string, bool } = PropTypes;
+const { func, string, bool, arrayOf, number } = PropTypes;
 
 const propTypes = {
   saveMultipleChoiceQuestion: func.isRequired,
   cancelAddingQuestion: func.isRequired,
   addMultipleChoiceQuestion: func.isRequired,
-  isAdding: bool
+  addQuestionSecs: func.isRequired,
+  isAdding: bool,
+  questionSecsArray: arrayOf(number)
 };
 const defaultProps = {
-  isAdding: false
+  isAdding: false,
+  questionSecsArray: []
 };
 
 class UploadInsertionComponent extends Component {
@@ -47,9 +51,9 @@ class UploadInsertionComponent extends Component {
     } = this.state;
 
     const {
-      isAdding
+      isAdding,
+      questionSecsArray
     } = this.props;
-
     return (
       <div>
         <FlassContentTitleComponent title="Upload new video" />
@@ -82,7 +86,8 @@ class UploadInsertionComponent extends Component {
               played={ played }
               loaded={ loaded }
               playing={ playing }
-              isQuizSecs={ isQuizSecs } />
+              isQuizSecs={ isQuizSecs }
+              questionSecsArray={ questionSecsArray } />
           </div>
 
           <div className="row__player-large-5">
@@ -161,6 +166,7 @@ class UploadInsertionComponent extends Component {
   saveMultipleChoiceQuestion(quizState) {
     const { numOfQuiz, numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = quizState;
     const { duration, played } = this.state;
+    const secsOfQuiz = (duration * played).toFixed(2);
 
     this.props.saveMultipleChoiceQuestion({
       numOfQuiz,
@@ -170,8 +176,9 @@ class UploadInsertionComponent extends Component {
       SingleChoiceValues,
       duration,
       played,
-      secsOfQuiz: (duration * played)
+      secsOfQuiz
     });
+    this.props.addQuestionSecs({ playedSeconds: secsOfQuiz });
   }
 }
 
@@ -179,11 +186,12 @@ UploadInsertionComponent.propTypes = propTypes;
 UploadInsertionComponent.defaultProps = defaultProps;
 
 function mapStateToProps({ quizInsertion }) {
-  const { isAdding, type } = quizInsertion;
+  const { isAdding, type, questionSecsArray } = quizInsertion;
 
   return {
     isAdding,
-    type
+    type,
+    questionSecsArray
   };
 }
 

@@ -3,10 +3,12 @@ import {
   ADD_MULTIPLE_CHIOICE_QUESTION,
   ADD_ANSWER_QUESTION,
   CANCEL_ADDING_QUESTION,
-  SAVE_MULTIPLE_CHOICE_QUESTION
+  SAVE_MULTIPLE_CHOICE_QUESTION,
+  ADD_QUESTION_SECS
 } from './QuizActions';
 
 const INITIAL_STATE = {
+  questionSecsArray: [],
   isAdding: false,
   type: null,
   numOfQuiz: 0,
@@ -39,12 +41,19 @@ export default function(state = INITIAL_STATE, action) {
         SingleChoiceValues,
         secsOfQuiz
       };
-      
-      console.log('secsOfQuiz', secsOfQuiz);
+
       return {
         ...state,
         quizState: _.concat(state.quizState, newMultipleChoiceState),
         numOfQuiz: state.numOfQuiz + 1
+      };
+    }
+    case ADD_QUESTION_SECS: {
+      const { playedSeconds } = action.payload;
+
+      return {
+        ...state,
+        questionSecsArray: _.concat(state.questionSecsArray, parseFloat(playedSeconds))
       };
     }
     default:
