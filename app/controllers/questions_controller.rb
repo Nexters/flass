@@ -11,13 +11,13 @@ class QuestionsController < ApplicationController
 
   api :GET, '/questions/edit', '강의 문제 수정 페이지'
   param :id, :number, :desc => "question ID", :required => true
-    def edit
-      if @question.user_id == session[:user_id]
-        render json: @question, status: :ok
-      else
-        render json: {message: "문제를 수정할 권한이 없습니다."}, status: :unauthorized
-      end
+  def edit
+    if @question.user_id == session[:user_id]
+      render json: @question, status: :ok
+    else
+      render json: {message: "문제를 수정할 권한이 없습니다."}, status: :unauthorized
     end
+  end
 
   # POST /questions.json
   api :POST, '/questions', '강의 질문 생성'
@@ -58,6 +58,7 @@ class QuestionsController < ApplicationController
       head :ok
     else
       render json: {message: "문제를 삭제할 권한이 없습니다."}, status: :unauthorized
+    end
   end
 
   private
