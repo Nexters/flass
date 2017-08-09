@@ -10,7 +10,7 @@ import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
 
 import './VideoCustomProgressBarStyle.scss';
 
-const { func, number, string, oneOfType, arrayOf, bool } = PropTypes;
+const { func, number, string, oneOfType, arrayOf, bool, shape } = PropTypes;
 
 const propTypes = {
   VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
@@ -28,7 +28,10 @@ const propTypes = {
   playedPercentage: number,
   loadedPercentage: number,
 
-  quizTimeArray: arrayOf(number),
+  quizTimeArray: arrayOf(shape({
+    playedSeconds: number,
+    label: string
+  })),
   canChangeIsQuizSecs: func.isRequired,
   isQuizSecs: bool.isRequired
 };

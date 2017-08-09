@@ -12,7 +12,7 @@ import * as actions from '../../../modules/Upload/UploadInsertion/Quiz/QuizActio
 
 import './UploadInsertionComponentStyles.scss';
 
-const { func, string, bool, arrayOf, number } = PropTypes;
+const { func, string, bool, arrayOf, number, shape } = PropTypes;
 
 const propTypes = {
   saveMultipleChoiceQuestion: func.isRequired,
@@ -21,11 +21,14 @@ const propTypes = {
   completeAddingQuestion: func.isRequired,
   addQuestionSecs: func.isRequired,
   isAdding: bool,
-  questionSecsArray: arrayOf(number)
+  questionSecsStateArray: arrayOf(shape({
+    playedSeconds: number,
+    label: string
+  }))
 };
 const defaultProps = {
   isAdding: false,
-  questionSecsArray: []
+  questionSecsStateArray: []
 };
 
 class UploadInsertionComponent extends Component {
@@ -38,7 +41,8 @@ class UploadInsertionComponent extends Component {
       loaded: 0,
       seeking: false,
       isQuizSecs: false,
-      playing: true
+      playing: true,
+      numOfQuestion: 1
     };
   }
 
@@ -48,13 +52,15 @@ class UploadInsertionComponent extends Component {
       played,
       loaded,
       isQuizSecs,
-      playing
+      playing,
+      numOfQuestion
     } = this.state;
 
     const {
       isAdding,
-      questionSecsArray
+      questionSecsStateArray
     } = this.props;
+
     return (
       <div>
         <FlassContentTitleComponent title="Upload new video" />
@@ -88,7 +94,7 @@ class UploadInsertionComponent extends Component {
               loaded={ loaded }
               playing={ playing }
               isQuizSecs={ isQuizSecs }
-              questionSecsArray={ questionSecsArray } />
+              questionSecsStateArray={ questionSecsStateArray } />
           </div>
 
           <div className="row__player-large-5">
@@ -98,8 +104,10 @@ class UploadInsertionComponent extends Component {
               cancelAddingQuestion={ this.cancelAddingQuestion }
               completeAddingQuestion={ this.completeAddingQuestion }
               addMultipleChoiceQuestion={ this.addMultipleChoiceQuestion }
+              decreaseNumOfQuestion={ this.decreaseNumOfQuestion }
 
-              isAdding={ isAdding } />
+              isAdding={ isAdding }
+              numOfQuestion={ numOfQuestion } />
           </div>
         </div>
 
@@ -166,12 +174,13 @@ class UploadInsertionComponent extends Component {
 
   @autobind
   saveMultipleChoiceQuestion(quizState) {
-    const { numOfQuiz, numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = quizState;
-    const { duration, played } = this.state;
+    const { numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = quizState;
+    const { duration, played, numOfQuestion } = this.state;
     const secsOfQuiz = (duration * played).toFixed(2);
+    const labelOfQuiz = this.makeQuestionTooltipLabel(numOfQuestion);
 
     this.props.saveMultipleChoiceQuestion({
-      numOfQuiz,
+      numOfQuestion,
       numOfChoice,
       checkedQuizIndex,
       TitleInputValue,
@@ -180,7 +189,24 @@ class UploadInsertionComponent extends Component {
       played,
       secsOfQuiz
     });
-    this.props.addQuestionSecs({ playedSeconds: secsOfQuiz });
+    this.props.addQuestionSecs({
+      playedSeconds: secsOfQuiz,
+      label: labelOfQuiz
+    });
+    this.increaseNumOfQuestion();
+  }
+
+  makeQuestionTooltipLabel(numOfQuestion) {
+    return `Q${numOfQuestion}`;
+  }
+
+  increaseNumOfQuestion() {
+    this.setState({ numOfQuestion: this.state.numOfQuestion + 1 });
+  }
+
+  @autobind
+  decreaseNumOfQuestion() {
+    this.setState({ numOfQuestion: this.state.numOfQuestion - 1 });
   }
 
   @autobind
@@ -193,12 +219,12 @@ UploadInsertionComponent.propTypes = propTypes;
 UploadInsertionComponent.defaultProps = defaultProps;
 
 function mapStateToProps({ quizInsertion }) {
-  const { isAdding, type, questionSecsArray } = quizInsertion;
+  const { isAdding, type, questionSecsStateArray } = quizInsertion;
 
   return {
     isAdding,
     type,
-    questionSecsArray
+    questionSecsStateArray
   };
 }
 

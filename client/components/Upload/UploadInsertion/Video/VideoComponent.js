@@ -11,7 +11,6 @@ import {
   VideoTimePanelComponent,
   VideoCustomProgressBarComponent,
   VideoControllerWrapperComponent,
-  VideoModalComponent,
   VideoControllerAndBarWrapperComponent
 } from '../../../Video';
 
@@ -20,13 +19,13 @@ import {
   convertSecsToPercentage
 } from '../../../Video/VideoUtils';
 
-import PlayBtnIcon from '../../../../../public/play_arrow_24dp_1x.png';
-import PauseBtnIcon from '../../../../../public/pause_24dp_1x.png';
-import VolumeOnBtnIcon from '../../../../../public/volume_up_24dp_1x.png';
-import VolumeOffBtnIcon from '../../../../../public/volume_off_24dp_1x.png';
-import FullscreenBtnIcon from '../../../../../public/web_asset_24dp_1x.png';
+import PlayBtnIcon from '../../../../../public/icons/play_btn.png';
+import PauseBtnIcon from '../../../../../public/icons/pause@2x.png';
+import VolumeOnBtnIcon from '../../../../../public/icons/speak_btn.png';
+import VolumeOffBtnIcon from '../../../../../public/icons/non-speak@2x.png';
+import FullscreenBtnIcon from '../../../../../public/icons/view_btn.png';
 
-const { string, oneOfType, arrayOf, func, number, bool } = PropTypes;
+const { string, oneOfType, arrayOf, func, number, bool, shape } = PropTypes;
 
 const propTypes = {
   VideoContainerClassName: oneOfType([string, arrayOf(string)]),
@@ -57,7 +56,10 @@ const propTypes = {
   loaded: number,
   playing: bool,
   isQuizSecs: bool,
-  questionSecsArray: arrayOf(number)
+  questionSecsStateArray: arrayOf(shape({
+    playedSeconds: number,
+    label: string
+  }))
 };
 const defaultProps = {
   VideoContainerClassName: '',
@@ -82,7 +84,7 @@ const defaultProps = {
   loaded: 0,
   playing: true,
   isQuizSecs: false,
-  questionSecsArray: []
+  questionSecsStateArray: []
 };
 
 class VideoComponent extends Component {
@@ -105,8 +107,7 @@ class VideoComponent extends Component {
       volume,
       isMute,
       isVolumeBtnMouseOver,
-      playbackRate,
-      youtubeConfig,
+      playbackRate
     } = this.state;
 
     const {
@@ -133,7 +134,7 @@ class VideoComponent extends Component {
       loaded,
       playing,
       isQuizSecs,
-      questionSecsArray
+      questionSecsStateArray
     } = this.props;
 
     return (
@@ -148,7 +149,6 @@ class VideoComponent extends Component {
           loaded={ loaded }
           duration={ duration }
           playbackRate={ playbackRate }
-          youtubeConfig={ youtubeConfig }
           onProgress={ onProgress }
           onDuration={ onDuration }
           setPlayer={ setPlayer } />
@@ -173,7 +173,7 @@ class VideoComponent extends Component {
                 onCustomSeekBarClick={ this.onCustomSeekBarClick }
                 onArrowKeyPressed={ this.onArrowKeyPressed }
 
-                quizTimeArray={ questionSecsArray }
+                quizTimeArray={ questionSecsStateArray }
                 canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
                 isQuizSecs={ isQuizSecs } />
 

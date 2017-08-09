@@ -5,14 +5,17 @@ import classNames from 'classnames';
 import VideoTooltipComponent from './VideoTooltip/VideoTooltipComponent';
 import './VideoCustomQuizBarStyle.scss';
 
-const { number, string, oneOfType, arrayOf } = PropTypes;
+const { number, string, oneOfType, arrayOf, shape } = PropTypes;
 
 const propTypes = {
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
   duration: number.isRequired,
 
-  quizTimeArray: arrayOf(number)
+  quizTimeArray: arrayOf(shape({
+    playedSeconds: number,
+    label: string
+  }))
 };
 const defaultProps = {
   VideoQuizIndicatorClassName: '',
@@ -33,14 +36,15 @@ class VideoCustomQuizBarComponent extends Component {
 
   renderQuizBar() {
     return this.props.quizTimeArray.map(quizTime => {
+      const { playedSeconds, label } = quizTime;
       const { VideoQuizIndicatorBarClassName } = this.props;
 
       return (
         <div
-          key={ quizTime }
+          key={ label }
           className={ classNames('quiz-indicator-bar', VideoQuizIndicatorBarClassName) }
-          style={ { left: `${(quizTime / this.props.duration) * 100}%` } }>
-          <VideoTooltipComponent content={ quizTime } />
+          style={ { left: `${(playedSeconds / this.props.duration) * 100}%` } }>
+          <VideoTooltipComponent content={ label } />
         </div>
       );
     });

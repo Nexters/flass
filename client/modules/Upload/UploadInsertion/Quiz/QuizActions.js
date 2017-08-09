@@ -21,7 +21,7 @@ export function completeAddingQuestion() {
   return { type: COMPLETE_ADDING_QUESTION };
 }
 
-export function saveMultipleChoiceQuestion({  numOfQuiz,
+export function saveMultipleChoiceQuestion({  numOfQuestion,
                                               numOfChoice,
                                               checkedQuizIndex,
                                               TitleInputValue,
@@ -32,7 +32,7 @@ export function saveMultipleChoiceQuestion({  numOfQuiz,
   return {
     type: SAVE_MULTIPLE_CHOICE_QUESTION,
     payload: {
-      numOfQuiz,
+      numOfQuestion,
       numOfChoice,
       checkedQuizIndex,
       TitleInputValue,
@@ -44,9 +44,9 @@ export function saveMultipleChoiceQuestion({  numOfQuiz,
   };
 }
 
-export function addQuestionSecs({ playedSeconds }) {
+export function addQuestionSecs({ playedSeconds, label }) {
   return {
     type: ADD_QUESTION_SECS,
-    payload: { playedSeconds }
+    payload: { playedSeconds, label }
   };
 }

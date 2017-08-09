@@ -9,10 +9,10 @@ import {
 } from './QuizActions';
 
 const INITIAL_STATE = {
-  questionSecsArray: [],
+  questionSecsStateArray: [],
   isAdding: false,
   type: null,
-  numOfQuiz: 0,
+  numOfQuestion: 0,
   quizState: []
 };
 const MULTIPLE_CHOICE_TYPE = 'multiple_choice_type';
@@ -48,15 +48,19 @@ export default function(state = INITIAL_STATE, action) {
       return {
         ...state,
         quizState: _.concat(state.quizState, newMultipleChoiceState),
-        numOfQuiz: state.numOfQuiz + 1
+        numOfQuestion: state.numOfQuestion
       };
     }
     case ADD_QUESTION_SECS: {
-      const { playedSeconds } = action.payload;
+      const { playedSeconds, label } = action.payload;
+      const newSecsState = {
+        playedSeconds: parseFloat(playedSeconds),
+        label
+      };
 
       return {
         ...state,
-        questionSecsArray: _.concat(state.questionSecsArray, parseFloat(playedSeconds))
+        questionSecsStateArray: _.concat(state.questionSecsStateArray, newSecsState)
       };
     }
     default:

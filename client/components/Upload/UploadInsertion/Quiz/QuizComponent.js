@@ -8,7 +8,7 @@ import QuizMultipleChoiceComponent from './QuizMultipleChoice/QuizMultipleChoice
 
 import './QuizComponentStyles.scss';
 
-const { bool, func } = PropTypes;
+const { bool, func, number } = PropTypes;
 
 const propTypes = {
   addMultipleChoiceQuestion: func.isRequired,
@@ -16,7 +16,9 @@ const propTypes = {
   setPlayingState: func.isRequired,
   cancelAddingQuestion: func.isRequired,
   completeAddingQuestion: func.isRequired,
-  isAdding: bool
+  decreaseNumOfQuestion: func.isRequired,
+  isAdding: bool,
+  numOfQuestion: number.isRequired
 };
 const defaultProps = {
   isAdding: false
@@ -36,7 +38,8 @@ class QuizComponent extends Component {
   @autobind
   renderQuizComponent() {
     const {
-      isAdding
+      isAdding,
+      numOfQuestion
     } = this.props;
 
     if (!isAdding) {
@@ -50,7 +53,10 @@ class QuizComponent extends Component {
           saveMultipleChoiceQuestion={ this.saveMultipleChoiceQuestion }
           setPlayingState={ this.setPlayingState }
           cancelAddingQuestion={ this.cancelAddingQuestion }
-          completeAddingQuestion={ this.completeAddingQuestion } />
+          completeAddingQuestion={ this.completeAddingQuestion }
+          decreaseNumOfQuestion={ this.decreaseNumOfQuestion }
+
+          numOfQuestion={ numOfQuestion } />
       );
     }
   }
@@ -85,6 +91,11 @@ class QuizComponent extends Component {
   @autobind
   completeAddingQuestion() {
     this.props.completeAddingQuestion();
+  }
+
+  @autobind
+  decreaseNumOfQuestion() {
+    this.props.decreaseNumOfQuestion();
   }
 }
 

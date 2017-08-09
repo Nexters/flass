@@ -12,17 +12,18 @@ import AddQuizIcon from './icons/add_circle_outline_black_24dp.png';
 import './QuizMultipleChoiceComponentStyles.scss';
 
 
-const { func } = PropTypes;
+const { func, number } = PropTypes;
 const propTypes = {
   cancelAddingQuestion: func.isRequired,
   completeAddingQuestion: func.isRequired,
   saveMultipleChoiceQuestion: func.isRequired,
-  setPlayingState: func.isRequired
+  decreaseNumOfQuestion: func.isRequired,
+  setPlayingState: func.isRequired,
+  numOfQuestion: number.isRequired,
 };
 const defaultProps = {};
 const NUMBERING_KEYWORD = ['첫 번째', '두 번째', '세 번째', '네 번째'];
 const COMPONENT_INITIAL_STATE = {
-  numOfQuiz: 1,
   numOfChoice: 1,
   checkedQuizIndex: -1,
   isTitleInputDirty: false,
@@ -43,15 +44,18 @@ class QuizMultipleChoiceComponent extends Component {
 
   render() {
     const {
-      numOfQuiz,
       isTitleInputDirty,
       TitleInputValue
     } = this.state;
 
+    const {
+      numOfQuestion
+    } = this.props;
+
     return (
       <div className="quiz-multiple-choice">
         <div className="quiz-multiple-choice__header">
-          <span className="quiz-multiple-choice__q-num">{`Q${numOfQuiz}`}</span>
+          <span className="quiz-multiple-choice__q-num">{`Q${numOfQuestion}`}</span>
           <span>
             <input
               type="text"
@@ -191,8 +195,8 @@ class QuizMultipleChoiceComponent extends Component {
 
   @autobind
   onCancelBtnClick() {
-    if (this.state.numOfQuiz > 1) {
-      this.setState({ numOfQuiz: this.state.numOfQuiz - 1 });
+    if (this.props.numOfQuestion > 1) {
+      this.props.decreaseNumOfQuestion();
     }
 
     this.props.cancelAddingQuestion();
@@ -201,12 +205,11 @@ class QuizMultipleChoiceComponent extends Component {
 
   @autobind
   onRegisterBtnClick() {
-    const { numOfQuiz, numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = this.state;
+    const { numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = this.state;
 
     if (this.isMultiChoiceFormFilled()) {
       this.props.setPlayingState(true);
       this.props.saveMultipleChoiceQuestion({
-        numOfQuiz,
         numOfChoice,
         checkedQuizIndex,
         TitleInputValue,
