@@ -47,8 +47,6 @@ class UsersController < ApplicationController
         if @user.save
           session[:user_id] = @user.id
           render json: @user, status: :ok
-        else
-          render json: {message: "회원 정보를 저장할 수 없습니다."}, status: :internal_server_error
         end
       else
         @user.username = about_user_list["name"]
@@ -56,8 +54,6 @@ class UsersController < ApplicationController
           if @user.save
             session[:user_id] = @user.id
             render json: @user, status: :ok
-          else
-            render json: {message: "회원 정보를 저장할 수 없습니다."}, status: :internal_server_error
           end
       end
     end
