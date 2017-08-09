@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
   before_action :set_question, only: [:edit, :update, :destroy]
-  before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
 
   api :GET, '/questions', '(특정) 강의 문제들 불러오기'
   param :lecture_id, :number, :desc => "lecture ID", :required => true
@@ -26,7 +25,6 @@ class QuestionsController < ApplicationController
   param :content, String, :desc => "질문 내용", :required => true
   param :correct_answer, String, :desc => "질문 정답", :required => true
   param :question_at, Time, :desc => "질문 등장 시간", :required => true
-  param :hint, String, :desc => "힌트", :required => false
   def create
     @question = Question.new(question_params)
 
@@ -44,7 +42,6 @@ class QuestionsController < ApplicationController
   param :content, String, :desc => "질문 내용", :required => true
   param :correct_answer, String, :desc => "질문 정답", :required => true
   param :question_at, Time, :desc => "질문 등장 시간", :required => true
-  param :hint, String, :desc => "힌트", :required => false
   def update
     if @question.update(question_params)
       render json: @question, status: :ok
@@ -72,6 +69,6 @@ class QuestionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
       params[:user_id] = session[:user_id]
-      params.permit(:user_id, :lecture_id, :content, :correct_answer, :question_at, :hint)
+      params.permit(:user_id, :lecture_id, :content, :correct_answer, :question_at)
     end
 end

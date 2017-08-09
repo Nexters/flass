@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807084725) do
+ActiveRecord::Schema.define(version: 20170809052147) do
 
   create_table "answers", force: :cascade do |t|
     t.integer "user_id"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20170807084725) do
     t.time "duration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "subject"
+    t.string "textbook_range"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -60,7 +62,6 @@ ActiveRecord::Schema.define(version: 20170807084725) do
     t.string "content"
     t.string "correct_answer"
     t.time "question_at"
-    t.string "hint"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
