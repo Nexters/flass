@@ -1,11 +1,19 @@
 class AnswersController < ApplicationController
-  before_action :login_check, only: [:show, :create, :destroy]
+  before_action :login_check, only: [:index, :show, :create, :destroy]
   before_action :set_answer, only: :destroy
 
-  api :GET, '/answers', '특정 question에 대한 학생들의 답'
+  api :GET, '/answers/question', '특정 question에 대한 학생들의 답'
   param :question_id, :number, :desc => "질문 ID", :required => true
-  def show
+  def index
     @answers = Answer.where(question_id: params[:question_id])
+    render json: @answers
+  end
+
+  api :GET, '/answers', '특정 학생의 특정 강의에 대한 답 리스트'
+  param :lecture_id, :number, :desc => "강의 ID", :required => true
+  def show
+    @answers = Answer.where(lecture_id: params[:lecture_id], user_id: session[:user_id])
+    render json: @answers
   end
 
   api :POST, '/answers', '특정 question에 대한 학생의 답 생성'
