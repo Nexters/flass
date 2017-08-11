@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Button, ControlLabel, Form, FormControl,
-  FormGroup,
+  FormGroup
 } from 'react-bootstrap';
+import { reduxForm, Field } from 'redux-form';
+import _ from 'lodash';
 import styled from 'styled-components';
+import normalizePostComment from './normalizePostComment';
 import color from '../../common/colors.scss';
 import './PostComment.scss';
 
@@ -41,24 +45,60 @@ const BtnPostComment = styled(Button)`
   float: right;
 `;
 
-const propTypes = {};
+const propTypes = {
+  detailId: PropTypes.number.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    userName: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
+  }).isRequired,
+  addComment: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};
 
 const defaultProps = {};
 
 class PostComment extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.renderTextArea = this.renderTextArea.bind(this);
+  }
 
-  render() {
+  submit = ({ content }) => {
+    const { detailId, user, addComment } = this.props;
+    addComment(detailId, user.id, user.userName, content);
+  };
+
+  renderTextArea({ input, meta: { touched, error }, id, label, userName, ...props }) {
     return (
-      <DetailPostComment>
-        <FormGroup controlId="formControlsTextarea">
-          <Label>최혜민</Label>
-          <TextArea componentClass="textarea" placeholder="해당 강의 내용 또는 퀴즈에 대해 궁금한 점이 잇다면 댓글을 달아주세요." />
+      <div>
+        <FormGroup controlId={id}>
+          <Label>{ userName }</Label>
+          <TextArea
+            { ...input }
+            componentClass="textarea"
+            { ...props } />
         </FormGroup>
         <Bottom>
-          <BottomText>0 / 500</BottomText>
-          <BtnPostComment bsStyle="primary">등록</BtnPostComment>
+          <BottomText>{input.value.length} / 500</BottomText>
+          <BtnPostComment type="submit" bsStyle="primary">등록</BtnPostComment>
         </Bottom>
+      </div>
+    );
+  }
+
+  render() {
+    const { user, handleSubmit } = this.props;
+    return (
+      <DetailPostComment onSubmit={ handleSubmit(this.submit) }>
+        <Field
+          id="content"
+          name="content"
+          userName={ user.userName }
+          type="text"
+          placeholder="해당 강의 내용 또는 퀴즈에 대해 궁금한 점이 잇다면 댓글을 달아주세요."
+          component={ this.renderTextArea }
+          normalize={ normalizePostComment }
+        />
       </DetailPostComment>
     );
   }
@@ -67,4 +107,6 @@ class PostComment extends Component {
 PostComment.propTypes = propTypes;
 PostComment.defaultProps = defaultProps;
 
-export default PostComment;
+export default reduxForm({
+  form: 'postComment'
+})(PostComment);

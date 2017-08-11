@@ -1,36 +1,36 @@
 [
   {
-    "key": 1,
+    "id": 1,
     "img": "http://via.placeholder.com/350x150",
     "title": "Breakfast",
     "author": "jill111"
   },
   {
-    "key": 2,
+    "id": 2,
     "img": "http://via.placeholder.com/350x150",
     "title": "Tasty burger",
     "author": "pashminu"
   },
   {
-    "key": 3,
+    "id": 3,
     "img": "http://via.placeholder.com/350x150",
     "title": "Camera",
     "author": "Danson67"
   },
   {
-    "key": 4,
+    "id": 4,
     "img": "http://via.placeholder.com/350x150",
     "title": "Morning",
     "author": "fancycrave1"
   },
   {
-    "key": 5,
+    "id": 5,
     "img": "http://via.placeholder.com/350x150",
     "title": "Hats",
     "author": "Hans"
   },
   {
-    "key": 6,
+    "id": 6,
     "img": "http://via.placeholder.com/350x150",
     "title": "Honey",
     "author": "fancycravel"

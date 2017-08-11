@@ -21,6 +21,7 @@ const CommentMenu = styled.span`
 const Content = styled.div`
   padding-top: 1rem;
   font-size: 1.4rem;
+  word-break: break-all;
 `;
 
 const Bottom = styled.span`

@@ -49,7 +49,7 @@ const Analysis = styled.div`
 `;
 
 const propTypes = {
-  key: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired
@@ -58,12 +58,12 @@ const propTypes = {
 const defaultProps = {};
 
 const FlassGridItem = props => {
-  const { key, title, author, img } = props;
+  const { id, title, author, img } = props;
 
   return (
     <Item src={ img }>
       <Header>12주차 수업</Header>
-      <Link to={ `/detail/${key}` }>
+      <Link to={ `/detail/${id}` }>
         <Title>
           { title }
         </Title>

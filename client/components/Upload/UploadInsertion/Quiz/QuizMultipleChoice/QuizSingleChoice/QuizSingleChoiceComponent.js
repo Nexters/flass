@@ -42,7 +42,7 @@ class QuizSingleChoiceComponent extends Component {
           className="quiz-single-choice__checkbox"
           onClick={ this.onCheckboxClick }>
           {
-            isChecked ? <div className="quiz-single-choice__check">{ ' ' }</div> : null
+            isChecked && <div className="quiz-single-choice__check">{ ' ' }</div>
           }
         </div>
 
