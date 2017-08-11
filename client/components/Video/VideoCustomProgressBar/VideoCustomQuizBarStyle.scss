@@ -4,6 +4,7 @@
 $tooltipWidth: 40px;
 $tooltipHeight: 43px;
 $tooltipTextColor: #9abf32;
+$quizbarColor: #9abf32;
 
 .quiz-indicator {
   position: relative;
@@ -23,7 +24,10 @@ $tooltipTextColor: #9abf32;
   position: absolute;
   width: 10px;
   height: $quizIndicatorBarHeight;
-  background-color: yellow;
+  background-color: $quizbarColor;
+  border: 3px solid $quizbarColor;
+  border-radius: 50%;
+  transform: scale(1.5, 1.5);
 
   &--thinner {
     height: $quizIndicatorBarHeightThinner;

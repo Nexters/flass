@@ -16,6 +16,18 @@
   }
 }
 
+@mixin atPlayerLargeForControllerbar {
+  @media (min-width: 1850px) {
+    @content;
+  }
+}
+
+@mixin atPlayerMediumForControllerbar {
+  @media (min-width: 1375px) {
+    @content;
+  }
+}
+
 @mixin atPlayerLarge {
   @media (min-width: 1400px) {
     @content;
