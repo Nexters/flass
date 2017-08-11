@@ -23,7 +23,7 @@ class QuizSingleChoiceComponent extends Component {
     super(props);
 
     this.state = {
-      isChoiceDirty: false,
+      isChoiceInputDirty: false,
       ChoiceInputValue: ''
     };
   }

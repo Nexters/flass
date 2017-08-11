@@ -1,15 +1,32 @@
 import _ from 'lodash';
+import { List } from 'immutable';
 import {
   ADD_MULTIPLE_CHIOICE_QUESTION,
   ADD_ANSWER_QUESTION,
   CANCEL_ADDING_QUESTION,
   COMPLETE_ADDING_QUESTION,
   SAVE_MULTIPLE_CHOICE_QUESTION,
-  ADD_QUESTION_SECS
+  ADD_QUESTION_SECS,
+  FOCUS_ON_QUESTION,
+  COMPLETE_EDIT_QUESTION
 } from './QuizActions';
 
 const INITIAL_STATE = {
   questionSecsStateArray: [],
+  stateOfFocusedQuestion: {
+    secsStateOfFocusedQuestion: {
+      playedSeconds: -1,
+      label: '',
+      isFocused: false
+    },
+    textStateOfFocusdQuestion: {
+      TitleInputValue: '',
+      checkedQuizIndex: -1,
+      numOfChoice: -1,
+      SingleChoiceValues: [],
+      secsOfQuiz: -1
+    }
+  },
   isAdding: false,
   type: null,
   numOfQuestion: 0,
@@ -34,7 +51,8 @@ export default function(state = INITIAL_STATE, action) {
         checkedQuizIndex,
         numOfChoice,
         SingleChoiceValues,
-        secsOfQuiz
+        secsOfQuiz,
+        numOfQuestion
       } = action.payload;
 
       const newMultipleChoiceState = {
@@ -42,7 +60,8 @@ export default function(state = INITIAL_STATE, action) {
         checkedQuizIndex,
         numOfChoice,
         SingleChoiceValues,
-        secsOfQuiz
+        secsOfQuiz,
+        indexOfQuestion: numOfQuestion - 1
       };
 
       return {
@@ -52,10 +71,11 @@ export default function(state = INITIAL_STATE, action) {
       };
     }
     case ADD_QUESTION_SECS: {
-      const { playedSeconds, label } = action.payload;
+      const { playedSeconds, label, isFocused } = action.payload;
       const newSecsState = {
         playedSeconds: parseFloat(playedSeconds),
-        label
+        label,
+        isFocused
       };
 
       return {
@@ -63,7 +83,61 @@ export default function(state = INITIAL_STATE, action) {
         questionSecsStateArray: _.concat(state.questionSecsStateArray, newSecsState)
       };
     }
+
+    case FOCUS_ON_QUESTION: {
+      const {
+        secsStateOfFocusedQuestion,
+        textStateOfFocusdQuestion
+      } = findQuestionSecsStateAndTextStateByLabel(state.questionSecsStateArray, state.quizState, action.payload.label);
+
+      return {
+        ...state,
+        stateOfFocusedQuestion: {
+          secsStateOfFocusedQuestion,
+          textStateOfFocusdQuestion
+        }
+      };
+    }
+
+    case COMPLETE_EDIT_QUESTION: {
+      const { EditedTextStateOfFocusedQuestion } = action.payload;
+      const { indexOfQuestion } = EditedTextStateOfFocusedQuestion;
+      const UpdatedQuizState = List(state.quizState)
+        .update(indexOfQuestion, () => EditedTextStateOfFocusedQuestion)
+        .toArray();
+
+      return {
+        ...state,
+        quizState: UpdatedQuizState,
+        stateOfFocusedQuestion: INITIAL_STATE.stateOfFocusedQuestion
+      };
+    }
     default:
       return state;
   }
+}
+
+function findQuestionSecsStateAndTextStateByLabel(questionSecsStateArray, questionTextStateArray, targetLabel) {
+  let index = -1;
+
+  const secsStateOfFocusedQuestion = List(questionSecsStateArray)
+    .filter(({ label }, i) => {
+      if (label === targetLabel) {
+        index = i;
+
+        return true;
+      }
+
+      return false;
+    })
+    .map(secsState => ({ ...secsState, isFocused: true }))
+    .toArray()[0];
+
+  const textStateOfFocusdQuestion = findQuestionTextStateByLabel(questionTextStateArray, index);
+
+  return { secsStateOfFocusedQuestion, textStateOfFocusdQuestion };
+}
+
+function findQuestionTextStateByLabel(questionTextStateArray, index) {
+  return questionTextStateArray[index];
 }

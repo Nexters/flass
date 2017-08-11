@@ -19,7 +19,7 @@ const propTypes = {
   saveMultipleChoiceQuestion: func.isRequired,
   decreaseNumOfQuestion: func.isRequired,
   setPlayingState: func.isRequired,
-  numOfQuestion: number.isRequired,
+  numOfQuestion: number.isRequired
 };
 const defaultProps = {};
 const NUMBERING_KEYWORD = ['첫 번째', '두 번째', '세 번째', '네 번째'];

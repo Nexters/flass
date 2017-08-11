@@ -51,6 +51,7 @@ const propTypes = {
   setPlayingState: func.isRequired,
   setIsQuizSecsState: func.isRequired,
   setPlayedState: func.isRequired,
+  onQuestionbarClick: func,
   duration: number,
   played: number,
   loaded: number,
@@ -62,6 +63,7 @@ const propTypes = {
   }))
 };
 const defaultProps = {
+  onQuestionbarClick: () => {},
   VideoContainerClassName: '',
   VideoPlayerWrapperClassName: '',
   VideoPlayerClassName: '',
@@ -164,6 +166,7 @@ class VideoComponent extends Component {
                 VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
                 VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
 
+                onQuestionbarClick={ this.onQuestionbarClick }
                 duration={ duration }
                 playedPercentage={ played }
                 loadedPercentage={ loaded }
@@ -304,6 +307,11 @@ class VideoComponent extends Component {
     this.props.setPlayingState(true);
     this.props.setPlayedState(changedPlayedPercentage);
     this.props.playerSeekTo(changedPlayedPercentage);
+  }
+
+  @autobind
+  onQuestionbarClick({ label }) {
+    this.props.onQuestionbarClick({ label });
   }
 }
 

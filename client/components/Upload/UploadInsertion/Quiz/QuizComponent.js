@@ -5,10 +5,10 @@ import autobind from 'autobind-decorator';
 import QuizWrapperComponent from './QuizWrapper/QuizWrapperComponent';
 import QuizIndexComponent from './QuizIndex/QuizIndexComponent';
 import QuizMultipleChoiceComponent from './QuizMultipleChoice/QuizMultipleChoiceComponent';
-
+import QuizEditMultipleChoiceComponent from './QuizEditMultipleChoice/QuizEditMultipleChoiceComponent';
 import './QuizComponentStyles.scss';
 
-const { bool, func, number } = PropTypes;
+const { bool, func, number, shape, string, arrayOf, oneOfType } = PropTypes;
 
 const propTypes = {
   addMultipleChoiceQuestion: func.isRequired,
@@ -17,11 +17,45 @@ const propTypes = {
   cancelAddingQuestion: func.isRequired,
   completeAddingQuestion: func.isRequired,
   decreaseNumOfQuestion: func.isRequired,
+  completeEditQuestion: func.isRequired,
   isAdding: bool,
-  numOfQuestion: number.isRequired
+  numOfQuestion: number.isRequired,
+  stateOfFocusedQuestion: shape({
+    secsStateOfFocusedQuestion: shape({
+      playedSeconds: number,
+      label: string,
+      isFocused: bool
+    }),
+    textStateOfFocusdQuestion: shape({
+      TitleInputValue: string,
+      checkedQuizIndex: number,
+      numOfChoice: number,
+      SingleChoiceValues: arrayOf(shape({
+        isAnswer: bool,
+        choiceTextValue: string
+      })),
+      secsOfQuiz: oneOfType([string, number]),
+      indexOfQuestion: number
+    })
+  })
 };
 const defaultProps = {
-  isAdding: false
+  isAdding: false,
+  stateOfFocusedQuestion: {
+    secsStateOfFocusedQuestion: {
+      playedSeconds: -1,
+      label: '',
+      isFocused: false
+    },
+    textStateOfFocusdQuestion: {
+      TitleInputValue: '',
+      checkedQuizIndex: -1,
+      numOfChoice: -1,
+      SingleChoiceValues: [],
+      secsOfQuiz: '',
+      indexOfQuestion: -1
+    }
+  }
 };
 
 class QuizComponent extends Component {
@@ -39,8 +73,24 @@ class QuizComponent extends Component {
   renderQuizComponent() {
     const {
       isAdding,
-      numOfQuestion
+      numOfQuestion,
+      stateOfFocusedQuestion: {
+        secsStateOfFocusedQuestion,
+        textStateOfFocusdQuestion
+      }
     } = this.props;
+    const { isFocused } = secsStateOfFocusedQuestion;
+
+    if (isFocused) {
+      return (
+        <QuizEditMultipleChoiceComponent
+          setPlayingState={ this.setPlayingState }
+          decreaseNumOfQuestion={ this.decreaseNumOfQuestion }
+          completeEditQuestion={ this.completeEditQuestion }
+          secsStateOfFocusedQuestion={ secsStateOfFocusedQuestion }
+          textStateOfFocusdQuestion={ textStateOfFocusdQuestion } />
+      );
+    }
 
     if (!isAdding) {
       return (
@@ -96,6 +146,11 @@ class QuizComponent extends Component {
   @autobind
   decreaseNumOfQuestion() {
     this.props.decreaseNumOfQuestion();
+  }
+
+  @autobind
+  completeEditQuestion({ EditedTextStateOfFocusedQuestion }) {
+    this.props.completeEditQuestion({ EditedTextStateOfFocusedQuestion })
   }
 }
 

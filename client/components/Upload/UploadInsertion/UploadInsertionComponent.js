@@ -12,7 +12,7 @@ import * as actions from '../../../modules/Upload/UploadInsertion/Quiz/QuizActio
 
 import './UploadInsertionComponentStyles.scss';
 
-const { func, string, bool, arrayOf, number, shape } = PropTypes;
+const { func, string, bool, arrayOf, number, shape, oneOfType } = PropTypes;
 
 const propTypes = {
   saveMultipleChoiceQuestion: func.isRequired,
@@ -20,15 +20,50 @@ const propTypes = {
   addMultipleChoiceQuestion: func.isRequired,
   completeAddingQuestion: func.isRequired,
   addQuestionSecs: func.isRequired,
+  focusOnQuestion: func.isRequired,
+  completeEditQuestion: func.isRequired,
   isAdding: bool,
   questionSecsStateArray: arrayOf(shape({
     playedSeconds: number,
     label: string
-  }))
+  })),
+  stateOfFocusedQuestion: shape({
+    secsStateOfFocusedQuestion: shape({
+      playedSeconds: number,
+      label: string,
+      isFocused: bool
+    }),
+    textStateOfFocusdQuestion: shape({
+      TitleInputValue: string,
+      checkedQuizIndex: number,
+      numOfChoice: number,
+      SingleChoiceValues: arrayOf(shape({
+        isAnswer: bool,
+        choiceTextValue: string
+      })),
+      secsOfQuiz: oneOfType([string, number]),
+      indexOfQuestion: number
+    })
+  })
 };
 const defaultProps = {
   isAdding: false,
-  questionSecsStateArray: []
+  questionSecsStateArray: [],
+  stateOfFocusedQuestion: {
+    secsStateOfFocusedQuestion: {
+      playedSeconds: -1,
+      label: '',
+      isFocused: false
+    },
+    textStateOfFocusdQuestion: {
+      TitleInputValue: '',
+      checkedQuizIndex: -1,
+      numOfChoice: -1,
+      SingleChoiceValues: [],
+      secsOfQuiz: '',
+      indexOfQuestion: -1
+    }
+  }
 };
 
 class UploadInsertionComponent extends Component {
@@ -58,7 +93,8 @@ class UploadInsertionComponent extends Component {
 
     const {
       isAdding,
-      questionSecsStateArray
+      questionSecsStateArray,
+      stateOfFocusedQuestion
     } = this.props;
 
     return (
@@ -89,6 +125,7 @@ class UploadInsertionComponent extends Component {
               setPlayingState={ this.setPlayingState }
               setPlayedState={ this.setPlayedState }
               setIsQuizSecsState={ this.setIsQuizSecsState }
+              onQuestionbarClick={ this.onQuestionbarClick }
               duration={ duration }
               played={ played }
               loaded={ loaded }
@@ -105,9 +142,11 @@ class UploadInsertionComponent extends Component {
               completeAddingQuestion={ this.completeAddingQuestion }
               addMultipleChoiceQuestion={ this.addMultipleChoiceQuestion }
               decreaseNumOfQuestion={ this.decreaseNumOfQuestion }
+              completeEditQuestion={ this.completeEditQuestion }
 
               isAdding={ isAdding }
-              numOfQuestion={ numOfQuestion } />
+              numOfQuestion={ numOfQuestion }
+              stateOfFocusedQuestion={ stateOfFocusedQuestion } />
           </div>
         </div>
 
@@ -213,18 +252,36 @@ class UploadInsertionComponent extends Component {
   completeAddingQuestion() {
     this.props.completeAddingQuestion();
   }
+
+  @autobind
+  onQuestionbarClick({ label }) {
+    this.props.focusOnQuestion({ label });
+    this.setPlayingState(false);
+  }
+
+  @autobind
+  completeEditQuestion({ EditedTextStateOfFocusedQuestion }) {
+    this.props.completeEditQuestion({ EditedTextStateOfFocusedQuestion });
+    this.setPlayingState(true);
+  }
 }
 
 UploadInsertionComponent.propTypes = propTypes;
 UploadInsertionComponent.defaultProps = defaultProps;
 
 function mapStateToProps({ quizInsertion }) {
-  const { isAdding, type, questionSecsStateArray } = quizInsertion;
+  const {
+    isAdding,
+    type,
+    questionSecsStateArray,
+    stateOfFocusedQuestion
+  } = quizInsertion;
 
   return {
     isAdding,
     type,
-    questionSecsStateArray
+    questionSecsStateArray,
+    stateOfFocusedQuestion
   };
 }
 
