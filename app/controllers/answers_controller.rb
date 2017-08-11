@@ -1,14 +1,19 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: [:edit, :update, :destroy]
+  before_action :login_check, only: [:index, :show, :create, :destroy]
+  before_action :set_answer, only: :destroy
 
-  api :GET, '/answers', '특정 question에 대한 학생의 답'
+  api :GET, '/answers/question', '특정 question에 대한 학생들의 답'
   param :question_id, :number, :desc => "질문 ID", :required => true
-  def show
-    @answers = Answer.where(user_id: session[:user_id], question_id: params[:question_id])
+  def index
+    @answers = Answer.where(question_id: params[:question_id])
+    render json: @answers
   end
 
-  # GET /answers/1/edit
-  def edit
+  api :GET, '/answers', '특정 학생의 특정 강의에 대한 답 리스트'
+  param :lecture_id, :number, :desc => "강의 ID", :required => true
+  def show
+    @answers = Answer.where(lecture_id: params[:lecture_id], user_id: session[:user_id])
+    render json: @answers
   end
 
   api :POST, '/answers', '특정 question에 대한 학생의 답 생성'
@@ -18,30 +23,20 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
 
       if @answer.save
-        render :show, status: :created, location: @answer
+        render json: @answer, status: :ok
       else
-        render json: @answer.errors, status: :unprocessable_entity
+        render json: {message: "답은 반드시 입력해야 합니다."}, status: :bad_request
       end
   end
-
-  # PATCH/PUT /answers/1
-  # PATCH/PUT /answers/1.json
-  def update
-      if @answer.update(answer_params)
-        render :show, status: :ok, location: @answer
-      else
-       render json: @answer.errors, status: :unprocessable_entity
-      end
-  end
-
 
   # DELETE /answers/1
   # DELETE /answers/1.json
+  api :DELETE, '/answers', '특정 question에 대한 학생 답 삭제'
+  param :id, :number, :desc => "학생 답 ID", :required => true
   def destroy
     @answer.destroy
-    head :no_content
+    head :ok
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -51,6 +46,7 @@ class AnswersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
-      params.require(:answer).permit(:user_id, :question_id, :answer)
+      params[:user_id] = session[:user_id]
+      params.permit(:user_id, :question_id, :answer)
     end
 end
