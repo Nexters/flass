@@ -3,10 +3,7 @@ import { FETCH_READY_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_ERROR,
 import _ from 'lodash';
 
 const initialState = {
-  comments: [],
-  get totalCount() {
-    return this.comments.length;
-  }
+  comments: []
 };
 
 const CommentReducer = (state = initialState, action) => {

@@ -140,7 +140,7 @@ class FlassDetail extends Component {
         </Tab>
         <Tab
           eventKey={ 2 }
-          title={ tabTitle(`학생 질문 - ${comment.totalCount}`,
+          title={ tabTitle(`학생 질문 - ${comment.comments.length}`,
           selected === 2 ? commentImageActive : commentImage) }>
           <Comment detailId={detail.id} />
         </Tab>
