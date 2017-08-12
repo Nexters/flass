@@ -27,11 +27,10 @@ export default class Google {
   static isAuthenticated() {
     const that = this;
     const auth = gapi.auth2.getAuthInstance();
-    console.log(`authInstance ${auth}`);
     const user = auth.currentUser.get();
     const hasGrantedScopes = user.hasGrantedScopes(UPLOAD_SCOPE);
     if (hasGrantedScopes) {
-      // this.accessToken = user.getAuthResponse().id_token;
+      this.idToken = user.getAuthResponse().id_token;
       user.reloadAuthResponse().then(response => {
         that.accessToken = response.access_token;
         Google.storeAccessToken();
@@ -143,14 +142,10 @@ export default class Google {
   }
 
   static storeAccessToken() {
-    axios({
-      method: 'post',
-      url: `${BASE_URL}/users.json`,
-      headers: {
-        'Content-type': 'multipart/form-data',
-        id_token: this.accessToken
-      }
-    })
+    const form = new FormData();
+    form.append('id_token', this.idToken);
+
+    axios.post(`${BASE_URL}/users.json`, form)
     .then(response => {
       console.log(response);
     })

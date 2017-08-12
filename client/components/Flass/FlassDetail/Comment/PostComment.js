@@ -12,8 +12,11 @@ import color from '../../common/colors.scss';
 import './PostComment.scss';
 
 const DetailPostComment = styled(Form)`
+  border-radius: 3px;
+  background-color: ${color['white']};
+  box-shadow: 3px 4px 10px 0 rgba(79, 79, 79, 0.15);
+  border: solid 1px ${color['silver']};
   text-align: left;
-  border: solid 1px ${color['cool-grey']};
 `;
 
 const Label = styled(ControlLabel)`
@@ -23,6 +26,7 @@ const Label = styled(ControlLabel)`
 `;
 
 const TextArea = styled(FormControl)`
+  height: 130px !important;
   border: 0;
   box-shadow: none;
   resize: none;
@@ -30,18 +34,16 @@ const TextArea = styled(FormControl)`
 
 const Bottom = styled.div`
   height: 32px;
-  border-top: solid 1px ${color['steel-grey']};
 `;
 
-const BottomText = styled.span`
-  line-height: 2.3;
-  margin-left: 1rem;
-`;
-
-const BtnPostComment = styled(Button)`
-  border: 0;
-  border-radius: 0;
-  background-color: ${color['light-navy']};
+const BtnPostComment = styled.button`
+  margin-top: 5px;
+  padding: 4px 20px;
+  color: ${color['light-navy']};
+  border-radius: 100px;
+  background-color: ${color['white']};
+  border: solid 1px ${color['light-navy']};
+  border-radius: 100px;
   float: right;
 `;
 
@@ -70,36 +72,35 @@ class PostComment extends Component {
 
   renderTextArea({ input, meta: { touched, error }, id, label, userName, ...props }) {
     return (
-      <div>
-        <FormGroup controlId={id}>
-          <Label>{ userName }</Label>
-          <TextArea
-            { ...input }
-            componentClass="textarea"
-            { ...props } />
-        </FormGroup>
-        <Bottom>
-          <BottomText>{input.value.length} / 500</BottomText>
-          <BtnPostComment type="submit" bsStyle="primary">등록</BtnPostComment>
-        </Bottom>
-      </div>
+      <FormGroup controlId={id}>
+        <Label>{ userName }</Label>
+        <TextArea
+          { ...input }
+          componentClass="textarea"
+          { ...props } />
+      </FormGroup>
     );
   }
 
   render() {
     const { user, handleSubmit } = this.props;
     return (
-      <DetailPostComment onSubmit={ handleSubmit(this.submit) }>
-        <Field
-          id="content"
-          name="content"
-          userName={ user.userName }
-          type="text"
-          placeholder="해당 강의 내용 또는 퀴즈에 대해 궁금한 점이 잇다면 댓글을 달아주세요."
-          component={ this.renderTextArea }
-          normalize={ normalizePostComment }
-        />
-      </DetailPostComment>
+      <div>
+        <DetailPostComment onSubmit={ handleSubmit(this.submit) }>
+          <Field
+            id="content"
+            name="content"
+            userName={ user.userName }
+            type="text"
+            placeholder="해당 강의 내용 또는 퀴즈에 대해 궁금한 점이 잇다면 댓글을 달아주세요."
+            component={ this.renderTextArea }
+            normalize={ normalizePostComment }
+          />
+        </DetailPostComment>
+        <Bottom>
+          <BtnPostComment type="submit">등록</BtnPostComment>
+        </Bottom>
+      </div>
     );
   }
 }

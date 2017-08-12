@@ -21,6 +21,7 @@
     "userId": "",
     "profileUrl": "http://via.placeholder.com/128x128",
     "userName": "질문자3",
-    "content": "<p> <span>to me, Scott, Jennifer</span> -- Wish I could come, but I&apos;m out of town this weekend. </p>"
+    "content": "<p> <span>to me, Scott, Jennifer</span> -- Wish I could come, but I&apos;m out of town this weekend. </p>",
+    "isReply": true
   }
 ]

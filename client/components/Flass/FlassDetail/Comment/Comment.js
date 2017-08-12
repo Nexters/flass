@@ -4,6 +4,7 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import PostComment from './PostComment';
 import CommentItem from './CommentItem';
+import ReplyComment from './ReplyCommentItem';
 
 const DetailComment = styled.div`
   width: 100%;
@@ -22,10 +23,10 @@ const propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     userName: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
   }).isRequired,
   fetchComment: PropTypes.func.isRequired,
-  addComment: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired
 };
 const defaultProps = {};
 
@@ -39,11 +40,12 @@ class Comment extends Component {
     const { comments } = this.props;
     return comments.map(comment => {
       const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
-      return (<CommentItem
+      const commentItem = (<CommentItem
         key={ comment.id }
         userName={ comment.userName }
-        content={ content }
-      />);
+        content={ content } />);
+      return comment.isReply ?
+        <ReplyComment component={ commentItem } /> : commentItem;
     });
   }
 
@@ -53,10 +55,9 @@ class Comment extends Component {
     return (
       <DetailComment>
         <PostComment
-          detailId={detailId}
-          user={user}
-          addComment={addComment}
-        />
+          detailId={ detailId }
+          user={ user }
+          addComment={ addComment } />
         <Divider />
         {this.renderChild()}
       </DetailComment>
