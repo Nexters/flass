@@ -13,14 +13,15 @@ const propTypes = {
   setStep: PropTypes.func,
   setVideoData: PropTypes.func,
   title: PropTypes.string,
-  thumb: PropTypes.number,
+  thumbStatus: PropTypes.number,
   thumbURL: PropTypes.string,
   getThumbnail: PropTypes.func,
   method: PropTypes.number,
   changeUploadMethod: PropTypes.func,
   resetVideo: PropTypes.func,
   isGoogleAuth: PropTypes.bool,
-  goToGoogleAuthPage: PropTypes.func
+  goToGoogleAuthPage: PropTypes.func,
+  uploadYoutubeVideo: PropTypes.func
 };
 
 const defaultProps = {
@@ -28,14 +29,15 @@ const defaultProps = {
   setStep: () => handleError('setStep'),
   setVideoData: () => handleError('setVideoData'),
   title: '',
-  thumb: actions.NO_THUMB,
+  thumbStatus: actions.NO_THUMB,
   thumbURL: '',
   getThumbnail: () => handleError('getThumbnail'),
   method: actions.URL_METHOD,
   changeUploadMethod: () => handleError('changeUploadMethod'),
   resetVideo: () => handleError('resetVideo'),
   isGoogleAuth: null,
-  goToGoogleAuthPage: () => handleError('goToGoogleAuthPage')
+  goToGoogleAuthPage: () => handleError('goToGoogleAuthPage'),
+  uploadYoutubeVideo: () => handleError('uploadYoutubeVideo')
 };
 
 function handleError(func) {
@@ -51,14 +53,15 @@ class Upload extends Component {
   render() {
     const {
       title,
-      thumb,
+      thumbStatus,
       thumbURL,
       getThumbnail,
       method,
       changeUploadMethod,
       resetVideo,
       isGoogleAuth,
-      goToGoogleAuthPage
+      goToGoogleAuthPage,
+      uploadYoutubeVideo
     } = this.props;
 
     switch(this.props.step) {
@@ -67,14 +70,15 @@ class Upload extends Component {
         return (
           <VideoUpload
             handleNext={ (title, description) => this.goToStepTwo(title, description) }
-            thumb={ thumb }
+            thumbStatus={ thumbStatus }
             thumbURL={ thumbURL }
             handleVideoURL={ videoURL => getThumbnail(videoURL) }
             method={ method }
             changeUploadMethod={ nextMethod => changeUploadMethod(nextMethod) }
             resetVideo={ resetVideo }
             isGoogleAuth={ isGoogleAuth }
-            goToGoogleAuthPage={ goToGoogleAuthPage } />
+            goToGoogleAuthPage={ goToGoogleAuthPage }
+            handleUploadVideo={ file => uploadYoutubeVideo(file) } />
         );
 
       // step 2
@@ -110,7 +114,7 @@ Upload.defaultProps = defaultProps;
 const mapStateToProps = state => ({
   step: state.upload.step,
   title: state.upload.title,
-  thumb: state.upload.thumb,
+  thumbStatus: state.upload.thumbStatus,
   thumbURL: state.upload.thumbURL,
   method: state.upload.method,
   isGoogleAuth: state.upload.isGoogleAuth
@@ -122,7 +126,8 @@ const mapDispatchToProps = dispatch => ({
   getThumbnail: videoURL => dispatch(actions.getThumbnail(videoURL)),
   changeUploadMethod: method => dispatch(actions.changeUploadMethod(method)),
   resetVideo: () => dispatch(actions.resetVideo()),
-  goToGoogleAuthPage: () => dispatch(actions.goToGoogleAuthPage())
+  goToGoogleAuthPage: () => dispatch(actions.goToGoogleAuthPage()),
+  uploadYoutubeVideo: file => dispatch(actions.uploadYoutubeVideo(file))
 });
 
 export default connect(

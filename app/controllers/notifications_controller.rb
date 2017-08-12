@@ -9,10 +9,10 @@ class NotificationsController < ApplicationController
   end
 
   api :POST, '/notifications', '유저 알림 생성'
-  param :user_id, :number, :desc => "알림을 보낼 유저 ID", :required => true
-  param :notification_type, String, :desc => "알림 타입", :required => true
-  param :content, String, :desc => "알림 내용", :required => true
-  param :url, String, :desc => "알림 url 정보", :required => true
+  param :user_id, :number, :desc => "알림을 보낼 유저 ID"
+  param :notification_type, String, :desc => "알림 타입"
+  param :content, String, :desc => "알림 내용"
+  param :url, String, :desc => "알림 url 정보"
   def create
     @notification = Notification.new(notification_params)
 
@@ -24,10 +24,10 @@ class NotificationsController < ApplicationController
   end
 
   api :PUT, '/notifications', '유저 알림 업데이트'
-  param :id, :number, :desc => "notification ID", :required => true
-  param :notification_type, String, :desc => "알림 타입", :required => false
-  param :content, String, :desc => "알림 내용", :required => false
-  param :url, String, :desc => "알림 url 정보", :required => false
+  param :id, :number, :desc => "notification ID"
+  param :notification_type, String, :desc => "알림 타입"
+  param :content, String, :desc => "알림 내용"
+  param :url, String, :desc => "알림 url 정보"
   def update
     if @notification.update(notification_params)
       render json: @notification, status: :ok
@@ -37,7 +37,7 @@ class NotificationsController < ApplicationController
   end
 
   api :DELETE, '/notifications', '유저 알림 삭제'
-  param :id, :number, :desc => "notification ID", :required => true
+  param :id, :number, :desc => "notification ID"
   def destroy
     if @notification.user_id == session[:user_id]
       @notification.destroy
