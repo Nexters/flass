@@ -5,10 +5,12 @@
   transform: translateY(-50%);
   position: absolute;
   margin: 0 $FlassContentWrapperPadding;
+  margin-right: 40px;
   list-style: none;
 
   &--right {
     right: 0;
+    z-index: 9999;
   }
 
   &__header {

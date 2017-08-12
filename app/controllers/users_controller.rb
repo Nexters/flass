@@ -4,7 +4,6 @@ require 'openssl'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class UsersController < ApplicationController
-  protect_from_forgery prepend: :true, with: :exception
   before_action :login_check, only: [:show, :edit, :logout, :destroy]
   before_action :set_user, only: [:show, :edit, :destroy]
   # GET /users
@@ -48,8 +47,6 @@ class UsersController < ApplicationController
         if @user.save
           session[:user_id] = @user.id
           render json: @user, status: :ok
-        else
-          render json: {message: "회원 정보를 저장할 수 없습니다."}, status: :internal_server_error
         end
       else
         @user.username = about_user_list["name"]
@@ -57,8 +54,6 @@ class UsersController < ApplicationController
           if @user.save
             session[:user_id] = @user.id
             render json: @user, status: :ok
-          else
-            render json: {message: "회원 정보를 저장할 수 없습니다."}, status: :internal_server_error
           end
       end
     end

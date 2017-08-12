@@ -1,4 +1,5 @@
 class ReplayAtsController < ApplicationController
+  before_action :login_check
   before_action :set_replay_at, only: [:update, :destroy]
 
   api :GET, '/replay_ats', '유저의 해당 강의 재생시간 정보'
@@ -17,7 +18,7 @@ class ReplayAtsController < ApplicationController
     if @replay_at.save
       render json: @replay_at, status: :ok
     else
-      render json: @replay_at.errors, status: :unprocessable_entity
+      render json: {message: "재생시간을 입력해 주세요"}, status: :bad_request
     end
   end
 
@@ -28,15 +29,19 @@ class ReplayAtsController < ApplicationController
     if @replay_at.update(replay_at_params)
       render json: @replay_at, status: :ok
     else
-      render json: @replay_at.errors, status: :unprocessable_entity
+      render json: {message: "재생시간을 입력해 주세요"}, status: :bad_request
     end
   end
 
   api :DELETE, '/replay_ats', '유저의 해당 강의 재생시간 정보 삭제'
   param :id, :number, :desc => "replay_at ID", :required => true
   def destroy
-    @replay_at.destroy
-    head :no_content
+    if @lecture.user_id == session[:user_id]
+      @replay_at.destroy
+      head :ok
+    else
+      render json: {message: "강의 재생시간 정보를 삭제할 권한이 없습니다."}, status: :unauthorized
+    end
   end
 
   private

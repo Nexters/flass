@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
   before_action :set_question, only: [:edit, :update, :destroy]
-  before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
 
   api :GET, '/questions', '(특정) 강의 문제들 불러오기'
   param :lecture_id, :number, :desc => "lecture ID", :required => true
@@ -12,13 +11,13 @@ class QuestionsController < ApplicationController
 
   api :GET, '/questions/edit', '강의 문제 수정 페이지'
   param :id, :number, :desc => "question ID", :required => true
-    def edit
-      if @question.user_id == session[:user_id]
-        render json: @question, status: :ok
-      else
-        render json: {message: "문제를 수정할 권한이 없습니다."}, status: :unauthorized
-      end
+  def edit
+    if @question.user_id == session[:user_id]
+      render json: @question, status: :ok
+    else
+      render json: {message: "문제를 수정할 권한이 없습니다."}, status: :unauthorized
     end
+  end
 
   # POST /questions.json
   api :POST, '/questions', '강의 질문 생성'
@@ -26,7 +25,6 @@ class QuestionsController < ApplicationController
   param :content, String, :desc => "질문 내용", :required => true
   param :correct_answer, String, :desc => "질문 정답", :required => true
   param :question_at, Time, :desc => "질문 등장 시간", :required => true
-  param :hint, String, :desc => "힌트", :required => false
   def create
     @question = Question.new(question_params)
 
@@ -44,7 +42,6 @@ class QuestionsController < ApplicationController
   param :content, String, :desc => "질문 내용", :required => true
   param :correct_answer, String, :desc => "질문 정답", :required => true
   param :question_at, Time, :desc => "질문 등장 시간", :required => true
-  param :hint, String, :desc => "힌트", :required => false
   def update
     if @question.update(question_params)
       render json: @question, status: :ok
@@ -61,6 +58,7 @@ class QuestionsController < ApplicationController
       head :ok
     else
       render json: {message: "문제를 삭제할 권한이 없습니다."}, status: :unauthorized
+    end
   end
 
   private
@@ -72,6 +70,6 @@ class QuestionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
       params[:user_id] = session[:user_id]
-      params.permit(:user_id, :lecture_id, :content, :correct_answer, :question_at, :hint)
+      params.permit(:user_id, :lecture_id, :content, :correct_answer, :question_at)
     end
 end

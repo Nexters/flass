@@ -24,7 +24,7 @@ class FlassGrid extends Component {
 
   renderChildren(items) {
     return items.map(item => (
-      <Col key={item.key} md={ 3 }>
+      <Col key={item.id} md={ 3 }>
         <FlassGridItem { ...item } />
       </Col>
     ));

@@ -19,7 +19,10 @@ import FlassAppBar from './FlassAppBar/FlassAppBar';
 const childContextTypes = {
   muiTheme: PropTypes.object.isRequired
 };
-const propTypes = {};
+const propTypes = {
+  fetchUser: PropTypes.func.isRequired,
+};
+
 const defaultProps = {};
 
 const flassTheme = getMuiTheme({
@@ -34,6 +37,10 @@ const flassTheme = getMuiTheme({
 class FlassApp extends Component {
   getChildContext() {
     return { muiTheme: getMuiTheme(baseTheme) };
+  }
+
+  componentDidMount() {
+    this.props.fetchUser('userId');
   }
 
   renderContent() {
@@ -53,7 +60,6 @@ class FlassApp extends Component {
       <MuiThemeProvider muiTheme={ flassTheme }>
         <div>
           <FlassDrawer />
-
           <FlassAppBar isLogin />
 
           <FlassContent>

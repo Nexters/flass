@@ -6,7 +6,7 @@ import { Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import Content from './Content/Content';
-import Comment from './Comment/Comment';
+import Comment from '../../../modules/Flass/FlassDetail/Comment/CommentContainer';
 import Analysis from './Analysis/Analysis';
 import Video from './Video/Video';
 import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
@@ -36,7 +36,19 @@ const TabTitle = styled.span`
 
 const propTypes = {
   match: PropTypes.object,
-  detail: PropTypes.object.isRequired,
+  detail: PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+    detail: {
+      id: PropTypes.number.isRequired,
+      userId: PropTypes.string.isRequired,
+      userName: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      replayAt: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+    }
+  }).isRequired,
   question: PropTypes.object.isRequired,
   comment: PropTypes.shape({
     comments: PropTypes.array,
@@ -110,7 +122,7 @@ class FlassDetail extends Component {
   }
 
   renderTabs() {
-    const { comment } = this.props;
+    const { detail: { detail }, comment } = this.props;
     const { selected } = this.state;
 
     const tabTitle = (title, src) => (
@@ -119,18 +131,18 @@ class FlassDetail extends Component {
         {title}
       </TabTitle>);
     return (<div className="flass-detail-tabs">
-      <Tabs activeKey={ selected } onSelect={ this.handleSelect }>
+      <Tabs id="detail-tabs" activeKey={ selected } onSelect={ this.handleSelect }>
         <Tab
           eventKey={ 1 }
           title={ tabTitle('강의 정보',
           selected === 1 ? contentImageActive : contentImage) }>
-          <Content />
+          <Content content={detail.content} />
         </Tab>
         <Tab
           eventKey={ 2 }
-          title={ tabTitle(`학생 질문 - ${comment.totalCount}`,
+          title={ tabTitle(`학생 질문 - ${comment.comments.length}`,
           selected === 2 ? commentImageActive : commentImage) }>
-          <Comment comments={ comment.comments } />
+          <Comment detailId={detail.id} />
         </Tab>
         <Tab
           eventKey={ 3 }

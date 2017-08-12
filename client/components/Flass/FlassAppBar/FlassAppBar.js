@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Navbar, NavItem } from 'react-bootstrap';
+import styled from 'styled-components';
 import NavbarComponent from './Navbar/NavbarComponent';
 import NavComponent from './Nav/NavComponent';
-import FlassUserAppBar from './FlassUserAppBar';
-import styled from 'styled-components';
+import FlassUserAppBar from '../../../modules/Flass/FlassAppBar/FlassUserAppBarContainer';
 import color from '../common/colors.scss';
 import './FlassAppBar.scss';
-
 
 const NavTitle = styled.span`
   font-family: NotoSansCJKkr;
@@ -40,9 +39,7 @@ class FlassAppBar extends Component {
         </NavComponent>
 
         <NavComponent isRight>
-          <NavItem>
-            { isLogin ? <FlassUserAppBar /> : '' }
-          </NavItem>
+          { isLogin && <FlassUserAppBar /> }
         </NavComponent>
       </NavbarComponent>
     );

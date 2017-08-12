@@ -48,16 +48,23 @@
 
   &__controller-bar {
     position: absolute;
-    width: $playerWidth;
+    width: 864px;
+    margin: 0 auto;
     height: $progressbarHeight;
     top: $playerHeight - $progressbarHeight - 1px;
+    left: 0;
+    right: 0;
     background-color: rgba(0, 0, 0, .32);
 
-    @include atPlayerMedium {
-      width: $playerWindowWidthAtMedium;
+    @include atPlayerLargeForControllerbar {
+      width: $playerWindowWidthAtLarge;
       margin: 0 auto;
       left: 0;
       right: 0;
+    }
+
+    @include atPlayerMediumForControllerbar {
+      width: 100%;
     }
   }
 
@@ -73,5 +80,6 @@
     text-decoration: none;
     font-size: 2rem;
     color: $FlassBlueColor;
+    cursor: pointer;
   }
 }

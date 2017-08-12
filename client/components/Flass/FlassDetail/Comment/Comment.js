@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
-import PostComment from '../../../../modules/Flass/FlassDetail/Comment/PostCommentContainer';
+import PostComment from './PostComment';
 import CommentItem from './CommentItem';
 
 const DetailComment = styled.div`
@@ -17,14 +17,23 @@ const Divider = styled.hr`
 `;
 
 const propTypes = {
-  comments: PropTypes.array
+  detailId: PropTypes.number.isRequired,
+  comments: PropTypes.array.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    userName: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+  fetchComment: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired,
 };
-const defaultProps = {
-  comments: []
-};
+const defaultProps = {};
 
 class Comment extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    const { detailId, fetchComment } = this.props;
+    fetchComment(detailId);
+  }
 
   renderChild() {
     const { comments } = this.props;
@@ -39,9 +48,15 @@ class Comment extends Component {
   }
 
   render() {
+    const { detailId, user, addComment } = this.props;
+
     return (
       <DetailComment>
-        <PostComment />
+        <PostComment
+          detailId={detailId}
+          user={user}
+          addComment={addComment}
+        />
         <Divider />
         {this.renderChild()}
       </DetailComment>

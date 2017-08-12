@@ -11,7 +11,6 @@ import {
   VideoTimePanelComponent,
   VideoCustomProgressBarComponent,
   VideoControllerWrapperComponent,
-  VideoModalComponent,
   VideoControllerAndBarWrapperComponent
 } from '../../../Video';
 
@@ -20,13 +19,13 @@ import {
   convertSecsToPercentage
 } from '../../../Video/VideoUtils';
 
-import PlayBtnIcon from '../../../../../public/play_arrow_24dp_1x.png';
-import PauseBtnIcon from '../../../../../public/pause_24dp_1x.png';
-import VolumeOnBtnIcon from '../../../../../public/volume_up_24dp_1x.png';
-import VolumeOffBtnIcon from '../../../../../public/volume_off_24dp_1x.png';
-import FullscreenBtnIcon from '../../../../../public/web_asset_24dp_1x.png';
+import PlayBtnIcon from '../../../../../public/icons/play_btn.png';
+import PauseBtnIcon from '../../../../../public/icons/pause@2x.png';
+import VolumeOnBtnIcon from '../../../../../public/icons/speak_btn.png';
+import VolumeOffBtnIcon from '../../../../../public/icons/non-speak@2x.png';
+import FullscreenBtnIcon from '../../../../../public/icons/view_btn.png';
 
-const { string, oneOfType, arrayOf, func, number, bool } = PropTypes;
+const { string, oneOfType, arrayOf, func, number, bool, shape } = PropTypes;
 
 const propTypes = {
   VideoContainerClassName: oneOfType([string, arrayOf(string)]),
@@ -52,13 +51,19 @@ const propTypes = {
   setPlayingState: func.isRequired,
   setIsQuizSecsState: func.isRequired,
   setPlayedState: func.isRequired,
+  onQuestionbarClick: func,
   duration: number,
   played: number,
   loaded: number,
   playing: bool,
-  isQuizSecs: bool
+  isQuizSecs: bool,
+  questionSecsStateArray: arrayOf(shape({
+    playedSeconds: number,
+    label: string
+  }))
 };
 const defaultProps = {
+  onQuestionbarClick: () => {},
   VideoContainerClassName: '',
   VideoPlayerWrapperClassName: '',
   VideoPlayerClassName: '',
@@ -80,7 +85,8 @@ const defaultProps = {
   played: 0,
   loaded: 0,
   playing: true,
-  isQuizSecs: false
+  isQuizSecs: false,
+  questionSecsStateArray: []
 };
 
 class VideoComponent extends Component {
@@ -103,8 +109,7 @@ class VideoComponent extends Component {
       volume,
       isMute,
       isVolumeBtnMouseOver,
-      playbackRate,
-      youtubeConfig,
+      playbackRate
     } = this.state;
 
     const {
@@ -130,7 +135,8 @@ class VideoComponent extends Component {
       played,
       loaded,
       playing,
-      isQuizSecs
+      isQuizSecs,
+      questionSecsStateArray
     } = this.props;
 
     return (
@@ -145,7 +151,6 @@ class VideoComponent extends Component {
           loaded={ loaded }
           duration={ duration }
           playbackRate={ playbackRate }
-          youtubeConfig={ youtubeConfig }
           onProgress={ onProgress }
           onDuration={ onDuration }
           setPlayer={ setPlayer } />
@@ -161,6 +166,7 @@ class VideoComponent extends Component {
                 VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
                 VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
 
+                onQuestionbarClick={ this.onQuestionbarClick }
                 duration={ duration }
                 playedPercentage={ played }
                 loadedPercentage={ loaded }
@@ -170,6 +176,7 @@ class VideoComponent extends Component {
                 onCustomSeekBarClick={ this.onCustomSeekBarClick }
                 onArrowKeyPressed={ this.onArrowKeyPressed }
 
+                quizTimeArray={ questionSecsStateArray }
                 canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
                 isQuizSecs={ isQuizSecs } />
 
@@ -300,6 +307,11 @@ class VideoComponent extends Component {
     this.props.setPlayingState(true);
     this.props.setPlayedState(changedPlayedPercentage);
     this.props.playerSeekTo(changedPlayedPercentage);
+  }
+
+  @autobind
+  onQuestionbarClick({ label }) {
+    this.props.onQuestionbarClick({ label });
   }
 }
 

@@ -3,5 +3,5 @@ class Question < ApplicationRecord
   has_many :choices, dependent: :destroy
   has_many :answers, dependent: :destroy
 
-  validates :content, :correct_answer, presense: true
+  validates :content, :correct_answer, presence: true
 end
