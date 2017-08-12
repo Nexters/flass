@@ -8,11 +8,16 @@ module.exports = {
       'babel-polyfill',
       'react-hot-loader/patch',
       './client/index'
+    ],
+    sign: [
+      'babel-polyfill',
+      'react-hot-loader/patch',
+      './client/sign'
     ]
   },
   output: {
     path: path.resolve(__dirname, './public'),
-    filename: 'app.js'
+    filename: '[name].js'
   },
 
   devServer: {
