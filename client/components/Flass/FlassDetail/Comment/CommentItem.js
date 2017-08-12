@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import color from '../../common/colors.scss';
 import './CommentItem.scss';
+import Heart from './images/heart.png';
+import HeartActive from './images/heart-active.png';
+import Menu from './images/menu.png';
 
 const DetailCommentItem = styled.div`
   padding: 2rem 0;
@@ -16,6 +19,17 @@ const UserName = styled.span`
 
 const CommentMenu = styled.span`
   float: right;
+`;
+
+const HeartIcon = styled.img`
+  width: 15px;
+  margin-right: 3px;
+  margin-bottom: 2px;
+`;
+
+const MenuIcon = styled.img`
+  width: 5px;
+  margin-left: 8px;
 `;
 
 const Content = styled.div`
@@ -38,13 +52,14 @@ const defaultProps = {};
 
 const CommentItem = props => {
   const { userName, content } = props;
-  const src = 'http://via.placeholder.com/25x25';
   return (
     <DetailCommentItem>
       <div>
         <UserName>{userName}</UserName>
         <CommentMenu className="flass-comment-item-float-box">
-          <img alt="like" src={ src } />11<img alt="menu" src={ src } />
+          <HeartIcon alt="like" src={ Heart } />
+          11
+          <MenuIcon alt="menu" src={ Menu } />
         </CommentMenu>
       </div>
       <Content>
