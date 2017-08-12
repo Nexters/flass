@@ -1,4 +1,5 @@
 import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
+import MediaUploader from './MediaUploader';
 
 const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
 
@@ -21,10 +22,18 @@ export default class Google {
   }
 
   static isAuthenticated() {
+    const that = this;
     const auth = gapi.auth2.getAuthInstance();
     const user = auth.currentUser.get();
-    console.log(user.hasGrantedScopes(UPLOAD_SCOPE));
-    return user.hasGrantedScopes(UPLOAD_SCOPE);
+    const hasGrantedScopes = user.hasGrantedScopes(UPLOAD_SCOPE);
+    if(hasGrantedScopes){
+      // this.accessToken = user.getAuthResponse().id_token;
+      user.reloadAuthResponse().then(function(response){
+        that.accessToken = response.access_token;
+        console.log(response);
+      })
+    }
+    return hasGrantedScopes;
   }
 
   static initUploadClient(setGoogleAuthStatus) {
@@ -59,12 +68,16 @@ export default class Google {
     auth.signIn();
   }
 
-  static uploadVideo(file, accessToken){
+  static uploadVideo(file){
+    if(file == null){
+      return;
+    }
+    const that = this;
     var metadata = {
       snippet: {
         title: "title",
         description: "description",
-        tags: ["tag1", ["tag2"]]
+        // tags: ["tag1", ["tag2"]]
       },
       status: {
         privacyStatus: "unlisted"
@@ -74,7 +87,7 @@ export default class Google {
     var uploader = new MediaUploader({
       baseUrl: 'https://www.googleapis.com/upload/youtube/v3/videos',
       file: file,
-      token: accessToken,
+      token: that.accessToken,
       metadata: metadata,
       params: {
         part: Object.keys(metadata).join(',')

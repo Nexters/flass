@@ -94,7 +94,7 @@ RetryHandler.prototype.getRandomInt_ = function(min, max) {
  * @param {function} [options.onProgress] Callback for status for the in-progress upload
  * @param {function} [options.onError] Callback if upload fails
  */
-var MediaUploader = function(options) {
+export default function MediaUploader(options) {
   var noop = function() {};
   this.file = options.file;
   this.contentType = options.contentType || this.file.type || 'application/octet-stream';
