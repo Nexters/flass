@@ -1,16 +1,15 @@
 @import '../../../../css/base/mixins';
 @import '../../FlassAppVariables';
+@import '../../common/colors';
 
 .flass-app-bar {
   position: absolute;
   top: 0;
-  left: $flassDrawerWidth;
+  padding-left: $flassDrawerWidth;
   width: 100%;
   min-height: $AppBarMinHeight;
-  border: 1px solid transparent;
-  background-color: $AppBarBackgroundColor;
-  border-color: $AppBarBorderColor;
-  border-width: 0 0 1px;
+  border-bottom: 1px solid $silver-four;
+  background-color: transparent;
 
   &--no-b-margin {
     margin-bottom: 0;

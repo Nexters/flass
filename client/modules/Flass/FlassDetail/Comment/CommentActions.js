@@ -1,5 +1,6 @@
 import fetch from 'axios';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
+import _ from 'lodash';
 
 export const FETCH_COMMENT = 'FETCH_COMMENT';
 export const FETCH_READY_COMMENT = 'FETCH_READY_COMMENT';
@@ -23,18 +24,40 @@ function* fetchRequestComment({ detailId }) {
   }
 }
 
-export const ADDD_COMMENT = 'ADD_COMMENT';
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const ADD_READY_COMMENT = 'ADD_READY_COMMENT';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_ERROR = 'ADD_COMMENT_ERROR';
 
-export const addComment = comment => dispatch => {
-  // TODO 낙관적인 업데이트
-  dispatch(() => ({ type: ADDD_COMMENT }));
-  fetch('/json/FlassComment.json', {
-    data: comment
-  })
-  .then(res => dispatch(fetchCommentSuccess(res.data)))
-  .catch(err => dispatch(fetchCommentError(err)));
-};
+function* addComment({ detailId, userId, userName, content }) {
+  const commentId = Date.now().toString();
+  yield put({
+    type: ADD_READY_COMMENT,
+    comment: {
+      id: commentId,
+      detailId,
+      userId,
+      userName,
+      content
+    }
+  });
+
+  try {
+    const response = yield call(fetch, '/json/FlassPostComment.json');
+    yield put({
+      type: ADD_COMMENT_SUCCESS,
+      id: commentId,
+      newId: response.data.id
+    });
+  } catch (err) {
+    yield put({
+      type: ADD_COMMENT_ERROR,
+      message: err.message
+    });
+  }
+}
 
 export default function* rootSaga() {
   yield takeLatest(FETCH_COMMENT, fetchRequestComment);
+  yield takeLatest(ADD_COMMENT, addComment);
 }

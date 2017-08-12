@@ -19,7 +19,10 @@ import FlassAppBar from './FlassAppBar/FlassAppBar';
 const childContextTypes = {
   muiTheme: PropTypes.object.isRequired
 };
-const propTypes = {};
+const propTypes = {
+  fetchUser: PropTypes.func.isRequired,
+};
+
 const defaultProps = {};
 
 const flassTheme = getMuiTheme({
@@ -36,11 +39,15 @@ class FlassApp extends Component {
     return { muiTheme: getMuiTheme(baseTheme) };
   }
 
+  componentDidMount() {
+    this.props.fetchUser('userId');
+  }
+
   renderContent() {
     return (
       <Switch>
         <Route exact path="/" component={ FlassGrid } />
-        <Route path="/channel/me" component={ FlassGrid } />
+        <Route path="/home" component={ FlassGrid } />
         <Route path="/detail/:id" component={ FlassDetail } />
         <Route path="/video" component={ VideoComponent } />
         <Route path="/upload" component={ Upload } />
@@ -53,7 +60,6 @@ class FlassApp extends Component {
       <MuiThemeProvider muiTheme={ flassTheme }>
         <div>
           <FlassDrawer />
-
           <FlassAppBar isLogin />
 
           <FlassContent>

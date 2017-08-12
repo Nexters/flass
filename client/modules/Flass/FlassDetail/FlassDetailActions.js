@@ -18,10 +18,6 @@ function* fetchRequestDetailAll({ detailId }) {
       detailId
     });
     yield put({
-      type: FETCH_COMMENT,
-      detailId
-    });
-    yield put({
       type: FETCH_DETAIL_SUCCESS,
       detail: response.data
     });

@@ -10,6 +10,9 @@ $dusty-orange: #f28021;
 $sick-green: #9abf32;
 $pale-grey: #f1f3f4;
 $white: #fff;
+
+@value white #{$white};
+
 $charcoal-grey: #3f4a4b;
 $steel-grey: #848b8c;
 
@@ -27,5 +30,8 @@ $silver-two: #edeeee;
 $slate-grey-two: #5f7477;
 $silver-three: #b6bfc1;
 $steel-grey-two: #7c8d8f;
+
+@value slate-grey-two #{$slate-grey-two};
+
 $cool-grey-two: #99a6a8;
 $silver-four: #d3d9d9;

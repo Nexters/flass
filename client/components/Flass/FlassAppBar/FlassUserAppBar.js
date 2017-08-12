@@ -1,32 +1,53 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SvgIcon from 'material-ui/SvgIcon';
-import FlassBadge from './FlassBadge';
+import styled from 'styled-components';
+import color from '../common/colors.scss';
+import Badge from '../../../modules/Flass/FlassBadge/FlassBadgeContainer';
+
+const FlassUserAppBarView = styled.div`
+  width: 180px;
+`;
+
+const UserName = styled.span`
+  font-family: NotoSansCJKkr;
+  text-decoration: none;
+  letter-spacing: 5px;
+  font-size: 15px;
+  font-weight: 100;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  color: ${color['slate-grey-two']};
+`;
+
+const Divider = styled.span`
+  width: 1px;
+  border-left: solid 2px #afbfc1;
+  margin: 0 2rem;
+`;
 
 const propTypes = {
-  badges: PropTypes.array
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    userName: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-const defaultProps = {
-  badges: [
-    { id: 1, content: 'Refresh' },
-    { id: 2, content: 'Help &amp; feedback' },
-    { id: 3, content: 'Settings' },
-    { id: 4, content: 'Sign out' }
-  ]
-};
+const defaultProps = {};
 
 class FlassUserAppBar extends Component {
   componentDidMount() {}
 
   render() {
+    const { user } = this.props;
+
     return (
-      <div>
-        <FlassBadge />
-        <span>
-        이름
-        </span>
-      </div>
+      <FlassUserAppBarView>
+        <Badge userId={user.id} />
+        <Divider />
+        <UserName>{user.userName}</UserName>
+      </FlassUserAppBarView>
     );
   }
 }

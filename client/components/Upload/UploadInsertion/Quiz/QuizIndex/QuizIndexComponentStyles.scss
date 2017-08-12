@@ -1,0 +1,36 @@
+@import '../../../variables';
+
+.quiz-index {
+  &__content {
+    padding-top: 170px;
+  }
+
+  &__icon {
+    display: block;
+    margin: 0 auto;
+    width: 42px;
+    height: 50px;
+  }
+
+  &__text {
+    margin: 10px auto 0 auto;
+    font-size: 2rem;
+    color: $FlassGrayColor;
+    text-align: center;
+  }
+
+  &__btn {
+    margin: 10px auto 0 auto;
+    padding: .75rem 1.2rem;
+    display: block;
+    width: 103px;
+    height: 45px;
+    border: solid 1.5px $FlassGreenColor;
+    border-radius: 100px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 2rem;
+    color: $FlassGreenColor;
+    cursor: pointer;
+  }
+}

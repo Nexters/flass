@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import FlassDetail from '../../../components/Flass/FlassDetail/FlassDetail';
-import { fetchRequestDetailAll, FETCH_DETAIL } from './FlassDetailActions';
+import { FETCH_DETAIL } from './FlassDetailActions';
 
 function mapStateToProps(state) {
   return {

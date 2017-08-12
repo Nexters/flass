@@ -10,10 +10,11 @@ import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
 
 import './VideoCustomProgressBarStyle.scss';
 
-const { func, number, string, oneOfType, arrayOf, bool } = PropTypes;
+const { func, number, string, oneOfType, arrayOf, bool, shape } = PropTypes;
 
 const propTypes = {
   VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
+  VideoBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
@@ -23,22 +24,27 @@ const propTypes = {
   onCustomSeekBarMouseUp: func.isRequired,
   onCustomSeekBarClick: func.isRequired,
   onArrowKeyPressed: func.isRequired,
+  onQuestionbarClick: func,
   duration: number,
   playedPercentage: number,
   loadedPercentage: number,
 
-  quizTimeArray: arrayOf(number),
+  quizTimeArray: arrayOf(shape({
+    playedSeconds: number,
+    label: string
+  })),
   canChangeIsQuizSecs: func.isRequired,
   isQuizSecs: bool.isRequired
 };
 
 const defaultProps = {
+  onQuestionbarClick: () => {},
   VideoProgressBarClassName: '',
+  VideoBarClassName: '',
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
   VideoQuizIndicatorClassName: '',
   VideoQuizIndicatorBarClassName: '',
-  VideoBarClassName: '',
   duration: 1,
   playedPercentage: 0,
   loadedPercentage: 0,
@@ -83,11 +89,14 @@ class VideoCustomProgressBarComponent extends Component {
   render() {
     const { played, loaded, duration } = this.state;
     const {
+      VideoBarClassName,
       VideoProgressBarClassName,
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
       VideoQuizIndicatorClassName,
       VideoQuizIndicatorBarClassName,
+
+      onQuestionbarClick,
 
       quizTimeArray
     } = this.props;
@@ -100,6 +109,7 @@ class VideoCustomProgressBarComponent extends Component {
         onMouseUp={ this.onCustomSeekBarMouseUp }
         onClick={ this.onCustomSeekBarClick }>
         <VideoCustomBarComponent
+          VideoBarClassName={ VideoBarClassName }
           VideoPlayedBarClassName={ VideoPlayedBarClassName }
           VideoLoadedBarClassName={ VideoLoadedBarClassName }
           played={ played }
@@ -107,6 +117,7 @@ class VideoCustomProgressBarComponent extends Component {
         <VideoCustomQuizBarComponent
           VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
           VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
+          onQuestionbarClick={ onQuestionbarClick }
           duration={ duration }
 
           quizTimeArray={ quizTimeArray } />
@@ -185,6 +196,11 @@ class VideoCustomProgressBarComponent extends Component {
   onRightArrowKeyPressed() {
     const changedPlayed = this.state.played + SHIFT_AMOUNT_PERCENTAGE;
     this.props.onArrowKeyPressed(changedPlayed);
+  }
+
+  @autobind
+  onQuestionbarClick({ label }) {
+    this.props.onQuestionbarClick({ label });
   }
 }
 
