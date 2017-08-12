@@ -1,11 +1,12 @@
-import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../../config/Constants';
+import Google from '../Google';
 
 export const SET_STEP = 'SET_STEP';
 export const SET_VIDEO_DATA = 'SET_VIDEO_DATA';
 export const SET_VIDEO_URL = 'SET_VIDEO_URL';
 export const SET_THUMB_URL = 'SET_THUMB_URL';
 export const SET_UPLOAD_METHOD = 'SET_UPLOAD_METHOD';
-export const SET_GOOGLE_SIGN_IN_STATUS = 'SET_GOOGLE_SIGN_IN_STATUS';
+export const CHANGE_UPLOAD_METHOD = 'CHANGE_UPLOAD_METHOD';
+export const SET_GOOGLE_AUTH_STATUS = 'SET_GOOGLE_AUTH_STATUS';
 
 export const NO_THUMB = 0;
 export const SUCC_THUMB = 1;
@@ -25,9 +26,9 @@ export const setVideoData = (title, description) => ({
   description
 });
 
-export const setThumbURL = (thumb, thumbURL) => ({
+export const setThumbURL = (thumbStatus, thumbURL) => ({
   type: SET_THUMB_URL,
-  thumb,
+  thumbStatus,
   thumbURL
 });
 
@@ -36,35 +37,39 @@ export const setVideoURL = videoURL => ({
   videoURL
 });
 
-export const setUploadMethod = method => ({
+const setUploadMethod = method => ({
   type: SET_UPLOAD_METHOD,
   method
 });
 
+// changes upload method and takes care of google api set up for the change
+export const changeUploadMethod = method => (dispatch => {
+  switch(method) {
+    case URL_METHOD:
+      Google.initThumbClient();
+      break;
+    case FILE_METHOD:
+    default:
+      dispatch(initYoutubeUpload());
+  }
+  dispatch(setUploadMethod(method));
+});
+
 export const getThumbnail = videoURL => (dispatch => {
-  const youtubeVideoId = parseYoutubeVideoId(videoURL);
-  let thumb = FAIL_THUMB;
+  let youtubeVideoId = videoURL;
+  if (videoURL.length != 11) {
+    youtubeVideoId = parseYoutubeVideoId(videoURL);
+  }
+  let thumbStatus = FAIL_THUMB;
   let thumbURL = '';
-  gapi.load('client', () => {
-    gapi.client.init({
-      apiKey: GOOGLE_API_KEY
-    }).then(() => {
-      gapi.client.request({
-        method: 'GET',
-        path: '/youtube/v3/videos',
-        params: {
-          part: 'snippet',
-          id: youtubeVideoId
-        }
-      }).then(({ result }) => {
-        if (result.pageInfo.totalResults == 1) {
-          thumb = SUCC_THUMB;
-          thumbURL = result.items[0].snippet.thumbnails.high.url;
-          dispatch(setVideoURL(videoURL));
-        }
-        dispatch(setThumbURL(thumb, thumbURL));
-      });
-    });
+  Google.requestThumbClient(youtubeVideoId)
+  .then(({ result }) => {
+    if (result.pageInfo.totalResults == 1) {
+      thumbStatus = SUCC_THUMB;
+      thumbURL = result.items[0].snippet.thumbnails.high.url;
+      dispatch(setVideoURL(videoURL));
+    }
+    dispatch(setThumbURL(thumbStatus, thumbURL));
   });
 });
 
@@ -79,29 +84,23 @@ export const resetVideo = () => (dispatch => {
   dispatch(setThumbURL(NO_THUMB, ''));
 });
 
-const setGoogleSignInStatus = isGoogleSignedIn => ({
-  type: SET_GOOGLE_SIGN_IN_STATUS,
-  isGoogleSignedIn
+const setGoogleAuthStatus = isGoogleAuth => ({
+  type: SET_GOOGLE_AUTH_STATUS,
+  isGoogleAuth
 });
 
-let gauth;
-
 export const initYoutubeUpload = () => (dispatch => {
-  const SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
-  gapi.load('client:auth2', () => {
-    gapi.client.init({
-      apiKey: GOOGLE_API_KEY,
-      clientId: GOOGLE_CLIENT_KEY,
-      scope: SCOPE
-    }).then(() => {
-      gauth = gapi.auth2.getAuthInstance();
-      const user = gauth.currentUser.get();
-      const isGoogleSignedIn = user.hasGrantedScopes(SCOPE);
-      dispatch(setGoogleSignInStatus(isGoogleSignedIn));
-    });
+  Google.initUploadClient(isGoogleAuth => {
+    dispatch(setGoogleAuthStatus(isGoogleAuth));
   });
 });
 
-export const signIn = () => (() => {
-  gauth.signIn();
+export const goToGoogleAuthPage = () => (() => {
+  Google.authenticate();
+});
+
+export const uploadYoutubeVideo = file => (dispatch => {
+  Google.uploadVideo(file, thumbURL => {
+    dispatch(getThumbnail(thumbURL));
+  });
 });

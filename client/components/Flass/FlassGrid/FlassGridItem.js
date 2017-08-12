@@ -26,7 +26,7 @@ const Header = styled.span`
 `;
 
 const Title = styled.div`
-  margin-top: 90px;
+  margin-top: 80px;
   font-family: NotoSansCJKkr;
   font-size: 18px;
   font-weight: 100;
@@ -41,10 +41,20 @@ const Date = styled.div`
 `;
 
 const Question = styled.div`
+  font-size: 9px;
+  padding: 4px 6px;
+  margin: 5px;
+  border-radius: 100px;
+  border: solid 1px ${color['white']};
   float: left;
 `;
 
 const Analysis = styled.div`
+  font-size: 9px;
+  padding: 4px 6px;
+  margin: 5px;
+  border-radius: 100px;
+  border: solid 1px ${color['white']};
   float: right;
 `;
 

@@ -14,22 +14,23 @@ import './upload.scss';
 const propTypes = {
   handleNext: PropTypes.func,
   handleVideoURL: PropTypes.func,
-  thumb: PropTypes.number.isRequired,
+  thumbStatus: PropTypes.number.isRequired,
   thumbURL: PropTypes.string.isRequired,
   method: PropTypes.number.isRequired,
-  setUploadMethod: PropTypes.func,
+  changeUploadMethod: PropTypes.func,
   resetVideo: PropTypes.func,
-  isGoogleSignedIn: PropTypes.bool.isRequired,
-  initYoutubeUpload: PropTypes.func,
-  signIn: PropTypes.func
+  isGoogleAuth: PropTypes.bool,
+  goToGoogleAuthPage: PropTypes.func,
+  handleUploadVideo: PropTypes.func
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
   handleVideoURL: () => handleError('handleVideoURL'),
-  setUploadMethod: () => handleError('setUploadMethod'),
+  changeUploadMethod: () => handleError('changeUploadMethod'),
   resetVideo: () => handleError('resetVideo'),
-  initYoutubeUpload: () => handleError('initYoutubeUpload'),
-  signIn: () => handleError('signIn')
+  isGoogleAuth: null,
+  goToGoogleAuthPage: () => handleError('goToGoogleAuthPage'),
+  handleUploadVideo: () => handleError('handleUploadVideo')
 };
 
 function handleError(func) {
@@ -86,8 +87,7 @@ class VideoUpload extends Component {
             name="title"
             value={ title }
             onChange={ this.handleChange }
-            fullWidth
-          />
+            fullWidth />
           <TextField
             floatingLabelText="학습 목표"
             name="description"
@@ -95,8 +95,7 @@ class VideoUpload extends Component {
             onChange={ this.handleChange }
             multiLine
             fullWidth
-            rows={ 15 }
-          />
+            rows={ 15 } />
           <FlatButton
             onTouchTap={ () => handleNext(title, description) }
             className="next"
@@ -129,8 +128,7 @@ class VideoUpload extends Component {
           floatingLabelText="URL"
           name="videoURL"
           value={ videoURL }
-          onChange={ this.handleChange }
-        />
+          onChange={ this.handleChange } />
         <FlatButton
           onTouchTap={ () => handleVideoURL(videoURL) }
           backgroundColor="#7dcdf8"
@@ -143,34 +141,8 @@ class VideoUpload extends Component {
     );
   }
 
-  renderFileField = () => {
-    this.props.initYoutubeUpload();
-    switch(this.props.isGoogleSignedIn) {
-      case true:
-        return (
-          <div>
-            로그인됨!
-          </div>
-        );
-      case false:
-      default:
-        return (
-          <div>
-            <FlatButton
-              backgroundColor="#7dcdf8"
-              hoverColor="#75a8da"
-              onTouchTap={ this.props.signIn }>
-              <span className="buttonLabel">
-                구글 로그인
-              </span>
-            </FlatButton>
-          </div>
-        );
-    }
-  }
-
   renderThumbnail = () => {
-    switch(this.props.thumb) {
+    switch(this.props.thumbStatus) {
       case actions.NO_THUMB:
         return;
       case actions.SUCC_THUMB:
@@ -191,6 +163,46 @@ class VideoUpload extends Component {
     }
   }
 
+  renderFileField = () => {
+    switch(this.props.isGoogleAuth) {
+      case true:
+        return (
+          <div>
+            <input
+              type="file"
+              id="file"
+              accept="video/*"
+              className="fileUpload"
+              onChange={ e => this.props.handleUploadVideo(e.target.files[0]) } />
+            <label htmlFor="file">
+              <div className="uploadButton buttonLabel">
+                영상 업로드
+              </div>
+            </label>
+          </div>
+        );
+      case false:
+        return (
+          <div>
+            <FlatButton
+              backgroundColor="#7dcdf8"
+              hoverColor="#75a8da"
+              onTouchTap={ this.props.goToGoogleAuthPage }>
+              <span className="buttonLabel">
+                구글 로그인
+              </span>
+            </FlatButton>
+          </div>
+        );
+      default:
+        return (
+          <div>
+            로딩중...
+          </div>
+        );
+    }
+  }
+
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -198,12 +210,12 @@ class VideoUpload extends Component {
   }
 
   handleDialogOpen = (e, nextMethod) => {
-    const { method, thumb } = this.props;
+    const { method, thumbStatus } = this.props;
 
     if (method == nextMethod) {
       return;
     }
-    if (thumb != actions.SUCC_THUMB) {
+    if (thumbStatus != actions.SUCC_THUMB) {
       this.handleUploadMethodChange(nextMethod);
       return;
     }
@@ -224,7 +236,7 @@ class VideoUpload extends Component {
       videoURL: ''
     });
     this.props.resetVideo();
-    this.props.setUploadMethod(nextMethod);
+    this.props.changeUploadMethod(nextMethod);
     this.handleDialogClose();
   }
 }

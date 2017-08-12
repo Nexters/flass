@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import styled from 'styled-components';
 import color from '../../common/colors.scss';
 import BadgeIcon from './images/appbar-badge.png';
@@ -12,6 +13,7 @@ const BadgeView = styled.div`
 `;
 
 const propTypes = {
+  userId: PropTypes.number.isRequired,
   badgeItems: PropTypes.array.isRequired,
   toggleBadge: PropTypes.bool.isRequired,
   toggleBadgeHistory: PropTypes.func.isRequired,
@@ -21,32 +23,28 @@ const propTypes = {
 const defaultProps = {};
 
 class Badge extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleToggleBadge = () => {
     this.props.toggleBadgeHistory();
   }
 
-  fetchBadgeHistory = badgeType => {
-    this.props.fetchBadgeHistory('userId', badgeType);
+  fetchBadgeHistory = (userId, badgeType) => {
+    this.props.fetchBadgeHistory(userId, badgeType);
   }
 
   componentDidMount() {}
 
   render() {
-    const { badgeItems, toggleBadge } = this.props;
+    const { userId, badgeItems, toggleBadge } = this.props;
 
     return (
       <BadgeView>
         <span className="flass-badge" onClick={ this.handleToggleBadge }>
-          <img alt="" src={ BadgeIcon } />
+          <img alt="badge" src={ BadgeIcon } />
         </span>
         {toggleBadge
           ? <BadgeHistory
             badgeItems={ badgeItems }
-            fetchBadgeHistory={ this.fetchBadgeHistory } />
+            fetchBadgeHistory={ _.partial(this.fetchBadgeHistory, userId, _) } />
           : ''}
       </BadgeView>
     );

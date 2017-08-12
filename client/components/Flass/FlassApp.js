@@ -22,6 +22,7 @@ const childContextTypes = {
 const propTypes = {
   fetchUser: PropTypes.func.isRequired,
 };
+
 const defaultProps = {};
 
 const flassTheme = getMuiTheme({

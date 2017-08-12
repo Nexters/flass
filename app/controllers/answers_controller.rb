@@ -9,6 +9,7 @@ class AnswersController < ApplicationController
     render json: @answers
   end
 
+
   api :GET, '/answers', '특정 학생의 특정 강의에 대한 답 리스트'
   param :lecture_id, :number, :desc => "강의 ID", :required => true
   def show
@@ -22,12 +23,14 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(answer_params)
 
+
       if @answer.save
         render json: @answer, status: :ok
       else
         render json: {message: "답은 반드시 입력해야 합니다."}, status: :bad_request
       end
   end
+
 
   # DELETE /answers/1
   # DELETE /answers/1.json
