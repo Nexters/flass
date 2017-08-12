@@ -24,14 +24,15 @@ export default class Google {
   static isAuthenticated() {
     const that = this;
     const auth = gapi.auth2.getAuthInstance();
+    console.log(`authInstance ${auth}`);
     const user = auth.currentUser.get();
     const hasGrantedScopes = user.hasGrantedScopes(UPLOAD_SCOPE);
-    if(hasGrantedScopes){
+    if (hasGrantedScopes) {
       // this.accessToken = user.getAuthResponse().id_token;
-      user.reloadAuthResponse().then(function(response){
+      user.reloadAuthResponse().then(response => {
         that.accessToken = response.access_token;
         console.log(response);
-      })
+      });
     }
     return hasGrantedScopes;
   }
@@ -68,31 +69,30 @@ export default class Google {
     auth.signIn();
   }
 
-  static uploadVideo(file){
-    if(file == null){
+  static uploadVideo(file) {
+    if (file == null) {
       return;
     }
     const that = this;
     var metadata = {
       snippet: {
-        title: "title",
-        description: "description",
+        title: 'title',
+        description: 'description'
         // tags: ["tag1", ["tag2"]]
       },
       status: {
-        privacyStatus: "unlisted"
+        privacyStatus: 'unlisted'
       }
     };
-    let uploadStartTime;
     var uploader = new MediaUploader({
       baseUrl: 'https://www.googleapis.com/upload/youtube/v3/videos',
-      file: file,
+      file,
       token: that.accessToken,
-      metadata: metadata,
+      metadata,
       params: {
         part: Object.keys(metadata).join(',')
       },
-      onError: function(data) {
+      onError(data) {
         var message = data;
         // Assuming the error is raised by the YouTube API, data will be
         // a JSON string with error.message set. That may not be the
@@ -103,15 +103,15 @@ export default class Google {
         } finally {
           alert(message);
         }
-      }.bind(this),
-      onProgress: function(data) {
-        var currentTime = Date.now();
+      },
+      onProgress(data) {
+        // var currentTime = Date.now();
         var bytesUploaded = data.loaded;
         var totalBytes = data.total;
         // The times are in millis, so we need to divide by 1000 to get seconds.
-        var bytesPerSecond = bytesUploaded / ((currentTime - uploadStartTime) / 1000);
-        var estimatedSecondsRemaining = (totalBytes - bytesUploaded) / bytesPerSecond;
-        var percentageComplete = (bytesUploaded * 100) / totalBytes;
+        // var bytesPerSecond = bytesUploaded / ((currentTime - uploadStartTime) / 1000);
+        // var estimatedSecondsRemaining = (totalBytes - bytesUploaded) / bytesPerSecond;
+        // var percentageComplete = (bytesUploaded * 100) / totalBytes;
 
         // $('#upload-progress').attr({
         //   value: bytesUploaded,
@@ -123,19 +123,18 @@ export default class Google {
         // $('#total-bytes').text(totalBytes);
         //
         // $('.during-upload').show();
-        console.log(bytesUploaded+" / "+totalBytes);
-      }.bind(this),
-      onComplete: function(data) {
+        console.log(`${bytesUploaded} / ${totalBytes}`);
+      },
+      onComplete(data) {
         var uploadResponse = JSON.parse(data);
         // this.videoId = uploadResponse.id;
         // $('#video-id').text(this.videoId);
         // $('.post-upload').show();
         // this.pollForVideoStatus();
         console.log(uploadResponse);
-      }.bind(this)
+      }
     });
     // This won't correspond to the *exact* start of the upload, but it should be close enough.
-    uploadStartTime = Date.now();
     uploader.upload();
   }
 }

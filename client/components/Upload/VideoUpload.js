@@ -168,7 +168,11 @@ class VideoUpload extends Component {
       case true:
         return (
           <div>
-            <input type="file" id="file" accept="video/*" className="fileUpload"
+            <input
+              type="file"
+              id="file"
+              accept="video/*"
+              className="fileUpload"
               onChange={ e => this.props.handleUploadVideo(e.target.files[0]) } />
             <label htmlFor="file">
               <div className="uploadButton buttonLabel">
