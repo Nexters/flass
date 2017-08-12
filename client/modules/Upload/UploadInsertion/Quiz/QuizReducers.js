@@ -18,6 +18,7 @@ const INITIAL_STATE = {
     secsStateOfFocusedQuestion: {
       playedSeconds: -1,
       label: '',
+      indexOfQuestion: -1,
       isFocused: false
     },
     textStateOfFocusdQuestion: {
