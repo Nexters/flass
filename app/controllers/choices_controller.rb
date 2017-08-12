@@ -18,7 +18,7 @@ class ChoicesController < ApplicationController
     if @choice.save
       render json: @choice, status: :created
     else
-      render json: @choice.errors, status: :unprocessable_entity
+      render json: {message: "보기를 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
@@ -29,7 +29,7 @@ class ChoicesController < ApplicationController
       if @question.user_id == session[:user_id]
         render json: @choice, status: :ok
       else
-        render json: @choice.errors, status: :forbidden
+        render json: {message: "문제를 수정할 권한이 없습니다."}, status: :unauthorized
       end
     end
 
@@ -38,19 +38,22 @@ class ChoicesController < ApplicationController
   param :answer, String, :desc => "선지 내용", :required => true
   def update
     if @choice.update(choice_params)
-      render :show, status: :ok, location: @choice
+      render json: @choice, status: :ok
     else
-      render json: @choice.errors, status: :unprocessable_entity
+      render json: {message: "문제의 보기를 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
   api :DELETE, '/choices', '특정 Question에 대한 선지 삭제'
   param :id, :number, :desc => "Choice ID", :required => true
   def destroy
-    @choice.destroy
-    head :no_content
+    if @question.user_id == session[:user_id]
+      @choice.destroy
+      head :ok
+    else
+      render json: {message: "문제를 삭제할 권한이 없습니다."}, status: :unauthorized
+    end
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
   param :lecture_id, :number, :desc => "강의 ID", :required => true
   def show
     @comments = Comment.where(lecture_id: params[:lecture_id]).paginate(page: params[:page], per_page:20)
+    render json: @comment, status: :ok
   end
 
 
@@ -15,9 +16,9 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      render :show, status: :created, location: @comment
+      render json: @comment, status: :created
     else
-      render json: @comment.errors, status: :unprocessable_entity 
+      render json: {message: "내용을 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
@@ -27,7 +28,7 @@ class CommentsController < ApplicationController
       if @comment.user_id == session[:user_id]
         render json: @comment, status: :ok
       else
-        render json: @comment.errors, status: :forbidden
+        render json: {message: "댓글을 수정할 권한이 없습니다."}, status: :unauthorized
       end
     end
 
@@ -37,9 +38,9 @@ class CommentsController < ApplicationController
   param :content, String, :desc => "댓글 내용", :required => true
   def update
     if @comment.update(comment_params)
-      render :show, status: :ok, location: @comment
+      render json: @comment, status: :ok
     else
-      render json: @comment.errors, status: :unprocessable_entity
+      render json: {message: "내용을 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
@@ -47,15 +48,29 @@ class CommentsController < ApplicationController
   api :DELETE, '/comments', '특정 lecture에 대한 댓글 삭제'
   param :id, :number, :desc => "Comment ID", :required => true
   def destroy
-    @comment.destroy
-    head :no_content
+    if @comment.user_id == session[:user_id]
+      @comment.destroy
+      head :ok
+    else
+      render json: {message: "댓글을 삭제할 권한이 없습니다."}, status: :unauthorized
+    end
   end
 
+  api :PUT, '/comments/:id/like'
   def like
-    if current_user
-      @comment.liked_by(current_user)
-    end    
-      render :show, status: :ok, location: @comment
+    user = session[:user_id]
+    if user
+      if user.liked? @comment
+        @comment.unliked_by(user)
+      else
+        @comment.liked_by(user)
+      end
+    end
+      like = @comment.get_likes.size
+      @comment1 = @comment.as_json
+      @comment1[:like] = like
+
+      render json: @comment1
   end
 
 

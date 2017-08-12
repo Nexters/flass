@@ -4,10 +4,10 @@ const initialState = {
   step: 0,
   title: '',
   description: '',
-  thumb: actions.NO_THUMB,
+  thumbStatus: actions.NO_THUMB,
   thumbURL: '',
   method: actions.URL_METHOD,
-  isGoogleSignedIn: false
+  isGoogleAuth: null
 };
 
 const UploadReducer = (state = initialState, action) => {
@@ -26,7 +26,7 @@ const UploadReducer = (state = initialState, action) => {
     case actions.SET_THUMB_URL:
       return {
         ...state,
-        thumb: action.thumb,
+        thumbStatus: action.thumbStatus,
         thumbURL: action.thumbURL
       };
     case actions.SET_VIDEO_URL:
@@ -39,10 +39,10 @@ const UploadReducer = (state = initialState, action) => {
         ...state,
         method: action.method
       };
-    case actions.SET_GOOGLE_SIGN_IN_STATUS:
+    case actions.SET_GOOGLE_AUTH_STATUS:
       return {
         ...state,
-        isGoogleSignedIn: action.isGoogleSignedIn
+        isGoogleAuth: action.isGoogleAuth
       };
     default:
       return state;
