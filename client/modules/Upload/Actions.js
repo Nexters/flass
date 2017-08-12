@@ -56,7 +56,10 @@ export const changeUploadMethod = method => (dispatch => {
 });
 
 export const getThumbnail = videoURL => (dispatch => {
-  const youtubeVideoId = parseYoutubeVideoId(videoURL);
+  let youtubeVideoId = videoURL;
+  if (videoURL.length != 11) {
+    youtubeVideoId = parseYoutubeVideoId(videoURL);
+  }
   let thumbStatus = FAIL_THUMB;
   let thumbURL = '';
   Google.requestThumbClient(youtubeVideoId)
@@ -96,7 +99,8 @@ export const goToGoogleAuthPage = () => (() => {
   Google.authenticate();
 });
 
-
-export const uploadYoutubeVideo = file => (() => {
-  Google.uploadVideo(file);
+export const uploadYoutubeVideo = file => (dispatch => {
+  Google.uploadVideo(file, thumbURL => {
+    dispatch(getThumbnail(thumbURL));
+  });
 });

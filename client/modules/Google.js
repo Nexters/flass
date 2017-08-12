@@ -1,7 +1,10 @@
+import axios from 'axios';
+
 import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
 import MediaUploader from './MediaUploader';
 
 const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
+const BASE_URL = 'http://localhost:3000';
 
 let instance = null;
 
@@ -31,7 +34,7 @@ export default class Google {
       // this.accessToken = user.getAuthResponse().id_token;
       user.reloadAuthResponse().then(response => {
         that.accessToken = response.access_token;
-        console.log(response);
+        Google.storeAccessToken();
       });
     }
     return hasGrantedScopes;
@@ -69,7 +72,7 @@ export default class Google {
     auth.signIn();
   }
 
-  static uploadVideo(file) {
+  static uploadVideo(file, setThumbURL) {
     if (file == null) {
       return;
     }
@@ -131,10 +134,28 @@ export default class Google {
         // $('#video-id').text(this.videoId);
         // $('.post-upload').show();
         // this.pollForVideoStatus();
-        console.log(uploadResponse);
+        // console.log(uploadResponse);
+        setThumbURL(uploadResponse.id);
       }
     });
     // This won't correspond to the *exact* start of the upload, but it should be close enough.
     uploader.upload();
+  }
+
+  static storeAccessToken() {
+    axios({
+      method: 'post',
+      url: `${BASE_URL}/users.json`,
+      headers: {
+        'Content-type': 'multipart/form-data',
+        id_token: this.accessToken
+      }
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 }
