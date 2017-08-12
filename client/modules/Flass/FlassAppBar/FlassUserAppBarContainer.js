@@ -1,20 +1,18 @@
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
-import PostComment from '../../../../components/Flass/FlassDetail/Comment/PostComment';
+import FlassUserAppBar from '../../../components/Flass/FlassAppBar/FlassUserAppBar';
+
 
 function mapStateToProps(state) {
   return {
+    user: { ...state.flass.user }
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-  };
+  return {};
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(reduxForm({
-  form: 'postComment',
-})(PostComment));
+)(FlassUserAppBar);

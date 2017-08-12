@@ -26,18 +26,27 @@ const Divider = styled.span`
   margin: 0 2rem;
 `;
 
-const propTypes = {};
+const propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    userName: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
 const defaultProps = {};
 
 class FlassUserAppBar extends Component {
   componentDidMount() {}
 
   render() {
+    const { user } = this.props;
+
     return (
       <FlassUserAppBarView>
-        <Badge />
+        <Badge userId={user.id} />
         <Divider />
-        <UserName>최혜민</UserName>
+        <UserName>{user.userName}</UserName>
       </FlassUserAppBarView>
     );
   }

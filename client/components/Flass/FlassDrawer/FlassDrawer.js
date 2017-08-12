@@ -74,7 +74,7 @@ class FlassDrawer extends Component {
               <FlassMenu
                 to="/home" >
                 <FlassMenuImage alt="" width="17" src={ match ? SideHomeActive : SideHome } />
-                {match ? <ClickLine /> : ''}
+                {match && <ClickLine />}
               </FlassMenu>
             )} />
         <Route
@@ -84,7 +84,7 @@ class FlassDrawer extends Component {
               <FlassMenu
                 to="/upload" >
                 <FlassMenuImage alt="" width="17" src={ match ? SideUploadActive : SideUpload } />
-                {match ? <ClickLine /> : ''}
+                {match && <ClickLine />}
               </FlassMenu>
             )} />
       </div>

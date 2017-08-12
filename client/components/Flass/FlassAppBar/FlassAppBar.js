@@ -4,7 +4,7 @@ import { Navbar, NavItem } from 'react-bootstrap';
 import styled from 'styled-components';
 import NavbarComponent from './Navbar/NavbarComponent';
 import NavComponent from './Nav/NavComponent';
-import FlassUserAppBar from './FlassUserAppBar';
+import FlassUserAppBar from '../../../modules/Flass/FlassAppBar/FlassUserAppBarContainer';
 import color from '../common/colors.scss';
 import './FlassAppBar.scss';
 
@@ -39,9 +39,7 @@ class FlassAppBar extends Component {
         </NavComponent>
 
         <NavComponent isRight>
-          <NavItem>
-            { isLogin ? <FlassUserAppBar /> : '' }
-          </NavItem>
+          { isLogin && <FlassUserAppBar /> }
         </NavComponent>
       </NavbarComponent>
     );
