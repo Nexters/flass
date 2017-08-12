@@ -13,7 +13,7 @@ const propTypes = {
   setStep: PropTypes.func,
   setVideoData: PropTypes.func,
   title: PropTypes.string,
-  thumb: PropTypes.number,
+  thumbStatus: PropTypes.number,
   thumbURL: PropTypes.string,
   getThumbnail: PropTypes.func,
   method: PropTypes.number,
@@ -29,7 +29,7 @@ const defaultProps = {
   setStep: () => handleError('setStep'),
   setVideoData: () => handleError('setVideoData'),
   title: '',
-  thumb: actions.NO_THUMB,
+  thumbStatus: actions.NO_THUMB,
   thumbURL: '',
   getThumbnail: () => handleError('getThumbnail'),
   method: actions.URL_METHOD,
@@ -53,7 +53,7 @@ class Upload extends Component {
   render() {
     const {
       title,
-      thumb,
+      thumbStatus,
       thumbURL,
       getThumbnail,
       method,
@@ -70,7 +70,7 @@ class Upload extends Component {
         return (
           <VideoUpload
             handleNext={ (title, description) => this.goToStepTwo(title, description) }
-            thumb={ thumb }
+            thumbStatus={ thumbStatus }
             thumbURL={ thumbURL }
             handleVideoURL={ videoURL => getThumbnail(videoURL) }
             method={ method }
@@ -114,7 +114,7 @@ Upload.defaultProps = defaultProps;
 const mapStateToProps = state => ({
   step: state.upload.step,
   title: state.upload.title,
-  thumb: state.upload.thumb,
+  thumbStatus: state.upload.thumbStatus,
   thumbURL: state.upload.thumbURL,
   method: state.upload.method,
   isGoogleAuth: state.upload.isGoogleAuth

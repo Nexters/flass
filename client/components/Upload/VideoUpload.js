@@ -14,7 +14,7 @@ import './upload.scss';
 const propTypes = {
   handleNext: PropTypes.func,
   handleVideoURL: PropTypes.func,
-  thumb: PropTypes.number.isRequired,
+  thumbStatus: PropTypes.number.isRequired,
   thumbURL: PropTypes.string.isRequired,
   method: PropTypes.number.isRequired,
   changeUploadMethod: PropTypes.func,
@@ -142,7 +142,7 @@ class VideoUpload extends Component {
   }
 
   renderThumbnail = () => {
-    switch(this.props.thumb) {
+    switch(this.props.thumbStatus) {
       case actions.NO_THUMB:
         return;
       case actions.SUCC_THUMB:
@@ -210,12 +210,12 @@ class VideoUpload extends Component {
   }
 
   handleDialogOpen = (e, nextMethod) => {
-    const { method, thumb } = this.props;
+    const { method, thumbStatus } = this.props;
 
     if (method == nextMethod) {
       return;
     }
-    if (thumb != actions.SUCC_THUMB) {
+    if (thumbStatus != actions.SUCC_THUMB) {
       this.handleUploadMethodChange(nextMethod);
       return;
     }

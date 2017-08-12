@@ -4,7 +4,7 @@ const initialState = {
   step: 0,
   title: '',
   description: '',
-  thumb: actions.NO_THUMB,
+  thumbStatus: actions.NO_THUMB,
   thumbURL: '',
   method: actions.URL_METHOD,
   isGoogleAuth: null
@@ -26,7 +26,7 @@ const UploadReducer = (state = initialState, action) => {
     case actions.SET_THUMB_URL:
       return {
         ...state,
-        thumb: action.thumb,
+        thumbStatus: action.thumbStatus,
         thumbURL: action.thumbURL
       };
     case actions.SET_VIDEO_URL:

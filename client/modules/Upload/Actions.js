@@ -26,9 +26,9 @@ export const setVideoData = (title, description) => ({
   description
 });
 
-export const setThumbURL = (thumb, thumbURL) => ({
+export const setThumbURL = (thumbStatus, thumbURL) => ({
   type: SET_THUMB_URL,
-  thumb,
+  thumbStatus,
   thumbURL
 });
 
@@ -57,16 +57,16 @@ export const changeUploadMethod = method => (dispatch => {
 
 export const getThumbnail = videoURL => (dispatch => {
   const youtubeVideoId = parseYoutubeVideoId(videoURL);
-  let thumb = FAIL_THUMB;
+  let thumbStatus = FAIL_THUMB;
   let thumbURL = '';
   Google.requestThumbClient(youtubeVideoId)
   .then(({ result }) => {
     if (result.pageInfo.totalResults == 1) {
-      thumb = SUCC_THUMB;
+      thumbStatus = SUCC_THUMB;
       thumbURL = result.items[0].snippet.thumbnails.high.url;
       dispatch(setVideoURL(videoURL));
     }
-    dispatch(setThumbURL(thumb, thumbURL));
+    dispatch(setThumbURL(thumbStatus, thumbURL));
   });
 });
 
