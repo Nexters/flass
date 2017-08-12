@@ -28,7 +28,7 @@ import {
 } from './VideoStyled';
 
 // 팝업 테스트를 위한 더미 action
-import * as actions from '../../../../modules/Quiz/quiz';
+import * as actions from '../../../../modules/Flass/FlassDetail/Video/VideoActions';
 
 import PlayBtnIcon from '../../../../../public/icons/play_btn.png';
 import PauseBtnIcon from '../../../../../public/icons/pause@2x.png';
@@ -51,6 +51,7 @@ const propTypes = {
   VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
 
+  flassDetailSolvedOneQuestion: func.isRequired,
   videoUrl: string,
   questions: object.isRequired
 };
@@ -321,13 +322,20 @@ class Video extends Component {
   }
 
   @autobind
-  onQuestionSolved() {
+  onQuestionSolved(solvedQuestionState) {
+    const {
+      indexOfQuestion,
+      isCorrect,
+      indexOfSelectedChoice,
+      indexOfAnswer
+    } = solvedQuestionState;
     const { played, duration } = this.state;
     const solvedSecs = convertPercentageToSecs(played, duration);
     const secsAddOneFromSolvedSecs = solvedSecs + 1;
     const changedPlayedPercentage = convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
     this.setState({ isQuizSecs: false, playing: true, played: changedPlayedPercentage });
     this.player.seekTo(changedPlayedPercentage);
+    this.props.flassDetailSolvedOneQuestion({ indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer });
   }
 
 }
