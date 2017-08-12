@@ -13,17 +13,6 @@ class UsersController < ApplicationController
     render json: @user
   end
 
-  # GET /users/edit
-  api :GET, '/users/edit', '회원 정보 수정'
-  def edit
-    if @user.id == session[:user_id]
-      render json: @user, status: :ok
-    else
-      render json: {message: "해당 경로에 접근 권한이 없습니다."}, status: :unauthorized
-    end
-  end
-
-
   # POST /users
   # POST /users.json
   api :POST, '/users', '회원 정보 생성 및 업데이트하기'
@@ -70,6 +59,7 @@ class UsersController < ApplicationController
   api :DELETE, '/users', '회원 탈퇴'
   def destroy
     @user.destroy
+    reset_session
     head :ok
   end
 
