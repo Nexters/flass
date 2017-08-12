@@ -57,6 +57,15 @@ function* addComment({ detailId, userId, userName, content }) {
   }
 }
 
+export const FETCH_REPLY_COMMENT = 'FETCH_REPLY_COMMENT';
+
+function fetchReplyComment(commentId) {
+  return {
+    type: FETCH_READY_COMMENT,
+    commentId,
+  };
+}
+
 export default function* rootSaga() {
   yield takeLatest(FETCH_COMMENT, fetchRequestComment);
   yield takeLatest(ADD_COMMENT, addComment);

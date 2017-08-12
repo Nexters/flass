@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { FETCH_COMMENT, ADD_COMMENT } from './CommentActions';
+import { FETCH_COMMENT, fetchReplyComment, ADD_COMMENT } from './CommentActions';
 import Comment from '../../../../components/Flass/FlassDetail/Comment/Comment';
 
 
@@ -19,9 +19,7 @@ function mapDispatchToProps(dispatch) {
         detailId
       });
     },
-    fetchReplyComment: commentId => {
-
-    },
+    fetchReplyComment,
     addComment: (detailId, userId, userName, content) => {
       dispatch({
         type: ADD_COMMENT,
