@@ -20,7 +20,8 @@ const propTypes = {
   changeUploadMethod: PropTypes.func,
   resetVideo: PropTypes.func,
   isGoogleAuth: PropTypes.bool,
-  goToGoogleAuthPage: PropTypes.func
+  goToGoogleAuthPage: PropTypes.func,
+  handleUploadVideo: PropTypes.func
 };
 const defaultProps = {
   handleNext: () => handleError('handleNext'),
@@ -28,7 +29,8 @@ const defaultProps = {
   changeUploadMethod: () => handleError('changeUploadMethod'),
   resetVideo: () => handleError('resetVideo'),
   isGoogleAuth: null,
-  goToGoogleAuthPage: () => handleError('goToGoogleAuthPage')
+  goToGoogleAuthPage: () => handleError('goToGoogleAuthPage'),
+  handleUploadVideo: () => handleError('handleUploadVideo')
 };
 
 function handleError(func) {
@@ -139,12 +141,35 @@ class VideoUpload extends Component {
     );
   }
 
+  renderThumbnail = () => {
+    switch(this.props.thumb) {
+      case actions.NO_THUMB:
+        return;
+      case actions.SUCC_THUMB:
+        return (
+          <img
+            src={ this.props.thumbURL }
+            alt="succeeded importing video"
+            className="thumbnail" />
+        );
+      case actions.FAIL_THUMB:
+      default:
+        return (
+          <img
+            src={ 'http://iamaperformer.com/userphotos/no-video-available.jpg' }
+            alt="failed at importing video"
+            className="thumbnail" />
+        );
+    }
+  }
+
   renderFileField = () => {
     switch(this.props.isGoogleAuth) {
       case true:
         return (
           <div>
-            <input type="file" id="file" accept="*/video" className="fileUpload" />
+            <input type="file" id="file" accept="video/*" className="fileUpload"
+              onChange={ e => this.props.handleUploadVideo(e.target.files[0]) } />
             <label htmlFor="file">
               <div className="uploadButton buttonLabel">
                 영상 업로드
@@ -170,28 +195,6 @@ class VideoUpload extends Component {
           <div>
             로딩중...
           </div>
-        );
-    }
-  }
-
-  renderThumbnail = () => {
-    switch(this.props.thumb) {
-      case actions.NO_THUMB:
-        return;
-      case actions.SUCC_THUMB:
-        return (
-          <img
-            src={ this.props.thumbURL }
-            alt="succeeded importing video"
-            className="thumbnail" />
-        );
-      case actions.FAIL_THUMB:
-      default:
-        return (
-          <img
-            src={ 'http://iamaperformer.com/userphotos/no-video-available.jpg' }
-            alt="failed at importing video"
-            className="thumbnail" />
         );
     }
   }

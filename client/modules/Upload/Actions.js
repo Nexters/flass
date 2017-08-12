@@ -95,3 +95,8 @@ export const initYoutubeUpload = () => (dispatch => {
 export const goToGoogleAuthPage = () => (() => {
   Google.authenticate();
 });
+
+
+export const uploadYoutubeVideo = file => (() => {
+  Google.uploadVideo(file);
+});
