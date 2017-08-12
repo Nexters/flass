@@ -10,6 +10,7 @@ import Comment from '../../../modules/Flass/FlassDetail/Comment/CommentContainer
 import Analysis from './Analysis/Analysis';
 import Video from './Video/Video';
 import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
+import { FlassDetailStyled } from './FlassDetailStyled';
 
 import contentImageActive from './images/tab-content-active.png';
 import contentImage from './images/tab-content.png';
@@ -21,6 +22,8 @@ import analysisImage from './images/tab-analysis.png';
 
 import color from '../common/colors.scss';
 import './FlassDetail.scss';
+
+const { string, number, shape, object, array, bool, func } = PropTypes;
 
 const TabIcon = styled.img`
   width: 15px;
@@ -35,26 +38,32 @@ const TabTitle = styled.span`
 `;
 
 const propTypes = {
-  match: PropTypes.object,
-  detail: PropTypes.shape({
-    isLoading: PropTypes.bool.isRequired,
+  match: object,
+  detail: shape({
+    isLoading: bool.isRequired,
     detail: {
-      id: PropTypes.number.isRequired,
-      userId: PropTypes.string.isRequired,
-      userName: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      replayAt: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
+      id: number.isRequired,
+      userId: string.isRequired,
+      userName: string.isRequired,
+      title: string.isRequired,
+      content: string.isRequired,
+      url: string.isRequired,
+      replayAt: string.isRequired,
+      createdAt: string.isRequired
     }
   }).isRequired,
-  question: PropTypes.object.isRequired,
-  comment: PropTypes.shape({
-    comments: PropTypes.array,
-    totalCount: PropTypes.number
+  question: shape({
+    questions: object
   }).isRequired,
-  fetchRequestDetailAll: PropTypes.func.isRequired
+  comment: shape({
+    comments: array,
+    totalCount: number
+  }).isRequired,
+  video: shape({
+    videoUrl: string
+  }).isRequired,
+  fetchRequestDetailAll: func.isRequired,
+  loadVideoUrl: func.isRequired
 };
 
 const defaultProps = {
@@ -69,13 +78,15 @@ class FlassDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 2
+      selected: 3,
+      videoUrl: ''
     };
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchRequestDetailAll(id);
+    this.props.loadVideoUrl();
   }
 
   handleSelect = selected => {
@@ -83,7 +94,11 @@ class FlassDetail extends Component {
   }
 
   render() {
-    const { detail, question } = this.props;
+    const {
+      detail,
+      question: { questions },
+      video: { videoUrl }
+    } = this.props;
 
     if (detail.isLoading) {
       return (
@@ -93,14 +108,12 @@ class FlassDetail extends Component {
       );
     }
     return (
-      <div className="flass-detail">
+      <FlassDetailStyled.Wrapper>
         <FlassContentTitleComponent title="Watching Video" />
-        <div className="flass-detail-contents">
+        <FlassDetailStyled.Content>
           <Video
-            VideoContainerClassName={ 'flass-detail-media' }
             VideoPlayerWrapperClassName="flass-detail-media__player-wrapper"
             VideoPlayerClassName="flass-detail-media__player"
-            VideoControllerBarClassName="flass-detail-media__controller-bar"
             VideoBarClassName="bar--thinner"
             VideoPlayedBarClassName="played-bar--thinner"
             VideoLoadedBarClassName="loaded-bar--thinner"
@@ -110,14 +123,15 @@ class FlassDetail extends Component {
             VideoVolumeBtnClassName="video-btn"
             VideoVolumeBarClassName={ classNames('video-volume-bar') }
             VideoFullscreenBtnClassName={ classNames('video-btn', 'video-btn--right', 'video-btn--r-margin') }
-            VideoModalClassName="flass-detail-media__modal"
-            VideoModalQuestionClassName="flass-detail-media__modal__question" />
+
+            videoUrl={ videoUrl }
+            questions={ questions } />
 
           <div className="flass-detail-tabs">
             {this.renderTabs()}
           </div>
-        </div>
-      </div>
+        </FlassDetailStyled.Content>
+      </FlassDetailStyled.Wrapper>
     );
   }
 

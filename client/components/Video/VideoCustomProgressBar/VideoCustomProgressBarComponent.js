@@ -3,17 +3,16 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import keydown from 'react-keydown';
-import classNames from 'classnames';
 
 import VideoCustomBarComponent from './VideoCustomBarComponent';
 import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
-
-import './VideoCustomProgressBarStyle.scss';
+import {
+  VideoProgressBar
+} from './VideoCustomProgressBarStyled';
 
 const { func, number, string, oneOfType, arrayOf, bool, shape } = PropTypes;
 
 const propTypes = {
-  VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
   VideoBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
@@ -31,7 +30,8 @@ const propTypes = {
 
   quizTimeArray: arrayOf(shape({
     playedSeconds: number,
-    label: string
+    label: string,
+    indexOfQuestion: number
   })),
   canChangeIsQuizSecs: func.isRequired,
   isQuizSecs: bool.isRequired
@@ -39,7 +39,6 @@ const propTypes = {
 
 const defaultProps = {
   onQuestionbarClick: () => {},
-  VideoProgressBarClassName: '',
   VideoBarClassName: '',
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
@@ -90,7 +89,6 @@ class VideoCustomProgressBarComponent extends Component {
     const { played, loaded, duration } = this.state;
     const {
       VideoBarClassName,
-      VideoProgressBarClassName,
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
       VideoQuizIndicatorClassName,
@@ -102,8 +100,7 @@ class VideoCustomProgressBarComponent extends Component {
     } = this.props;
 
     return (
-      <div
-        className={ classNames('player-progress-bar', VideoProgressBarClassName) }
+      <VideoProgressBar
         onMouseDown={ this.onCustomSeekBarMouseDown }
         onMouseMove={ this.onCustomSeekBarChange }
         onMouseUp={ this.onCustomSeekBarMouseUp }
@@ -121,7 +118,7 @@ class VideoCustomProgressBarComponent extends Component {
           duration={ duration }
 
           quizTimeArray={ quizTimeArray } />
-      </div>
+      </VideoProgressBar>
     );
   }
 

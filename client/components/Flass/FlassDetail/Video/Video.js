@@ -1,10 +1,10 @@
+import { List } from 'immutable';
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-import classNames from 'classnames';
 import screenfull from 'screenfull';
 
 import {
@@ -23,45 +23,42 @@ import {
   convertSecsToPercentage
 } from '../../../Video/VideoUtils';
 
+import {
+  FlassDetailVideo
+} from './VideoStyled';
+
 // 팝업 테스트를 위한 더미 action
 import * as actions from '../../../../modules/Quiz/quiz';
 
-import PlayBtnIcon from '../../../../../public/play_arrow_24dp_1x.png';
-import PauseBtnIcon from '../../../../../public/pause_24dp_1x.png';
-import VolumeOnBtnIcon from '../../../../../public/volume_up_24dp_1x.png';
-import VolumeOffBtnIcon from '../../../../../public/volume_off_24dp_1x.png';
-import FullscreenBtnIcon from '../../../../../public/web_asset_24dp_1x.png';
+import PlayBtnIcon from '../../../../../public/icons/play_btn.png';
+import PauseBtnIcon from '../../../../../public/icons/pause@2x.png';
+import VolumeOnBtnIcon from '../../../../../public/icons/speak_btn.png';
+import VolumeOffBtnIcon from '../../../../../public/icons/non-speak@2x.png';
+import FullscreenBtnIcon from '../../../../../public/icons/view_btn.png';
 
-const { string, oneOfType, arrayOf, func, number } = PropTypes;
+const { string, oneOfType, arrayOf, func, number, object } = PropTypes;
 
 const propTypes = {
-  VideoContainerClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayerWrapperClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayerClassName: oneOfType([string, arrayOf(string)]),
-  VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
   VideoBarClassName: oneOfType([string, arrayOf(string)]),
-  VideoControllerBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayPauseBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
-  VideoModalClassName: oneOfType([string, arrayOf(string)]),
-  VideoModalQuestionClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
 
-  // 팝업 테스트를 위한 더미 action
-  loadQuizs: func.isRequired,
-  quizTimeArrayForPopupTest: arrayOf(number)
+  videoUrl: string,
+  questions: object.isRequired
 };
 
 const defaultProps = {
   VideoContainerClassName: '',
   VideoPlayerWrapperClassName: '',
   VideoPlayerClassName: '',
-  VideoProgressBarClassName: '',
   VideoControllerBarClassName: '',
   VideoBarClassName: '',
   VideoPlayedBarClassName: '',
@@ -75,8 +72,7 @@ const defaultProps = {
   VideoVolumeBtnClassName: '',
   VideoVolumeBarClassName: '',
 
-  // 팝업 테스트를 위한 더미 array
-  quizTimeArrayForPopupTest: []
+  videoUrl: ''
 };
 
 class Video extends Component {
@@ -84,7 +80,6 @@ class Video extends Component {
     super(props);
 
     this.state = {
-      url: 'https://www.youtube.com/watch?v=PTkKJI27NlE',
       playing: true,
       volume: 0.8,
       played: 0,
@@ -94,17 +89,13 @@ class Video extends Component {
       isMute: false,
       volumeBeforeMute: 0,
       isVolumeBtnMouseOver: false,
-      isQuizSecs: false
+      isQuizSecs: false,
+      indexOfQuestion: -1
     };
-  }
-
-  componentWillMount() {
-    this.props.loadQuizs();
   }
 
   render() {
     const {
-      url,
       playing,
       volume,
       isMute,
@@ -114,14 +105,12 @@ class Video extends Component {
       duration,
       playbackRate,
       youtubeConfig,
-      isQuizSecs
+      isQuizSecs,
+      indexOfQuestion
     } = this.state;
     const {
-      VideoContainerClassName,
       VideoPlayerWrapperClassName,
       VideoPlayerClassName,
-      VideoProgressBarClassName,
-      VideoControllerBarClassName,
       VideoBarClassName,
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
@@ -129,21 +118,22 @@ class Video extends Component {
       VideoQuizIndicatorBarClassName,
       VideoPlayPauseBtnClassName,
       VideoFullscreenBtnClassName,
-      VideoModalClassName,
-      VideoModalQuestionClassName,
       VideoVolumeBtnClassName,
       VideoVolumeBarClassName,
 
-      // 팝업 테스트를 위한 더미 array
-      quizTimeArrayForPopupTest
+      videoUrl,
+      questions: {
+        secsStateOfQuestions,
+        textStateOfQuestions
+      }
     } = this.props;
 
     return (
-      <div className={ classNames(VideoContainerClassName) }>
+      <FlassDetailVideo.Container>
         <VideoPlayerComponent
           VideoPlayerWrapperClassName={ VideoPlayerWrapperClassName }
           VideoPlayerClassName={ VideoPlayerClassName }
-          url={ url }
+          url={ videoUrl }
           playing={ playing }
           volume={ volume }
           played={ played }
@@ -158,17 +148,16 @@ class Video extends Component {
         {
           isQuizSecs ?
             <VideoModalComponent
-              VideoModalClassName={ VideoModalClassName }
-              VideoModalQuestionClassName={ VideoModalQuestionClassName }
-              onQuestionSolved={ this.onQuestionSolved } /> :
+              onQuestionSolved={ this.onQuestionSolved }
+              textStateOfQuestions={ textStateOfQuestions }
+              indexOfQuestion={ indexOfQuestion } /> :
             null
         }
 
-        <div className={ VideoControllerBarClassName }>
+        <FlassDetailVideo.ControllerBar>
           <VideoControllerAndBarWrapperComponent>
             <div>
               <VideoCustomProgressBarComponent
-                VideoProgressBarClassName={ VideoProgressBarClassName }
                 VideoBarClassName={ VideoBarClassName }
                 VideoPlayedBarClassName={ VideoPlayedBarClassName }
                 VideoLoadedBarClassName={ VideoLoadedBarClassName }
@@ -184,7 +173,7 @@ class Video extends Component {
                 onCustomSeekBarClick={ this.onCustomSeekBarClick }
                 onArrowKeyPressed={ this.onArrowKeyPressed }
 
-                quizTimeArray={ quizTimeArrayForPopupTest }
+                quizTimeArray={ secsStateOfQuestions }
                 canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
                 isQuizSecs={ isQuizSecs } />
 
@@ -217,8 +206,8 @@ class Video extends Component {
               </VideoControllerWrapperComponent>
             </div>
           </VideoControllerAndBarWrapperComponent>
-        </div>
-      </div>
+        </FlassDetailVideo.ControllerBar>
+      </FlassDetailVideo.Container>
     );
   }
 
@@ -308,15 +297,27 @@ class Video extends Component {
 
   @autobind
   canChangeIsQuizSecs(playedSecs) {
-    const { quizTimeArrayForPopupTest } = this.props;
+    const {
+      questions: {
+        secsStateOfQuestions
+      }
+    } = this.props;
 
-    if (this.isEqlQuizSecsWithPlayedSecs(playedSecs, quizTimeArrayForPopupTest)) {
-      this.setState({ isQuizSecs: true, playing: false });
+    if (this.isEqlQuizSecsWithPlayedSecs(playedSecs, secsStateOfQuestions)) {
+      const indexOfQuestion = this.findIndexOfQuestionFromSecsStateArray(playedSecs, secsStateOfQuestions);
+      this.setState({ isQuizSecs: true, playing: false, indexOfQuestion });
     }
   }
 
   isEqlQuizSecsWithPlayedSecs(playedSecs, quizSecsArray) {
-    return quizSecsArray.indexOf(playedSecs) !== -1;
+    return quizSecsArray
+      .filter(({ playedSeconds }) => playedSeconds === playedSecs)
+      .length !== 0;
+  }
+
+  findIndexOfQuestionFromSecsStateArray(playedSecs, secsStateOfQuestions) {
+    return List(secsStateOfQuestions)
+      .findKey(({ playedSeconds }) => playedSeconds === playedSecs);
   }
 
   @autobind

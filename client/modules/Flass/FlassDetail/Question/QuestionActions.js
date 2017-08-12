@@ -11,6 +11,7 @@ function* fetchRequestQuestion({ detailId }) {
 
   try {
     const response = yield call(fetch, '/json/FlassQuestion.json');
+
     yield put({
       type: FETCH_QUESTION_SUCCESS,
       questions: response.data
