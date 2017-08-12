@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import color from '../../common/colors.scss';
@@ -6,6 +6,7 @@ import './CommentItem.scss';
 import Heart from './images/heart.png';
 import HeartActive from './images/heart-active.png';
 import Menu from './images/menu.png';
+import CommentItemMenu from './CommentItemMenu';
 
 const DetailCommentItem = styled.div`
   padding: 2rem 0;
@@ -50,27 +51,45 @@ const propTypes = {
 };
 const defaultProps = {};
 
-const CommentItem = props => {
-  const { userName, content } = props;
-  return (
-    <DetailCommentItem>
-      <div>
-        <UserName>{userName}</UserName>
-        <CommentMenu className="flass-comment-item-float-box">
-          <HeartIcon alt="like" src={ Heart } />
-          11
-          <MenuIcon alt="menu" src={ Menu } />
-        </CommentMenu>
-      </div>
-      <Content>
-        {content}
-      </Content>
-      <Bottom>
-        2017.07.23 | <a>설명글 보기</a>
-      </Bottom>
-    </DetailCommentItem>
-  );
-};
+class CommentItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      toggleContentMenu: false,
+    };
+  }
+
+  componentDidMount() {}
+
+  render() {
+    const { userName, content } = this.props;
+    const { toggleContentMenu } = this.state;
+
+    handleReplyComment = () => {
+
+    }
+
+    return (
+      <DetailCommentItem>
+        <div>
+          <UserName>{userName}</UserName>
+          <CommentMenu className="flass-comment-item-float-box">
+            <HeartIcon alt="like" src={ Heart } />
+            11
+            <MenuIcon alt="menu" src={ Menu } />
+            <CommentItemMenu />
+          </CommentMenu>
+        </div>
+        <Content>
+          {content}
+        </Content>
+        <Bottom>
+          2017.07.23 | <a>답글 보기</a>
+        </Bottom>
+      </DetailCommentItem>
+    );
+  }
+}
 
 CommentItem.propTypes = propTypes;
 CommentItem.defaultProps = defaultProps;

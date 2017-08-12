@@ -19,6 +19,9 @@ function mapDispatchToProps(dispatch) {
         detailId
       });
     },
+    fetchReplyComment: commentId => {
+
+    },
     addComment: (detailId, userId, userName, content) => {
       dispatch({
         type: ADD_COMMENT,
