@@ -4,9 +4,7 @@ import FlassApp from '../../components/Flass/FlassApp';
 
 
 function mapStateToProps(state) {
-  return {
-    user: state.flass.user,
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
