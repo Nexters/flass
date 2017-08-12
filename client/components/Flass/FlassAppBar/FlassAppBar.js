@@ -39,9 +39,7 @@ class FlassAppBar extends Component {
         </NavComponent>
 
         <NavComponent isRight>
-          <NavItem>
-            { isLogin && <FlassUserAppBar /> }
-          </NavItem>
+          { isLogin && <FlassUserAppBar /> }
         </NavComponent>
       </NavbarComponent>
     );
