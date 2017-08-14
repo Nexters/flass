@@ -6,6 +6,7 @@ export const SAVE_MULTIPLE_CHOICE_QUESTION = 'save_multiple_choice_question';
 export const ADD_QUESTION_SECS = 'add_question_secs';
 export const FOCUS_ON_QUESTION = 'focus_on_question';
 export const COMPLETE_EDIT_QUESTION = 'complete_edit_question';
+export const DELETE_COMPLETE_QUESTION = 'delete_complete_question';
 
 export function addMultipleChoiceQuestion() {
   return { type: ADD_MULTIPLE_CHIOICE_QUESTION };
@@ -46,10 +47,10 @@ export function saveMultipleChoiceQuestion({  numOfQuestion,
   };
 }
 
-export function addQuestionSecs({ playedSeconds, label }) {
+export function addQuestionSecs({ playedSeconds, indexOfQuestion }) {
   return {
     type: ADD_QUESTION_SECS,
-    payload: { playedSeconds, label, isFocused: false }
+    payload: { playedSeconds, indexOfQuestion, isFocused: false }
   };
 }
 
@@ -64,5 +65,12 @@ export function completeEditQuestion({ EditedTextStateOfFocusedQuestion }) {
   return {
     type: COMPLETE_EDIT_QUESTION,
     payload: { EditedTextStateOfFocusedQuestion }
+  };
+}
+
+export function deleteCompleteQuestion({ indexOfQuestion }) {
+  return {
+    type: DELETE_COMPLETE_QUESTION,
+    payload: { indexOfQuestion }
   };
 }

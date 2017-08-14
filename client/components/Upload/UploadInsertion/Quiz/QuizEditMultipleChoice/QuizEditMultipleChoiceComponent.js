@@ -10,6 +10,7 @@ const { func, shape, arrayOf, string, bool, number, oneOfType } = PropTypes;
 const propTypes = {
   decreaseNumOfQuestion: func.isRequired,
   completeEditQuestion: func.isRequired,
+  deleteCompleteQuestion: func.isRequired,
   secsStateOfFocusedQuestion: shape({
     playedSeconds: number,
     label: string,
@@ -111,7 +112,7 @@ class QuizEditMultipleChoiceComponent extends Component {
           <QuizEditMultipleChoice.Button
             right
             color="gray"
-            onClick={ this.onCancelBtnClick }>
+            onClick={ this.onDeleteBtnClick }>
             삭제
           </QuizEditMultipleChoice.Button>
         </QuizEditMultipleChoice.Footer>
@@ -210,8 +211,11 @@ class QuizEditMultipleChoiceComponent extends Component {
   }
 
   @autobind
-  onCancelBtnClick() {
-    console.log('Cancel button clikced');
+  onDeleteBtnClick() {
+    const { EditedTextStateOfFocusedQuestion: { indexOfQuestion } } = this.state;
+    this.setState({ isEdit: false });
+    this.props.deleteCompleteQuestion({ indexOfQuestion });
+    this.props.decreaseNumOfQuestion();
   }
 }
 
