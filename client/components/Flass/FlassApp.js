@@ -5,16 +5,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import { Route, Switch } from 'react-router-dom';
-import FlassGrid from '../../modules/Flass/FlassGrid/FlassGridContainer';
+import FlassGrid from './Grid/GridContainer';
 import VideoComponent from '../Video/VideoComponent';
-import FlassDetail from '../../modules/Flass/FlassDetail/FlassDetailContainer';
+import FlassDetail from './Detail/DetailContainer';
 import Upload from '../Upload';
 
-import FlassDrawer from './FlassDrawer/FlassDrawer';
-import FlassContentWrapperComponent from './FlassContentWrapper/FlassContentWrapperComponent';
+import FlassDrawer from './Drawer/Drawer';
+import FlassContentWrapperComponent from './ContentWrapper/ContentWrapperComponent';
 import FlassContent from './FlassContent';
 import './FlassApp.scss';
-import FlassAppBar from './FlassAppBar/FlassAppBar';
+import FlassAppBar from './AppBar/AppBar';
 
 const childContextTypes = {
   muiTheme: PropTypes.object.isRequired
