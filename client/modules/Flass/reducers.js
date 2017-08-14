@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import badge from './FlassBadge/FlassBadgeReducer';
-import detail from './FlassDetail/reducers';
-import grid from './FlassGrid/FlassGridReducer';
-import user from './FlassUser/FlassUserReducer';
+import badge from './Badge/BadgeReducer';
+import detail from './Detail/reducers';
+import grid from './Grid/GridReducer';
+import user from './User/UserReducer';
 
 export default combineReducers({
   badge,

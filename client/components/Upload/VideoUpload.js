@@ -5,7 +5,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem  from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import PropTypes from 'prop-types';
-import FlassContentTitleComponent from '../Flass/FlassContentTitle/FlassContentTitleComponent';
+import FlassContentTitleComponent from '../Flass/ContentTitle/ContentTitleComponent';
 
 import * as actions from '../../modules/Upload/Actions';
 
