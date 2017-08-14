@@ -13,7 +13,6 @@ module RailsReactBoilerplate
     # -- all .rb files in that directory are automatically loaded.
 
     config.assets.enabled = true
-    config.assets.paths << Rails.root.join("public")
 
     config.generators do |generator|
       generator.assets false
