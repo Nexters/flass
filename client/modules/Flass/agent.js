@@ -78,4 +78,3 @@ export default {
   Analysis,
   setToken: _token => { token = _token; }
 };
-

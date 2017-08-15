@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
@@ -11,7 +12,7 @@ const propTypes = {
   onQuestionSolved: func.isRequired,
   textStateOfQuestions: arrayOf(shape({
     answerIndex: number,
-    SingleChoiceValues: arrayOf(shape({
+    singleChoiceValues: arrayOf(shape({
       isAnswer: bool,
       textValue: string
     })),
@@ -134,7 +135,23 @@ class VideoModalComponent extends Component {
 
   @autobind
   onClickKeepGoingBtn() {
-    this.props.onQuestionSolved();
+    const {
+      indexOfQuestion,
+      textStateOfQuestions
+     } = this.props;
+    const {
+      isCorrect,
+      selectedChoiceIndex
+    } = this.state;
+    const { singleChoiceValues } = textStateOfQuestions[indexOfQuestion];
+    const solvedQuestionState = {
+      indexOfQuestion,
+      isCorrect,
+      indexOfSelectedChoice: selectedChoiceIndex,
+      indexOfAnswer: List(singleChoiceValues).findKey(({ isAnswer }) => isAnswer)
+    };
+
+    this.props.onQuestionSolved(solvedQuestionState);
   }
 }
 
