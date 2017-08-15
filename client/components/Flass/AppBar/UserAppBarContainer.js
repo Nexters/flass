@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import FlassUserAppBar from './UserAppBar';
+import UserAppBar from './UserAppBar';
 
 
 function mapStateToProps(state) {
@@ -15,4 +15,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FlassUserAppBar);
+)(UserAppBar);

@@ -67,7 +67,7 @@ const propTypes = {
 
 const defaultProps = {};
 
-const FlassGridItem = props => {
+const GridItem = props => {
   const { id, title, author, img } = props;
 
   return (
@@ -89,7 +89,7 @@ const FlassGridItem = props => {
   );
 };
 
-FlassGridItem.propTypes = propTypes;
-FlassGridItem.defaultProps = defaultProps;
+GridItem.propTypes = propTypes;
+GridItem.defaultProps = defaultProps;
 
-export default FlassGridItem;
+export default GridItem;

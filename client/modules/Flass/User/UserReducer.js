@@ -6,7 +6,7 @@ const initialState = {
   userName: '',
 };
 
-const FlassUserReducer = (state = initialState, action) => {
+const UserReducer = (state = initialState, action) => {
   switch(action.type) {
     case FETCH_USER_SUCCESS:
       return {
@@ -20,4 +20,4 @@ const FlassUserReducer = (state = initialState, action) => {
   }
 };
 
-export default FlassUserReducer;
+export default UserReducer;

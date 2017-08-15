@@ -2,12 +2,10 @@
 
 one:
   user_id: 1
-  notification_type:
+  comment_id: 1
   content: MyString
-  url: MyString
 
 two:
   user_id: 1
-  notification_type:
+  comment_id: 1
   content: MyString
-  url: MyString

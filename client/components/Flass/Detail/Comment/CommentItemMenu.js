@@ -4,12 +4,24 @@ import styled from 'styled-components';
 import color from '../../common/colors.scss';
 
 const CommentItemMenuView = styled.div`
-  width: 100px;
+  width: 80px;
   position: relative;
   top: 5px;
-  right: 60px;
+  right: 40px;
   border-radius: 3px;
   border: solid 1px ${color['cool-grey']};
+`;
+
+const List = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+`;
+
+const Item = styled.li`
+  padding: 5px;
+  border-bottom: 1px solid #eee;
 `;
 
 const propTypes = {};
@@ -22,10 +34,10 @@ class CommentItemMenu extends Component {
   render() {
     return (
       <CommentItemMenuView>
-        <ul>
-          <li>댓글 수정</li>
-          <li>댓글 삭제</li>
-        </ul>
+        <List>
+          <Item>댓글 수정</Item>
+          <Item>댓글 삭제</Item>
+        </List>
       </CommentItemMenuView>
     );
   }

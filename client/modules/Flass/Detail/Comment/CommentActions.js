@@ -1,20 +1,20 @@
-import fetch from 'axios';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
+import agent from '../../agent';
 
 export const FETCH_COMMENT = 'FETCH_COMMENT';
 export const FETCH_READY_COMMENT = 'FETCH_READY_COMMENT';
 export const FETCH_COMMENT_SUCCESS = 'FETCH_COMMENT_SUCCESS';
 export const FETCH_COMMENT_ERROR = 'FETCH_COMMENT_ERROR';
 
-function* fetchRequestComment({ detailId }) {
+function* fetchComment({ detailId }) {
   yield put({ type: FETCH_READY_COMMENT });
 
   try {
-    const response = yield call(fetch, '/json/FlassComment.json');
+    const comments = yield call(agent.Comment.byDetailId, detailId);
     yield put({
       type: FETCH_COMMENT_SUCCESS,
-      comments: response.data
+      comments
     });
   } catch (err) {
     yield put({
@@ -43,11 +43,11 @@ function* addComment({ detailId, userId, userName, content }) {
   });
 
   try {
-    const response = yield call(fetch, '/json/FlassPostComment.json');
+    const res = yield call(agent.Comment.postComment, detailId, content);
     yield put({
       type: ADD_COMMENT_SUCCESS,
       id: commentId,
-      newId: response.data.id
+      newId: res.id
     });
   } catch (err) {
     yield put({
@@ -67,6 +67,6 @@ function fetchReplyComment(commentId) {
 }
 
 export default function* rootSaga() {
-  yield takeLatest(FETCH_COMMENT, fetchRequestComment);
+  yield takeLatest(FETCH_COMMENT, fetchComment);
   yield takeLatest(ADD_COMMENT, addComment);
 }

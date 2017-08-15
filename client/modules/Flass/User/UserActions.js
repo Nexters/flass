@@ -1,20 +1,21 @@
 import fetch from 'axios';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
+import agent from '../agent';
 
 export const FETCH_USER = 'FETCH_USER';
 export const FETCH_READY_USER = 'FETCH_READY_USER';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_ERROR = 'FETCH_USER_ERROR';
 
-function* fetchUser({ userId }) {
+function* fetchUser() {
   yield put({ type: FETCH_READY_USER });
 
   try {
-    const response = yield call(fetch, '/json/FlassUser.json');
+    const user = yield call(agent.User.me);
     yield put({
       type: FETCH_USER_SUCCESS,
-      user: response.data
+      user
     });
   } catch (err) {
     yield put({

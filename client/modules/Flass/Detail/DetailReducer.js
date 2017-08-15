@@ -14,7 +14,7 @@ const initialState = {
   }
 };
 
-const FlassDetailReducer = (state = initialState, action) => {
+const DetailReducer = (state = initialState, action) => {
   switch(action.type) {
     case FETCH_READY_DETAIL:
       return initialState;
@@ -32,4 +32,4 @@ const FlassDetailReducer = (state = initialState, action) => {
   }
 };
 
-export default FlassDetailReducer;
+export default DetailReducer;

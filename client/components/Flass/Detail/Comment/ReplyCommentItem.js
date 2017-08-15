@@ -2,15 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import color from '../../common/colors.scss';
+import Reply from './images/reply.png';
 
-const ReplyIcon = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: #fff;
+const ReplayCommentView = styled.div`
+  background-color: ${color['silver-two']};
+`;
+
+const ReplyIcon = styled.img`
+  width: 13px;
+  position: relative;
+  top: 20px;
+  left: 12px;
+  float: left;
 `;
 
 const ReplyContent = styled.div`
-  display: inline-block;
+  padding-left: 35px;
 `;
 
 const propTypes = {
@@ -19,14 +26,10 @@ const propTypes = {
 
 const defaultProps = {};
 
-const ReplayCommentView = styled.div`
-  background-color: ${color['silver-two']};
-`;
-
 const ReplyComment = ({ component }) => {
   return (
     <ReplayCommentView>
-      <ReplyIcon />
+      <ReplyIcon src={ Reply } />
       <ReplyContent>
         { component }
       </ReplyContent>

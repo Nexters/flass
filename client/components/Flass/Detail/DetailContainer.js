@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import FlassDetail from './Detail';
+import Detail from './Detail';
 import { FETCH_DETAIL } from '../../../modules/Flass/Detail/DetailActions';
 import {
   LOAD_VIDEO
@@ -27,4 +27,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FlassDetail);
+)(Detail);
