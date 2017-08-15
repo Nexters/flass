@@ -36,7 +36,7 @@ const propTypes = {
 
 const defaultProps = {};
 
-class FlassUserAppBar extends Component {
+class UserAppBar extends Component {
   componentDidMount() {}
 
   render() {
@@ -52,7 +52,7 @@ class FlassUserAppBar extends Component {
   }
 }
 
-FlassUserAppBar.propTypes = propTypes;
-FlassUserAppBar.defaultProps = defaultProps;
+UserAppBar.propTypes = propTypes;
+UserAppBar.defaultProps = defaultProps;
 
-export default FlassUserAppBar;
+export default UserAppBar;

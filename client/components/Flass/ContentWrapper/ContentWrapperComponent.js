@@ -8,14 +8,14 @@ const propTypes = {
 };
 const defaultProps = {};
 
-const FlassContentWrapperComponent = props => (
+const ContentWrapperComponent = props => (
   <div
     className={ classNames('flass-content-wrapper') }>
     { props.children }
   </div>
 );
 
-FlassContentWrapperComponent.propTypes = propTypes;
-FlassContentWrapperComponent.defaultProps = defaultProps;
+ContentWrapperComponent.propTypes = propTypes;
+ContentWrapperComponent.defaultProps = defaultProps;
 
-export default FlassContentWrapperComponent;
+export default ContentWrapperComponent;

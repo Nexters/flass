@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Grid, Row } from 'react-bootstrap';
+import { Col, Grid as GridView, Row } from 'react-bootstrap';
 import _ from 'lodash';
 import styled from 'styled-components';
 import color from '../common/colors.scss';
-import FlassGridItem from './GridItem';
-import FlassContentTitleComponent from '../ContentTitle/ContentTitleComponent';
+import GridItem from './GridItem';
+import ContentTitleComponent from '../ContentTitle/ContentTitleComponent';
 import './Grid.scss';
 
 const propTypes = {
@@ -16,16 +16,16 @@ const propTypes = {
 const defaultProps = {
 };
 
-class FlassGrid extends Component {
+class Grid extends Component {
 
   componentDidMount() {
-    this.props.fetchRequestMyChannelItems('1');
+    this.props.fetchRequestMyChannelItems();
   }
 
   renderChildren(items) {
     return items.map(item => (
       <Col key={item.id} md={ 3 }>
-        <FlassGridItem { ...item } />
+        <GridItem { ...item } />
       </Col>
     ));
   }
@@ -41,19 +41,19 @@ class FlassGrid extends Component {
     });
     return (
       <div>
-        <FlassContentTitleComponent title="Home Channel" />
-        <Grid>
+        <ContentTitleComponent title="Home Channel" />
+        <GridView>
           {renderAllItems}
-        </Grid>
+        </GridView>
       </div>
     );
   }
 }
 
-FlassGrid.childContextTypes = {
+Grid.childContextTypes = {
   muiTheme: PropTypes.object.isRequired
 };
-FlassGrid.propTypes = propTypes;
-FlassGrid.defaultProps = defaultProps;
+Grid.propTypes = propTypes;
+Grid.defaultProps = defaultProps;
 
-export default FlassGrid;
+export default Grid;

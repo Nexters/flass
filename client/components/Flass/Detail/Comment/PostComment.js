@@ -11,7 +11,11 @@ import normalizePostComment from './normalizePostComment';
 import color from '../../common/colors.scss';
 import './PostComment.scss';
 
-const DetailPostComment = styled(Form)`
+const DetailForm = styled(Form)`
+  
+`;
+
+const DetailPostComment = styled.div`
   border-radius: 3px;
   background-color: ${color['white']};
   box-shadow: 3px 4px 10px 0 rgba(79, 79, 79, 0.15);
@@ -67,6 +71,7 @@ class PostComment extends Component {
 
   submit = ({ content }) => {
     const { detailId, user, addComment } = this.props;
+    console.log(detailId, user, addComment);
     addComment(detailId, user.id, user.userName, content);
   };
 
@@ -85,8 +90,8 @@ class PostComment extends Component {
   render() {
     const { user, handleSubmit } = this.props;
     return (
-      <div>
-        <DetailPostComment onSubmit={ handleSubmit(this.submit) }>
+      <DetailForm onSubmit={ handleSubmit(this.submit) }>
+        <DetailPostComment>
           <Field
             id="content"
             name="content"
@@ -100,7 +105,7 @@ class PostComment extends Component {
         <Bottom>
           <BtnPostComment type="submit">등록</BtnPostComment>
         </Bottom>
-      </div>
+      </DetailForm>
     );
   }
 }

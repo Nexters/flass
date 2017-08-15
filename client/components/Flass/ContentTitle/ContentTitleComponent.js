@@ -8,13 +8,13 @@ const propTypes = {
 };
 const defaultProps = {};
 
-const FlassContentTitleComponent = props => (
+const ContentTitleComponent = props => (
   <div className={ classNames('flass-content-title') }>
     { props.title }
   </div>
 );
 
-FlassContentTitleComponent.propTypes = propTypes;
-FlassContentTitleComponent.defaultProps = defaultProps;
+ContentTitleComponent.propTypes = propTypes;
+ContentTitleComponent.defaultProps = defaultProps;
 
-export default FlassContentTitleComponent;
+export default ContentTitleComponent;

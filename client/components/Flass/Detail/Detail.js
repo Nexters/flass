@@ -9,7 +9,7 @@ import Content from './Content/Content';
 import Comment from './Comment/CommentContainer';
 import Analysis from './Analysis/Analysis';
 import Video from './Video/Video';
-import FlassContentTitleComponent from '../ContentTitle/ContentTitleComponent';
+import ContentTitleComponent from '../ContentTitle/ContentTitleComponent';
 import { FlassDetailStyled } from './DetailStyled';
 
 import contentImageActive from './images/tab-content-active.png';
@@ -18,7 +18,6 @@ import commentImageActive from './images/tab-comment-active.png';
 import commentImage from './images/tab-comment.png';
 import analysisImageActive from './images/tab-analysis-active.png';
 import analysisImage from './images/tab-analysis.png';
-
 
 import color from '../common/colors.scss';
 import './Detail.scss';
@@ -74,7 +73,7 @@ const defaultProps = {
   }
 };
 
-class FlassDetail extends Component {
+class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,7 +108,7 @@ class FlassDetail extends Component {
     }
     return (
       <FlassDetailStyled.Wrapper>
-        <FlassContentTitleComponent title="Watching Video" />
+        <ContentTitleComponent title="Watching Video" />
         <FlassDetailStyled.Content>
           <Video
             VideoPlayerWrapperClassName="flass-detail-media__player-wrapper"
@@ -127,9 +126,9 @@ class FlassDetail extends Component {
             videoUrl={ videoUrl }
             questions={ questions } />
 
-          <div className="flass-detail-tabs">
+          <FlassDetailStyled.Tab>
             {this.renderTabs()}
-          </div>
+          </FlassDetailStyled.Tab>
         </FlassDetailStyled.Content>
       </FlassDetailStyled.Wrapper>
     );
@@ -144,32 +143,30 @@ class FlassDetail extends Component {
         <TabIcon alt="" src={ src } />
         {title}
       </TabTitle>);
-    return (<div className="flass-detail-tabs">
-      <Tabs id="detail-tabs" activeKey={ selected } onSelect={ this.handleSelect }>
-        <Tab
-          eventKey={ 1 }
-          title={ tabTitle('강의 정보',
+    return (<Tabs id="detail-tabs" activeKey={ selected } onSelect={ this.handleSelect }>
+      <Tab
+        eventKey={ 1 }
+        title={ tabTitle('강의 정보',
           selected === 1 ? contentImageActive : contentImage) }>
-          <Content content={detail.content} />
-        </Tab>
-        <Tab
-          eventKey={ 2 }
-          title={ tabTitle(`학생 질문 - ${comment.comments.length}`,
+        <Content content={ detail.content } />
+      </Tab>
+      <Tab
+        eventKey={ 2 }
+        title={ tabTitle(`학생 질문 - ${comment.comments.length}`,
           selected === 2 ? commentImageActive : commentImage) }>
-          <Comment detailId={detail.id} />
-        </Tab>
-        <Tab
-          eventKey={ 3 }
-          title={ tabTitle('분석',
+        <Comment detailId={ detail.id } />
+      </Tab>
+      <Tab
+        eventKey={ 3 }
+        title={ tabTitle('분석',
           selected === 3 ? analysisImageActive : analysisImage) }>
-          <Analysis />
-        </Tab>
-      </Tabs>
-    </div>);
+        <Analysis />
+      </Tab>
+    </Tabs>);
   }
 }
 
-FlassDetail.propTypes = propTypes;
-FlassDetail.defaultProps = defaultProps;
+Detail.propTypes = propTypes;
+Detail.defaultProps = defaultProps;
 
-export default FlassDetail;
+export default Detail;

@@ -4,7 +4,7 @@ import { Navbar, NavItem } from 'react-bootstrap';
 import styled from 'styled-components';
 import NavbarComponent from './Navbar/NavbarComponent';
 import NavComponent from './Nav/NavComponent';
-import FlassUserAppBar from './UserAppBarContainer';
+import UserAppBar from './UserAppBarContainer';
 import color from '../common/colors.scss';
 import './AppBar.scss';
 
@@ -24,7 +24,7 @@ const defaultProps = {
   isLogin: false
 };
 
-class FlassAppBar extends Component {
+class AppBar extends Component {
   componentDidMount() {}
 
   render() {
@@ -39,14 +39,14 @@ class FlassAppBar extends Component {
         </NavComponent>
 
         <NavComponent isRight>
-          { isLogin && <FlassUserAppBar /> }
+          { isLogin && <UserAppBar /> }
         </NavComponent>
       </NavbarComponent>
     );
   }
 }
 
-FlassAppBar.propTypes = propTypes;
-FlassAppBar.defaultProps = defaultProps;
+AppBar.propTypes = propTypes;
+AppBar.defaultProps = defaultProps;
 
-export default FlassAppBar;
+export default AppBar;

@@ -5,16 +5,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import { Route, Switch } from 'react-router-dom';
-import FlassGrid from './Grid/GridContainer';
+import Grid from './Grid/GridContainer';
 import VideoComponent from '../Video/VideoComponent';
-import FlassDetail from './Detail/DetailContainer';
+import Detail from './Detail/DetailContainer';
 import Upload from '../Upload';
 
-import FlassDrawer from './Drawer/Drawer';
-import FlassContentWrapperComponent from './ContentWrapper/ContentWrapperComponent';
-import FlassContent from './FlassContent';
+import Drawer from './Drawer/Drawer';
+import ContentWrapperComponent from './ContentWrapper/ContentWrapperComponent';
+import Content from './FlassContent';
 import './FlassApp.scss';
-import FlassAppBar from './AppBar/AppBar';
+import AppBar from './AppBar/AppBar';
 
 const childContextTypes = {
   muiTheme: PropTypes.object.isRequired
@@ -46,9 +46,9 @@ class FlassApp extends Component {
   renderContent() {
     return (
       <Switch>
-        <Route exact path="/" component={ FlassGrid } />
-        <Route path="/home" component={ FlassGrid } />
-        <Route path="/detail/:id" component={ FlassDetail } />
+        <Route exact path="/" component={ Grid } />
+        <Route path="/home" component={ Grid } />
+        <Route path="/detail/:id" component={ Detail } />
         <Route path="/video" component={ VideoComponent } />
         <Route path="/upload" component={ Upload } />
       </Switch>
@@ -59,14 +59,14 @@ class FlassApp extends Component {
     return (
       <MuiThemeProvider muiTheme={ flassTheme }>
         <div>
-          <FlassDrawer />
-          <FlassAppBar isLogin />
+          <Drawer />
+          <AppBar isLogin />
 
-          <FlassContent>
-            <FlassContentWrapperComponent>
+          <Content>
+            <ContentWrapperComponent>
               {this.renderContent()}
-            </FlassContentWrapperComponent>
-          </FlassContent>
+            </ContentWrapperComponent>
+          </Content>
         </div>
       </MuiThemeProvider>
     );

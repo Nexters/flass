@@ -12,7 +12,7 @@ const defaultProps = {
   children: null,
 };
 
-class FlassDrawerItem extends Component {
+class DrawerItem extends Component {
   componentDidMount() {
   }
 
@@ -30,7 +30,7 @@ class FlassDrawerItem extends Component {
   }
 }
 
-FlassDrawerItem.propTypes = propTypes;
-FlassDrawerItem.defaultProps = defaultProps;
+DrawerItem.propTypes = propTypes;
+DrawerItem.defaultProps = defaultProps;
 
-export default FlassDrawerItem;
+export default DrawerItem;

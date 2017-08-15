@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import FlassGrid from './Grid';
+import Grid from './Grid';
 import { FETCH_MY_CHANNEL } from '../../../modules/Flass/Grid/GridActions';
 
 function mapStateToProps(state) {
@@ -10,8 +10,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchRequestMyChannelItems: userId => {
-      dispatch({ type: FETCH_MY_CHANNEL, payload: { userId } });
+    fetchRequestMyChannelItems: () => {
+      dispatch({
+        type: FETCH_MY_CHANNEL
+      });
     }
   };
 }
@@ -19,4 +21,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FlassGrid);
+)(Grid);

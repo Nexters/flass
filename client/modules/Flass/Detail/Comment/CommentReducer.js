@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import { FETCH_READY_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_ERROR,
   ADD_READY_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR } from './CommentActions';
-import _ from 'lodash';
 
 const initialState = {
   comments: []
@@ -26,6 +26,7 @@ const CommentReducer = (state = initialState, action) => {
       };
     case FETCH_READY_COMMENT:
     case FETCH_COMMENT_ERROR:
+      return initialState;
     case ADD_COMMENT_ERROR:
     default:
       return state;

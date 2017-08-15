@@ -6,7 +6,7 @@ const initialState = {
   toggleBadge: false,
 };
 
-const FlassBadgeReducer = (state = initialState, action) => {
+const BadgeReducer = (state = initialState, action) => {
   switch(action.type) {
     case FETCH_BADGE_HISTORY_SUCCESS:
       return {
@@ -30,4 +30,4 @@ const FlassBadgeReducer = (state = initialState, action) => {
   }
 };
 
-export default FlassBadgeReducer;
+export default BadgeReducer;

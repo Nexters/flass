@@ -57,7 +57,7 @@ const propTypes = {
 const defaultProps = {
 };
 
-class FlassDrawer extends Component {
+class Drawer extends Component {
   componentDidMount() {
   }
 
@@ -92,7 +92,7 @@ class FlassDrawer extends Component {
   }
 }
 
-FlassDrawer.propTypes = propTypes;
-FlassDrawer.defaultProps = defaultProps;
+Drawer.propTypes = propTypes;
+Drawer.defaultProps = defaultProps;
 
-export default FlassDrawer;
+export default Drawer;

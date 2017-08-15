@@ -5,7 +5,7 @@ const initialState = {
   questions: []
 };
 
-const FlassQuestionReducer = (state = initialState, action) => {
+const QuestionReducer = (state = initialState, action) => {
   switch(action.type) {
     case FETCH_QUESTION_SUCCESS:
       return {
@@ -19,4 +19,4 @@ const FlassQuestionReducer = (state = initialState, action) => {
   }
 };
 
-export default FlassQuestionReducer;
+export default QuestionReducer;
