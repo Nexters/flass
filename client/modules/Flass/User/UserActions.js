@@ -1,7 +1,7 @@
 import fetch from 'axios';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
-import agent from '../agent';
+import agent from '../../agent';
 
 export const FETCH_USER = 'FETCH_USER';
 export const FETCH_READY_USER = 'FETCH_READY_USER';

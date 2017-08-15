@@ -61,7 +61,7 @@ class VideoModalComponent extends Component {
           <VideoModal.ContentWrapper>
             <VideoModal.Header>
               <VideoModal.QuestionNum>
-                { `Q${indexOfQuestion + 1}` }
+                { this.renderQuestionNumber(indexOfQuestion) }
               </VideoModal.QuestionNum>
               <VideoModal.QuestionTitle>
                 { title }
@@ -97,6 +97,11 @@ class VideoModalComponent extends Component {
         </VideoModal.Inner>
       </VideoModal.Container>
     );
+  }
+
+  @autobind
+  renderQuestionNumber(indexOfQuestion) {
+    return `Q${indexOfQuestion + 1}`;
   }
 
   @autobind

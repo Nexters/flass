@@ -25,16 +25,48 @@
     background-color: #9abf32;
   }
 
+  &__q-text-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
   &__q-text {
     margin-left: 20px;
     font-size: 20px;
     border: none;
+    outline: none;
     height: 30px;
     color: #cacdcd;
-    width: 250px;
+    width: 500px;
 
     &--font-black {
       color: #3f4a4b;
+    }
+
+    &:focus ~ span {
+      width: 100%;
+      opacity: 1;
+    }
+  }
+
+  &__underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 20px;
+    width: 0;
+    border: .5px solid #d3d9d9;
+    transition: all 0.5s linear;
+  }
+
+  &__delete-btn {
+    position: absolute;
+    right: 68px;
+
+    & > img {
+      width: 16px;
+      height: 16px;
+      margin: auto;
     }
   }
 }
