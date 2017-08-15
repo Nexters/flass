@@ -8,7 +8,8 @@ import {
   SAVE_MULTIPLE_CHOICE_QUESTION,
   ADD_QUESTION_SECS,
   FOCUS_ON_QUESTION,
-  COMPLETE_EDIT_QUESTION
+  COMPLETE_EDIT_QUESTION,
+  DELETE_COMPLETE_QUESTION
 } from './QuizActions';
 
 const INITIAL_STATE = {
@@ -17,6 +18,7 @@ const INITIAL_STATE = {
     secsStateOfFocusedQuestion: {
       playedSeconds: -1,
       label: '',
+      indexOfQuestion: -1,
       isFocused: false
     },
     textStateOfFocusdQuestion: {
@@ -71,10 +73,11 @@ export default function(state = INITIAL_STATE, action) {
       };
     }
     case ADD_QUESTION_SECS: {
-      const { playedSeconds, label, isFocused } = action.payload;
+      const { playedSeconds, indexOfQuestion, isFocused } = action.payload;
       const newSecsState = {
         playedSeconds: parseFloat(playedSeconds),
-        label,
+        label: `Q${indexOfQuestion}`,
+        indexOfQuestion,
         isFocused
       };
 
@@ -109,6 +112,31 @@ export default function(state = INITIAL_STATE, action) {
       return {
         ...state,
         quizState: UpdatedQuizState,
+        stateOfFocusedQuestion: INITIAL_STATE.stateOfFocusedQuestion
+      };
+    }
+
+    case DELETE_COMPLETE_QUESTION: {
+      const { indexOfQuestion } = action.payload;
+
+      const UpdatedQuizState = List(state.quizState)
+        .delete(indexOfQuestion)
+        .toArray();
+      const UpdatedQuizSecsState = List(state.questionSecsStateArray)
+        .delete(indexOfQuestion)
+        .map((secsState, i) => ({
+          ...secsState,
+          indexOfQuestion: i + 1,
+          label: `Q${i + 1}`,
+          isFocused: false
+        }))
+        .toArray();
+
+
+      return {
+        ...state,
+        quizState: UpdatedQuizState,
+        questionSecsStateArray: UpdatedQuizSecsState,
         stateOfFocusedQuestion: INITIAL_STATE.stateOfFocusedQuestion
       };
     }

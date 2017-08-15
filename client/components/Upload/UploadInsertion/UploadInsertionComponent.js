@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
-import FlassContentTitleComponent from '../../Flass/FlassContentTitle/FlassContentTitleComponent';
+import FlassContentTitleComponent from '../../Flass/ContentTitle/ContentTitleComponent';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
 
@@ -22,6 +22,7 @@ const propTypes = {
   addQuestionSecs: func.isRequired,
   focusOnQuestion: func.isRequired,
   completeEditQuestion: func.isRequired,
+  deleteCompleteQuestion: func.isRequired,
   isAdding: bool,
   questionSecsStateArray: arrayOf(shape({
     playedSeconds: number,
@@ -143,6 +144,7 @@ class UploadInsertionComponent extends Component {
               addMultipleChoiceQuestion={ this.addMultipleChoiceQuestion }
               decreaseNumOfQuestion={ this.decreaseNumOfQuestion }
               completeEditQuestion={ this.completeEditQuestion }
+              deleteCompleteQuestion={ this.deleteCompleteQuestion }
 
               isAdding={ isAdding }
               numOfQuestion={ numOfQuestion }
@@ -216,7 +218,7 @@ class UploadInsertionComponent extends Component {
     const { numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = quizState;
     const { duration, played, numOfQuestion } = this.state;
     const secsOfQuiz = (duration * played).toFixed(2);
-    const labelOfQuiz = this.makeQuestionTooltipLabel(numOfQuestion);
+    // const labelOfQuiz = this.makeQuestionTooltipLabel(numOfQuestion);
 
     this.props.saveMultipleChoiceQuestion({
       numOfQuestion,
@@ -230,7 +232,7 @@ class UploadInsertionComponent extends Component {
     });
     this.props.addQuestionSecs({
       playedSeconds: secsOfQuiz,
-      label: labelOfQuiz
+      indexOfQuestion: numOfQuestion
     });
     this.increaseNumOfQuestion();
   }
@@ -262,6 +264,12 @@ class UploadInsertionComponent extends Component {
   @autobind
   completeEditQuestion({ EditedTextStateOfFocusedQuestion }) {
     this.props.completeEditQuestion({ EditedTextStateOfFocusedQuestion });
+    this.setPlayingState(true);
+  }
+
+  @autobind
+  deleteCompleteQuestion({ indexOfQuestion }) {
+    this.props.deleteCompleteQuestion({ indexOfQuestion });
     this.setPlayingState(true);
   }
 }

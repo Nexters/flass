@@ -8,11 +8,16 @@ module.exports = {
       'babel-polyfill',
       'react-hot-loader/patch',
       './client/index'
+    ],
+    sign: [
+      'babel-polyfill',
+      'react-hot-loader/patch',
+      './client/sign'
     ]
   },
   output: {
     path: path.resolve(__dirname, './public'),
-    filename: 'app.js'
+    filename: '[name].js'
   },
 
   devServer: {
@@ -21,7 +26,7 @@ module.exports = {
     host: 'localhost',
     port: 4000,
     historyApiFallback: true,
-    contentBase: __dirname + '/public/'
+    contentBase: __dirname + '/public/',
   },
   module: {
     // https://velopert.com/1492

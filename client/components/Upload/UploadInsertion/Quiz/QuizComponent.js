@@ -18,6 +18,7 @@ const propTypes = {
   completeAddingQuestion: func.isRequired,
   decreaseNumOfQuestion: func.isRequired,
   completeEditQuestion: func.isRequired,
+  deleteCompleteQuestion: func.isRequired,
   isAdding: bool,
   numOfQuestion: number.isRequired,
   stateOfFocusedQuestion: shape({
@@ -87,6 +88,7 @@ class QuizComponent extends Component {
           setPlayingState={ this.setPlayingState }
           decreaseNumOfQuestion={ this.decreaseNumOfQuestion }
           completeEditQuestion={ this.completeEditQuestion }
+          deleteCompleteQuestion={ this.deleteCompleteQuestion }
           secsStateOfFocusedQuestion={ secsStateOfFocusedQuestion }
           textStateOfFocusdQuestion={ textStateOfFocusdQuestion } />
       );
@@ -150,7 +152,12 @@ class QuizComponent extends Component {
 
   @autobind
   completeEditQuestion({ EditedTextStateOfFocusedQuestion }) {
-    this.props.completeEditQuestion({ EditedTextStateOfFocusedQuestion })
+    this.props.completeEditQuestion({ EditedTextStateOfFocusedQuestion });
+  }
+
+  @autobind
+  deleteCompleteQuestion({ indexOfQuestion }) {
+    this.props.deleteCompleteQuestion({ indexOfQuestion });
   }
 }
 
