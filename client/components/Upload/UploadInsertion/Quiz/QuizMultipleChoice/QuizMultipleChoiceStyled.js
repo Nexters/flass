@@ -18,30 +18,35 @@ export const QuizMultipleChoice = {
     font-weight: 500;
     color: #3f4a4b;
   `,
+  QuestionTitleWrapper: styled.span`
+    position: relative;
+    display: inline-block;
+    padding: 0 30px 0 0;
+    width: 500px;
+  `,
+  underline: styled.span`
+    position: absolute;
+    width: 0;
+    bottom: 0;
+    left: 0;
+    margin-left: 20px;
+    border: .5px solid #d3d9d9;
+    transition: all 0.3s linear;
+    opacity: 0;
+  `,
   QuestionTitle: styled.input`
     margin-left: 20px;
     font-size: 20px;
     border: none;
-    border-bottom: solid 1px white;
+    border-bottom: solid .5px white;
     height: 30px;
-    width: 80%;
+    width: 100%;
     outline: none;
     color: ${props => selectInputTitleColor(props)};
 
-    span {
-      position: absolute;
-      left: 0;
-      content: '';
-      height: 40px;
-      height: 5px;
-      background: #f00;
-      transition: all 0.5s linear;
-      width: 0;
-      bottom: -5px;
-    }
-
-    &:hover ~ span {
-      width: 200px;
+    &:focus ~ span {
+      width: 80%;
+      opacity: 1;
     }
   `,
   Icon: styled.img`

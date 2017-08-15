@@ -56,15 +56,17 @@ class QuizMultipleChoiceComponent extends Component {
       <QuizMultipleChoice.Wrapper>
         <QuizMultipleChoice.Header>
           <QuizMultipleChoice.QuestionNumber>
-            {`Q${numOfQuestion}`}
+            { this.renderQuestionNumber(numOfQuestion) }
           </QuizMultipleChoice.QuestionNumber>
-          <span>
+
+          <QuizMultipleChoice.QuestionTitleWrapper>
             <QuizMultipleChoice.QuestionTitle
               type="text"
               value={ TitleInputValue }
               onClick={ this.onTitleInputClick }
               onChange={ this.onTitleInputChange } />
-          </span>
+            <QuizMultipleChoice.underline />
+          </QuizMultipleChoice.QuestionTitleWrapper>
         </QuizMultipleChoice.Header>
 
         <QuizMultipleChoice.Body>
@@ -91,6 +93,11 @@ class QuizMultipleChoiceComponent extends Component {
   }
 
   @autobind
+  renderQuestionNumber(indexOfQuestion) {
+    return `Q${indexOfQuestion}`;
+  }
+
+  @autobind
   onTitleInputClick() {
     if (!this.state.isTitleInputDirty) {
       this.setState({ isTitleInputDirty: true, TitleInputValue: EMPTY_STRING });
@@ -104,17 +111,22 @@ class QuizMultipleChoiceComponent extends Component {
 
   @autobind
   renderChoices() {
+    const { numOfChoice, SingleChoiceValues } = this.state;
     const choices = [];
 
-    for (let i = 0; i < this.state.numOfChoice; i += 1) {
+    for (let i = 0; i < numOfChoice; i += 1) {
+      const { choiceTextValue } = SingleChoiceValues[i];
+
       choices.push(
         <QuizSingleChoiceComponent
           numberingKeyword={ NUMBERING_KEYWORD[i] }
           key={ i }
-          quizIndex={ i }
+          choiceIndex={ i }
+          choiceTextValue={ choiceTextValue }
           isChecked={ this.isCheckedQuizIndexSameWithIndex(i) }
           onCheckboxClick={ this.onCheckboxClick }
-          onChoiceInputChange={ this.onSingleChoiceInputChange } />
+          onChoiceInputChange={ this.onSingleChoiceInputChange }
+          onSingleChoiceDeleteBtnClick={ this.onSingleChoiceDeleteBtnClick }/>
       );
     }
 
@@ -260,6 +272,17 @@ class QuizMultipleChoiceComponent extends Component {
     }
 
     return null;
+  }
+
+  @autobind
+  onSingleChoiceDeleteBtnClick(indexOfChoice) {
+    const { SingleChoiceValues, numOfChoice } = this.state;
+    const updatedSingleChoicesValue = List(SingleChoiceValues).delete(indexOfChoice).toArray();
+    console.log(updatedSingleChoicesValue);
+    this.setState({
+      SingleChoiceValues: updatedSingleChoicesValue,
+      numOfChoice: numOfChoice - 1
+    });
   }
 }
 
