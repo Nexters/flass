@@ -22,8 +22,8 @@ class Root extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/signup" component={ this.signUp } />
-          <Route path="/signin" component={ this.signIn } />
+          //<Route path="/signup" component={ this.signUp } />
+          <Route path="/users/login" component={ this.signIn } />
         </Switch>
       </BrowserRouter>
     );
