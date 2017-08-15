@@ -43,7 +43,9 @@ class Comment extends Component {
       const commentItem = (<CommentItem
         key={ comment.id }
         userName={ comment.userName }
-        content={ content } />);
+        content={ content }
+        isReply={ comment.isReply }
+      />);
       return comment.isReply ?
         <ReplyComment component={ commentItem } /> : commentItem;
     });

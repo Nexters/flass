@@ -77,7 +77,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 3,
+      selected: 2,
       videoUrl: ''
     };
   }
