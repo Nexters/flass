@@ -13,7 +13,7 @@ const tokenPlugin = req => {
   if (token) {
     req.set('authorization', `Token ${token}`);
   }
-}
+};
 
 const config = {
   headers: {

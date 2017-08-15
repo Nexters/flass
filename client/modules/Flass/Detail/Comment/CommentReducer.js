@@ -3,7 +3,7 @@ import { FETCH_READY_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_ERROR,
   ADD_READY_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR } from './CommentActions';
 
 const initialState = {
-  comments: []
+  comments: [],
 };
 
 const CommentReducer = (state = initialState, action) => {

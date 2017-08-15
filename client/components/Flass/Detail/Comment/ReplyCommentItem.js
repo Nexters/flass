@@ -5,6 +5,7 @@ import color from '../../common/colors.scss';
 import Reply from './images/reply.png';
 
 const ReplayCommentView = styled.div`
+  padding-right: 15px;
   background-color: ${color['silver-two']};
 `;
 
