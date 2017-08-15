@@ -1,0 +1,2 @@
+module CommentChildrenHelper
+end
