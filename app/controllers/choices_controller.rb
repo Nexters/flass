@@ -3,15 +3,15 @@ class ChoicesController < ApplicationController
 
 
   api :GET, '/choices', '특정 Question에 대한 보기(선지)'
-  param :question_id, :number, :desc => "질문 ID", :required => true
+  param :question_id, :number, :desc => "질문 ID"
   def show
     @choices = Choice.where(question_id: params[:question_id])  
   end
 
 
   api :POST, '/choices', '특정 Question에 대한 선지 생성'
-  param :question_id, :number, :desc => "Question ID", :required => true
-  param :answer, String, :desc => "선지 내용", :required => true
+  param :question_id, :number, :desc => "Question ID"
+  param :answer, String, :desc => "선지 내용"
   def create
     @choice = Choice.new(choice_params)
  
@@ -24,7 +24,7 @@ class ChoicesController < ApplicationController
 
 
   api :GET, '/choices/edit', '특정 Question에 대한 선지 수정 페이지'
-  param :id, :number, :desc => "Choice ID", :required => true
+  param :id, :number, :desc => "Choice ID"
     def edit
       if @question.user_id == session[:user_id]
         render json: @choice, status: :ok
@@ -34,8 +34,8 @@ class ChoicesController < ApplicationController
     end
 
   api :PUT, '/choices', '특정 Question에 대한 선지 엡데이트'
-  param :id, :number, :desc => "Choice ID", :required => true
-  param :answer, String, :desc => "선지 내용", :required => true
+  param :id, :number, :desc => "Choice ID"
+  param :answer, String, :desc => "선지 내용"
   def update
     if @choice.update(choice_params)
       render json: @choice, status: :ok
@@ -45,7 +45,7 @@ class ChoicesController < ApplicationController
   end
 
   api :DELETE, '/choices', '특정 Question에 대한 선지 삭제'
-  param :id, :number, :desc => "Choice ID", :required => true
+  param :id, :number, :desc => "Choice ID"
   def destroy
     if @question.user_id == session[:user_id]
       @choice.destroy
@@ -66,3 +66,4 @@ class ChoicesController < ApplicationController
       params.require(:choice).permit(:question_id, :answer)
     end
 end
+ 
