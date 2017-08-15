@@ -1,6 +1,6 @@
 import fetch from 'axios';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
-import agent from '../../agent';
+import agent from '../../../agent';
 
 export const FETCH_QUESTION = 'FETCH_QUESTION';
 export const FETCH_READY_QUESTION = 'FETCH_READY_QUESTION';

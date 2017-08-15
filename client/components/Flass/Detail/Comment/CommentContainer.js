@@ -20,9 +20,10 @@ function mapDispatchToProps(dispatch) {
       });
     },
     fetchReplyComment,
-    addComment: (detailId, userId, userName, content) => {
+    addComment: (commentId, detailId, userId, userName, content) => {
       dispatch({
         type: ADD_COMMENT,
+        commentId,
         detailId,
         userId,
         userName,

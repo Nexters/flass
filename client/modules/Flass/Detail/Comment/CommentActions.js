@@ -1,6 +1,6 @@
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
-import agent from '../../agent';
+import agent from '../../../agent';
 
 export const FETCH_COMMENT = 'FETCH_COMMENT';
 export const FETCH_READY_COMMENT = 'FETCH_READY_COMMENT';

@@ -50,9 +50,13 @@ const Bottom = styled.span`
 const propTypes = {
   userName: PropTypes.string.isRequired,
   content: PropTypes.object.isRequired,
-  isReply: PropTypes.bool.isRequired
+  isReply: PropTypes.bool.isRequired,
+  isSelectedReply: PropTypes.bool.isRequired,
+  onSelectedReply: PropTypes.func.isRequired,
 };
-const defaultProps = {};
+const defaultProps = {
+  isReply: false,
+};
 
 class CommentItem extends Component {
   constructor(props) {
@@ -61,10 +65,6 @@ class CommentItem extends Component {
       toggleMenu: true,
       toggleHeart: false
     };
-  }
-
-  handleReplyComment = () => {
-
   }
 
   handleToggleHeart = () => {
@@ -80,7 +80,7 @@ class CommentItem extends Component {
   componentDidMount() {}
 
   render() {
-    const { userName, content, isReply } = this.props;
+    const { userName, content, isReply, isSelectedReply, onSelectedReply } = this.props;
     const { toggleMenu, toggleHeart } = this.state;
 
     return (
@@ -98,7 +98,7 @@ class CommentItem extends Component {
           {content}
         </Content>
         <Bottom>
-          2017.07.23 {!isReply && <a>답글 보기</a>}
+          2017.07.23 {!isReply && <a onClick={ onSelectedReply }>{ isSelectedReply ? '답글 닫기' : '답글 보기' }</a>}
         </Bottom>
       </DetailCommentItem>
     );
