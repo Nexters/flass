@@ -11,11 +11,10 @@ import normalizePostComment from './normalizePostComment';
 import color from '../../common/colors.scss';
 import './PostComment.scss';
 
-const DetailForm = styled(Form)`
-  
-`;
+const DetailForm = styled(Form)``;
 
 const DetailPostComment = styled.div`
+  padding: 5px;
   border-radius: 3px;
   background-color: ${color['white']};
   box-shadow: 3px 4px 10px 0 rgba(79, 79, 79, 0.15);
@@ -37,12 +36,13 @@ const TextArea = styled(FormControl)`
 `;
 
 const Bottom = styled.div`
-  height: 32px;
+  height: 45px;
 `;
 
 const BtnPostComment = styled.button`
-  margin-top: 5px;
-  padding: 4px 20px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  padding: 6px 20px;
   color: ${color['light-navy']};
   border-radius: 100px;
   background-color: ${color['white']};
@@ -103,7 +103,7 @@ class PostComment extends Component {
           />
         </DetailPostComment>
         <Bottom>
-          <BtnPostComment type="submit">등록</BtnPostComment>
+          <BtnPostComment type="submit">질문 등록</BtnPostComment>
         </Bottom>
       </DetailForm>
     );

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import color from '../../common/colors.scss';
@@ -6,6 +6,7 @@ import './CommentItem.scss';
 import Heart from './images/heart.png';
 import HeartActive from './images/heart-active.png';
 import Menu from './images/menu.png';
+import MenuActive from './images/menu-active.png';
 import CommentItemMenu from './CommentItemMenu';
 
 const DetailCommentItem = styled.div`
@@ -19,6 +20,7 @@ const UserName = styled.span`
 `;
 
 const CommentMenu = styled.span`
+  width: 55px;
   float: right;
 `;
 
@@ -47,7 +49,8 @@ const Bottom = styled.span`
 
 const propTypes = {
   userName: PropTypes.string.isRequired,
-  content: PropTypes.object.isRequired
+  content: PropTypes.object.isRequired,
+  isReply: PropTypes.bool.isRequired
 };
 const defaultProps = {};
 
@@ -55,7 +58,8 @@ class CommentItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggleContentMenu: false,
+      toggleMenu: true,
+      toggleHeart: false
     };
   }
 
@@ -63,28 +67,38 @@ class CommentItem extends Component {
 
   }
 
+  handleToggleHeart = () => {
+    const { toggleHeart } = this.state;
+    this.setState({ toggleHeart: !toggleHeart });
+  }
+
+  handleToggleMenu = () => {
+    const { toggleMenu } = this.state;
+    this.setState({ toggleMenu: !toggleMenu });
+  }
+
   componentDidMount() {}
 
   render() {
-    const { userName, content } = this.props;
-    const { toggleContentMenu } = this.state;
+    const { userName, content, isReply } = this.props;
+    const { toggleMenu, toggleHeart } = this.state;
 
     return (
       <DetailCommentItem>
         <div>
           <UserName>{userName}</UserName>
           <CommentMenu className="flass-comment-item-float-box">
-            <HeartIcon alt="like" src={ Heart } />
+            <HeartIcon alt="like" src={ toggleHeart ? HeartActive : Heart } onClick={ this.handleToggleHeart } />
             11
-            <MenuIcon alt="menu" src={ Menu } />
-            <CommentItemMenu />
+            <MenuIcon alt="menu" src={ toggleMenu ? MenuActive : Menu } onClick={ this.handleToggleMenu } />
+            {toggleMenu && <CommentItemMenu />}
           </CommentMenu>
         </div>
         <Content>
           {content}
         </Content>
         <Bottom>
-          2017.07.23 | <a>답글 보기</a>
+          2017.07.23 {!isReply && <a>답글 보기</a>}
         </Bottom>
       </DetailCommentItem>
     );
