@@ -278,7 +278,7 @@ class QuizMultipleChoiceComponent extends Component {
   onSingleChoiceDeleteBtnClick(indexOfChoice) {
     const { SingleChoiceValues, numOfChoice } = this.state;
     const updatedSingleChoicesValue = List(SingleChoiceValues).delete(indexOfChoice).toArray();
-    console.log(updatedSingleChoicesValue);
+
     this.setState({
       SingleChoiceValues: updatedSingleChoicesValue,
       numOfChoice: numOfChoice - 1

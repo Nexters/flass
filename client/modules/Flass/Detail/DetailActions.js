@@ -1,5 +1,5 @@
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
-import agent from '../agent';
+import agent from '../../agent';
 
 import { FETCH_COMMENT } from './Comment/CommentActions';
 import { FETCH_QUESTION } from './Question/QuestionActions';
