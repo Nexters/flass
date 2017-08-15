@@ -6,7 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import './SignApp.scss';
 import Intro from './Intro/Intro';
-import FlassAppBar from '../Flass/FlassAppBar/FlassAppBar';
+import FlassAppBar from '../Flass/AppBar/AppBar';
 
 const signTheme = getMuiTheme({
   palette: {

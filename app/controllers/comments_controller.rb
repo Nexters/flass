@@ -1,17 +1,25 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:like, :edit, :update, :destroy]
 
-  api :GET, '/comments', '특정 lecture에 대한 댓글'
-  param :lecture_id, :number, :desc => "강의 ID", :required => true
+  api :GET, '/comments', '특정 lecture에 대한 댓글과 대댓글'
+  param :lecture_id, :number, :desc => "강의 ID"
   def show
+    @ret = Hash.new
     @comments = Comment.where(lecture_id: params[:lecture_id]).paginate(page: params[:page], per_page:20)
-    render json: @comment, status: :ok
+    @ret[:comments] = @comments
+
+    @ret['commentchild'] = Hash.new
+    @comments.each do |comment|
+      @ret['commentchild'][comment.id] = CommentChild.where(comment_id: comment.id)
+    end
+
+    render json: @ret
   end
 
 
   api :POST, '/comments', '특정 lecture에 대한 댓글 생성'
-  param :lecture_id, :number, :desc => "강의 ID", :required => true
-  param :content, String, :desc => "댓글 내용", :required => true
+  param :lecture_id, :number, :desc => "강의 ID"
+  param :content, String, :desc => "댓글 내용"
   def create
     @comment = Comment.new(comment_params)
 
@@ -23,7 +31,7 @@ class CommentsController < ApplicationController
   end
 
   api :GET, '/comments/edit', '댓글 수정 페이지'
-  param :id, :number, :desc => "Comment ID", :required => true
+  param :id, :number, :desc => "Comment ID"
     def edit
       if @comment.user_id == session[:user_id]
         render json: @comment, status: :ok
@@ -34,8 +42,8 @@ class CommentsController < ApplicationController
 
   # PATCH/PUT /comments.json
   api :PUT, '/comments', '특정 lecture에 대한 댓글 수정'
-  param :id, :number, :desc => "Comment ID", :required => true
-  param :content, String, :desc => "댓글 내용", :required => true
+  param :id, :number, :desc => "Comment ID"
+  param :content, String, :desc => "댓글 내용"
   def update
     if @comment.update(comment_params)
       render json: @comment, status: :ok
@@ -46,7 +54,7 @@ class CommentsController < ApplicationController
 
 
   api :DELETE, '/comments', '특정 lecture에 대한 댓글 삭제'
-  param :id, :number, :desc => "Comment ID", :required => true
+  param :id, :number, :desc => "Comment ID"
   def destroy
     if @comment.user_id == session[:user_id]
       @comment.destroy
@@ -57,6 +65,7 @@ class CommentsController < ApplicationController
   end
 
   api :PUT, '/comments/:id/like'
+  param :id, :number, :desc => "Comment ID"
   def like
     user = session[:user_id]
     if user
@@ -82,6 +91,7 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
+      params[:user_id] = session[:user_id]
       params.require(:comment).permit(:user_id, :lecture_id, :content)
     end
 end

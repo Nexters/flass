@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
-import FlassContentTitleComponent from '../../Flass/FlassContentTitle/FlassContentTitleComponent';
+import FlassContentTitleComponent from '../../Flass/ContentTitle/ContentTitleComponent';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
 

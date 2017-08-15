@@ -28,7 +28,7 @@ import {
 } from './VideoStyled';
 
 // 팝업 테스트를 위한 더미 action
-import * as actions from '../../../../modules/Flass/FlassDetail/Video/VideoActions';
+import * as actions from '../../../../modules/Flass/Detail/Video/VideoActions';
 
 import PlayBtnIcon from '../../../../../public/icons/play_btn.png';
 import PauseBtnIcon from '../../../../../public/icons/pause@2x.png';

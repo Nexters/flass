@@ -1,10 +1,10 @@
 import { call, fork, take, select, put, cancel } from 'redux-saga/effects';
-import flassUser from './FlassUser/FlassUserActions';
-import flassBadge from './FlassBadge/FlassBadgeActions';
-import flassGrid from './FlassGrid/FlassGridActions';
-import flassDetail from './FlassDetail/FlassDetailActions';
-import flassComment from './FlassDetail/Comment/CommentActions';
-import flassQuestion from './FlassDetail/Question/QuestionActions';
+import flassUser from './User/UserActions';
+import flassBadge from './Badge/BadgeActions';
+import flassGrid from './Grid/GridActions';
+import flassDetail from './Detail/DetailActions';
+import flassComment from './Detail/Comment/CommentActions';
+import flassQuestion from './Detail/Question/QuestionActions';
 
 export default function* rootSaga() {
   yield [

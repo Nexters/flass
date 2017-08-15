@@ -23,7 +23,7 @@ class Root extends Component {
       <BrowserRouter>
         <Switch>
           <Route path="/signup" component={ this.signUp } />
-          <Route path="/signin" component={ this.signIn } />
+          <Route path="/users/login" component={ this.signIn } />
         </Switch>
       </BrowserRouter>
     );
