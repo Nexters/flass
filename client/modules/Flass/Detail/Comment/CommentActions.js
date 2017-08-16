@@ -41,7 +41,6 @@ function* addComment({ detailId, userId, userName, content }) {
       content
     }
   });
-
   try {
     const res = yield call(agent.Comment.postComment, detailId, content);
     yield put({
@@ -52,10 +51,32 @@ function* addComment({ detailId, userId, userName, content }) {
   } catch (err) {
     yield put({
       type: ADD_COMMENT_ERROR,
-      message: err.message
+      message: err.message,
+      id: commentId,
     });
   }
 }
+
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const DELETE_READY_COMMENT = 'DELETE_READY_COMMENT';
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
+export const DELETE_COMMENT_ERROR = 'DELETE_COMMENT_ERROR';
+
+function* deleteComment({ commentId }) {
+  try {
+    yield call(agent.Comment.deleteById, commentId);
+    yield put({
+      type: DELETE_COMMENT_SUCCESS,
+      id: commentId,
+    });
+  } catch (err) {
+    yield put({
+      type: DELETE_COMMENT_ERROR,
+      message: err.message,
+    });
+  }
+}
+
 
 export const FETCH_REPLY_COMMENT = 'FETCH_REPLY_COMMENT';
 
@@ -69,4 +90,5 @@ function fetchReplyComment(commentId) {
 export default function* rootSaga() {
   yield takeLatest(FETCH_COMMENT, fetchComment);
   yield takeLatest(ADD_COMMENT, addComment);
+  yield takeLatest(DELETE_COMMENT, deleteComment);
 }

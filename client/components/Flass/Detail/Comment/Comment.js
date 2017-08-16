@@ -28,7 +28,8 @@ const propTypes = {
     email: PropTypes.string.isRequired
   }).isRequired,
   fetchComment: PropTypes.func.isRequired,
-  addComment: PropTypes.func.isRequired
+  addComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
 };
 const defaultProps = {};
 
@@ -58,10 +59,11 @@ class Comment extends Component {
     fetchComment(detailId);
   }
 
-  renderPostComment = (name, commentId) => {
+  renderPostComment = (form, name, commentId) => {
     const { detailId, user, addComment } = this.props;
 
     return (<PostComment
+      form={ form }
       detailId={ detailId }
       name={ name }
       user={ user }
@@ -69,22 +71,28 @@ class Comment extends Component {
   }
 
   renderComment = (comment, index, isReply = false) => {
+    const { deleteComment } = this.props;
     const { selectedReply } = this.state;
+
     const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
     return (<CommentItem
       key={ `comment${comment.id}` }
+      id={ comment.id }
       userName={ comment.userName }
       content={ content }
       isReply={ isReply }
       isSelectedReply={ selectedReply === index }
-      onSelectedReply={ _.partial(this.handleSelectedReply, index) } />);
+      onSelectedReply={ _.partial(this.handleSelectedReply, index) }
+      onDelete={ deleteComment }
+    />);
   };
 
   renderReply = comment => {
     if (!comment) {
       return [];
     }
-    const replyPostComments = [<ReplyPostComment component={ this.renderPostComment('답글 등록', comment.id) } />];
+    const replyPostComments = [<ReplyPostComment
+      component={ this.renderPostComment('replyPostComment', '답글 등록', comment.id) } />];
     return _.map(comment.replyComments,
       ((comment, index) => {
         const commentView = this.renderComment(comment, index, true);
@@ -106,7 +114,7 @@ class Comment extends Component {
   render() {
     return (
       <DetailComment>
-        {this.renderPostComment('질문 등록')}
+        {this.renderPostComment('postComment', '질문 등록')}
         <Divider />
         {this.renderChild()}
       </DetailComment>

@@ -61,6 +61,7 @@ const propTypes = {
   }).isRequired,
   addComment: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
 const defaultProps = {};
@@ -71,9 +72,10 @@ class PostComment extends Component {
   }
 
   submit = ({ content }) => {
-    const { detailId, user, addComment } = this.props;
+    const { detailId, user, addComment, reset } = this.props;
     console.log(detailId, user, addComment);
     addComment(detailId, user.id, user.userName, content);
+    reset();
   };
 
   renderTextArea({ input, meta: { touched, error }, id, label, userName, ...props }) {

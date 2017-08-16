@@ -9,7 +9,7 @@ export const FETCH_READY_DETAIL = 'FETCH_READY_DETAIL';
 export const FETCH_DETAIL_SUCCESS = 'FETCH_DETAIL_SUCCESS';
 export const FETCH_DETAIL_ERROR = 'FETCH_DETAIL_ERROR';
 
-function* fetchDetailAll({ detailId }) {
+export function* fetchDetailAll({ detailId }) {
   yield put({ type: FETCH_READY_DETAIL });
 
   try {
