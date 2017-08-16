@@ -19,10 +19,11 @@ class UsersController < ApplicationController
   param :test_token, String, '테스트용 token 값(nil만 아니면 인증됨, nil일 경우 에러메시지)'
   def create
     test = params[:test_token]
+    puts test
     if test.nil?
       render json: {message: "유효하지 않은 토큰값입니다."}, status: :unauthorized
     else
-      @user = User.find(6)
+      @user = User.find(21)
       session[:user_id] = @user.id
       render json: @user, status: :ok
     end
