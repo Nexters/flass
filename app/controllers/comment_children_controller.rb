@@ -1,8 +1,11 @@
 class CommentChildrenController < ApplicationController
+  before_action :login_check
+  before_action :set_commentchild, only: [:edit, :update, :destroy]
+
 
   api :POST, '/commentchild', '특정 comment에 대한 대댓글 생성'
   param :comment_id, :number, :desc => "Comment ID"
-  param :content, String, :desc => "댓글 내용"
+  param :content, String, :desc => "대댓글 내용"
   def create
     @commentchild = CommentChild.new(commentchild_params)
 
@@ -49,7 +52,7 @@ class CommentChildrenController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_comment
+    def set_commentchild
       @commentchild = CommentChild.find(params[:id])
     end
 

@@ -51,7 +51,6 @@ const Grid = {
 
 const Detail = {
   byId: detailId => requests.get('/json/FlassDetail.json'),
-
 };
 
 const Question = {
@@ -60,8 +59,8 @@ const Question = {
 
 const Comment = {
   byDetailId: detailId => requests.get('/json/FlassComment.json'),
-  postComment: (detailId, content) => requests.post('/json/FlassPostComment.json', { detailId, content }),
-
+  postComment: (detailId, content) => requests.get('/json/FlassPostComment.json', { detailId, content }),
+  deleteById: commentId => requests.del(''),
 };
 
 const Analysis = {

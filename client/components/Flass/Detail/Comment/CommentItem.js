@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import styled from 'styled-components';
 import color from '../../common/colors.scss';
 import './CommentItem.scss';
@@ -48,14 +49,16 @@ const Bottom = styled.span`
 `;
 
 const propTypes = {
+  id: PropTypes.number.isRequired,
   userName: PropTypes.string.isRequired,
   content: PropTypes.object.isRequired,
   isReply: PropTypes.bool.isRequired,
   isSelectedReply: PropTypes.bool.isRequired,
   onSelectedReply: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 const defaultProps = {
-  isReply: false,
+  isReply: false
 };
 
 class CommentItem extends Component {
@@ -80,7 +83,7 @@ class CommentItem extends Component {
   componentDidMount() {}
 
   render() {
-    const { userName, content, isReply, isSelectedReply, onSelectedReply } = this.props;
+    const { id, userName, content, isReply, isSelectedReply, onSelectedReply, onDelete } = this.props;
     const { toggleMenu, toggleHeart } = this.state;
 
     return (
@@ -91,7 +94,8 @@ class CommentItem extends Component {
             <HeartIcon alt="like" src={ toggleHeart ? HeartActive : Heart } onClick={ this.handleToggleHeart } />
             11
             <MenuIcon alt="menu" src={ toggleMenu ? MenuActive : Menu } onClick={ this.handleToggleMenu } />
-            {toggleMenu && <CommentItemMenu />}
+            {toggleMenu && <CommentItemMenu
+              onDelete={ _.partial(onDelete, id) } />}
           </CommentMenu>
         </div>
         <Content>

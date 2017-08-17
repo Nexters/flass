@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :login_check
   before_action :set_comment, only: [:like, :edit, :update, :destroy]
 
   api :GET, '/comments', '특정 lecture에 대한 댓글과 대댓글'
