@@ -6,3 +6,4 @@ export * from './VideoTimePanel/VideoTimePanelComponent';
 export * from './VideoCustomProgressBar/VideoCustomProgressBarComponent';
 export * from './VideoControllerWrapper/VideoControllerWrapperComponent';
 export * from './VideoModal/VideoModalComponent';
+export * from './VideoEndedPage/VideoEndedPageComponent';

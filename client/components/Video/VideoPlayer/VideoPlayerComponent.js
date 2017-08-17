@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import classNames from 'classnames';
+import autobind from 'autobind-decorator';
+
+import { VideoPlayer } from './VideoPlayerStyled';
+import './VideoPlayerStyles.scss';
 
 const { func, string, number, bool, object, oneOfType, arrayOf } = PropTypes;
 
 const propTypes = {
   onProgress: func.isRequired,
   onDuration: func.isRequired,
+  onEnded: func.isRequired,
   setPlayer: func.isRequired,
   url: string,
   playing: bool,
@@ -29,8 +34,6 @@ const defaultProps = {
 class VideoPlayerComponent extends Component {
   render() {
     const {
-      VideoPlayerWrapperClassName,
-      VideoPlayerClassName,
       onProgress,
       onDuration,
       setPlayer,
@@ -42,10 +45,10 @@ class VideoPlayerComponent extends Component {
     } = this.props;
 
     return (
-      <div className={ classNames(VideoPlayerWrapperClassName) }>
+      <VideoPlayer.Wrapper>
         <ReactPlayer
           ref={ player => setPlayer(player) }
-          className={ classNames('react-player', VideoPlayerClassName) }
+          className={ classNames('react-player', 'player') }
           width="100%"
           height="100%"
           url={ url }
@@ -53,16 +56,17 @@ class VideoPlayerComponent extends Component {
           playbackRate={ playbackRate }
           volume={ volume }
           youtubeConfig={ youtubeConfig }
-          onReady={ () => console.log('onReady') }
-          onStart={ () => console.log('onStart') }
-          onPlay={ () => this.setState({ playing: true }) }
-          onPause={ () => this.setState({ playing: false }) }
-          onEnded={ () => this.setState({ playing: false }) }
+          onEnded={ this.onEnded }
           onError={ e => console.log('onError', e) }
           onProgress={ onProgress }
           onDuration={ onDuration } />
-      </div>
+      </VideoPlayer.Wrapper>
     );
+  }
+
+  @autobind
+  onEnded() {
+    this.props.onEnded();
   }
 }
 

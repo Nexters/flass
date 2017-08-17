@@ -1,8 +1,7 @@
+import _ from 'lodash';
 import { List } from 'immutable';
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import screenfull from 'screenfull';
@@ -15,7 +14,8 @@ import {
   VideoCustomProgressBarComponent,
   VideoControllerWrapperComponent,
   VideoModalComponent,
-  VideoControllerAndBarWrapperComponent
+  VideoControllerAndBarWrapperComponent,
+  VideoEndedPageComponent
 } from '../../../Video';
 
 import {
@@ -24,7 +24,8 @@ import {
 } from '../../../Video/VideoUtils';
 
 import {
-  FlassDetailVideo
+  FlassDetailVideo,
+  ReplayBtn
 } from './VideoStyled';
 
 // 팝업 테스트를 위한 더미 action
@@ -36,11 +37,9 @@ import VolumeOnBtnIcon from '../../../../../public/icons/speak_btn.png';
 import VolumeOffBtnIcon from '../../../../../public/icons/non-speak@2x.png';
 import FullscreenBtnIcon from '../../../../../public/icons/view_btn.png';
 
-const { string, oneOfType, arrayOf, func, number, object } = PropTypes;
+const { string, oneOfType, arrayOf, func, number, object, array, shape } = PropTypes;
 
 const propTypes = {
-  VideoPlayerWrapperClassName: oneOfType([string, arrayOf(string)]),
-  VideoPlayerClassName: oneOfType([string, arrayOf(string)]),
   VideoBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
@@ -51,15 +50,20 @@ const propTypes = {
   VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
 
-  flassDetailSolvedOneQuestion: func.isRequired,
+  updateStateAfterSolveQuestion: func.isRequired,
+
   videoUrl: string,
-  questions: object.isRequired
+  questions: shape({
+    id: number,
+    content: string,
+    title: string,
+    questionAt: string,
+    secsStateOfQuestions: array,
+    textStateOfQuestions: array
+  }).isRequired
 };
 
 const defaultProps = {
-  VideoContainerClassName: '',
-  VideoPlayerWrapperClassName: '',
-  VideoPlayerClassName: '',
   VideoControllerBarClassName: '',
   VideoBarClassName: '',
   VideoPlayedBarClassName: '',
@@ -88,6 +92,7 @@ class Video extends Component {
       duration: 0,
       playbackRate: 1.0,
       isMute: false,
+      isEnded: false,
       volumeBeforeMute: 0,
       isVolumeBtnMouseOver: false,
       isQuizSecs: false,
@@ -100,18 +105,15 @@ class Video extends Component {
       playing,
       volume,
       isMute,
+      isEnded,
       isVolumeBtnMouseOver,
       played,
       loaded,
       duration,
       playbackRate,
-      youtubeConfig,
-      isQuizSecs,
-      indexOfQuestion
+      isQuizSecs
     } = this.state;
     const {
-      VideoPlayerWrapperClassName,
-      VideoPlayerClassName,
       VideoBarClassName,
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
@@ -124,16 +126,13 @@ class Video extends Component {
 
       videoUrl,
       questions: {
-        secsStateOfQuestions,
-        textStateOfQuestions
+        secsStateOfQuestions
       }
     } = this.props;
 
     return (
       <FlassDetailVideo.Container>
         <VideoPlayerComponent
-          VideoPlayerWrapperClassName={ VideoPlayerWrapperClassName }
-          VideoPlayerClassName={ VideoPlayerClassName }
           url={ videoUrl }
           playing={ playing }
           volume={ volume }
@@ -141,18 +140,16 @@ class Video extends Component {
           loaded={ loaded }
           duration={ duration }
           playbackRate={ playbackRate }
-          youtubeConfig={ youtubeConfig }
           onProgress={ this.onProgress }
           onDuration={ this.onDuration }
+          onEnded={ this.onEnded }
           setPlayer={ this.setPlayer } />
+        {
+          this.renderEndedPage(isEnded)
+        }
 
         {
-          isQuizSecs ?
-            <VideoModalComponent
-              onQuestionSolved={ this.onQuestionSolved }
-              textStateOfQuestions={ textStateOfQuestions }
-              indexOfQuestion={ indexOfQuestion } /> :
-            null
+          this.renderQuestionModal(isQuizSecs)
         }
 
         <FlassDetailVideo.ControllerBar>
@@ -213,6 +210,28 @@ class Video extends Component {
   }
 
   @autobind
+  renderEndedPage(isEnded) {
+    return isEnded ?
+      <VideoEndedPageComponent
+        onReplayBtnClick={ this.onReplayBtnClick } /> :
+      null;
+  }
+  @autobind
+  renderQuestionModal(isQuizSecs) {
+    const { indexOfQuestion } = this.state;
+    const { questions: { textStateOfQuestions } } = this.props;
+
+    return (
+      isQuizSecs ?
+        <VideoModalComponent
+          onQuestionSolved={ this.onQuestionSolved }
+          textStateOfQuestions={ textStateOfQuestions }
+          indexOfQuestion={ indexOfQuestion } /> :
+        null
+    );
+  }
+
+  @autobind
   setPlayer(player) {
     this.player = player;
   }
@@ -227,6 +246,11 @@ class Video extends Component {
     if (!this.state.seeking) {
       this.setState(state);
     }
+  }
+
+  @autobind
+  onEnded() {
+    this.setState({ isEnded: true, playing: false });
   }
 
   @autobind
@@ -311,6 +335,10 @@ class Video extends Component {
   }
 
   isEqlQuizSecsWithPlayedSecs(playedSecs, quizSecsArray) {
+    if (!quizSecsArray) {
+      return false;
+    }
+
     return quizSecsArray
       .filter(({ playedSeconds }) => playedSeconds === playedSecs)
       .length !== 0;
@@ -333,26 +361,26 @@ class Video extends Component {
     const solvedSecs = convertPercentageToSecs(played, duration);
     const secsAddOneFromSolvedSecs = solvedSecs + 1;
     const changedPlayedPercentage = convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
+
     this.setState({ isQuizSecs: false, playing: true, played: changedPlayedPercentage });
     this.player.seekTo(changedPlayedPercentage);
-    this.props.flassDetailSolvedOneQuestion({ indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer });
+    this.props.updateStateAfterSolveQuestion({
+      indexOfQuestion,
+      isCorrect,
+      indexOfSelectedChoice,
+      indexOfAnswer,
+      searchableSecs: secsAddOneFromSolvedSecs
+    });
   }
 
+  @autobind
+  onReplayBtnClick() {
+    this.setState({ played: 0, playing: true, isEnded: false });
+    this.player.seekTo(0);
+  }
 }
 
 Video.propTypes = propTypes;
 Video.defaultProps = defaultProps;
 
-function mapStateToProps(state) {
-  const { quiz: { quizTimeArrayForPopupTest } } = state;
-  return { quizTimeArrayForPopupTest };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actions, dispatch);
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Video);
+export default Video;

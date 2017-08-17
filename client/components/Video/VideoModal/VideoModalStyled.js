@@ -14,12 +14,14 @@ export const VideoModal = {
   Container: styled.div`
     position: absolute;
     top: 0;
-    width: 100%;
+    width: ${props => (props.isOpen ? '100%' : 0)};
     padding: 50px 0;
-    height: ${$playerHeight};
-    z-index: 10;
+    height: ${props => (props.isOpen ? $playerHeight : 0)};
+    opacity: ${props => (props.isOpen ? 1 : 0)};
+    z-index: ${props => (props.isOpen ? 10 : -10)};
     background-color: rgba(0, 0, 0, .5);
     border-radius: 3px;
+    transition: opacity .5s ease-out;
   `,
   Inner: styled.div`
     width: 900px;
@@ -29,8 +31,10 @@ export const VideoModal = {
     color: black;
     z-index: 20;
     animation: ${showEaseOut} 1s ease-out;
-    box-shadow: 3px 4px 20px 0 ${props => isSolvedAndCorrect(props)};
-    border: solid 1.5px ${props => isSolvedAndCorrect(props)};
+    box-shadow: 3px 4px 20px 0 ${props => selectBorderColor(props)};
+    border: solid 1.5px ${props => selectBorderColor(props)};
+
+    transition: border 1s ease-out, box-shadow 1s ease-out;
   `,
   ContentWrapper: styled.div`
     position: relative;
@@ -68,16 +72,18 @@ export const VideoModal = {
     display: inline-block;
     width: 110px;
     height: 51px;
-    border: solid 1.5px ${props => isSolvedAndCorrect(props)};
+    border: solid 1.5px ${props => selectBtnColor(props)};
     border-radius: 100px;
     text-align: center;
     text-decoration: none;
     font-size: 2rem;
-    color: ${props => isSolvedAndCorrect(props)};
-    cursor: pointer;
+    color: ${props => selectBtnColor(props)};
+    cursor: ${props => (props.selected ? 'pointer' : 'default')};
 
     float: ${props => (props.right ? 'right' : 'none')};
     margin-left: ${props => (props.right ? '15px' : '0')};
+
+    transition: color 1s ease-out, border 1s ease-out;
   `
 };
 function selectColor({ color }) {
@@ -89,12 +95,28 @@ function selectColor({ color }) {
   }
 }
 
-function isSolvedAndCorrect({ isSolved, isCorrect }) {
-  if (isSolved && !isCorrect) {
+function selectBtnColor({ isSolved, selected, isCorrect }) {
+  if (!selected) {
+    return $FlassGrayColor;
+  }
+
+  if (isSolvedAndCorrect({ isSolved, isCorrect })) {
     return $WrongRedColor;
   }
 
   return $NormalGreenColor;
+}
+
+function selectBorderColor({ isSolved, isCorrect }) {
+  if (isSolvedAndCorrect({ isSolved, isCorrect })) {
+    return $WrongRedColor;
+  }
+
+  return $NormalGreenColor;
+}
+
+function isSolvedAndCorrect({ isSolved, isCorrect }) {
+  return isSolved && !isCorrect;
 }
 
 const showEaseOut = keyframes`
