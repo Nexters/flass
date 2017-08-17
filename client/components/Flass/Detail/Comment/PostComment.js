@@ -53,6 +53,7 @@ const BtnPostComment = styled.button`
 
 const propTypes = {
   detailId: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     userName: PropTypes.string.isRequired,
@@ -60,6 +61,7 @@ const propTypes = {
   }).isRequired,
   addComment: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
 const defaultProps = {};
@@ -70,9 +72,10 @@ class PostComment extends Component {
   }
 
   submit = ({ content }) => {
-    const { detailId, user, addComment } = this.props;
+    const { detailId, user, addComment, reset } = this.props;
     console.log(detailId, user, addComment);
     addComment(detailId, user.id, user.userName, content);
+    reset();
   };
 
   renderTextArea({ input, meta: { touched, error }, id, label, userName, ...props }) {
@@ -88,7 +91,7 @@ class PostComment extends Component {
   }
 
   render() {
-    const { user, handleSubmit } = this.props;
+    const { name, user, handleSubmit } = this.props;
     return (
       <DetailForm onSubmit={ handleSubmit(this.submit) }>
         <DetailPostComment>
@@ -103,7 +106,7 @@ class PostComment extends Component {
           />
         </DetailPostComment>
         <Bottom>
-          <BtnPostComment type="submit">질문 등록</BtnPostComment>
+          <BtnPostComment type="submit">{ name }</BtnPostComment>
         </Bottom>
       </DetailForm>
     );

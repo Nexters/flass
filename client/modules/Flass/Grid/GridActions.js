@@ -1,7 +1,7 @@
 import fetch from 'axios';
 import { takeEvery } from 'redux-saga';
 import { call, fork, take, select, put, cancel } from 'redux-saga/effects';
-import agent from '../agent';
+import agent from '../../agent';
 
 export const FETCH_MY_CHANNEL = 'FETCH_MY_CHANNEL';
 export const FETCH_READY_MY_CHANNEL = 'FETCH_READY_MY_CHANNEL';

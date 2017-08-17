@@ -16,6 +16,23 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   api :POST, '/users', '회원 정보 생성 및 업데이트하기'
+  param :test_token, String, '테스트용 token 값(nil만 아니면 인증됨, nil일 경우 에러메시지)'
+  def create
+    test = params[:test_token]
+    puts test
+    if test.nil?
+      render json: {message: "유효하지 않은 토큰값입니다."}, status: :unauthorized
+    else
+      @user = User.find(21)
+      session[:user_id] = @user.id
+      render json: @user, status: :ok
+    end
+  end
+
+=begin
+  # POST /users
+  # POST /users.json
+  api :POST, '/users', '회원 정보 생성 및 업데이트하기'
   param :id_token, String, '구글 발급용 id_token 값'
   def create
     uri = URI("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=#{params[:id_token]}")
@@ -47,6 +64,7 @@ class UsersController < ApplicationController
       end
     end
   end
+=end
 
   def login
   end

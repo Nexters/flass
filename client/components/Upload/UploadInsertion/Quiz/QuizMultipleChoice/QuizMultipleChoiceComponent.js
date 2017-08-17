@@ -7,10 +7,9 @@ import autobind from 'autobind-decorator';
 
 import QuizSingleChoiceComponent from './QuizSingleChoice/QuizSingleChoiceComponent';
 
-import AddQuizIcon from './icons/add_circle_outline_black_24dp.png';
+import AddQuizIcon from './icons/invalid-name@2x.png';
 
-import './QuizMultipleChoiceComponentStyles.scss';
-
+import { QuizMultipleChoice } from './QuizMultipleChoiceStyled';
 
 const { func, number } = PropTypes;
 const propTypes = {
@@ -23,6 +22,7 @@ const propTypes = {
 };
 const defaultProps = {};
 const NUMBERING_KEYWORD = ['첫 번째', '두 번째', '세 번째', '네 번째'];
+const MAX_NUM_OF_CHOICES = 4;
 const COMPONENT_INITIAL_STATE = {
   numOfChoice: 1,
   checkedQuizIndex: -1,
@@ -44,8 +44,8 @@ class QuizMultipleChoiceComponent extends Component {
 
   render() {
     const {
-      isTitleInputDirty,
-      TitleInputValue
+      TitleInputValue,
+      numOfChoice
     } = this.state;
 
     const {
@@ -53,51 +53,48 @@ class QuizMultipleChoiceComponent extends Component {
     } = this.props;
 
     return (
-      <div className="quiz-multiple-choice">
-        <div className="quiz-multiple-choice__header">
-          <span className="quiz-multiple-choice__q-num">{`Q${numOfQuestion}`}</span>
-          <span>
-            <input
+      <QuizMultipleChoice.Wrapper>
+        <QuizMultipleChoice.Header>
+          <QuizMultipleChoice.QuestionNumber>
+            { this.renderQuestionNumber(numOfQuestion) }
+          </QuizMultipleChoice.QuestionNumber>
+
+          <QuizMultipleChoice.QuestionTitleWrapper>
+            <QuizMultipleChoice.QuestionTitle
               type="text"
-              className={ classNames(
-                'quiz-multiple-choice__q-title',
-                { 'quiz-multiple-choice__q-title--font-black': isTitleInputDirty }
-              ) }
               value={ TitleInputValue }
               onClick={ this.onTitleInputClick }
               onChange={ this.onTitleInputChange } />
-          </span>
-          <span onClick={ this.onAddChoiceBtnClick }>
-            <img
-              className="quiz-multiple-choice__q-add-btn"
-              srcSet={ AddQuizIcon }
-              alt="Add quiz button" />
-          </span>
-        </div>
+            <QuizMultipleChoice.underline />
+          </QuizMultipleChoice.QuestionTitleWrapper>
+        </QuizMultipleChoice.Header>
 
-        <div className="quiz-multiple-choice__body">
+        <QuizMultipleChoice.Body>
           { this.renderChoices() }
-        </div>
 
-        <div className="quiz-multiple-choice__footer">
-          <div
-            className={ classNames(
-              'quiz-multiple-choice__btn',
-              'quiz-multiple-choice__btn--right') }
+          { this.renderAddButton(numOfChoice) }
+        </QuizMultipleChoice.Body>
+
+        <QuizMultipleChoice.Footer>
+          <QuizMultipleChoice.Button
+            right
             onClick={ this.onRegisterBtnClick }>
             입력
-          </div>
-          <div
-            className={ classNames(
-              'quiz-multiple-choice__btn',
-              'quiz-multiple-choice__btn--gray',
-              'quiz-multiple-choice__btn--right') }
+          </QuizMultipleChoice.Button>
+          <QuizMultipleChoice.Button
+            right
+            gray
             onClick={ this.onCancelBtnClick }>
             삭제
-          </div>
-        </div>
-      </div>
+          </QuizMultipleChoice.Button>
+        </QuizMultipleChoice.Footer>
+      </QuizMultipleChoice.Wrapper>
     );
+  }
+
+  @autobind
+  renderQuestionNumber(indexOfQuestion) {
+    return `Q${indexOfQuestion}`;
   }
 
   @autobind
@@ -114,17 +111,22 @@ class QuizMultipleChoiceComponent extends Component {
 
   @autobind
   renderChoices() {
+    const { numOfChoice, SingleChoiceValues } = this.state;
     const choices = [];
 
-    for (let i = 0; i < this.state.numOfChoice; i += 1) {
+    for (let i = 0; i < numOfChoice; i += 1) {
+      const { choiceTextValue } = SingleChoiceValues[i];
+
       choices.push(
         <QuizSingleChoiceComponent
           numberingKeyword={ NUMBERING_KEYWORD[i] }
           key={ i }
-          quizIndex={ i }
+          choiceIndex={ i }
+          choiceTextValue={ choiceTextValue }
           isChecked={ this.isCheckedQuizIndexSameWithIndex(i) }
           onCheckboxClick={ this.onCheckboxClick }
-          onChoiceInputChange={ this.onSingleChoiceInputChange } />
+          onChoiceInputChange={ this.onSingleChoiceInputChange }
+          onSingleChoiceDeleteBtnClick={ this.onSingleChoiceDeleteBtnClick }/>
       );
     }
 
@@ -174,7 +176,7 @@ class QuizMultipleChoiceComponent extends Component {
   onAddChoiceBtnClick() {
     const { numOfChoice, SingleChoiceValues } = this.state;
 
-    if (this.state.numOfChoice < 4) {
+    if (this.state.numOfChoice < MAX_NUM_OF_CHOICES) {
       this.updateNumAndValuesOfChoice(numOfChoice, SingleChoiceValues);
     } else {
       alert('선택지 수는 4개를 넘을 수 없습니다.');
@@ -251,6 +253,36 @@ class QuizMultipleChoiceComponent extends Component {
 
   isCheckboxChecked() {
     return this.state.checkedQuizIndex !== -1;
+  }
+
+  @autobind
+  renderAddButton(numOfChoice) {
+    if (numOfChoice < MAX_NUM_OF_CHOICES) {
+      return (
+        <QuizMultipleChoice.AddButton>
+          <QuizMultipleChoice.Icon
+            onClick={ this.onAddChoiceBtnClick }
+            srcSet={ AddQuizIcon }
+            alt="Add quiz button" />
+          <QuizMultipleChoice.AddButtonText>
+            { `${NUMBERING_KEYWORD[numOfChoice]} 문항을 입력하세요.` }
+          </QuizMultipleChoice.AddButtonText>
+        </QuizMultipleChoice.AddButton>
+      );
+    }
+
+    return null;
+  }
+
+  @autobind
+  onSingleChoiceDeleteBtnClick(indexOfChoice) {
+    const { SingleChoiceValues, numOfChoice } = this.state;
+    const updatedSingleChoicesValue = List(SingleChoiceValues).delete(indexOfChoice).toArray();
+
+    this.setState({
+      SingleChoiceValues: updatedSingleChoicesValue,
+      numOfChoice: numOfChoice - 1
+    });
   }
 }
 

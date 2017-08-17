@@ -24,7 +24,9 @@ const Item = styled.li`
   border-bottom: 1px solid #eee;
 `;
 
-const propTypes = {};
+const propTypes = {
+  onDelete: PropTypes.func.isRequired,
+};
 
 const defaultProps = {};
 
@@ -32,11 +34,13 @@ class CommentItemMenu extends Component {
   componentDidMount() {}
 
   render() {
+    const { onDelete } = this.props;
+
     return (
       <CommentItemMenuView>
         <List>
           <Item>댓글 수정</Item>
-          <Item>댓글 삭제</Item>
+          <Item onClick={ onDelete }>댓글 삭제</Item>
         </List>
       </CommentItemMenuView>
     );
