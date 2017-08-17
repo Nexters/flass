@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import { FETCH_READY_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_ERROR,
   ADD_READY_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_ERROR } from './CommentActions';
+import { createReducer } from '../../../reduxHelper';
 
 const initialState = {
   comments: []
@@ -40,20 +41,10 @@ const removeCommentReducer = {
   [DELETE_COMMENT_ERROR]: (state, action) => state
 };
 
-function createReducer(initialState, handlers) {
-  return function reducer(state = initialState, action) {
-    if (handlers.hasOwnProperty(action.type)) {
-      return handlers[action.type](state, action);
-    } else {
-      return state;
-    }
-  };
-}
-
 const CommentReducer = createReducer(initialState, {
   ...fetchCommentReducer,
   ...addCommentReducer,
-  ...removeCommentReducer,
+  ...removeCommentReducer
 });
 
 export default CommentReducer;

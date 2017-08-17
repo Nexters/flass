@@ -18,6 +18,10 @@ const defaultProps = {
 
 class Grid extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     this.props.fetchRequestMyChannelItems();
   }

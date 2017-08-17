@@ -4,15 +4,17 @@ import FlassApp from './FlassApp';
 
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    ...state.flass.user
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchUser: (userId) => {
+    fetchUser: (token) => {
       dispatch({
         type: FETCH_USER,
-        userId,
+        token,
       });
     }
   };

@@ -20,6 +20,7 @@ const childContextTypes = {
   muiTheme: PropTypes.object.isRequired
 };
 const propTypes = {
+  id: PropTypes.number.isRequired,
   fetchUser: PropTypes.func.isRequired,
 };
 
@@ -35,12 +36,16 @@ const flassTheme = getMuiTheme({
 });
 
 class FlassApp extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   getChildContext() {
     return { muiTheme: getMuiTheme(baseTheme) };
   }
 
   componentDidMount() {
-    this.props.fetchUser('userId');
+    this.props.fetchUser('token');
   }
 
   renderContent() {
@@ -56,11 +61,13 @@ class FlassApp extends Component {
   }
 
   render() {
+    const { id } = this.props;
+
     return (
       <MuiThemeProvider muiTheme={ flassTheme }>
         <div>
           <Drawer />
-          <AppBar isLogin />
+          <AppBar isLogin={id !== -1} />
 
           <Content>
             <ContentWrapperComponent>
