@@ -1,9 +1,9 @@
-export const LOAD_VIDEO = 'flassdetail/load_video';
+export const FETCH_VIDEO = 'flassdetail/fetch_video';
 export const SOLVED_ONE_QUESTION = 'flassdetail/solved_one_question';
 
 export function flassDetailLoadVideo() {
   return {
-    type: LOAD_VIDEO
+    type: FETCH_VIDEO
   };
 }
 

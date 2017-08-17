@@ -32,14 +32,22 @@ class VideoModalComponent extends Component {
     this.state = {
       selectedChoiceIndex: -1,
       isSolved: false,
-      isCorrect: false
+      isCorrect: false,
+      isOpen: false
     };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ isOpen: true });
+    }, 50);
   }
 
   render() {
     const {
       isSolved,
-      isCorrect
+      isCorrect,
+      isOpen
     } = this.state;
 
     const {
@@ -54,7 +62,7 @@ class VideoModalComponent extends Component {
     } = textStateOfQuestions[indexOfQuestion];
 
     return (
-      <VideoModal.Container>
+      <VideoModal.Container isOpen={ isOpen }>
         <VideoModal.Inner
           isSolved={ isSolved }
           isCorrect={ isCorrect }>
@@ -78,7 +86,8 @@ class VideoModalComponent extends Component {
                 (
                   <VideoModal.Button
                     right
-                    onClick={ this.onClickSolveBtn }>
+                    onClick={ this.isChoicesSelected() ? this.onClickSolveBtn : null }
+                    selected={ this.isChoicesSelected() }>
                     확인
                   </VideoModal.Button>
                 ) :
@@ -87,7 +96,8 @@ class VideoModalComponent extends Component {
                     right
                     onClick={ this.onClickKeepGoingBtn }
                     isSolved={ isSolved }
-                    isCorrect={ isCorrect }>
+                    isCorrect={ isCorrect }
+                    selected={ this.isChoicesSelected() }>
                     이어보기
                   </VideoModal.Button>
                 )
@@ -148,7 +158,9 @@ class VideoModalComponent extends Component {
       isCorrect,
       selectedChoiceIndex
     } = this.state;
-    const { singleChoiceValues } = textStateOfQuestions[indexOfQuestion];
+    const {
+      singleChoiceValues
+    } = textStateOfQuestions[indexOfQuestion];
     const solvedQuestionState = {
       indexOfQuestion,
       isCorrect,
@@ -156,7 +168,13 @@ class VideoModalComponent extends Component {
       indexOfAnswer: List(singleChoiceValues).findKey(({ isAnswer }) => isAnswer)
     };
 
+    this.setState({ isOpen: false });
     this.props.onQuestionSolved(solvedQuestionState);
+  }
+
+  @autobind
+  isChoicesSelected() {
+    return this.state.selectedChoiceIndex !== -1;
   }
 }
 

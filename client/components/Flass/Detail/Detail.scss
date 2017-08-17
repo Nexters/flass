@@ -14,23 +14,6 @@ $playerWidth: 100%;
       height: $playerHeight;
       border-radius: 3px;
 
-      &__player-wrapper {
-        width: $playerWidth;
-        height: $playerHeight;
-        border-radius: 3px;
-      }
-
-      &__player {
-        &::after {
-          position: absolute;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          background-color: transparent;
-          content: ""
-        }
-      }
-
       &__modal {
         position: absolute;
         top: 0;
@@ -49,21 +32,6 @@ $playerWidth: 100%;
           z-index: 20;
           transition: background-color 1s ease-out;
           animation: move 1s ease-out;
-        }
-      }
-
-      &__controller-bar {
-        position: absolute;
-        width: $playerWidth;
-        height: $progressbarHeight;
-        top: $playerHeight - $progressbarHeight - 1px;
-        background-color: rgba(0, 0, 0, .32);
-
-        @include atPlayerLarge {
-          width: $playerWindowWidthAtLarge;
-          margin: 0 auto;
-          left: 0;
-          right: 0;
         }
       }
     }

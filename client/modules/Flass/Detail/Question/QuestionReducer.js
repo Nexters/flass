@@ -2,7 +2,7 @@ import { FETCH_READY_QUESTION, FETCH_QUESTION_SUCCESS, FETCH_QUESTION_ERROR } fr
 
 const initialState = {
   totalCount: 0,
-  questions: []
+  questions: {}
 };
 
 const QuestionReducer = (state = initialState, action) => {
