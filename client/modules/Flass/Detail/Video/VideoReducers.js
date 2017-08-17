@@ -1,36 +1,34 @@
 import _ from 'lodash';
 import {
+  createReducer
+} from '../../../reducerHelper';
+import {
   FETCH_VIDEO,
-  SOLVED_ONE_QUESTION
+  UPDATE_SEARCHABLE_SECS
 } from './VideoActions';
 
-const INITIAL_STATE = {
+const initialState = {
   videoUrl: '',
-  solvedQuestionsState: []
+  searchableSecs: 0
 };
 
-export default function(state = INITIAL_STATE, action) {
-  switch(action.type) {
-    case FETCH_VIDEO: {
-      console.log('HEY!');
-      return {
-        ...state,
-        videoUrl: 'https://www.youtube.com/watch?v=PTkKJI27NlE'
-      };
-    }
+const fetchVideoReducer = {
+  [FETCH_VIDEO]: (state, action) => ({
+    ...state,
+    videoUrl: 'https://www.youtube.com/watch?v=PTkKJI27NlE'
+  })
+};
 
-    case SOLVED_ONE_QUESTION: {
-      const { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer } = action.payload;
+const updateSearchableSecsReducer = {
+  [UPDATE_SEARCHABLE_SECS]: (state, { searchableSecs }) => ({
+    ...state,
+    searchableSecs
+  })
+};
 
-      return {
-        ...state,
-        solvedQuestionsState: _.concat(
-          state.solvedQuestionsState,
-          { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
-        )
-      };
-    }
-    default:
-      return state;
-  }
-}
+const VideoReducers = createReducer(initialState, {
+  ...fetchVideoReducer,
+  ...updateSearchableSecsReducer
+});
+
+export default VideoReducers;

@@ -50,9 +50,7 @@ const propTypes = {
   VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
 
-  flassDetailSolvedOneQuestion: func.isRequired,
-  flassDetailLoadVideo: func.isRequired,
-  fetchQuestion: func.isRequired,
+  updateStateAfterSolveQuestion: func.isRequired,
 
   videoUrl: string,
   questions: shape({
@@ -366,7 +364,13 @@ class Video extends Component {
 
     this.setState({ isQuizSecs: false, playing: true, played: changedPlayedPercentage });
     this.player.seekTo(changedPlayedPercentage);
-    this.props.flassDetailSolvedOneQuestion({ indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer });
+    this.props.updateStateAfterSolveQuestion({
+      indexOfQuestion,
+      isCorrect,
+      indexOfSelectedChoice,
+      indexOfAnswer,
+      searchableSecs: secsAddOneFromSolvedSecs
+    });
   }
 
   @autobind

@@ -1,15 +1,17 @@
 export const FETCH_VIDEO = 'flassdetail/fetch_video';
-export const SOLVED_ONE_QUESTION = 'flassdetail/solved_one_question';
 
-export function flassDetailLoadVideo() {
+export function fetchdVideo() {
   return {
     type: FETCH_VIDEO
   };
 }
 
-export function flassDetailSolvedOneQuestion({ indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }) {
+
+export const UPDATE_SEARCHABLE_SECS = 'UPDATE_SEARCHABLE_SECS';
+
+export function updateSearchableSecs({ searchableSecs }) {
   return {
-    type: SOLVED_ONE_QUESTION,
-    payload: { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
+    type: UPDATE_SEARCHABLE_SECS,
+    searchableSecs
   };
 }

@@ -37,6 +37,15 @@ export const addQuestion = question => dispatch => {
   .catch(err => dispatch(fetchQuestionError(err)));
 };
 
+export const UPDATE_SOLVED_QUESTION = 'UPDATE_SOLVED_QUESTION';
+
+export function updateSolvedQuestion({ indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }) {
+  return {
+    type: UPDATE_SOLVED_QUESTION,
+    payload: { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
+  };
+}
+
 export default function* rootSaga() {
   yield takeLatest(FETCH_QUESTION, fetchQuestion);
 }

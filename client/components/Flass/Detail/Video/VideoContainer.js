@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
 import {
-  FETCH_QUESTION
+  FETCH_QUESTION,
 } from '../../../../modules/Flass/Detail/Question/QuestionActions';
 import {
-  flassDetailLoadVideo,
-  flassDetailSolvedOneQuestion
+  fetchVideo
 } from '../../../../modules/Flass/Detail/Video/VideoActions';
+import {
+  UPDATE_STATE_AFTER_SOLVE_QUESTION
+} from '../../../../modules/Flass/Detail/DetailActions';
 
 import Video from './Video';
 
@@ -35,8 +37,13 @@ function mapDispatchToProps(dispatch) {
         detailId
       });
     },
-    flassDetailLoadVideo,
-    flassDetailSolvedOneQuestion
+    flassDetailLoadVideo: fetchVideo,
+    updateStateAfterSolveQuestion: newState => {
+      dispatch({
+        type: UPDATE_STATE_AFTER_SOLVE_QUESTION,
+        newState
+      });
+    }
   };
 }
 
