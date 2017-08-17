@@ -32,13 +32,13 @@ class CommentsController < ApplicationController
 
   api :GET, '/comments/edit', '댓글 수정 페이지'
   param :id, :number, :desc => "Comment ID"
-    def edit
-      if @comment.user_id == session[:user_id]
-        render json: @comment, status: :ok
-      else
-        render json: {message: "댓글을 수정할 권한이 없습니다."}, status: :unauthorized
-      end
+  def edit
+    if @comment.user_id == session[:user_id]
+      render json: @comment, status: :ok
+    else
+      render json: {message: "댓글을 수정할 권한이 없습니다."}, status: :unauthorized
     end
+  end
 
   # PATCH/PUT /comments.json
   api :PUT, '/comments', '특정 lecture에 대한 댓글 수정'
