@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 
 import { VideoEndedPage } from './VideoEndedPageStyled';
 
-import ReplayBtnIcon from '../../../../public/icons/replay_btn@2x.png';
+import ReplayBtnIcon from '../../../../public/icons/replay-btn.png';
 
 const { bool, string, func } = PropTypes;
 
@@ -31,9 +31,15 @@ class VideoEndedPageComponent extends Component {
     const { isOpen } = this.state;
     return (
       <VideoEndedPage.Container isOpen={ isOpen }>
+        <VideoEndedPage.Title>
+          강의를 모두 시청하였습니다.
+        </VideoEndedPage.Title>
         <VideoEndedPage.ReplayBtn
           srcSet={ ReplayBtnIcon }
           onClick={ this.onReplayBtnClick } />
+        <VideoEndedPage.BtnLabel>
+          다시 시청하기
+        </VideoEndedPage.BtnLabel>
       </VideoEndedPage.Container>
     );
   }

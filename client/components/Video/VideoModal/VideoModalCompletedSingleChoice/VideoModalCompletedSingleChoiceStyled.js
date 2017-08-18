@@ -3,10 +3,9 @@ import styled from 'styled-components';
 const $checkboxBorderColor = '#3f4a4b';
 const $NormalGreenColor = '#9abf32';
 const $NormalGrayColor = '#a7acad';
-const $NormalBlackColor = '#3f4a4b';
 const $WrongRedColor = '#f8490d';
 
-export const VideoModalSingleChoice = {
+export const CompletedSingleChoice = {
   Wrapper: styled.div`
     margin-top: 35px;
     display: flex;
@@ -41,25 +40,9 @@ export const VideoModalSingleChoice = {
   `
 };
 
-function selectTextColor({ isSolved, isCorrect, isChecked }) {
-  if (!isSolved) {
-    return $NormalBlackColor;
-  }
-
+function selectTextColor({ isCorrect, isChecked }) {
   if (!isChecked) {
     return $NormalGrayColor;
-  }
-
-  if (isSolved && !isCorrect) {
-    return $WrongRedColor;
-  }
-
-  return $NormalGreenColor;
-}
-
-function selectCheckColor({ isSolved, isCorrect }) {
-  if (!isSolved) {
-    return $NormalGreenColor;
   }
 
   if (!isCorrect) {
@@ -69,10 +52,14 @@ function selectCheckColor({ isSolved, isCorrect }) {
   return $NormalGreenColor;
 }
 
-function selectFontWeight({ isSolved, isChecked }) {
-  if (isSolved && isChecked) {
-    return 'bold';
+function selectCheckColor({ isCorrect }) {
+  if (!isCorrect) {
+    return $WrongRedColor;
   }
 
-  return 'normal';
+  return $NormalGreenColor;
+}
+
+function selectFontWeight({ isChecked }) {
+  return isChecked ? 'bold' : 'normal';
 }

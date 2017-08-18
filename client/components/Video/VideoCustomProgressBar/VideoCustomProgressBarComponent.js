@@ -6,9 +6,8 @@ import keydown from 'react-keydown';
 
 import VideoCustomBarComponent from './VideoCustomBarComponent';
 import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
-import {
-  VideoProgressBar
-} from './VideoCustomProgressBarStyled';
+import { VideoProgressBar } from './VideoCustomProgressBarStyled';
+import { convertSecsToPercentage } from '../VideoUtils';
 
 const { func, number, string, oneOfType, arrayOf, bool, shape } = PropTypes;
 
@@ -34,7 +33,8 @@ const propTypes = {
     indexOfQuestion: number
   })),
   canChangeIsQuizSecs: func.isRequired,
-  isQuizSecs: bool.isRequired
+  isQuizSecs: bool.isRequired,
+  searchableSecs: number.isRequired
 };
 
 const defaultProps = {
@@ -141,9 +141,14 @@ class VideoCustomProgressBarComponent extends Component {
   @autobind
   onCustomSeekBarChange(e) {
     if (this.state.isDragging) {
+      const { searchableSecs } = this.props;
       const movedPosition = this.calculateMovedPosition(e);
-      this.setState({ played: movedPosition });
-      this.props.onCustomSeekBarChange(movedPosition);
+      const searchablePosition = this.calculateSearchablePosition(searchableSecs);
+
+      if (movedPosition < searchablePosition) {
+        this.setState({ played: movedPosition });
+        this.props.onCustomSeekBarChange(movedPosition);
+      }
     }
     e.stopPropagation();
     e.preventDefault;
@@ -160,9 +165,14 @@ class VideoCustomProgressBarComponent extends Component {
   @autobind
   onCustomSeekBarClick(e) {
     if (!this.state.isDragging) {
+      const { searchableSecs } = this.props;
       const movedPosition = this.calculateMovedPosition(e);
-      this.setState({ played: movedPosition });
-      this.props.onCustomSeekBarClick(movedPosition);
+      const searchablePosition = this.calculateSearchablePosition(searchableSecs);
+
+      if (movedPosition < searchablePosition) {
+        this.setState({ played: movedPosition });
+        this.props.onCustomSeekBarClick(movedPosition);
+      }
     }
   }
 
@@ -179,6 +189,11 @@ class VideoCustomProgressBarComponent extends Component {
     }
 
     return movedPosition;
+  }
+
+  calculateSearchablePosition(searchableSecs) {
+    const { duration } = this.props;
+    return convertSecsToPercentage(searchableSecs, duration) * 100;
   }
 
   @autobind

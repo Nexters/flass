@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 import {
-  FETCH_QUESTION,
+  FETCH_QUESTION
 } from '../../../../modules/Flass/Detail/Question/QuestionActions';
 import {
-  fetchVideo
+  fetchVideo,
+  SET_VIDEO_COMPLETE,
+  RESET_VIDEO_COMPLETE
 } from '../../../../modules/Flass/Detail/Video/VideoActions';
 import {
   UPDATE_STATE_AFTER_SOLVE_QUESTION
@@ -17,27 +19,46 @@ function mapStateToProps(state) {
     flass: {
       detail: {
         question: {
-          questions
+          questions,
+          solvedQuestionsState
         },
         video: {
-          videoUrl
+          videoUrl,
+          searchableSecs,
+          isVideoComplete
         }
       }
     }
   } = state;
 
-  return { questions, videoUrl };
+  return {
+    questions,
+    solvedQuestionsState,
+    videoUrl,
+    searchableSecs,
+    isVideoComplete
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    flassDetailLoadVideo: fetchVideo,
+    setCompleteVideoFlag: () => {
+      dispatch({
+        type: SET_VIDEO_COMPLETE
+      });
+    },
+    resetCompleteVideoFlag: () => {
+      dispatch({
+        type: RESET_VIDEO_COMPLETE
+      });
+    },
     fetchQuestion: detailId => {
       dispatch({
         type: FETCH_QUESTION,
         detailId
       });
     },
-    flassDetailLoadVideo: fetchVideo,
     updateStateAfterSolveQuestion: newState => {
       dispatch({
         type: UPDATE_STATE_AFTER_SOLVE_QUESTION,

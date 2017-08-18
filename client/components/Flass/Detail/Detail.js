@@ -118,7 +118,6 @@ class Detail extends Component {
             VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
             VideoVolumeBtnClassName="video-btn"
             VideoVolumeBarClassName={ classNames('video-volume-bar') }
-            VideoFullscreenBtnClassName={ classNames('video-btn', 'video-btn--right', 'video-btn--r-margin') }
 
             videoUrl={ videoUrl }
             questions={ questions } />

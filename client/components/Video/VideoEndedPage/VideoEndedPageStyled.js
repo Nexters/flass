@@ -10,15 +10,29 @@ export const VideoEndedPage = {
     height: ${props => (props.isOpen ? $playerHeight : 0)};
     opacity: ${props => (props.isOpen ? 1 : 0)};
     z-index: ${props => (props.isOpen ? 10 : -10)};
-    background-color: rgba(0, 0, 0, .32);
+    background-color: black;
     border-radius: 3px;
     transition: opacity .5s ease-out;
   `,
+  Title: styled.div`
+    margin-top: 196px;
+    color: white;
+    text-align: center;
+    font-size: 29px;
+    font-weight: 500;
+  `,
   ReplayBtn: styled.img`
     position: relative;
-    top: 50%;
+    margin-top: 34px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     cursor: pointer;
+  `,
+  BtnLabel: styled.div`
+    margin-top: 14px;
+    color: white;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 500;
   `
 };

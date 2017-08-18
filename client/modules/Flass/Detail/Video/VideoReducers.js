@@ -4,12 +4,15 @@ import {
 } from '../../../reducerHelper';
 import {
   FETCH_VIDEO,
-  UPDATE_SEARCHABLE_SECS
+  UPDATE_SEARCHABLE_SECS,
+  SET_VIDEO_COMPLETE,
+  RESET_VIDEO_COMPLETE
 } from './VideoActions';
 
 const initialState = {
   videoUrl: '',
-  searchableSecs: 0
+  searchableSecs: 0,
+  isVideoComplete: false
 };
 
 const fetchVideoReducer = {
@@ -26,9 +29,25 @@ const updateSearchableSecsReducer = {
   })
 };
 
+const updateVideoCompleteReducer = {
+  [SET_VIDEO_COMPLETE]: (state, action) => {
+    return {
+      ...state,
+      isVideoComplete: true
+    };
+  },
+  [RESET_VIDEO_COMPLETE]: (state, action) => {
+    return {
+      ...state,
+      isVideoComplete: false
+    }
+  }
+};
+
 const VideoReducers = createReducer(initialState, {
   ...fetchVideoReducer,
-  ...updateSearchableSecsReducer
+  ...updateSearchableSecsReducer,
+  ...updateVideoCompleteReducer
 });
 
 export default VideoReducers;
