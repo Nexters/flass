@@ -7,7 +7,7 @@ import autobind from 'autobind-decorator';
 import { VideoPlayer } from './VideoPlayerStyled';
 import './VideoPlayerStyles.scss';
 
-const { func, string, number, bool, object, oneOfType, arrayOf } = PropTypes;
+const { func, string, number, bool } = PropTypes;
 
 const propTypes = {
   onProgress: func.isRequired,
@@ -16,11 +16,7 @@ const propTypes = {
   setPlayer: func.isRequired,
   url: string,
   playing: bool,
-  playbackRate: number.isRequired,
-  volume: number.isRequired,
-  youtubeConfig: object,
-  VideoPlayerWrapperClassName: oneOfType([string, arrayOf(string)]),
-  VideoPlayerClassName: oneOfType([string, arrayOf(string)])
+  volume: number.isRequired
 };
 
 const defaultProps = {
@@ -39,9 +35,7 @@ class VideoPlayerComponent extends Component {
       setPlayer,
       url,
       playing,
-      playbackRate,
-      volume,
-      youtubeConfig
+      volume
     } = this.props;
 
     return (
@@ -53,9 +47,7 @@ class VideoPlayerComponent extends Component {
           height="100%"
           url={ url }
           playing={ playing }
-          playbackRate={ playbackRate }
           volume={ volume }
-          youtubeConfig={ youtubeConfig }
           onEnded={ this.onEnded }
           onError={ e => console.log('onError', e) }
           onProgress={ onProgress }

@@ -78,7 +78,7 @@ export const VideoModal = {
     text-decoration: none;
     font-size: 2rem;
     color: ${props => selectBtnColor(props)};
-    cursor: ${props => (props.selected ? 'pointer' : 'default')};
+    cursor: ${props => selectCursor(props)};
 
     float: ${props => (props.right ? 'right' : 'none')};
     margin-left: ${props => (props.right ? '15px' : '0')};
@@ -117,6 +117,14 @@ function selectBorderColor({ isSolved, isCorrect }) {
 
 function isSolvedAndCorrect({ isSolved, isCorrect }) {
   return isSolved && !isCorrect;
+}
+
+function selectCursor({ selected, isVideoComplete }) {
+  if (!isVideoComplete && !selected) {
+    return 'default';
+  }
+
+  return 'pointer';
 }
 
 const showEaseOut = keyframes`

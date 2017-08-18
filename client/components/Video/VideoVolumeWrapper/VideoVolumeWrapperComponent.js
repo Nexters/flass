@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { VideoVolumeWrapper } from './VideoVolumeWrapperStyled';
 
+const { oneOfType, element, arrayOf } = PropTypes;
+
 const propTypes = {
-  children: PropTypes.element.isRequired
+  children: oneOfType([element, arrayOf(element)]).isRequired
 };
 
 const defaultProps = {};

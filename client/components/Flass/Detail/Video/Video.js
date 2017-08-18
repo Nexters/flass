@@ -25,20 +25,15 @@ import {
 } from '../../../Video/VideoUtils';
 
 import {
-  FlassDetailVideo,
-  ReplayBtn
+  FlassDetailVideo
 } from './VideoStyled';
-
-// 팝업 테스트를 위한 더미 action
-import * as actions from '../../../../modules/Flass/Detail/Video/VideoActions';
 
 import PlayBtnIcon from '../../../../../public/icons/play_btn.png';
 import PauseBtnIcon from '../../../../../public/icons/pause@2x.png';
 import VolumeOnBtnIcon from '../../../../../public/icons/speak_btn.png';
 import VolumeOffBtnIcon from '../../../../../public/icons/non-speak@2x.png';
-import FullscreenBtnIcon from '../../../../../public/icons/view_btn.png';
 
-const { string, oneOfType, arrayOf, func, number, object, array, shape } = PropTypes;
+const { string, oneOfType, arrayOf, func, number, array, shape, bool } = PropTypes;
 
 const propTypes = {
   VideoBarClassName: oneOfType([string, arrayOf(string)]),
@@ -47,10 +42,11 @@ const propTypes = {
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayPauseBtnClassName: oneOfType([string, arrayOf(string)]),
-  VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
   updateStateAfterSolveQuestion: func.isRequired,
+  setCompleteVideoFlag: func.isRequired,
+  resetCompleteVideoFlag: func.isRequired,
 
   videoUrl: string,
   questions: shape({
@@ -60,7 +56,14 @@ const propTypes = {
     questionAt: string,
     secsStateOfQuestions: array,
     textStateOfQuestions: array
-  }).isRequired
+  }).isRequired,
+  isVideoComplete: bool.isRequired,
+  solvedQuestionsState: arrayOf(shape({
+    indexOfQuestion: number,
+    isCorrect: bool,
+    indexOfSelectedChoice: number,
+    indexOfAnswer: number
+  })).isRequired
 };
 
 const defaultProps = {
@@ -71,7 +74,6 @@ const defaultProps = {
   VideoQuizIndicatorClassName: '',
   VideoQuizIndicatorBarClassName: '',
   VideoPlayPauseBtnClassName: '',
-  VideoFullscreenBtnClassName: '',
   VideoModalClassName: '',
   VideoModalQuestionClassName: '',
   VideoVolumeBtnClassName: '',
@@ -90,7 +92,6 @@ class Video extends Component {
       played: 0,
       loaded: 0,
       duration: 0,
-      playbackRate: 1.0,
       isMute: false,
       isEnded: false,
       volumeBeforeMute: 0,
@@ -109,6 +110,10 @@ class Video extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetCompleteVideoFlag();
+  }
+
   render() {
     const {
       playing,
@@ -118,7 +123,6 @@ class Video extends Component {
       played,
       loaded,
       duration,
-      playbackRate,
       isQuizSecs,
       searchableSecs
     } = this.state;
@@ -129,7 +133,6 @@ class Video extends Component {
       VideoQuizIndicatorClassName,
       VideoQuizIndicatorBarClassName,
       VideoPlayPauseBtnClassName,
-      VideoFullscreenBtnClassName,
       VideoVolumeBtnClassName,
       VideoVolumeBarClassName,
 
@@ -148,7 +151,6 @@ class Video extends Component {
           played={ played }
           loaded={ loaded }
           duration={ duration }
-          playbackRate={ playbackRate }
           onProgress={ this.onProgress }
           onDuration={ this.onDuration }
           onEnded={ this.onEnded }
@@ -188,7 +190,7 @@ class Video extends Component {
               <VideoControllerWrapperComponent>
                 <VideoButtonComponent
                   buttonClass={ VideoPlayPauseBtnClassName }
-                  srcSet={ playing ? PlayBtnIcon : PauseBtnIcon }
+                  srcSet={ playing ? PauseBtnIcon : PlayBtnIcon }
                   onButtonClick={ this.onClickPlayPause } />
 
                 <VideoTimePanelComponent
@@ -248,14 +250,23 @@ class Video extends Component {
   @autobind
   renderQuestionModal(isQuizSecs) {
     const { indexOfQuestion } = this.state;
-    const { questions: { textStateOfQuestions } } = this.props;
+    const {
+      questions: {
+        textStateOfQuestions
+      },
+      solvedQuestionsState,
+      isVideoComplete
+    } = this.props;
 
     return (
       isQuizSecs ?
         <VideoModalComponent
           onQuestionSolved={ this.onQuestionSolved }
           textStateOfQuestions={ textStateOfQuestions }
-          indexOfQuestion={ indexOfQuestion } /> :
+          indexOfQuestion={ indexOfQuestion }
+          isVideoComplete={ isVideoComplete }
+          solvedQuestionsState={ solvedQuestionsState }
+          onKeepGoingOnVideoCompleteCase={ this.onKeepGoingOnVideoCompleteCase } /> :
         null
     );
   }
@@ -281,6 +292,7 @@ class Video extends Component {
   @autobind
   onEnded() {
     this.setState({ isEnded: true, playing: false });
+    this.props.setCompleteVideoFlag();
   }
 
   @autobind
@@ -411,6 +423,19 @@ class Video extends Component {
       indexOfAnswer,
       searchableSecs
     });
+  }
+
+  @autobind
+  onKeepGoingOnVideoCompleteCase() {
+    const { played, duration } = this.state;
+    const updatedPlayedPercentage = this.updatePlayedPercentage(played, duration);
+
+    this.setState({
+      isQuizSecs: false,
+      playing: true,
+      played: updatedPlayedPercentage
+    });
+    this.player.seekTo(updatedPlayedPercentage);
   }
 
   updatePlayedPercentage(played, duration) {

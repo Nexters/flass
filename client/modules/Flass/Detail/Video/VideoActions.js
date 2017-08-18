@@ -15,3 +15,21 @@ export function updateSearchableSecs({ searchableSecs }) {
     searchableSecs
   };
 }
+
+
+export const SET_VIDEO_COMPLETE = 'SET_VIDEO_COMPLETE';
+
+export function setCompleteVideoFlag() {
+  return {
+    type: SET_VIDEO_COMPLETE
+  };
+}
+
+
+export const RESET_VIDEO_COMPLETE = 'RESET_VIDEO_COMPLETE';
+
+export function resetCompleteVideoFlag() {
+  return {
+    type: RESET_VIDEO_COMPLETE
+  };
+}
