@@ -17,19 +17,20 @@ const tokenPlugin = req => {
 
 const config = {
   headers: {
-
-  }
+    Authorization: ''
+  },
+  withCredentials: true
 };
 
 const requests = {
   del: url =>
-    axios.delete(`${API_ROOT}${url}`).then(responseBody),
+    axios.delete(`${API_ROOT}${url}`, config).then(responseBody),
   get: url =>
-    axios.get(`${API_ROOT}${url}`).then(responseBody),
+    axios.get(`${API_ROOT}${url}`, config).then(responseBody),
   put: (url, body) =>
-    axios.put(`${API_ROOT}${url}`, body).then(responseBody),
+    axios.put(`${API_ROOT}${url}`, body, config).then(responseBody),
   post: (url, body) =>
-    axios.post(`${API_ROOT}${url}`, body).then(responseBody)
+    axios.post(`${API_ROOT}${url}`, body, config).then(responseBody)
 };
 
 const Auth = {
@@ -37,7 +38,10 @@ const Auth = {
 };
 
 const User = {
-  me: (token) => requests.post('/users', { test_token: token }), // /json/FlassUser.json
+  me: token => requests.post('/users', { test_token: token })
+      .then(response => {
+        console.log(response);
+      }) // /json/FlassUser.json
 };
 
 const Badge = {

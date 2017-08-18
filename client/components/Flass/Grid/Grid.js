@@ -9,6 +9,7 @@ import ContentTitleComponent from '../ContentTitle/ContentTitleComponent';
 import './Grid.scss';
 
 const propTypes = {
+  user: PropTypes.object.isRequired,
   items: PropTypes.array.isRequired,
   fetchRequestMyChannelItems: PropTypes.func.isRequired
 };
@@ -22,8 +23,16 @@ class Grid extends Component {
     super(props);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { user } = this.props;
+    const nextUser = nextProps.user;
+    console.log(user, nextUser);
+    if(user.id !== nextUser.id) {
+      this.props.fetchRequestMyChannelItems();
+    }
+  }
+
   componentDidMount() {
-    this.props.fetchRequestMyChannelItems();
   }
 
   renderChildren(items) {
