@@ -26,8 +26,7 @@ function mapStateToProps(state) {
       }
     }
   } = state;
-  console.log('searchableSecs');
-  console.log(searchableSecs);
+
   return {
     questions,
     videoUrl,

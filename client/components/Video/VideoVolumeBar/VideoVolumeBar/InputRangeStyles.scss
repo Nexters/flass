@@ -7,8 +7,8 @@
 $track-color: #ccc;
 $thumb-color: #666;
 
-$thumb-radius: 10px;
-$thumb-height: 10px;
+$thumb-radius: 50%;
+$thumb-height: 20px;
 $thumb-width: 10px;
 $thumb-shadow-size: 0;
 $thumb-shadow-blur: 0;
@@ -17,14 +17,14 @@ $thumb-border-width: 0;
 $thumb-border-color: #fff;
 
 $track-width: 100%;
-$track-height: 5px;
+$track-height: 10px;
 $track-shadow-size: 0;
 $track-shadow-blur: 0;
 $track-shadow-color: #222;
 $track-border-width: 0;
 $track-border-color: #000;
 
-$track-radius: 5px;
+$track-radius: 10px;
 $contrast: 5%;
 
 @mixin shadow($shadow-size, $shadow-blur, $shadow-color) {

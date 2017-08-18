@@ -7,7 +7,7 @@ import screenfull from 'screenfull';
 import {
   VideoPlayerComponent,
   VideoButtonComponent,
-  VideoVolumeBarComponent,
+  VideoVolumeComponent,
   VideoTimePanelComponent,
   VideoCustomProgressBarComponent,
   VideoControllerWrapperComponent,
@@ -192,7 +192,7 @@ class VideoComponent extends Component {
                   onButtonMouseOver={ this.onVolumeBtnMouseOver }
                   onButtonMouseLeave={ this.onVolumeBtnMouseLeave } />
 
-                <VideoVolumeBarComponent
+                <VideoVolumeComponent
                   onVolumeBarChange={ this.setVolume }
                   barClass={ VideoVolumeBarClassName }
                   volume={ volume }

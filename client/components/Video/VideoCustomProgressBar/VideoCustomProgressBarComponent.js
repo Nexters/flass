@@ -141,9 +141,14 @@ class VideoCustomProgressBarComponent extends Component {
   @autobind
   onCustomSeekBarChange(e) {
     if (this.state.isDragging) {
+      const { searchableSecs } = this.props;
       const movedPosition = this.calculateMovedPosition(e);
-      this.setState({ played: movedPosition });
-      this.props.onCustomSeekBarChange(movedPosition);
+      const searchablePosition = this.calculateSearchablePosition(searchableSecs);
+
+      if (movedPosition < searchablePosition) {
+        this.setState({ played: movedPosition });
+        this.props.onCustomSeekBarChange(movedPosition);
+      }
     }
     e.stopPropagation();
     e.preventDefault;

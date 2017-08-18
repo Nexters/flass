@@ -10,7 +10,6 @@ const propTypes = {
   onButtonClick: func.isRequired,
   onButtonMouseOver: func,
   onButtonMouseLeave: func,
-  buttonTitle: string,
   buttonClass: oneOfType([string, arrayOf(string)]),
   value: oneOfType([
     string,
@@ -30,7 +29,6 @@ const defaultProps = {
 
 const VideoButtonComponent = props => {
   const {
-    buttonTitle,
     onButtonClick,
     onButtonMouseOver,
     onButtonMouseLeave,

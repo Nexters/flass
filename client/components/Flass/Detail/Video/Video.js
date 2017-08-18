@@ -9,7 +9,8 @@ import screenfull from 'screenfull';
 import {
   VideoPlayerComponent,
   VideoButtonComponent,
-  VideoVolumeBarComponent,
+  VideoVolumeComponent,
+  VideoVolumeWrapperComponent,
   VideoTimePanelComponent,
   VideoCustomProgressBarComponent,
   VideoControllerWrapperComponent,
@@ -114,7 +115,6 @@ class Video extends Component {
       volume,
       isMute,
       isEnded,
-      isVolumeBtnMouseOver,
       played,
       loaded,
       duration,
@@ -190,27 +190,25 @@ class Video extends Component {
                   buttonClass={ VideoPlayPauseBtnClassName }
                   srcSet={ playing ? PlayBtnIcon : PauseBtnIcon }
                   onButtonClick={ this.onClickPlayPause } />
-                <VideoButtonComponent
-                  buttonClass={ VideoVolumeBtnClassName }
-                  srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }
-                  onButtonClick={ this.onClickVolumeBtn }
-                  onButtonMouseOver={ this.onVolumeBtnMouseOver }
-                  onButtonMouseLeave={ this.onVolumeBtnMouseLeave } />
-
-                <VideoVolumeBarComponent
-                  onVolumeBarChange={ this.setVolume }
-                  barClass={ VideoVolumeBarClassName }
-                  volume={ volume }
-                  visible={ isVolumeBtnMouseOver } />
 
                 <VideoTimePanelComponent
                   duration={ duration }
                   elapsed={ played * duration } />
 
-                <VideoButtonComponent
-                  buttonClass={ VideoFullscreenBtnClassName }
-                  srcSet={ FullscreenBtnIcon }
-                  onButtonClick={ this.onClickFullscreen } />
+                <VideoVolumeWrapperComponent>
+                  <VideoButtonComponent
+                    buttonClass={ VideoVolumeBtnClassName }
+                    srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }
+                    onButtonClick={ this.onClickVolumeBtn }
+                    onButtonMouseOver={ this.onVolumeBtnMouseOver }
+                    onButtonMouseLeave={ this.onVolumeBtnMouseLeave } />
+
+                  <VideoVolumeComponent
+                    onVolumebarClick={ this.onVolumebarClick }
+                    barClass={ VideoVolumeBarClassName }
+                    volume={ volume } />
+                </VideoVolumeWrapperComponent>
+
               </VideoControllerWrapperComponent>
             </div>
           </VideoControllerAndBarWrapperComponent>
@@ -288,6 +286,12 @@ class Video extends Component {
   @autobind
   setVolume(e) {
     this.setState({ volume: parseFloat(e.target.value) });
+  }
+
+  @autobind
+  onVolumebarClick(barIndex) {
+    const volume = parseFloat(0.1 * (barIndex + 1));
+    this.setState({ volume });
   }
 
   @autobind
