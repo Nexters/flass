@@ -20,10 +20,12 @@ const fetchVideoReducer = {
 };
 
 const updateSearchableSecsReducer = {
-  [UPDATE_SEARCHABLE_SECS]: (state, { searchableSecs }) => ({
-    ...state,
-    searchableSecs
-  })
+  [UPDATE_SEARCHABLE_SECS]: (state, { searchableSecs }) => {
+    return {
+      ...state,
+      searchableSecs
+    };
+  }
 };
 
 const VideoReducers = createReducer(initialState, {

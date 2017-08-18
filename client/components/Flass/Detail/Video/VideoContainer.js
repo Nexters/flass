@@ -20,13 +20,19 @@ function mapStateToProps(state) {
           questions
         },
         video: {
-          videoUrl
+          videoUrl,
+          searchableSecs
         }
       }
     }
   } = state;
-
-  return { questions, videoUrl };
+  console.log('searchableSecs');
+  console.log(searchableSecs);
+  return {
+    questions,
+    videoUrl,
+    searchableSecs
+  };
 }
 
 function mapDispatchToProps(dispatch) {

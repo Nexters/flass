@@ -42,7 +42,7 @@ export function* fetchDetailAll({ detailId }) {
 
 export const UPDATE_STATE_AFTER_SOLVE_QUESTION = 'UPDATE_STATE_AFTER_SOLVE_QUESTION';
 
-export function* updateStateAfterSolveQuestion(newState) {
+export function* updateStateAfterSolveQuestion({ newState }) {
   const {
     indexOfQuestion,
     isCorrect,
@@ -50,8 +50,7 @@ export function* updateStateAfterSolveQuestion(newState) {
     indexOfAnswer,
     searchableSecs
   } = newState;
-  console.log('sagas');
-  console.log(newState);
+
   yield put({
     type: UPDATE_SOLVED_QUESTION,
     payload: { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }

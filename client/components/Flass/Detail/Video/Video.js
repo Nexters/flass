@@ -49,7 +49,6 @@ const propTypes = {
   VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
-
   updateStateAfterSolveQuestion: func.isRequired,
 
   videoUrl: string,
@@ -96,8 +95,17 @@ class Video extends Component {
       volumeBeforeMute: 0,
       isVolumeBtnMouseOver: false,
       isQuizSecs: false,
-      indexOfQuestion: -1
+      indexOfQuestion: -1,
+      searchableSecs: 0
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { questions } = nextProps;
+
+    if (!_.isEmpty(questions)) {
+      this.updateSearchableSecsState(nextProps);
+    }
   }
 
   render() {
@@ -111,7 +119,8 @@ class Video extends Component {
       loaded,
       duration,
       playbackRate,
-      isQuizSecs
+      isQuizSecs,
+      searchableSecs
     } = this.state;
     const {
       VideoBarClassName,
@@ -173,7 +182,8 @@ class Video extends Component {
 
                 quizTimeArray={ secsStateOfQuestions }
                 canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
-                isQuizSecs={ isQuizSecs } />
+                isQuizSecs={ isQuizSecs }
+                searchableSecs={ searchableSecs } />
 
               <VideoControllerWrapperComponent>
                 <VideoButtonComponent
@@ -209,6 +219,26 @@ class Video extends Component {
     );
   }
 
+  updateSearchableSecsState({ searchableSecs, questions }) {
+    if (!this.isSearchableSecsInit()) {
+      return this.initalizeSearchableSecs({ questions });
+    }
+    if (this.state.searchableSecs !== searchableSecs) {
+      this.setState({ searchableSecs });
+    }
+  }
+
+  isSearchableSecsInit() {
+    return this.state.searchableSecs !== 0;
+  }
+
+  initalizeSearchableSecs({ questions }) {
+    const { secsStateOfQuestions } = questions;
+    const searchableSecs = secsStateOfQuestions[0].playedSeconds;
+    this.setState({ searchableSecs });
+  }
+
+
   @autobind
   renderEndedPage(isEnded) {
     return isEnded ?
@@ -216,6 +246,7 @@ class Video extends Component {
         onReplayBtnClick={ this.onReplayBtnClick } /> :
       null;
   }
+
   @autobind
   renderQuestionModal(isQuizSecs) {
     const { indexOfQuestion } = this.state;
@@ -230,6 +261,7 @@ class Video extends Component {
         null
     );
   }
+
 
   @autobind
   setPlayer(player) {
@@ -320,6 +352,7 @@ class Video extends Component {
     screenfull.request(findDOMNode(this.player));
   }
 
+
   @autobind
   canChangeIsQuizSecs(playedSecs) {
     const {
@@ -358,19 +391,39 @@ class Video extends Component {
       indexOfAnswer
     } = solvedQuestionState;
     const { played, duration } = this.state;
-    const solvedSecs = convertPercentageToSecs(played, duration);
-    const secsAddOneFromSolvedSecs = solvedSecs + 1;
-    const changedPlayedPercentage = convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
+    const updatedPlayedPercentage = this.updatePlayedPercentage(played, duration);
+    const searchableSecs = this.findSearchableSecs(indexOfQuestion);
 
-    this.setState({ isQuizSecs: false, playing: true, played: changedPlayedPercentage });
-    this.player.seekTo(changedPlayedPercentage);
+    this.setState({
+      isQuizSecs: false,
+      playing: true,
+      played: updatedPlayedPercentage
+    });
+    this.player.seekTo(updatedPlayedPercentage);
     this.props.updateStateAfterSolveQuestion({
       indexOfQuestion,
       isCorrect,
       indexOfSelectedChoice,
       indexOfAnswer,
-      searchableSecs: secsAddOneFromSolvedSecs
+      searchableSecs
     });
+  }
+
+  updatePlayedPercentage(played, duration) {
+    const solvedSecs = convertPercentageToSecs(played, duration);
+    const secsAddOneFromSolvedSecs = solvedSecs + 1;
+    return convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
+  }
+
+  findSearchableSecs(indexOfQuestion) {
+    const { duration } = this.state;
+    const { questions: { secsStateOfQuestions } } = this.props;
+
+    if (!secsStateOfQuestions[indexOfQuestion + 1]) {
+      return duration;
+    }
+
+    return secsStateOfQuestions[indexOfQuestion + 1].playedSeconds;
   }
 
   @autobind
