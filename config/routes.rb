@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'lectures/statistics'
+
   apipie
   resource :users
   resource :comments
