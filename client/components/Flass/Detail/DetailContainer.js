@@ -4,6 +4,7 @@ import { FETCH_DETAIL } from '../../../modules/Flass/Detail/DetailActions';
 import {
   LOAD_VIDEO
 } from '../../../modules/Flass/Detail/Video/VideoActions';
+import withLoading from './EnhancedDetail';
 
 function mapStateToProps(state) {
   return {
@@ -24,7 +25,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+export default withLoading()(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Detail);
+)(Detail));

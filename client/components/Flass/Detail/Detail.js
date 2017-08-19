@@ -39,7 +39,6 @@ const TabTitle = styled.span`
 const propTypes = {
   match: object,
   detail: shape({
-    isLoading: bool.isRequired,
     detail: {
       id: number.isRequired,
       userId: string.isRequired,
@@ -94,18 +93,10 @@ class Detail extends Component {
 
   render() {
     const {
-      detail,
       question: { questions },
       video: { videoUrl }
     } = this.props;
 
-    if (detail.isLoading) {
-      return (
-        <div style={ { textAlign: 'center' } }>
-          <CircularProgress size={ 80 } thickness={ 5 } />
-        </div>
-      );
-    }
     return (
       <FlassDetailStyled.Wrapper>
         <ContentTitleComponent title="Watching Video" />
