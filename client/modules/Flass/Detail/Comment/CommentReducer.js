@@ -1,7 +1,4 @@
 import _ from 'lodash';
-import {
-  createReducer
-} from '../../../reducerHelper';
 import { FETCH_READY_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_ERROR,
   ADD_READY_COMMENT, ADD_COMMENT_SUCCESS, ADD_COMMENT_ERROR, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_ERROR } from './CommentActions';
 import { createReducer } from '../../../reduxHelper';
