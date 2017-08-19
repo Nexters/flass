@@ -54,7 +54,7 @@ const Grid = {
 };
 
 const Detail = {
-  byId: detailId => requests.get('/json/FlassDetail.json')
+  byId: detailId => requests.get(`/lectures?id=${detailId}`) // '/json/FlassDetail.json'
 };
 
 const Question = {

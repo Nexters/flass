@@ -4,19 +4,22 @@ import _ from 'lodash';
 import { CircularProgress } from 'material-ui';
 
 const propTypes = {
-  isLoading: PropTypes.bool.isRequired,
+  detail: PropTypes.shape({
+    isLoading: PropTypes.bool
+  }).isRequired,
 };
 const defaultProps = {
-  isLoading: true,
 };
 
 const withLoadingComponent = (props, options, WrappedComponent) => {
-  if (props.isLoading) {
+  const { isLoading } = props.detail;
+
+  if (isLoading) {
     return (<div style={ { textAlign: 'center' } }>
       <CircularProgress size={ 80 } thickness={ 5 } />
     </div>);
   }
-  return <WrappedComponent />;
+  return <WrappedComponent {...props} />;
 };
 
 withLoadingComponent.propTypes = propTypes;

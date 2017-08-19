@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import CircularProgress from 'material-ui/CircularProgress';
 import { Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -22,8 +21,6 @@ import analysisImage from './images/tab-analysis.png';
 import color from '../common/colors.scss';
 import './Detail.scss';
 
-const { string, number, shape, object, array, bool, func } = PropTypes;
-
 const TabIcon = styled.img`
   width: 15px;
   margin-right: 1rem;
@@ -37,29 +34,29 @@ const TabTitle = styled.span`
 `;
 
 const propTypes = {
-  fetchRequestDetailAll: func.isRequired,
-  match: object,
-  detail: shape({
+  fetchRequestDetailAll: PropTypes.func.isRequired,
+  match: PropTypes.object,
+  detail: PropTypes.shape({
     detail: {
-      id: number.isRequired,
-      userId: string.isRequired,
-      userName: string.isRequired,
-      title: string.isRequired,
-      content: string.isRequired,
-      url: string.isRequired,
-      replayAt: string.isRequired,
-      createdAt: string.isRequired
+      id: PropTypes.number.isRequired,
+      userId: PropTypes.string.isRequired,
+      userName: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      replayAt: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired
     }
   }).isRequired,
-  question: shape({
-    questions: object
+  question: PropTypes.shape({
+    questions: PropTypes.object
   }).isRequired,
-  comment: shape({
-    comments: array,
-    totalCount: number
+  comment: PropTypes.shape({
+    comments: PropTypes.array,
+    totalCount: PropTypes.number
   }).isRequired,
-  video: shape({
-    videoUrl: string
+  video: PropTypes.shape({
+    videoUrl: PropTypes.string
   }).isRequired
 };
 
@@ -82,7 +79,11 @@ class Detail extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.fetchRequestDetailAll(id);
+    const detailId = this.props.detail.detail.id;
+    console.log(this.props, detailId);
+    if(detailId === -1) {
+      this.props.fetchRequestDetailAll(detailId);
+    }
   }
 
   handleSelect = selected => {

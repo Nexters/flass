@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withLoading()(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Detail));
+)(withLoading()(Detail));
