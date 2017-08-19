@@ -41,6 +41,7 @@ const User = {
   me: token => requests.post('/users', { test_token: token })
       .then(response => {
         console.log(response);
+        return response;
       }) // /json/FlassUser.json
 };
 

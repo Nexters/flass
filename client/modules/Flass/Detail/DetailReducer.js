@@ -1,7 +1,7 @@
 import { FETCH_READY_DETAIL, FETCH_DETAIL_SUCCESS, FETCH_DETAIL_ERROR } from './DetailActions';
 
 const initialState = {
-  isLoading: false,
+  isLoading: true,
   detail: {
     id: -1,
     userId: '',
