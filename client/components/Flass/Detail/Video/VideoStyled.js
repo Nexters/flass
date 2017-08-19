@@ -33,5 +33,20 @@ export const FlassDetailVideo = {
       left: 0;
       right: 0;
     }
+  `,
+  EndedPage: styled.div`
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: ${$playerHeight}px;
+    background-color: rgba(0, 0, 0, .32);
   `
 };
+
+export const ReplayBtn = styled.img`
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+`;

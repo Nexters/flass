@@ -5,11 +5,13 @@ import autobind from 'autobind-decorator';
 
 import { VideoModal } from './VideoModalStyled';
 import VideoModalSingleChoiceComponent from './VideoModalSingleChoice/VideoModalSingleChoiceComponent';
+import VideoModalCompletedSingleChoiceComponent from './VideoModalCompletedSingleChoice/VideoModalCompletedSingleChoiceComponent';
 
 const { func, arrayOf, shape, number, bool, string } = PropTypes;
 
 const propTypes = {
   onQuestionSolved: func.isRequired,
+  onKeepGoingOnVideoCompleteCase: func.isRequired,
   textStateOfQuestions: arrayOf(shape({
     answerIndex: number,
     singleChoiceValues: arrayOf(shape({
@@ -18,7 +20,14 @@ const propTypes = {
     })),
     title: string.isRequired
   })).isRequired,
-  indexOfQuestion: number
+  indexOfQuestion: number,
+  isVideoComplete: bool.isRequired,
+  solvedQuestionsState: arrayOf(shape({
+    indexOfQuestion: number,
+    isCorrect: bool,
+    indexOfSelectedChoice: number,
+    indexOfAnswer: number
+  })).isRequired
 };
 
 const defaultProps = {
@@ -32,14 +41,22 @@ class VideoModalComponent extends Component {
     this.state = {
       selectedChoiceIndex: -1,
       isSolved: false,
-      isCorrect: false
+      isCorrect: false,
+      isOpen: false
     };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ isOpen: true });
+    }, 50);
   }
 
   render() {
     const {
       isSolved,
-      isCorrect
+      isCorrect,
+      isOpen
     } = this.state;
 
     const {
@@ -54,7 +71,7 @@ class VideoModalComponent extends Component {
     } = textStateOfQuestions[indexOfQuestion];
 
     return (
-      <VideoModal.Container>
+      <VideoModal.Container isOpen={ isOpen }>
         <VideoModal.Inner
           isSolved={ isSolved }
           isCorrect={ isCorrect }>
@@ -74,23 +91,7 @@ class VideoModalComponent extends Component {
 
             <VideoModal.Footer>
               {
-                !isSolved ?
-                (
-                  <VideoModal.Button
-                    right
-                    onClick={ this.onClickSolveBtn }>
-                    확인
-                  </VideoModal.Button>
-                ) :
-                (
-                  <VideoModal.Button
-                    right
-                    onClick={ this.onClickKeepGoingBtn }
-                    isSolved={ isSolved }
-                    isCorrect={ isCorrect }>
-                    이어보기
-                  </VideoModal.Button>
-                )
+                this.renderModalBtn()
               }
             </VideoModal.Footer>
           </VideoModal.ContentWrapper>
@@ -107,22 +108,71 @@ class VideoModalComponent extends Component {
   @autobind
   renderChoices(answerIndex, SingleChoiceValues) {
     const { selectedChoiceIndex, isSolved, isCorrect } = this.state;
+    const { isVideoComplete, solvedQuestionsState, indexOfQuestion } = this.props;
+    const solvedQuestionState = solvedQuestionsState[indexOfQuestion];
 
     return SingleChoiceValues.map((singleChoiceValue, index) => (
-      <VideoModalSingleChoiceComponent
-        key={ index }
-        isChecked={ index ===  selectedChoiceIndex }
-        isSolved={ isSolved }
-        isCorrect={ isCorrect }
-        singleChoiceValue={ singleChoiceValue }
-        choiceIndex={ index }
-        onCheckboxClick={ this.onCheckboxClick } />
+      !isVideoComplete ?
+        <VideoModalSingleChoiceComponent
+          key={ index }
+          isChecked={ index ===  selectedChoiceIndex }
+          isSolved={ isSolved }
+          isCorrect={ isCorrect }
+          singleChoiceValue={ singleChoiceValue }
+          choiceIndex={ index }
+          onCheckboxClick={ this.onCheckboxClick } /> :
+        <VideoModalCompletedSingleChoiceComponent
+          key={ index }
+          index={ index }
+          solvedQuestionState={ solvedQuestionState }
+          singleChoiceValue={ singleChoiceValue } />
     ));
   }
 
   @autobind
   onCheckboxClick(choiceIndex) {
     this.setState({ selectedChoiceIndex: choiceIndex });
+  }
+
+  @autobind
+  renderModalBtn() {
+    const { isSolved, isCorrect } = this.state;
+    const { isVideoComplete } = this.props;
+
+    if (!isVideoComplete) {
+      if (!isSolved) {
+        return (
+          <VideoModal.Button
+            right
+            onClick={ this.isChoicesSelected() ? this.onClickSolveBtn : null }
+            selected={ this.isChoicesSelected() }>
+            확인
+          </VideoModal.Button>
+        );
+      }
+      return (
+        <VideoModal.Button
+          right
+          onClick={ this.onClickKeepGoingBtn }
+          isSolved={ isSolved }
+          isCorrect={ isCorrect }
+          selected={ this.isChoicesSelected() }>
+          이어보기
+        </VideoModal.Button>
+      );
+    } else {
+      return (
+        <VideoModal.Button
+          right
+          onClick={ this.onClickVideoCompleteCaseKeepGoingBtn }
+          isSolved={ isSolved }
+          isCorrect={ isCorrect }
+          isVideoComplete={ isVideoComplete }
+          selected={ this.isChoicesSelected() }>
+          이어보기
+        </VideoModal.Button>
+      );
+    }
   }
 
   @autobind
@@ -148,7 +198,9 @@ class VideoModalComponent extends Component {
       isCorrect,
       selectedChoiceIndex
     } = this.state;
-    const { singleChoiceValues } = textStateOfQuestions[indexOfQuestion];
+    const {
+      singleChoiceValues
+    } = textStateOfQuestions[indexOfQuestion];
     const solvedQuestionState = {
       indexOfQuestion,
       isCorrect,
@@ -156,7 +208,19 @@ class VideoModalComponent extends Component {
       indexOfAnswer: List(singleChoiceValues).findKey(({ isAnswer }) => isAnswer)
     };
 
+    this.setState({ isOpen: false });
     this.props.onQuestionSolved(solvedQuestionState);
+  }
+
+  @autobind
+  onClickVideoCompleteCaseKeepGoingBtn() {
+    this.setState({ isOpen: false });
+    this.props.onKeepGoingOnVideoCompleteCase();
+  }
+
+  @autobind
+  isChoicesSelected() {
+    return this.state.selectedChoiceIndex !== -1;
   }
 }
 

@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 
 import { VideoModalSingleChoice } from './VideoModalSingleChoiceStyled';
 
-const { func, arrayOf, shape, string, bool, number } = PropTypes;
+const { func, shape, string, bool, number } = PropTypes;
 
 const propTypes = {
   onCheckboxClick: func.isRequired,
@@ -53,7 +53,11 @@ class VideoModalSingleChoiceComponent extends Component {
 
   @autobind
   onCheckboxClick() {
-    this.props.onCheckboxClick(this.props.choiceIndex);
+    const { isSolved } = this.props;
+
+    if (!isSolved) {
+      this.props.onCheckboxClick(this.props.choiceIndex);
+    }
   }
 
   @autobind

@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import Content from './Content/Content';
 import Comment from './Comment/CommentContainer';
 import Analysis from './Analysis/Analysis';
-import Video from './Video/Video';
+import Video from './Video/VideoContainer';
 import ContentTitleComponent from '../ContentTitle/ContentTitleComponent';
 import { FlassDetailStyled } from './DetailStyled';
 
@@ -37,6 +37,7 @@ const TabTitle = styled.span`
 `;
 
 const propTypes = {
+  fetchRequestDetailAll: func.isRequired,
   match: object,
   detail: shape({
     detail: {
@@ -59,9 +60,7 @@ const propTypes = {
   }).isRequired,
   video: shape({
     videoUrl: string
-  }).isRequired,
-  fetchRequestDetailAll: func.isRequired,
-  loadVideoUrl: func.isRequired
+  }).isRequired
 };
 
 const defaultProps = {
@@ -84,7 +83,6 @@ class Detail extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchRequestDetailAll(id);
-    this.props.loadVideoUrl();
   }
 
   handleSelect = selected => {
@@ -102,8 +100,6 @@ class Detail extends Component {
         <ContentTitleComponent title="Watching Video" />
         <FlassDetailStyled.Content>
           <Video
-            VideoPlayerWrapperClassName="flass-detail-media__player-wrapper"
-            VideoPlayerClassName="flass-detail-media__player"
             VideoBarClassName="bar--thinner"
             VideoPlayedBarClassName="played-bar--thinner"
             VideoLoadedBarClassName="loaded-bar--thinner"
@@ -112,7 +108,6 @@ class Detail extends Component {
             VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
             VideoVolumeBtnClassName="video-btn"
             VideoVolumeBarClassName={ classNames('video-volume-bar') }
-            VideoFullscreenBtnClassName={ classNames('video-btn', 'video-btn--right', 'video-btn--r-margin') }
 
             videoUrl={ videoUrl }
             questions={ questions } />

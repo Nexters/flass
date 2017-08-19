@@ -1,33 +1,53 @@
 import _ from 'lodash';
 import {
-  LOAD_VIDEO,
-  SOLVED_ONE_QUESTION
+  createReducer
+} from '../../../reducerHelper';
+import {
+  FETCH_VIDEO,
+  UPDATE_SEARCHABLE_SECS,
+  SET_VIDEO_COMPLETE,
+  RESET_VIDEO_COMPLETE
 } from './VideoActions';
 
-const INITIAL_STATE = {
+const initialState = {
   videoUrl: '',
-  solvedQuestionsState: []
+  searchableSecs: 0,
+  isVideoComplete: false
 };
 
-export default function(state = INITIAL_STATE, action) {
-  switch(action.type) {
-    case LOAD_VIDEO:
-      return {
-        ...state,
-        videoUrl: 'https://www.youtube.com/watch?v=PTkKJI27NlE'
-      };
-    case SOLVED_ONE_QUESTION: {
-      const { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer } = action.payload;
+const fetchVideoReducer = {
+  [FETCH_VIDEO]: (state, action) => ({
+    ...state,
+    videoUrl: 'https://www.youtube.com/watch?v=PTkKJI27NlE'
+  })
+};
 
-      return {
-        ...state,
-        solvedQuestionsState: _.concat(
-          state.solvedQuestionsState,
-          { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
-        )
-      };
+const updateSearchableSecsReducer = {
+  [UPDATE_SEARCHABLE_SECS]: (state, { searchableSecs }) => ({
+    ...state,
+    searchableSecs
+  })
+};
+
+const updateVideoCompleteReducer = {
+  [SET_VIDEO_COMPLETE]: (state, action) => {
+    return {
+      ...state,
+      isVideoComplete: true
+    };
+  },
+  [RESET_VIDEO_COMPLETE]: (state, action) => {
+    return {
+      ...state,
+      isVideoComplete: false
     }
-    default:
-      return state;
   }
-}
+};
+
+const VideoReducers = createReducer(initialState, {
+  ...fetchVideoReducer,
+  ...updateSearchableSecsReducer,
+  ...updateVideoCompleteReducer
+});
+
+export default VideoReducers;
