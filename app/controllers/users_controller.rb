@@ -13,17 +13,23 @@ class UsersController < ApplicationController
     render json: @user
   end
 
-  # GET /users/edit
-  api :GET, '/users/edit', '회원 정보 수정'
-  def edit
-    if @user.id == session[:user_id]
-      render json: @user, status: :ok
+  # POST /users
+  # POST /users.json
+  api :POST, '/users', '회원 정보 생성 및 업데이트하기'
+  param :test_token, String, '테스트용 token 값(nil만 아니면 인증됨, nil일 경우 에러메시지)'
+  def create
+    test = params[:test_token]
+    puts test
+    if test.nil?
+      render json: {message: "유효하지 않은 토큰값입니다."}, status: :unauthorized
     else
-      render json: {message: "해당 경로에 접근 권한이 없습니다."}, status: :unauthorized
+      @user = User.find(21)
+      session[:user_id] = @user.id
+      render json: @user, status: :ok
     end
   end
 
-
+=begin
   # POST /users
   # POST /users.json
   api :POST, '/users', '회원 정보 생성 및 업데이트하기'
@@ -58,6 +64,10 @@ class UsersController < ApplicationController
       end
     end
   end
+=end
+
+  def login
+  end
 
   api :GET, '/users/logout', '회원 로그아웃'
   def logout
@@ -70,6 +80,7 @@ class UsersController < ApplicationController
   api :DELETE, '/users', '회원 탈퇴'
   def destroy
     @user.destroy
+    reset_session
     head :ok
   end
 

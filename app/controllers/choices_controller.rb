@@ -1,56 +1,60 @@
 class ChoicesController < ApplicationController
+  before_action :login_check
   before_action :set_choice, only: [:edit, :update, :destroy]
 
 
   api :GET, '/choices', '특정 Question에 대한 보기(선지)'
-  param :question_id, :number, :desc => "질문 ID", :required => true
+  param :question_id, :number, :desc => "질문 ID"
   def show
     @choices = Choice.where(question_id: params[:question_id])  
   end
 
 
   api :POST, '/choices', '특정 Question에 대한 선지 생성'
-  param :question_id, :number, :desc => "Question ID", :required => true
-  param :answer, String, :desc => "선지 내용", :required => true
+  param :question_id, :number, :desc => "Question ID"
+  param :answer, String, :desc => "선지 내용"
   def create
     @choice = Choice.new(choice_params)
  
     if @choice.save
       render json: @choice, status: :created
     else
-      render json: @choice.errors, status: :unprocessable_entity
+      render json: {message: "보기를 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
 
   api :GET, '/choices/edit', '특정 Question에 대한 선지 수정 페이지'
-  param :id, :number, :desc => "Choice ID", :required => true
+  param :id, :number, :desc => "Choice ID"
     def edit
       if @question.user_id == session[:user_id]
         render json: @choice, status: :ok
       else
-        render json: @choice.errors, status: :forbidden
+        render json: {message: "문제를 수정할 권한이 없습니다."}, status: :unauthorized
       end
     end
 
   api :PUT, '/choices', '특정 Question에 대한 선지 엡데이트'
-  param :id, :number, :desc => "Choice ID", :required => true
-  param :answer, String, :desc => "선지 내용", :required => true
+  param :id, :number, :desc => "Choice ID"
+  param :answer, String, :desc => "선지 내용"
   def update
     if @choice.update(choice_params)
-      render :show, status: :ok, location: @choice
+      render json: @choice, status: :ok
     else
-      render json: @choice.errors, status: :unprocessable_entity
+      render json: {message: "문제의 보기를 반드시 입력하셔야 합니다."}, status: :bad_request
     end
   end
 
   api :DELETE, '/choices', '특정 Question에 대한 선지 삭제'
-  param :id, :number, :desc => "Choice ID", :required => true
+  param :id, :number, :desc => "Choice ID"
   def destroy
-    @choice.destroy
-    head :no_content
+    if @question.user_id == session[:user_id]
+      @choice.destroy
+      head :ok
+    else
+      render json: {message: "문제를 삭제할 권한이 없습니다."}, status: :unauthorized
+    end
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -63,3 +67,4 @@ class ChoicesController < ApplicationController
       params.require(:choice).permit(:question_id, :answer)
     end
 end
+ 

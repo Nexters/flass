@@ -3,7 +3,7 @@ class LecturesController < ApplicationController
   before_action :set_lecture, only: [:show, :edit, :update, :destroy, :statistics]
 
   api :GET, '/lectures', '(특정 유저가 업로드한) 강의들 불러오기'
-  param :page, :number, :desc => "강의 페이지", :required => true
+  param :page, :number, :desc => "강의 페이지"
   def index
     @lectures = Lecture.where(user_id: session[:user_id]).order(created_at: :desc).paginate(page: params[:page], per_page: 12)
     render json: @lectures
@@ -12,13 +12,13 @@ class LecturesController < ApplicationController
   # GET /lectures
   # GET /lectures.json
   api :GET, '/lectures/:id', '특정 강의 불러오기'
-  param :id, :number, :desc => "lecture ID", :required => true
+  param :id, :number, :desc => "lecture ID"
   def show
     render json: @lecture
   end
 
   api :GET, '/lectures/:id/edit', '강의 수정 페이지'
-  param :id, :number, :desc => "lecture ID", :required => true
+  param :id, :number, :desc => "lecture ID"
   def edit
     if @lecture.user_id == session[:user_id]
       render json: @lecture, status: :ok
@@ -28,13 +28,13 @@ class LecturesController < ApplicationController
   end
 
   api :POST, '/lectures', '강의 생성'
-  param :title, String, :desc => "강의 제목", :required => true
-  param :content, String, :desc => "강의 내용", :required => false
-  param :subject, String, :desc => "강의 과목", :required => false
-  param :textbook_range, String, :desc => "교재 범위", :required => false
-  param :url, String, :desc => "강의 url 정보", :required => true
-  param :thumbnail_url, String, :desc => "강의 thumbnail_url 정보", :required => true
-  param :duration, Time, :desc => "강의 시간", :required => true
+  param :title, String, :desc => "강의 제목"
+  param :content, String, :desc => "강의 내용"
+  param :subject, String, :desc => "강의 과목"
+  param :textbook_range, String, :desc => "교재 범위"
+  param :url, String, :desc => "강의 url 정보"
+  param :thumbnail_url, String, :desc => "강의 thumbnail_url 정보"
+  param :duration, String, :desc => "강의 시간"
   def create
     @lecture = Lecture.new(lecture_params)
 
@@ -46,14 +46,14 @@ class LecturesController < ApplicationController
   end
 
   api :PUT, '/lectures/:id', '강의 업데이트'
-  param :id, :number, :desc => "lecture ID", :required => true
-  param :title, String, :desc => "강의 제목", :required => true
-  param :content, String, :desc => "강의 설명", :required => true
-  param :subject, String, :desc => "강의 과목", :required => false
-  param :textbook_range, String, :desc => "교재 범위", :required => false
-  param :url, String, :desc => "강의 url", :required => true
-  param :thumbnail_url, String, :desc => "강의 thumbnail_url", :required => false
-  param :duration, Time, :desc => "강의 시간", :required => true
+  param :id, :number, :desc => "lecture ID"
+  param :title, String, :desc => "강의 제목"
+  param :content, String, :desc => "강의 설명"
+  param :subject, String, :desc => "강의 과목"
+  param :textbook_range, String, :desc => "교재 범위"
+  param :url, String, :desc => "강의 url"
+  param :thumbnail_url, String, :desc => "강의 thumbnail_url"
+  param :duration, Time, :desc => "강의 시간"
   def update
     if @lecture.update(lecture_params)
       render json: @lecture, status: :ok
@@ -65,7 +65,7 @@ class LecturesController < ApplicationController
   # DELETE /lectures
   # DELETE /lectures.json
   api :DELETE, '/lectures/:id', '강의 삭제'
-  param :id, :number, :desc => "lecture ID", :required => true
+  param :id, :number, :desc => "lecture ID"
   def destroy
     if @lecture.user_id == session[:user_id]
       @lecture.destroy

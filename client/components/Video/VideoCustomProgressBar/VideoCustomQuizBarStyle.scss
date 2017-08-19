@@ -1,8 +1,8 @@
 @import "../../../css/base/mixins";
 @import "../VideoVariables";
 
-$tooltipWidth: 40px;
-$tooltipHeight: 43px;
+$tooltipWidth: 20px;
+$tooltipHeight: 20px;
 $tooltipTextColor: #9abf32;
 $quizbarColor: #9abf32;
 
@@ -39,13 +39,13 @@ $quizbarColor: #9abf32;
     width: $tooltipWidth;
     height: $tooltipHeight;
     margin-left: -($tooltipWidth / 2);
-    padding: 5px 0;
+    padding: 3px 0;
     bottom: 150%;
     left: 50%;
     background-color: white;
     color: $tooltipTextColor;
     text-align: center;
-    font-size: 24px;
+    font-size: 10px;
     font-weight: 500;
     border-radius: 6px;
     z-index: -999;
