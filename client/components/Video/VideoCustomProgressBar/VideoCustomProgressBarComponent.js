@@ -94,8 +94,6 @@ class VideoCustomProgressBarComponent extends Component {
       VideoQuizIndicatorClassName,
       VideoQuizIndicatorBarClassName,
 
-      onQuestionbarClick,
-
       quizTimeArray
     } = this.props;
 
@@ -114,7 +112,7 @@ class VideoCustomProgressBarComponent extends Component {
         <VideoCustomQuizBarComponent
           VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
           VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
-          onQuestionbarClick={ onQuestionbarClick }
+          onQuestionbarClick={ this.onQuestionbarClick }
           duration={ duration }
 
           quizTimeArray={ quizTimeArray } />
@@ -211,8 +209,10 @@ class VideoCustomProgressBarComponent extends Component {
   }
 
   @autobind
-  onQuestionbarClick({ label }) {
+  onQuestionbarClick(e, { label }) {
     this.props.onQuestionbarClick({ label });
+    e.stopPropagation();
+    e.preventDefault;
   }
 }
 

@@ -27,6 +27,7 @@ $quizbarColor: #9abf32;
   background-color: $quizbarColor;
   border: 3px solid $quizbarColor;
   border-radius: 50%;
+  z-index: 5;
   transform: scale(1.5, 1.5);
 
   &--thinner {
