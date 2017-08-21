@@ -1,4 +1,4 @@
-import { delay } from 'redux-saga'
+import { delay } from 'redux-saga';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import agent from '../../agent';
 
