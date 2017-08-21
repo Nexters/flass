@@ -82,7 +82,7 @@ class Detail extends Component {
     const detailId = this.props.detail.detail.id;
     console.log(this.props, detailId);
     if(detailId === -1) {
-      this.props.fetchRequestDetailAll(detailId);
+      this.props.fetchRequestDetailAll(id);
     }
   }
 

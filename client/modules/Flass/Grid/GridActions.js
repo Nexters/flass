@@ -13,10 +13,6 @@ function* fetchMyChannelItems() {
   yield put({
     type: FETCH_READY_MY_CHANNEL
   });
-  yield put({
-    type: FETCH_USER,
-    token: 'token'
-  });
   try {
     const items = yield call(agent.Grid.all);
     yield put({

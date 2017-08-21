@@ -4,7 +4,7 @@ import { FETCH_DETAIL } from '../../../modules/Flass/Detail/DetailActions';
 import {
   LOAD_VIDEO
 } from '../../../modules/Flass/Detail/Video/VideoActions';
-import withLoading from './EnhancedDetail';
+import withLoading from './withLoading';
 
 function mapStateToProps(state) {
   return {

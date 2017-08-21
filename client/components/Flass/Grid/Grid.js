@@ -31,6 +31,9 @@ class Grid extends Component {
       this.props.fetchRequestMyChannelItems();
     }
   }
+  // 1. receive TODO
+  // 2. HOC
+  // 3. react router 기능.
 
   componentDidMount() {
   }
