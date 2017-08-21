@@ -135,7 +135,12 @@ class Detail extends Component {
         eventKey={ 1 }
         title={ tabTitle('강의 정보',
           selected === 1 ? contentImageActive : contentImage) }>
-        <Content content={ detail.content } />
+        <Content
+          title={ detail.title }
+          subject={ detail.subject }
+          content={ detail.content }
+          tetextbookRangextbookRange={ detail['textbook_range'] }
+        />
       </Tab>
       <Tab
         eventKey={ 2 }

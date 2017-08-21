@@ -1,25 +1,33 @@
-import { FETCH_READY_DETAIL, FETCH_DETAIL_SUCCESS, FETCH_DETAIL_ERROR } from './DetailActions';
+import {
+  FETCH_READY_DETAIL,
+  FETCH_DETAIL_SUCCESS,
+  FETCH_DETAIL_ERROR
+} from './DetailActions';
 
 const initialState = {
   isLoading: false,
   detail: {
     id: -1,
-    userId: '',
-    userName: '',
+    user_id: -1,
     title: '',
+    subject: '',
     content: '',
-    url: '',
-    replayAt: '',
-    createdAt: ''
+    textbook_range: '',
+    duration: -1,
+    thumbnail_url: '',
+    created_at: '',
+    updated_at: '',
+    url: ''
   }
-};
+}
+;
 
 const DetailReducer = (state = initialState, action) => {
   switch(action.type) {
     case FETCH_READY_DETAIL:
       return {
         ...state,
-        isLoading: true,
+        isLoading: true
       };
     case FETCH_DETAIL_SUCCESS:
       return {
@@ -29,8 +37,8 @@ const DetailReducer = (state = initialState, action) => {
     case FETCH_DETAIL_ERROR:
       return {
         ...state,
-        isLoading: false,
-      }
+        isLoading: false
+      };
     default:
       return state;
   }
