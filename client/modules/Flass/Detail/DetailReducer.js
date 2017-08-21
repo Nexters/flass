@@ -3,6 +3,7 @@ import {
   FETCH_DETAIL_SUCCESS,
   FETCH_DETAIL_ERROR
 } from './DetailActions';
+import { createReducer } from '../../reduxHelper';
 
 const initialState = {
   isLoading: false,
@@ -19,29 +20,40 @@ const initialState = {
     updated_at: '',
     url: ''
   }
-}
-;
-
-const DetailReducer = (state = initialState, action) => {
-  switch(action.type) {
-    case FETCH_READY_DETAIL:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case FETCH_DETAIL_SUCCESS:
-      return {
-        isLoading: false,
-        detail: { ...action.detail }
-      };
-    case FETCH_DETAIL_ERROR:
-      return {
-        ...state,
-        isLoading: false
-      };
-    default:
-      return state;
-  }
 };
+
+const fetchDetailReducer = {
+  [FETCH_READY_DETAIL]: (state, action) => ({
+    ...state,
+    isLoading: true
+  }),
+  [FETCH_DETAIL_SUCCESS]: (state, action) => {
+    const { detail } = action;
+    return {
+      isLoading: false,
+      detail: {
+        id: detail.id,
+        userId: detail['user_id'],
+        title: detail.title,
+        subject: detail.subject,
+        content: detail.content,
+        textbookRange: detail['textbook_range'],
+        url: detail.url,
+        thumbnailUrl: detail['thumbnail_url'],
+        duration: detail.duration,
+        createdAt: detail['created_at'],
+        updatedAt: detail['updated_at']
+      }
+    };
+  },
+  [FETCH_DETAIL_ERROR]: (state, action) => ({
+    ...state,
+    isLoading: false
+  })
+};
+
+const DetailReducer = createReducer(initialState, {
+  ...fetchDetailReducer
+});
 
 export default DetailReducer;

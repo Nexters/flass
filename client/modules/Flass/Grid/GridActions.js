@@ -1,6 +1,7 @@
 import fetch from 'axios';
 import { takeEvery } from 'redux-saga';
 import { call, fork, take, select, put, cancel } from 'redux-saga/effects';
+import _ from 'lodash';
 import agent from '../../agent';
 import { FETCH_USER } from '../User/UserActions';
 
@@ -15,9 +16,13 @@ function* fetchMyChannelItems() {
   });
   try {
     const items = yield call(agent.Grid.all);
+    const itemsWithQuestion = yield call(_.map, items, (item => {
+      const questions = agent.Question.byDetailId(item.id) || [];
+      return { ...item, questionCount: questions.length };
+    }));
     yield put({
       type: FETCH_MY_CHANNEL_SUCCESS,
-      items
+      items: itemsWithQuestion
     });
   } catch (err) {
     yield put({

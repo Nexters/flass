@@ -39,9 +39,10 @@ class Grid extends Component {
   }
 
   renderChildren(items) {
+    const { user } = this.props;
     return items.map(item => (
       <Col key={item.id} md={ 3 }>
-        <GridItem { ...item } />
+        <GridItem { ...item } userName={ user.userName } />
       </Col>
     ));
   }
