@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import './NavbarComponentStyles.scss';
 
 const propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.bool, PropTypes.array]).isRequired,
 };
 
 const NavbarComponent = props => (

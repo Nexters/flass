@@ -9,6 +9,7 @@ import ContentTitleComponent from '../ContentTitle/ContentTitleComponent';
 import './Grid.scss';
 
 const propTypes = {
+  user: PropTypes.object.isRequired,
   items: PropTypes.array.isRequired,
   fetchRequestMyChannelItems: PropTypes.func.isRequired
 };
@@ -18,8 +19,23 @@ const defaultProps = {
 
 class Grid extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { user } = this.props;
+    const nextUser = nextProps.user;
+    console.log(user, nextUser);
+    if(user.id !== nextUser.id) {
+      this.props.fetchRequestMyChannelItems();
+    }
+  }
+  // 1. receive TODO
+  // 2. HOC
+  // 3. react router 기능.
+
   componentDidMount() {
-    this.props.fetchRequestMyChannelItems();
   }
 
   renderChildren(items) {

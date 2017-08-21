@@ -4,7 +4,8 @@ import { FETCH_MY_CHANNEL } from '../../../modules/Flass/Grid/GridActions';
 
 function mapStateToProps(state) {
   return {
-    ...state.flass.grid
+    ...state.flass.grid,
+    user: { ...state.flass.user }
   };
 }
 
