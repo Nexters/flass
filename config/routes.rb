@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   get 'comment_children/destroy/:comment_children_id' => "comment_children#destroy"
 
   put 'comments/:id/like' => "comments#like"
->>>>>>> 0ce7fd8fa8b33fce2f3ac2b718ccbdc0547d38dd
 
   apipie
   resource :users
