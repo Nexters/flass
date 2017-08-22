@@ -104,10 +104,6 @@ class UploadInsertionComponent extends Component {
         <div className="row">
           <div className="row__player-large-5">
             <VideoComponent
-              VideoContainerClassName={ 'flass-upload-insertion-media' }
-              VideoPlayerWrapperClassName="flass-upload-insertion-media__player-wrapper"
-              VideoPlayerClassName="flass-upload-insertion-media__player"
-              VideoControllerBarClassName="flass-upload-insertion-media__controller-bar"
               VideoBarClassName="bar--thinner"
               VideoPlayedBarClassName="played-bar--thinner"
               VideoLoadedBarClassName="loaded-bar--thinner"
@@ -116,7 +112,6 @@ class UploadInsertionComponent extends Component {
               VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
               VideoVolumeBtnClassName="video-btn"
               VideoVolumeBarClassName={ classNames('video-volume-bar') }
-              VideoFullscreenBtnClassName={ classNames('video-btn', 'video-btn--right', 'video-btn--r-margin') }
 
               setPlayer={ this.setPlayer }
               playerSeekTo={ this.playerSeekTo }

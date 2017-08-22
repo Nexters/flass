@@ -70,6 +70,11 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        BACK_END: JSON.stringify(process.env.BACK_END)
+      }
+    })
   ]
 };
