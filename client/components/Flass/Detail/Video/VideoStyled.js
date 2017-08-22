@@ -50,3 +50,48 @@ export const ReplayBtn = styled.img`
   transform: translate(-50%, -50%);
   cursor: pointer;
 `;
+
+export const StyledPlayerOnDetailPage = `
+  width: 100%;
+  border-radius: 3px;
+  height: 650px;
+`;
+
+export const EndedPageOnDetailPage = props => {
+  const { isOpen } = props;
+
+  return {
+    Container: `
+      position: absolute;
+      top: 0;
+      width: ${isOpen ? '100%' : 0};
+      height: ${isOpen ? 650 : 0}px;
+      opacity: ${isOpen ? 1 : 0};
+      z-index: ${isOpen ? 10 : -10};
+      background-color: black;
+      border-radius: 3px;
+      transition: opacity .5s ease-out;
+    `,
+    Title: `
+      margin-top: 196px;
+      color: white;
+      text-align: center;
+      font-size: 29px;
+      font-weight: 500;
+    `,
+    ReplayBtn: `
+      position: relative;
+      margin-top: 34px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+    `,
+    BtnLabel: `
+      margin-top: 14px;
+      color: white;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 500;
+    `
+  };
+};

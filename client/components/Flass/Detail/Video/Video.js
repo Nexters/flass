@@ -30,7 +30,9 @@ import {
 } from '../../../Video/VideoUtils';
 
 import {
-  FlassDetailVideo
+  FlassDetailVideo,
+  StyledPlayerOnDetailPage,
+  EndedPageOnDetailPage
 } from './VideoStyled';
 
 const { string, oneOfType, arrayOf, func, number, array, shape, bool } = PropTypes;
@@ -145,6 +147,7 @@ class Video extends Component {
     return (
       <FlassDetailVideo.Container>
         <VideoPlayerComponent
+          styledProps={ StyledPlayerOnDetailPage }
           url={ videoUrl }
           playing={ playing }
           volume={ volume }
@@ -244,7 +247,8 @@ class Video extends Component {
   renderEndedPage(isEnded) {
     return isEnded ?
       <VideoEndedPageComponent
-        onReplayBtnClick={ this.onReplayBtnClick } /> :
+        onReplayBtnClick={ this.onReplayBtnClick }
+        styledProps={ EndedPageOnDetailPage } /> :
       null;
   }
 
