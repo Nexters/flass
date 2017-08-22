@@ -35,10 +35,6 @@ const flassTheme = getMuiTheme({
 });
 
 class FlassApp extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   getChildContext() {
     return { muiTheme: getMuiTheme(baseTheme) };
   }
