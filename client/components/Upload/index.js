@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../modules/Upload/Actions';
 
 import VideoUpload from './VideoUpload';
-import UploadInsertionComponent from './UploadInsertion/UploadInsertionComponent';
+import UploadInsertionContainer from './UploadInsertion/UploadInsertionContainer';
 import './upload.scss';
 
 const propTypes = {
@@ -85,9 +85,7 @@ class Upload extends Component {
       case 1:
       default:
         return (
-          <UploadInsertionComponent
-            videoTitle={ title }
-            goToStepOne={ this.goToStepOne } />
+          <UploadInsertionContainer />
         );
     }
   }

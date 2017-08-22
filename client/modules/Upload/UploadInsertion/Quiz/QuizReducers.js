@@ -1,15 +1,17 @@
 import _ from 'lodash';
 import { List } from 'immutable';
+import { createReducer } from '../../../reducerHelper';
 import {
   ADD_MULTIPLE_CHIOICE_QUESTION,
-  ADD_ANSWER_QUESTION,
   CANCEL_ADDING_QUESTION,
   COMPLETE_ADDING_QUESTION,
   SAVE_MULTIPLE_CHOICE_QUESTION,
   ADD_QUESTION_SECS,
   FOCUS_ON_QUESTION,
   COMPLETE_EDIT_QUESTION,
-  DELETE_COMPLETE_QUESTION
+  DELETE_COMPLETE_QUESTION,
+  SUCCESS_UPLOAD_QUESTIONS,
+  FAIL_UPLOAD_QUESTIONS
 } from './QuizActions';
 
 const INITIAL_STATE = {
@@ -32,118 +34,93 @@ const INITIAL_STATE = {
   isAdding: false,
   type: null,
   numOfQuestion: 0,
-  quizState: []
+  quizState: [],
+  isUploadingQuestionRequestSuccess: false,
+  isUploadingQuestionRequestFail: false,
+  videoUrl: ''
 };
 const MULTIPLE_CHOICE_TYPE = 'multiple_choice_type';
 const ANSWER_QUESTION_TYPE = 'answer_question_type';
 
-export default function(state = INITIAL_STATE, action) {
-  switch(action.type) {
-    case ADD_MULTIPLE_CHIOICE_QUESTION:
-      return { ...state, type: MULTIPLE_CHOICE_TYPE, isAdding: true };
-    case ADD_ANSWER_QUESTION:
-      return { ...state, type: ANSWER_QUESTION_TYPE, isAdding: true };
-    case CANCEL_ADDING_QUESTION:
-      return { ...state, type: null, isAdding: false };
-    case COMPLETE_ADDING_QUESTION:
-      return { ...state, type: null, isAdding: false };
-    case SAVE_MULTIPLE_CHOICE_QUESTION: {
-      const {
-        TitleInputValue,
-        checkedQuizIndex,
-        numOfChoice,
-        SingleChoiceValues,
-        secsOfQuiz,
-        numOfQuestion
-      } = action.payload;
+const addQuestionReducer = {
+  [ADD_MULTIPLE_CHIOICE_QUESTION]: state => ({
+    ...state,
+    type: MULTIPLE_CHOICE_TYPE,
+    isAdding: true
+  }),
+  [CANCEL_ADDING_QUESTION]: state => ({
+    ...state,
+    type: null,
+    isAdding: false
+  }),
+  [COMPLETE_ADDING_QUESTION]: state => ({
+    ...state,
+    type: null,
+    isAdding: false
+  })
+};
 
-      const newMultipleChoiceState = {
-        TitleInputValue,
-        checkedQuizIndex,
-        numOfChoice,
-        SingleChoiceValues,
-        secsOfQuiz,
-        indexOfQuestion: numOfQuestion - 1
-      };
+const saveQuestionReducer = {
+  [SAVE_MULTIPLE_CHOICE_QUESTION]: (state, action) => {
+    const {
+      TitleInputValue,
+      checkedQuizIndex,
+      numOfChoice,
+      SingleChoiceValues,
+      secsOfQuiz,
+      numOfQuestion
+    } = action.payload;
 
-      return {
-        ...state,
-        quizState: _.concat(state.quizState, newMultipleChoiceState),
-        numOfQuestion: state.numOfQuestion
-      };
-    }
-    case ADD_QUESTION_SECS: {
-      const { playedSeconds, indexOfQuestion, isFocused } = action.payload;
-      const newSecsState = {
-        playedSeconds: parseFloat(playedSeconds),
-        label: `Q${indexOfQuestion}`,
-        indexOfQuestion,
-        isFocused
-      };
+    const newMultipleChoiceState = {
+      TitleInputValue,
+      checkedQuizIndex,
+      numOfChoice,
+      SingleChoiceValues,
+      secsOfQuiz,
+      indexOfQuestion: numOfQuestion - 1
+    };
 
-      return {
-        ...state,
-        questionSecsStateArray: _.concat(state.questionSecsStateArray, newSecsState)
-      };
-    }
+    return {
+      ...state,
+      quizState: _.concat(state.quizState, newMultipleChoiceState),
+      numOfQuestion: state.numOfQuestion
+    };
+  }
+};
 
-    case FOCUS_ON_QUESTION: {
-      const {
+const questionSecsReducer = {
+  [ADD_QUESTION_SECS]: (state, action) => {
+    const { playedSeconds, indexOfQuestion, isFocused } = action.payload;
+    const newSecsState = {
+      playedSeconds: parseFloat(playedSeconds),
+      label: `Q${indexOfQuestion}`,
+      indexOfQuestion,
+      isFocused
+    };
+
+    return {
+      ...state,
+      questionSecsStateArray: _.concat(state.questionSecsStateArray, newSecsState)
+    };
+  }
+};
+
+const focusQuestionReducer = {
+  [FOCUS_ON_QUESTION]: (state, action) => {
+    const {
+      secsStateOfFocusedQuestion,
+      textStateOfFocusdQuestion
+    } = findQuestionSecsStateAndTextStateByLabel(state.questionSecsStateArray, state.quizState, action.payload.label);
+
+    return {
+      ...state,
+      stateOfFocusedQuestion: {
         secsStateOfFocusedQuestion,
         textStateOfFocusdQuestion
-      } = findQuestionSecsStateAndTextStateByLabel(state.questionSecsStateArray, state.quizState, action.payload.label);
-
-      return {
-        ...state,
-        stateOfFocusedQuestion: {
-          secsStateOfFocusedQuestion,
-          textStateOfFocusdQuestion
-        }
-      };
-    }
-
-    case COMPLETE_EDIT_QUESTION: {
-      const { EditedTextStateOfFocusedQuestion } = action.payload;
-      const { indexOfQuestion } = EditedTextStateOfFocusedQuestion;
-      const UpdatedQuizState = List(state.quizState)
-        .update(indexOfQuestion, () => EditedTextStateOfFocusedQuestion)
-        .toArray();
-
-      return {
-        ...state,
-        quizState: UpdatedQuizState,
-        stateOfFocusedQuestion: INITIAL_STATE.stateOfFocusedQuestion
-      };
-    }
-
-    case DELETE_COMPLETE_QUESTION: {
-      const { indexOfQuestion } = action.payload;
-
-      const UpdatedQuizState = List(state.quizState)
-        .delete(indexOfQuestion)
-        .toArray();
-      const UpdatedQuizSecsState = List(state.questionSecsStateArray)
-        .delete(indexOfQuestion)
-        .map((secsState, i) => ({
-          ...secsState,
-          indexOfQuestion: i + 1,
-          label: `Q${i + 1}`,
-          isFocused: false
-        }))
-        .toArray();
-
-
-      return {
-        ...state,
-        quizState: UpdatedQuizState,
-        questionSecsStateArray: UpdatedQuizSecsState,
-        stateOfFocusedQuestion: INITIAL_STATE.stateOfFocusedQuestion
-      };
-    }
-    default:
-      return state;
+      }
+    };
   }
-}
+};
 
 function findQuestionSecsStateAndTextStateByLabel(questionSecsStateArray, questionTextStateArray, targetLabel) {
   let index = -1;
@@ -169,3 +146,71 @@ function findQuestionSecsStateAndTextStateByLabel(questionSecsStateArray, questi
 function findQuestionTextStateByLabel(questionTextStateArray, index) {
   return questionTextStateArray[index];
 }
+
+const editQuestionReducer = {
+  [COMPLETE_EDIT_QUESTION]: (state, action) => {
+    const { EditedTextStateOfFocusedQuestion } = action.payload;
+    const { indexOfQuestion } = EditedTextStateOfFocusedQuestion;
+    const UpdatedQuizState = List(state.quizState)
+      .update(indexOfQuestion, () => EditedTextStateOfFocusedQuestion)
+      .toArray();
+
+    return {
+      ...state,
+      quizState: UpdatedQuizState,
+      stateOfFocusedQuestion: INITIAL_STATE.stateOfFocusedQuestion
+    };
+  }
+};
+
+const deleteQuestionReducer = {
+  [DELETE_COMPLETE_QUESTION]: (state, action) => {
+    const { indexOfQuestion } = action.payload;
+
+    const UpdatedQuizState = List(state.quizState)
+      .delete(indexOfQuestion)
+      .toArray();
+    const UpdatedQuizSecsState = List(state.questionSecsStateArray)
+      .delete(indexOfQuestion)
+      .map((secsState, i) => ({
+        ...secsState,
+        indexOfQuestion: i + 1,
+        label: `Q${i + 1}`,
+        isFocused: false
+      }))
+      .toArray();
+
+
+    return {
+      ...state,
+      quizState: UpdatedQuizState,
+      questionSecsStateArray: UpdatedQuizSecsState,
+      stateOfFocusedQuestion: INITIAL_STATE.stateOfFocusedQuestion
+    };
+  }
+};
+
+const requestQuestionReducer = {
+  [SUCCESS_UPLOAD_QUESTIONS]: state => ({
+    ...state,
+    isUploadingQuestionRequestSuccess: true,
+    videoUrl: 'flass.com/videoUrl'
+  }),
+  [FAIL_UPLOAD_QUESTIONS]: state => ({
+    ...state,
+    isUploadingQuestionRequestFail: true
+  })
+};
+
+const QuestionReducers = createReducer(INITIAL_STATE, {
+  ...addQuestionReducer,
+  ...saveQuestionReducer,
+  ...questionSecsReducer,
+  ...questionSecsReducer,
+  ...focusQuestionReducer,
+  ...editQuestionReducer,
+  ...deleteQuestionReducer,
+  ...requestQuestionReducer
+});
+
+export default QuestionReducers;

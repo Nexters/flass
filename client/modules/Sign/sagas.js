@@ -27,9 +27,11 @@ function* initGoogleService() {
 
 function* loginGoogleService() {
   const authResponse = yield call(Google.authenticateForSignIn);
+
   if (authResponse) {
     yield put({
-      type: SUCCESS_LOGIN_GOOGLE_SERVICE
+      type: SUCCESS_LOGIN_GOOGLE_SERVICE,
+      payload: authResponse
     });
   }
 }

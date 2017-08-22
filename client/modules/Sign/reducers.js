@@ -9,21 +9,24 @@ import {
 
 const initialState = {
   isUserSignedIn: false,
-  needRedirect: false
+  needRedirect: false,
+  id_token: ''
 };
 
 const userSignInReducer = {
-  [SUCCESS_LOGIN_GOOGLE_SERVICE]: state => ({
+  [SUCCESS_LOGIN_GOOGLE_SERVICE]: (state, { payload }) => ({
     ...state,
     isUserSignedIn: true,
-    needRedirect: true
+    needRedirect: true,
+    id_token: payload.id_token
   })
 };
 
 const userSignOutReducer = {
   [SUCCESS_LOGOUT_GOOGLE_SERVICE]: state => ({
     ...state,
-    isUserSignedIn: false
+    isUserSignedIn: false,
+    id_token: ''
   })
 };
 

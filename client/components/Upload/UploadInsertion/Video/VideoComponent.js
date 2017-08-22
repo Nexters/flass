@@ -303,18 +303,6 @@ class VideoComponent extends Component {
   }
 
   @autobind
-  onQuestionSolved() {
-    const { played, duration } = this.props;
-    const solvedSecs = convertPercentageToSecs(played, duration);
-    const secsAddOneFromSolvedSecs = solvedSecs + 1;
-    const changedPlayedPercentage = convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
-    this.props.setIsQuizSecsState(false);
-    this.props.setPlayingState(true);
-    this.props.setPlayedState(changedPlayedPercentage);
-    this.props.playerSeekTo(changedPlayedPercentage);
-  }
-
-  @autobind
   onQuestionbarClick({ label }) {
     this.props.onQuestionbarClick({ label });
   }
