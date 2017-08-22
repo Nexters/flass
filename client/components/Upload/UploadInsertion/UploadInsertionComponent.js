@@ -8,8 +8,6 @@ import FlassContentTitleComponent from '../../Flass/ContentTitle/ContentTitleCom
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
 
-import * as actions from '../../../modules/Upload/UploadInsertion/Quiz/QuizActions';
-
 import './UploadInsertionComponentStyles.scss';
 
 const { func, string, bool, arrayOf, number, shape, oneOfType } = PropTypes;
@@ -23,11 +21,23 @@ const propTypes = {
   focusOnQuestion: func.isRequired,
   completeEditQuestion: func.isRequired,
   deleteCompleteQuestion: func.isRequired,
+  requestUploadQuestions: func.isRequired,
   isAdding: bool,
   questionSecsStateArray: arrayOf(shape({
     playedSeconds: number,
     label: string
   })),
+  questionStateArray: arrayOf(shape({
+    TitleInputValue: string,
+    checkedQuizIndex: number,
+    numOfChoice: number,
+    SingleChoiceValues: arrayOf(shape({
+      isAnswer: bool,
+      choiceTextValue: string
+    })),
+    secsOfQuiz: number,
+    indexOfQuestion: number
+  })).isRequired,
   stateOfFocusedQuestion: shape({
     secsStateOfFocusedQuestion: shape({
       playedSeconds: number,
@@ -148,7 +158,9 @@ class UploadInsertionComponent extends Component {
         </div>
 
         <div className="row row--t-margin-larger">
-          <div className="flass-upload-insertion-media__btn">
+          <div
+            className="flass-upload-insertion-media__btn"
+            onClick={ this.onClickUploadBtn }>
             업 로 드
           </div>
         </div>
@@ -267,25 +279,15 @@ class UploadInsertionComponent extends Component {
     this.props.deleteCompleteQuestion({ indexOfQuestion });
     this.setPlayingState(true);
   }
+
+  @autobind
+  onClickUploadBtn() {
+    const { questionStateArray } = this.props;
+    this.props.requestUploadQuestions({ questionState: questionStateArray });
+  }
 }
 
 UploadInsertionComponent.propTypes = propTypes;
 UploadInsertionComponent.defaultProps = defaultProps;
 
-function mapStateToProps({ quizInsertion }) {
-  const {
-    isAdding,
-    type,
-    questionSecsStateArray,
-    stateOfFocusedQuestion
-  } = quizInsertion;
-
-  return {
-    isAdding,
-    type,
-    questionSecsStateArray,
-    stateOfFocusedQuestion
-  };
-}
-
-export default connect(mapStateToProps, actions)(UploadInsertionComponent);
+export default UploadInsertionComponent;

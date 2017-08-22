@@ -101,9 +101,14 @@ export default class Google {
 
   static authenticateForSignIn() {
     const auth = gapi.auth2.getAuthInstance();
+
     return new Promise(resolve => (
-      auth.signIn()
-        .then(res => resolve(res))
+      auth.signIn().then(() => {
+        const user = auth.currentUser.get();
+
+        user.reloadAuthResponse()
+          .then(response => resolve(response));
+      })
     ));
   }
 
