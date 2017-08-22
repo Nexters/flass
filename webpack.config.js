@@ -25,8 +25,10 @@ module.exports = {
     inline: true,
     host: 'localhost',
     port: 4000,
-    historyApiFallback: true,
-    contentBase: __dirname + '/public/',
+    historyApiFallback: {
+      index: '/sign.html'
+    },
+    contentBase: __dirname + '/public/'
   },
   module: {
     // https://velopert.com/1492

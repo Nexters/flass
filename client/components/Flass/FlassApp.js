@@ -6,7 +6,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import { Route, Switch } from 'react-router-dom';
 import Grid from './Grid/GridContainer';
-import VideoComponent from '../Video/VideoComponent';
 import Detail from './Detail/DetailContainer';
 import Upload from '../Upload';
 
@@ -21,7 +20,7 @@ const childContextTypes = {
 };
 const propTypes = {
   id: PropTypes.number.isRequired,
-  fetchUser: PropTypes.func.isRequired,
+  fetchUser: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
@@ -48,18 +47,6 @@ class FlassApp extends Component {
     this.props.fetchUser('token');
   }
 
-  renderContent() {
-    return (
-      <Switch>
-        <Route exact path="/" component={ Grid } />
-        <Route path="/home" component={ Grid } />
-        <Route path="/detail/:id" component={ Detail } />
-        <Route path="/video" component={ VideoComponent } />
-        <Route path="/upload" component={ Upload } />
-      </Switch>
-    );
-  }
-
   render() {
     const { id } = this.props;
 
@@ -76,6 +63,17 @@ class FlassApp extends Component {
           </Content>
         </div>
       </MuiThemeProvider>
+    );
+  }
+
+  renderContent() {
+    return (
+      <Switch>
+        <Route exact path="/" component={ Grid } />
+        <Route path="/home" component={ Grid } />
+        <Route path="/detail/:id" component={ Detail } />
+        <Route path="/upload" component={ Upload } />
+      </Switch>
     );
   }
 }

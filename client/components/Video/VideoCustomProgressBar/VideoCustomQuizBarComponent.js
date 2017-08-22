@@ -47,7 +47,7 @@ class VideoCustomQuizBarComponent extends Component {
           key={ label }
           className={ classNames('quiz-indicator-bar', VideoQuizIndicatorBarClassName) }
           style={ { left: `${(playedSeconds / this.props.duration) * 100}%` } }
-          onClick={ () => this.onQuestionbarClick({ label }) }>
+          onClick={ e => this.onQuestionbarClick(e, { label }) }>
           <VideoTooltipComponent content={ label } />
         </div>
       );
@@ -55,8 +55,8 @@ class VideoCustomQuizBarComponent extends Component {
   }
 
   @autobind
-  onQuestionbarClick({ label }) {
-    this.props.onQuestionbarClick({ label });
+  onQuestionbarClick(e, { label }) {
+    this.props.onQuestionbarClick(e, { label });
   }
 }
 

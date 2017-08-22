@@ -1,3 +1,4 @@
+export * from './VideoIcons';
 export * from './VideoPlayer/VideoPlayerComponent';
 export * from './VideoControllerAndBarWrapper/VideoControllerAndBarWrapperComponent';
 export * from './VideoButton/VideoButtonComponent';

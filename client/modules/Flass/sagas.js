@@ -1,4 +1,4 @@
-import { call, fork, take, select, put, cancel } from 'redux-saga/effects';
+import { fork } from 'redux-saga/effects';
 import flassUser from './User/UserActions';
 import flassBadge from './Badge/BadgeActions';
 import flassGrid from './Grid/GridActions';
@@ -13,6 +13,6 @@ export default function* rootSaga() {
     fork(flassGrid),
     fork(flassDetail),
     fork(flassComment),
-    fork(flassQuestion),
+    fork(flassQuestion)
   ];
 }

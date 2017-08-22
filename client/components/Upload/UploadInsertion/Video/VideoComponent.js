@@ -1,45 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import autobind from 'autobind-decorator';
-import screenfull from 'screenfull';
 
 import {
   VideoPlayerComponent,
   VideoButtonComponent,
   VideoVolumeComponent,
+  VideoVolumeWrapperComponent,
   VideoTimePanelComponent,
   VideoCustomProgressBarComponent,
   VideoControllerWrapperComponent,
-  VideoControllerAndBarWrapperComponent
+  VideoControllerAndBarWrapperComponent,
+  VideoEndedPageComponent,
+
+  PlayBtnIcon,
+  PauseBtnIcon,
+  VolumeOnBtnIcon,
+  VolumeOffBtnIcon
 } from '../../../Video';
+
+import {
+  VideoStyled,
+  StyledPlayerOnUploadPage,
+  EndedPageOnUploadPage
+} from './VideoStyled';
 
 import {
   convertPercentageToSecs,
   convertSecsToPercentage
 } from '../../../Video/VideoUtils';
 
-import PlayBtnIcon from '../../../../../public/icons/play_btn.png';
-import PauseBtnIcon from '../../../../../public/icons/pause@2x.png';
-import VolumeOnBtnIcon from '../../../../../public/icons/speak_btn.png';
-import VolumeOffBtnIcon from '../../../../../public/icons/non-speak@2x.png';
-import FullscreenBtnIcon from '../../../../../public/icons/view_btn.png';
-
 const { string, oneOfType, arrayOf, func, number, bool, shape } = PropTypes;
 
 const propTypes = {
-  VideoContainerClassName: oneOfType([string, arrayOf(string)]),
-  VideoPlayerWrapperClassName: oneOfType([string, arrayOf(string)]),
-  VideoPlayerClassName: oneOfType([string, arrayOf(string)]),
-  VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
-  VideoControllerBarClassName: oneOfType([string, arrayOf(string)]),
   VideoBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorClassName: oneOfType([string, arrayOf(string)]),
   VideoQuizIndicatorBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayPauseBtnClassName: oneOfType([string, arrayOf(string)]),
-  VideoFullscreenBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBtnClassName: oneOfType([string, arrayOf(string)]),
   VideoVolumeBarClassName: oneOfType([string, arrayOf(string)]),
 
@@ -64,18 +63,12 @@ const propTypes = {
 };
 const defaultProps = {
   onQuestionbarClick: () => {},
-  VideoContainerClassName: '',
-  VideoPlayerWrapperClassName: '',
-  VideoPlayerClassName: '',
-  VideoProgressBarClassName: '',
-  VideoControllerBarClassName: '',
   VideoBarClassName: '',
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
   VideoQuizIndicatorClassName: '',
   VideoQuizIndicatorBarClassName: '',
   VideoPlayPauseBtnClassName: '',
-  VideoFullscreenBtnClassName: '',
   VideoModalClassName: '',
   VideoModalQuestionClassName: '',
   VideoVolumeBtnClassName: '',
@@ -97,9 +90,10 @@ class VideoComponent extends Component {
       url: 'https://www.youtube.com/watch?v=PTkKJI27NlE',
       volume: 0.8,
       playbackRate: 1.0,
-      isMute: false,
       volumeBeforeMute: 0,
-      isVolumeBtnMouseOver: false
+      isMute: false,
+      isVolumeBtnMouseOver: false,
+      isEnded: false
     };
   }
 
@@ -107,24 +101,18 @@ class VideoComponent extends Component {
     const {
       url,
       volume,
+      playbackRate,
       isMute,
-      isVolumeBtnMouseOver,
-      playbackRate
+      isEnded
     } = this.state;
 
     const {
-      VideoContainerClassName,
-      VideoPlayerWrapperClassName,
-      VideoPlayerClassName,
-      VideoProgressBarClassName,
       VideoBarClassName,
-      VideoControllerBarClassName,
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
       VideoQuizIndicatorClassName,
       VideoQuizIndicatorBarClassName,
       VideoPlayPauseBtnClassName,
-      VideoFullscreenBtnClassName,
       VideoVolumeBtnClassName,
       VideoVolumeBarClassName,
 
@@ -140,10 +128,9 @@ class VideoComponent extends Component {
     } = this.props;
 
     return (
-      <div className={ classNames(VideoContainerClassName) }>
+      <VideoStyled.Container>
         <VideoPlayerComponent
-          VideoPlayerWrapperClassName={ VideoPlayerWrapperClassName }
-          VideoPlayerClassName={ VideoPlayerClassName }
+          styledProps={ StyledPlayerOnUploadPage }
           url={ url }
           playing={ playing }
           volume={ volume }
@@ -153,20 +140,23 @@ class VideoComponent extends Component {
           playbackRate={ playbackRate }
           onProgress={ onProgress }
           onDuration={ onDuration }
+          onEnded={ this.onEnded }
           setPlayer={ setPlayer } />
 
-        <div className={ VideoControllerBarClassName }>
+        {
+          this.renderEndedPage(isEnded)
+        }
+
+        <VideoStyled.ControllerBar>
           <VideoControllerAndBarWrapperComponent>
             <div>
               <VideoCustomProgressBarComponent
-                VideoProgressBarClassName={ VideoProgressBarClassName }
                 VideoBarClassName={ VideoBarClassName }
                 VideoPlayedBarClassName={ VideoPlayedBarClassName }
                 VideoLoadedBarClassName={ VideoLoadedBarClassName }
                 VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
                 VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
 
-                onQuestionbarClick={ this.onQuestionbarClick }
                 duration={ duration }
                 playedPercentage={ played }
                 loadedPercentage={ loaded }
@@ -175,48 +165,69 @@ class VideoComponent extends Component {
                 onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
                 onCustomSeekBarClick={ this.onCustomSeekBarClick }
                 onArrowKeyPressed={ this.onArrowKeyPressed }
+                onQuestionbarClick={ this.onQuestionbarClick }
 
                 quizTimeArray={ questionSecsStateArray }
                 canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
-                isQuizSecs={ isQuizSecs } />
+                isQuizSecs={ isQuizSecs }
+                searchableSecs={ duration } />
 
               <VideoControllerWrapperComponent>
                 <VideoButtonComponent
                   buttonClass={ VideoPlayPauseBtnClassName }
-                  srcSet={ playing ? PlayBtnIcon : PauseBtnIcon }
+                  srcSet={ playing ? PauseBtnIcon : PlayBtnIcon }
                   onButtonClick={ this.onClickPlayPause } />
-                <VideoButtonComponent
-                  buttonClass={ VideoVolumeBtnClassName }
-                  srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }
-                  onButtonClick={ this.onClickVolumeBtn }
-                  onButtonMouseOver={ this.onVolumeBtnMouseOver }
-                  onButtonMouseLeave={ this.onVolumeBtnMouseLeave } />
-
-                <VideoVolumeComponent
-                  onVolumeBarChange={ this.setVolume }
-                  barClass={ VideoVolumeBarClassName }
-                  volume={ volume }
-                  visible={ isVolumeBtnMouseOver } />
 
                 <VideoTimePanelComponent
                   duration={ duration }
                   elapsed={ played * duration } />
 
-                <VideoButtonComponent
-                  buttonClass={ VideoFullscreenBtnClassName }
-                  srcSet={ FullscreenBtnIcon }
-                  onButtonClick={ this.onClickFullscreen } />
+                <VideoVolumeWrapperComponent>
+                  <VideoButtonComponent
+                    buttonClass={ VideoVolumeBtnClassName }
+                    srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }
+                    onButtonClick={ this.onClickVolumeBtn }
+                    onButtonMouseOver={ this.onVolumeBtnMouseOver }
+                    onButtonMouseLeave={ this.onVolumeBtnMouseLeave } />
+
+                  <VideoVolumeComponent
+                    onVolumebarClick={ this.onVolumebarClick }
+                    barClass={ VideoVolumeBarClassName }
+                    volume={ volume } />
+                </VideoVolumeWrapperComponent>
+
               </VideoControllerWrapperComponent>
             </div>
           </VideoControllerAndBarWrapperComponent>
-        </div>
-      </div>
+        </VideoStyled.ControllerBar>
+      </VideoStyled.Container>
     );
   }
 
   @autobind
-  setVolume(e) {
-    this.setState({ volume: parseFloat(e.target.value) });
+  renderEndedPage(isEnded) {
+    return isEnded ?
+      <VideoEndedPageComponent
+        onReplayBtnClick={ this.onReplayBtnClick }
+        styledProps={ EndedPageOnUploadPage } /> :
+      null;
+  }
+
+  @autobind
+  onReplayBtnClick() {
+    this.setState({ played: 0, playing: true, isEnded: false });
+    this.props.playerSeekTo(0);
+  }
+
+  @autobind
+  onEnded() {
+    this.setState({ isEnded: true, playing: false });
+  }
+
+  @autobind
+  onVolumebarClick(barIndex) {
+    const volume = parseFloat(0.1 * (barIndex + 1));
+    this.setState({ volume });
   }
 
   @autobind
@@ -274,12 +285,6 @@ class VideoComponent extends Component {
   @autobind
   onClickPlayPause() {
     this.props.setPlayingState(!this.props.playing);
-  }
-
-  @autobind
-  onClickFullscreen() {
-    // screenfull.request(findDOMNode(this.player));
-    alert('Warn: This function still not define');
   }
 
   @autobind
