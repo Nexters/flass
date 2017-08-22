@@ -6,9 +6,16 @@ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class UsersController < ApplicationController
   before_action :login_check, only: [:show, :edit, :logout, :destroy]
   before_action :set_user, only: [:show, :edit, :destroy]
+
+  api :GET, '/users/:id', '(특정) 회원 정보 불러오기'
+  def index
+    @user = User.find(params[:id])
+    render json: @user
+  end
+
   # GET /users
   # GET /users.json
-  api :GET, '/users', '회원 정보 불러오기'
+  api :GET, '/users', '(본인) 회원 정보 불러오기'
   def show
     render json: @user
   end

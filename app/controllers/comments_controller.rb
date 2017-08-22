@@ -65,7 +65,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  api :PUT, '/comments/:id/like'
+  api :PUT, '/comments/:id/like', '좋아요 누르기'
   param :id, :number, :desc => "Comment ID"
   def like
     user = session[:user_id]
