@@ -4,7 +4,7 @@ require 'openssl'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class UsersController < ApplicationController
-  before_action :login_check, only: [:show, :edit, :logout, :destroy]
+  before_action :login_check, only: [:index, :show, :edit, :logout, :destroy]
   before_action :set_user, only: [:show, :edit, :destroy]
 
   api :GET, '/users/:id', '(특정) 회원 정보 불러오기'
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     if test.nil?
       render json: {message: "유효하지 않은 토큰값입니다."}, status: :unauthorized
     else
-      @user = User.find(21)
+      @user = User.find(22)
       session[:user_id] = @user.id
       render json: @user, status: :ok
     end
