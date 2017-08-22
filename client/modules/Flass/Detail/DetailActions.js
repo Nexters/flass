@@ -1,3 +1,4 @@
+import { delay } from 'redux-saga'
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import agent from '../../agent';
 
@@ -18,7 +19,7 @@ export const FETCH_DETAIL_ERROR = 'FETCH_DETAIL_ERROR';
 
 export function* fetchDetailAll({ detailId }) {
   yield put({ type: FETCH_READY_DETAIL });
-
+  // yield call(delay, 2000);
   try {
     const detail = yield call(agent.Detail.byId, detailId);
     yield put({

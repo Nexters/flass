@@ -1,6 +1,6 @@
 class LecturesController < ApplicationController
-  before_action :login_check, only: [:index, :show, :edit, :create, :update]
-  before_action :set_lecture, only: [:show, :edit, :update, :destroy]
+  before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
+  before_action :set_lecture, only: [:show, :edit, :update, :destroy, :statistics]
 
   api :GET, '/lectures', '(특정 유저가 업로드한) 강의들 불러오기'
   param :page, :number, :desc => "강의 페이지"
@@ -73,6 +73,23 @@ class LecturesController < ApplicationController
     else
       render json: {message: "게시물을 삭제할 권한이 없습니다."}, status: :unauthorized
     end
+  end
+
+  def statistics
+    @ret = Hash.new
+    
+    @ret['questions'] = questions = @lecture.questions.order(id: :asc)
+    @ret['answers'] = Hash.new
+
+    questions.each_with_index do |question, index|
+      if !@ret['answers'].key?(question.id)
+        @ret['answers'][question.id] = Hash.new
+      end
+      answers
+      @ret['answers'][question.id][index + 1] = Answer.where(question_id: question.id)
+    end
+
+    render json: @ret
   end
 
   private

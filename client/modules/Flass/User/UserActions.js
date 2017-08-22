@@ -8,11 +8,11 @@ export const FETCH_READY_USER = 'FETCH_READY_USER';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_ERROR = 'FETCH_USER_ERROR';
 
-function* fetchUser() {
+function* fetchUser({ token }) {
   yield put({ type: FETCH_READY_USER });
 
   try {
-    const user = yield call(agent.User.me);
+    const user = yield call(agent.User.me, token);
     yield put({
       type: FETCH_USER_SUCCESS,
       user

@@ -42,10 +42,18 @@ const Content = styled.div`
   word-break: break-all;
 `;
 
-const Bottom = styled.span`
+const Bottom = styled.div`
   color: ${color['steel-grey']};
   font-weight: 300;
   font-size: 1.2rem;
+`;
+
+const BtnReply = styled.a`
+  height: 30px;
+  border: solid 1px ${color['steel-grey-two']};
+  border-radius: 20px;
+  padding: 5px 8px;
+  float: right;
 `;
 
 const propTypes = {
@@ -102,7 +110,7 @@ class CommentItem extends Component {
           {content}
         </Content>
         <Bottom>
-          2017.07.23 {!isReply && <a onClick={ onSelectedReply }>{ isSelectedReply ? '답글 닫기' : '답글 보기' }</a>}
+          2017.07.23 {!isReply && <BtnReply onClick={ onSelectedReply }>{ isSelectedReply ? '설명글 (0)' : '설명글 (0)' }</BtnReply>}
         </Bottom>
       </DetailCommentItem>
     );

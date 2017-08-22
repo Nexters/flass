@@ -81,7 +81,6 @@ class PostComment extends Component {
   renderTextArea({ input, meta: { touched, error }, id, label, userName, ...props }) {
     return (
       <FormGroup controlId={id}>
-        <Label>{ userName }</Label>
         <TextArea
           { ...input }
           componentClass="textarea"
