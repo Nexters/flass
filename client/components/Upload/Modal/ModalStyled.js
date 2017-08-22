@@ -37,17 +37,25 @@ export const Modal = {
     margin-top: 1.375rem;
     width: 100%;
   `,
-  Input: styled.input`
+  Input: styled.div`
+    display: flex;
+    align-items: center;
     width: 35.88rem;
     height: 2.9375rem;
+    padding-left: 0.95rem;
     float: left;
     border-radius: 5px;
     border: solid 1px #d3d9d9;
     outline: 0;
+    font-size: 1.25rem;
+    color: #616a6b;
   `,
   Btn: styled.div`
+    cursor: pointer;
     padding: 0.4rem;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 7.2312rem;
     height: 2.9375rem;
     float: right;
@@ -70,7 +78,10 @@ export const Modal = {
     margin-top: 1.875rem;
   `,
   CompleteBtn: styled.div`
-    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     margin: 0 auto;
     width: 8.3125rem;
     height: 2.9375rem;

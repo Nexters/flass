@@ -21,7 +21,9 @@ function mapStateToProps({ quizInsertion }) {
     type,
     questionSecsStateArray,
     stateOfFocusedQuestion,
-    quizState
+    quizState,
+    isUploadingQuestionRequestSuccess,
+    videoUrl
   } = quizInsertion;
 
   return {
@@ -29,6 +31,8 @@ function mapStateToProps({ quizInsertion }) {
     type,
     questionSecsStateArray,
     stateOfFocusedQuestion,
+    isUploadingQuestionRequestSuccess,
+    videoUrl,
     questionStateArray: quizState
   };
 }

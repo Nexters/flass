@@ -36,7 +36,8 @@ const INITIAL_STATE = {
   numOfQuestion: 0,
   quizState: [],
   isUploadingQuestionRequestSuccess: false,
-  isUploadingQuestionRequestFail: false
+  isUploadingQuestionRequestFail: false,
+  videoUrl: ''
 };
 const MULTIPLE_CHOICE_TYPE = 'multiple_choice_type';
 const ANSWER_QUESTION_TYPE = 'answer_question_type';
@@ -192,7 +193,8 @@ const deleteQuestionReducer = {
 const requestQuestionReducer = {
   [SUCCESS_UPLOAD_QUESTIONS]: state => ({
     ...state,
-    isUploadingQuestionRequestSuccess: true
+    isUploadingQuestionRequestSuccess: true,
+    videoUrl: 'flass.com/videoUrl'
   }),
   [FAIL_UPLOAD_QUESTIONS]: state => ({
     ...state,

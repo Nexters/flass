@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Copy from 'copy-to-clipboard';
+import autobind from 'autobind-decorator';
 import { Modal } from './ModalStyled';
 
-const propTypes = {};
+const { string, object, shape } = PropTypes;
+
+const propTypes = {
+  url: string.isRequired
+};
 const defaultProps = {};
 
 class ModalComponent extends Component {
+  static contextTypes = {
+    router: shape({
+      history: object.isRequired
+    })
+  };
+
   render() {
+    const {
+      url
+    } = this.props;
+
     return (
       <Modal.Wrapper>
         <Modal.Inner>
@@ -15,8 +32,9 @@ class ModalComponent extends Component {
             </Modal.Header>
 
             <Modal.Body>
-              <Modal.Input />
-              <Modal.Btn>
+              <Modal.Input>{ url }</Modal.Input>
+              <Modal.Btn
+                onClick={ this.onClickCopyBtn }>
                 링크 복사
               </Modal.Btn>
             </Modal.Body>
@@ -24,7 +42,8 @@ class ModalComponent extends Component {
             <Modal.Hr>{ ' ' }</Modal.Hr>
 
             <Modal.Footer>
-              <Modal.CompleteBtn>
+              <Modal.CompleteBtn
+                onClick={ this.onClickCompleteBtn }>
                 완 료
               </Modal.CompleteBtn>
             </Modal.Footer>
@@ -32,6 +51,16 @@ class ModalComponent extends Component {
         </Modal.Inner>
       </Modal.Wrapper>
     );
+  }
+  @autobind
+  onClickCopyBtn() {
+    const { url } = this.props;
+    Copy(url);
+  }
+
+  @autobind
+  onClickCompleteBtn() {
+    return this.context.router.history.push('/home');
   }
 }
 

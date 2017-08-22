@@ -7,6 +7,7 @@ import autobind from 'autobind-decorator';
 import FlassContentTitleComponent from '../../Flass/ContentTitle/ContentTitleComponent';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
+import ModalComponent from '../Modal/ModalComponent';
 
 import './UploadInsertionComponentStyles.scss';
 
@@ -55,7 +56,9 @@ const propTypes = {
       secsOfQuiz: oneOfType([string, number]),
       indexOfQuestion: number
     })
-  })
+  }),
+  isUploadingQuestionRequestSuccess: bool.isRequired,
+  videoUrl: string.isRequired
 };
 const defaultProps = {
   isAdding: false,
@@ -164,7 +167,22 @@ class UploadInsertionComponent extends Component {
             업 로 드
           </div>
         </div>
+
+        {
+          this.renderModal()
+        }
       </div>
+    );
+  }
+
+  @autobind
+  renderModal() {
+    const { isUploadingQuestionRequestSuccess, videoUrl } = this.props;
+    return (
+      isUploadingQuestionRequestSuccess ?
+        <ModalComponent
+          url={ videoUrl } /> :
+        null
     );
   }
 
@@ -284,6 +302,7 @@ class UploadInsertionComponent extends Component {
   onClickUploadBtn() {
     const { questionStateArray } = this.props;
     this.props.requestUploadQuestions({ questionState: questionStateArray });
+    this.setPlayingState(false);
   }
 }
 

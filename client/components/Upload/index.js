@@ -6,7 +6,6 @@ import * as actions from '../../modules/Upload/Actions';
 
 import VideoUpload from './VideoUpload';
 import UploadInsertionContainer from './UploadInsertion/UploadInsertionContainer';
-import ModalComponent from './Modal/ModalComponent';
 import './upload.scss';
 
 const propTypes = {
@@ -86,10 +85,7 @@ class Upload extends Component {
       case 1:
       default:
         return (
-          <div>
-            <UploadInsertionContainer />
-            <ModalComponent />
-          </div>
+          <UploadInsertionContainer />
         );
     }
   }
