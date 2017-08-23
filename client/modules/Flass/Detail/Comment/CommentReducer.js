@@ -7,6 +7,24 @@ const initialState = {
   comments: []
 };
 
+/*
+{
+	"comments": [
+		{
+			"id": 1,
+			"user_id": 21,
+			"lecture_id": 1,
+			"content": "test",
+			"created_at": "2017-01-01T00:00:00.000Z",
+			"updated_at": "2017-01-01T00:00:00.000Z"
+		}
+	],
+	"commentchild": {
+		"1": []
+	}
+}
+ */
+
 const fetchCommentReducer = {
   [FETCH_READY_COMMENT]: (state, action) => state,
   [FETCH_COMMENT_SUCCESS]: (state, action) => ({
