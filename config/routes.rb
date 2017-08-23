@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   put 'comments/:id/like' => "comments#like"
 
+  get 'users/:id' => "users#index"
+
   apipie
   resource :users
   resource :comments

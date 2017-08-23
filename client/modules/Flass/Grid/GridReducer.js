@@ -1,22 +1,7 @@
 import { FETCH_READY_MY_CHANNEL, FETCH_MY_CHANNEL_SUCCESS, FETCH_MY_CHANNEL_ERROR } from './GridActions';
 
 const initialState = {
-  items: [
-    {
-      id: -1,
-      userId: -1,
-      title: '',
-      content: '',
-      url: '',
-      thumbnailUrl: '',
-      duration: -1,
-      createdAt: '',
-      updatedAt: '',
-      subject: '',
-      textbookRange: '',
-      questionCount: 0
-    }
-  ]
+  items: []
 };
 
 const GridReducer = (state = initialState, action) => {

@@ -16,22 +16,24 @@ import {
   VideoControllerWrapperComponent,
   VideoModalComponent,
   VideoControllerAndBarWrapperComponent,
-  VideoEndedPageComponent
+  VideoEndedPageComponent,
+
+  PlayBtnIcon,
+  PauseBtnIcon,
+  VolumeOnBtnIcon,
+  VolumeOffBtnIcon
 } from '../../../Video';
 
 import {
-  convertPercentageToSecs,
-  convertSecsToPercentage
+  convertSecsToPercentage,
+  updatePlayedPercentage
 } from '../../../Video/VideoUtils';
 
 import {
-  FlassDetailVideo
+  FlassDetailVideo,
+  StyledPlayerOnDetailPage,
+  EndedPageOnDetailPage
 } from './VideoStyled';
-
-import PlayBtnIcon from '../../../../../public/icons/play_btn.png';
-import PauseBtnIcon from '../../../../../public/icons/pause@2x.png';
-import VolumeOnBtnIcon from '../../../../../public/icons/speak_btn.png';
-import VolumeOffBtnIcon from '../../../../../public/icons/non-speak@2x.png';
 
 const { string, oneOfType, arrayOf, func, number, array, shape, bool } = PropTypes;
 
@@ -145,6 +147,7 @@ class Video extends Component {
     return (
       <FlassDetailVideo.Container>
         <VideoPlayerComponent
+          styledProps={ StyledPlayerOnDetailPage }
           url={ videoUrl }
           playing={ playing }
           volume={ volume }
@@ -181,6 +184,7 @@ class Video extends Component {
                 onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
                 onCustomSeekBarClick={ this.onCustomSeekBarClick }
                 onArrowKeyPressed={ this.onArrowKeyPressed }
+                onQuestionbarClick={ this.onQuestionbarClick }
 
                 quizTimeArray={ secsStateOfQuestions }
                 canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
@@ -243,7 +247,8 @@ class Video extends Component {
   renderEndedPage(isEnded) {
     return isEnded ?
       <VideoEndedPageComponent
-        onReplayBtnClick={ this.onReplayBtnClick } /> :
+        onReplayBtnClick={ this.onReplayBtnClick }
+        styledProps={ EndedPageOnDetailPage } /> :
       null;
   }
 
@@ -363,11 +368,6 @@ class Video extends Component {
     this.setState({ playing: !this.state.playing });
   }
 
-  @autobind
-  onClickFullscreen() {
-    screenfull.request(findDOMNode(this.player));
-  }
-
 
   @autobind
   canChangeIsQuizSecs(playedSecs) {
@@ -407,7 +407,7 @@ class Video extends Component {
       indexOfAnswer
     } = solvedQuestionState;
     const { played, duration } = this.state;
-    const updatedPlayedPercentage = this.updatePlayedPercentage(played, duration);
+    const updatedPlayedPercentage = updatePlayedPercentage(played, duration, 1);
     const searchableSecs = this.findSearchableSecs(indexOfQuestion);
 
     this.setState({
@@ -428,7 +428,7 @@ class Video extends Component {
   @autobind
   onKeepGoingOnVideoCompleteCase() {
     const { played, duration } = this.state;
-    const updatedPlayedPercentage = this.updatePlayedPercentage(played, duration);
+    const updatedPlayedPercentage = updatePlayedPercentage(played, duration, 1);
 
     this.setState({
       isQuizSecs: false,
@@ -436,12 +436,6 @@ class Video extends Component {
       played: updatedPlayedPercentage
     });
     this.player.seekTo(updatedPlayedPercentage);
-  }
-
-  updatePlayedPercentage(played, duration) {
-    const solvedSecs = convertPercentageToSecs(played, duration);
-    const secsAddOneFromSolvedSecs = solvedSecs + 1;
-    return convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
   }
 
   findSearchableSecs(indexOfQuestion) {
@@ -459,6 +453,26 @@ class Video extends Component {
   onReplayBtnClick() {
     this.setState({ played: 0, playing: true, isEnded: false });
     this.player.seekTo(0);
+  }
+
+  @autobind
+  onQuestionbarClick({ label }) {
+    const { duration } = this.state;
+    const { questions: { secsStateOfQuestions } } = this.props;
+    const { playedSeconds } = this.findSecsStateByLabel(secsStateOfQuestions, label);
+    const updatedPlayedPercentage = updatePlayedPercentage(
+      convertSecsToPercentage(playedSeconds, duration),
+      duration,
+      -1
+    );
+    this.setState({ played: updatedPlayedPercentage });
+    this.player.seekTo(updatedPlayedPercentage);
+  }
+
+  findSecsStateByLabel(questionSecsStateArray, targetLabel) {
+    return List(questionSecsStateArray)
+      .filter(({ label }) => (label === targetLabel))
+      .toArray()[0];
   }
 }
 
