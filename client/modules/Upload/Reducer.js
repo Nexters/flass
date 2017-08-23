@@ -9,7 +9,6 @@ const initialState = {
   description: '',
   videoURL: '',
   urlStatus: NO_URL,
-  thumbStatus: actions.NO_THUMB,
   thumbURL: '',
   method: METHOD_NOT_SELECTED,
   isGoogleAuth: INIT

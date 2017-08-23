@@ -13,13 +13,6 @@ export const SET_VIDEO_URL = 'SET_VIDEO_URL';
 export const SET_THUMB_URL = 'SET_THUMB_URL';
 export const SET_GOOGLE_AUTH_STATUS = 'SET_GOOGLE_AUTH_STATUS';
 
-export const NO_THUMB = 0;
-export const SUCC_THUMB = 1;
-export const FAIL_THUMB = -1;
-
-export const URL_METHOD = 0;
-export const FILE_METHOD = 1;
-
 export const setStep = step => ({
   type: SET_STEP,
   step
@@ -67,7 +60,6 @@ export const handleURLCheck = videoURL => (dispatch => {
       urlStatus = SUCC_URL;
 
       const thumbnails = result.items[0].snippet.thumbnails;
-      console.log(thumbnails);
       const thumb = thumbnails.maxres || thumbnails.standard || thumbnails.high
                     || thumbnails.medium || thumbnails.default;
       thumbURL = thumb.url;
