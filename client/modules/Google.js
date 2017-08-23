@@ -17,7 +17,7 @@ export default class Google {
     return instance;
   }
 
-  static initThumbClient = () => {
+  static initYoutubeThumbnail() {
     gapi.load('client', () => {
       gapi.client.init({
         apiKey: GOOGLE_API_KEY
@@ -25,7 +25,7 @@ export default class Google {
     });
   }
 
-  static isAuthenticated() {
+  static isAuthorized() {
     const that = this;
     const auth = gapi.auth2.getAuthInstance();
     const user = auth.currentUser.get();
@@ -40,17 +40,17 @@ export default class Google {
     return hasGrantedScopes;
   }
 
-  static initUploadClient(setGoogleAuthStatus) {
+  static initYoutubeUpload(setGoogleAuthStatus) {
     gapi.load('client:auth2', () => {
       gapi.client.init({
         apiKey: GOOGLE_API_KEY,
         clientId: GOOGLE_CLIENT_KEY,
         scope: UPLOAD_SCOPE
       }).then(() => {
-        setGoogleAuthStatus(Google.isAuthenticated());
+        setGoogleAuthStatus(Google.isAuthorized());
         // update auth status when signIn status changes
         gapi.auth2.getAuthInstance().isSignedIn.listen(() => {
-          setGoogleAuthStatus(Google.isAuthenticated());
+          setGoogleAuthStatus(Google.isAuthorized());
         });
       });
     });
@@ -73,8 +73,6 @@ export default class Google {
     const auth = gapi.auth2.getAuthInstance();
     const user = auth.currentUser.get();
     const hasGrantedScopes = user.hasGrantedScopes(LOGIN_SCOPE);
-    console.log('hasGrantedScopes');
-    console.log(hasGrantedScopes);
     if (hasGrantedScopes) {
       return new Promise(resolve => {
         user.reloadAuthResponse()
@@ -83,7 +81,7 @@ export default class Google {
     }
   }
 
-  static requestThumbClient(youtubeVideoId) {
+  static getYoutubeThumbnail(youtubeVideoId) {
     return gapi.client.request({
       method: 'GET',
       path: '/youtube/v3/videos',
@@ -94,12 +92,12 @@ export default class Google {
     });
   }
 
-  static authenticate() {
+  static authorize() {
     const auth = gapi.auth2.getAuthInstance();
     auth.signIn();
   }
 
-  static authenticateForSignIn() {
+  static authorizeForSignIn() {
     const auth = gapi.auth2.getAuthInstance();
 
     return new Promise(resolve => (

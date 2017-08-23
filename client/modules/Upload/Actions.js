@@ -38,7 +38,7 @@ export const handleSetUploadMethod = method => (dispatch => {
       dispatch(initYoutubeUpload());
       break;
     case URL_METHOD:
-      Google.initThumbClient();
+      Google.initYoutubeThumbnail();
       break;
     default:
       break;
@@ -54,7 +54,7 @@ export const handleURLCheck = videoURL => (dispatch => {
   }
   let urlStatus = FAIL_URL;
   let thumbURL = '';
-  Google.requestThumbClient(youtubeVideoId)
+  Google.getYoutubeThumbnail(youtubeVideoId)
   .then(({ result }) => {
     if (result.pageInfo.totalResults == 1) {
       urlStatus = SUCC_URL;
@@ -104,13 +104,13 @@ const setGoogleAuthStatus = isGoogleAuth => ({
 });
 
 export const initYoutubeUpload = () => (dispatch => {
-  Google.initUploadClient(isGoogleAuth => {
+  Google.initYoutubeUpload(isGoogleAuth => {
     dispatch(setGoogleAuthStatus(isGoogleAuth ? SUCC_AUTH : FAIL_AUTH));
   });
 });
 
 export const goToGoogleAuthPage = () => (() => {
-  Google.authenticate();
+  Google.authorize();
 });
 
 export const uploadYoutubeVideo = file => (dispatch => {
