@@ -4,6 +4,7 @@ import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
 import MediaUploader from './MediaUploader';
 
 const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
+const LOGIN_SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
 const BASE_URL = 'http://localhost:3000';
 
 let instance = null;
@@ -57,6 +58,33 @@ export default class Google {
     });
   }
 
+  static initGoogleAuthService() {
+    return new Promise(resolve => {
+      gapi.load('client:auth2', () => {
+        gapi.client.init({
+          apiKey: GOOGLE_API_KEY,
+          client_id: GOOGLE_CLIENT_KEY,
+          scope: LOGIN_SCOPE
+        })
+        .then(res => resolve(res));
+      });
+    });
+  }
+
+  static getAccessToken() {
+    const auth = gapi.auth2.getAuthInstance();
+    const user = auth.currentUser.get();
+    const hasGrantedScopes = user.hasGrantedScopes(LOGIN_SCOPE);
+    console.log('hasGrantedScopes');
+    console.log(hasGrantedScopes);
+    if (hasGrantedScopes) {
+      return new Promise(resolve => {
+        user.reloadAuthResponse()
+          .then(response => resolve(response));
+      });
+    }
+  }
+
   static requestThumbClient(youtubeVideoId) {
     return gapi.client.request({
       method: 'GET',
@@ -71,6 +99,29 @@ export default class Google {
   static authenticate() {
     const auth = gapi.auth2.getAuthInstance();
     gauth.signIn();
+  }
+
+  static authenticateForSignIn() {
+    const auth = gapi.auth2.getAuthInstance();
+
+    return new Promise(resolve => (
+      auth.signIn().then(() => {
+        const user = auth.currentUser.get();
+
+        user.reloadAuthResponse()
+          .then(response => resolve(response));
+      })
+    ));
+  }
+
+  static isUserSignedIn() {
+    const auth = gapi.auth2.getAuthInstance();
+    return auth.isSignedIn.get();
+  }
+
+  static signOutUser() {
+    const auth = gapi.auth2.getAuthInstance();
+    return auth.signOut();
   }
 
   static uploadVideo(file, setThumbURL) {

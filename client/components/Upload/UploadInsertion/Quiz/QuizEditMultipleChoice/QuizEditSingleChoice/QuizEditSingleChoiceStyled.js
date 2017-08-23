@@ -30,16 +30,16 @@ export const QuizEditSingleChoice = {
     background-color: ${$checkColor};
   `,
   QuestionText: styled.input`
-  margin-left: 20px;
-  font-size: 20px;
-  border: none;
-  height: 30px;
-  color: ${$qtextBorderColor};
-  width: 250px;
-  background-color: ${$FlassGrayColor};
+    margin-left: 20px;
+    font-size: 20px;
+    border: none;
+    height: 30px;
+    color: ${$qtextBorderColor};
+    width: 250px;
+    background-color: ${$FlassGrayColor};
 
-  &:disabled {
-    background-color: white;
-  }
+    &:disabled {
+      background-color: white;
+    }
   `
 };

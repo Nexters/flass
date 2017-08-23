@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -14,7 +15,6 @@ module RailsReactBoilerplate
 
     config.assets.enabled = true
     config.assets.paths << Rails.root.join("public")
-
     config.generators do |generator|
       generator.assets false
     end

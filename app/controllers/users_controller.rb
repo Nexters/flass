@@ -4,15 +4,38 @@ require 'openssl'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class UsersController < ApplicationController
-  before_action :login_check, only: [:show, :edit, :logout, :destroy]
+  before_action :login_check, only: [:index, :show, :edit, :logout, :destroy]
   before_action :set_user, only: [:show, :edit, :destroy]
-  # GET /users
-  # GET /users.json
-  api :GET, '/users', '회원 정보 불러오기'
-  def show
+
+  api :GET, '/users/:id', '(특정) 회원 정보 불러오기'
+  def index
+    @user = User.find(params[:id])
     render json: @user
   end
 
+  # GET /users
+  # GET /users.json
+  api :GET, '/users', '(본인) 회원 정보 불러오기'
+  def show
+    render json: @user
+  end
+=begin
+  # POST /users
+  # POST /users.json
+  api :POST, '/users', '회원 정보 생성 및 업데이트하기'
+  param :test_token, String, '테스트용 token 값(nil만 아니면 인증됨, nil일 경우 에러메시지)'
+  def create
+    test = params[:test_token]
+    puts test
+    if test.nil?
+      render json: {message: "유효하지 않은 토큰값입니다."}, status: :unauthorized
+    else
+      @user = User.find(22)
+      session[:user_id] = @user.id
+      render json: @user, status: :ok
+    end
+  end
+=end
   # POST /users
   # POST /users.json
   api :POST, '/users', '회원 정보 생성 및 업데이트하기'
@@ -47,6 +70,7 @@ class UsersController < ApplicationController
       end
     end
   end
+
 
   def login
   end

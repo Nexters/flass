@@ -1,0 +1,42 @@
+import _ from 'lodash';
+import {
+  createReducer
+} from '../../../reducerHelper';
+import {
+  FETCH_QUESTION_SUCCESS,
+  UPDATE_SOLVED_QUESTION
+} from './QuestionActions';
+
+const initialState = {
+  totalCount: 0,
+  questions: {},
+  solvedQuestionsState: []
+};
+
+const fetchQuestionReducer = {
+  [FETCH_QUESTION_SUCCESS]: (state, { questions }) => ({
+    ...state,
+    questions
+  })
+};
+
+const updateSolvedQuestion = {
+  [UPDATE_SOLVED_QUESTION]: (state, action) => {
+    const { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer } = action.payload;
+
+    return {
+      ...state,
+      solvedQuestionsState: _.concat(
+        state.solvedQuestionsState,
+        { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
+      )
+    };
+  }
+};
+
+const QuestionReducers = createReducer(initialState, {
+  ...fetchQuestionReducer,
+  ...updateSolvedQuestion
+});
+
+export default QuestionReducers;

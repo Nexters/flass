@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as constants from '../../modules/Constants';
 import * as actions from '../../modules/Upload/Actions';
 
-import UploadInsertionComponent from './UploadInsertion/UploadInsertionComponent';
+import UploadInsertionContainer from './UploadInsertion/UploadInsertionContainer';
 import './index.scss';
 
 // ********************************
@@ -113,9 +113,7 @@ class Upload extends Component {
         body = (
           <div>
             <Step2 />
-            <UploadInsertionComponent
-              videoTitle={ title }
-              goToStepOne={ this.goToStepOne } />
+            <UploadInsertionContainer />
           </div>
         );
     }

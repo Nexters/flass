@@ -1,24 +1,9 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
-import FlassApp from './../modules/Flass/FlassAppContainer';
-import SignApp from './Sign/SignApp';
-import SignUp from './Sign/SignUp/SignUp';
-import SignIn from './Sign/SignIn/SignIn';
+import FlassApp from './Flass/FlassAppContainer';
 
 class Root extends Component {
-  signUp = () => (
-    <SignApp>
-      <SignUp />
-    </SignApp>
-  );
-
-  signIn = () => (
-    <SignApp>
-      <SignIn />
-    </SignApp>
-  );
-
   render() {
     return (
       <BrowserRouter>

@@ -5,21 +5,21 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import { Route, Switch } from 'react-router-dom';
-import FlassGrid from '../../modules/Flass/FlassGrid/FlassGridContainer';
-import VideoComponent from '../Video/VideoComponent';
-import FlassDetail from '../../modules/Flass/FlassDetail/FlassDetailContainer';
+import Grid from './Grid/GridContainer';
+import Detail from './Detail/DetailContainer';
 import Upload from '../Upload';
 
-import FlassDrawer from './FlassDrawer/FlassDrawer';
+import Drawer from './Drawer/Drawer';
 import Content from './Content';
 import './FlassApp.scss';
-import FlassAppBar from './FlassAppBar/FlassAppBar';
+import AppBar from './AppBar/AppBar';
 
 const childContextTypes = {
   muiTheme: PropTypes.object.isRequired
 };
 const propTypes = {
-  fetchUser: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  fetchUser: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
@@ -39,32 +39,34 @@ class FlassApp extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchUser('userId');
-  }
-
-  renderContent() {
-    return (
-      <Switch>
-        <Route exact path="/" component={ FlassGrid } />
-        <Route path="/home" component={ FlassGrid } />
-        <Route path="/detail/:id" component={ FlassDetail } />
-        <Route path="/video" component={ VideoComponent } />
-        <Route path="/upload" component={ Upload } />
-      </Switch>
-    );
+    this.props.fetchUser('token');
   }
 
   render() {
+    const { id } = this.props;
+
     return (
       <MuiThemeProvider muiTheme={ flassTheme }>
         <div>
-          <FlassDrawer />
-          <FlassAppBar isLogin />
+          <Drawer />
+          <AppBar isLogin={id !== -1} />
+
           <Content>
             {this.renderContent()}
           </Content>
         </div>
       </MuiThemeProvider>
+    );
+  }
+
+  renderContent() {
+    return (
+      <Switch>
+        <Route exact path="/" component={ Grid } />
+        <Route path="/home" component={ Grid } />
+        <Route path="/detail/:id" component={ Detail } />
+        <Route path="/upload" component={ Upload } />
+      </Switch>
     );
   }
 }

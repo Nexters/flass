@@ -1,33 +1,18 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
-import SignApp from './Sign/SignApp';
-import SignUp from './Sign/SignUp/SignUp';
-import SignIn from './Sign/SignIn/SignIn';
+import SignInContainer from './Sign/SignIn/SignInContainer';
 
-class Root extends Component {
-  signUp = () => (
-    <SignApp>
-      <SignUp />
-    </SignApp>
-  );
-
-  signIn = () => (
-    <SignApp>
-      <SignIn />
-    </SignApp>
-  );
-
+class Sign extends Component {
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/signup" component={ this.signUp } />
-          <Route path="/signin" component={ this.signIn } />
+          <Route path="/user/login" component={ SignInContainer } />
         </Switch>
       </BrowserRouter>
     );
   }
 }
 
-export default Root;
+export default Sign;

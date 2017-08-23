@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import classNames from 'classnames';
+import autobind from 'autobind-decorator';
 
-const { func, string, number, bool, object, oneOfType, arrayOf } = PropTypes;
+import { VideoPlayer } from './VideoPlayerStyled';
+import './VideoPlayerStyles.scss';
+
+const { func, string, number, bool } = PropTypes;
 
 const propTypes = {
   onProgress: func.isRequired,
   onDuration: func.isRequired,
+  onEnded: func.isRequired,
   setPlayer: func.isRequired,
   url: string,
   playing: bool,
-  playbackRate: number.isRequired,
   volume: number.isRequired,
-  youtubeConfig: object,
-  VideoPlayerWrapperClassName: oneOfType([string, arrayOf(string)]),
-  VideoPlayerClassName: oneOfType([string, arrayOf(string)])
+  styledProps: string
 };
 
 const defaultProps = {
@@ -23,46 +25,46 @@ const defaultProps = {
   playing: false,
   youtubeConfig: undefined,
   VideoPlayerWrapperClassName: '',
-  VideoPlayerClassName: ''
+  VideoPlayerClassName: '',
+  styledProps: ''
 };
+
+const PROGRESS_FREQUENCY = 500;
 
 class VideoPlayerComponent extends Component {
   render() {
     const {
-      VideoPlayerWrapperClassName,
-      VideoPlayerClassName,
       onProgress,
       onDuration,
       setPlayer,
       url,
       playing,
-      playbackRate,
       volume,
-      youtubeConfig
+      styledProps
     } = this.props;
 
     return (
-      <div className={ classNames(VideoPlayerWrapperClassName) }>
+      <VideoPlayer.Wrapper styledProps={ styledProps }>
         <ReactPlayer
           ref={ player => setPlayer(player) }
-          className={ classNames('react-player', VideoPlayerClassName) }
+          className={ classNames('react-player', 'player') }
           width="100%"
           height="100%"
           url={ url }
+          progressFrequency={ PROGRESS_FREQUENCY }
           playing={ playing }
-          playbackRate={ playbackRate }
           volume={ volume }
-          youtubeConfig={ youtubeConfig }
-          onReady={ () => console.log('onReady') }
-          onStart={ () => console.log('onStart') }
-          onPlay={ () => this.setState({ playing: true }) }
-          onPause={ () => this.setState({ playing: false }) }
-          onEnded={ () => this.setState({ playing: false }) }
+          onEnded={ this.onEnded }
           onError={ e => console.log('onError', e) }
           onProgress={ onProgress }
           onDuration={ onDuration } />
-      </div>
+      </VideoPlayer.Wrapper>
     );
+  }
+
+  @autobind
+  onEnded() {
+    this.props.onEnded();
   }
 }
 
