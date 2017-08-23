@@ -25,8 +25,10 @@ module.exports = {
     inline: true,
     host: 'localhost',
     port: 4000,
-    historyApiFallback: true,
-    contentBase: __dirname + '/public/',
+    historyApiFallback: {
+      index: '/sign.html'
+    },
+    contentBase: __dirname + '/public/'
   },
   module: {
     // https://velopert.com/1492
@@ -68,6 +70,11 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        BACK_END: JSON.stringify(process.env.BACK_END)
+      }
+    })
   ]
 };

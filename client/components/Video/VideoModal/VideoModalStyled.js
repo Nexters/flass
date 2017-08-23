@@ -39,6 +39,7 @@ export const VideoModal = {
   ContentWrapper: styled.div`
     position: relative;
     padding: 58px 60px;
+    z-index: 20;
     height: 100%;
   `,
   Header: styled.div`
@@ -119,8 +120,8 @@ function isSolvedAndCorrect({ isSolved, isCorrect }) {
   return isSolved && !isCorrect;
 }
 
-function selectCursor({ selected, isVideoComplete }) {
-  if (!isVideoComplete && !selected) {
+function selectCursor({ selected, pointer }) {
+  if (!pointer && !selected) {
     return 'default';
   }
 

@@ -6,6 +6,7 @@ import TestTutorialReducer from './modules/TestTutorialModule/TestTutorialReduce
 import quizReducer from './modules/Quiz/quiz';
 import UploadReducer from './modules/Upload/Reducer';
 import quizInsertionReducer from './modules/Upload/UploadInsertion/Quiz/QuizReducers';
+import signReducer from './modules/Sign/reducers';
 
 export default combineReducers({
   memo,
@@ -14,5 +15,6 @@ export default combineReducers({
   comments: TestTutorialReducer,
   upload: UploadReducer,
   quizInsertion: quizInsertionReducer,
-  form: formReducer
+  form: formReducer,
+  sign: signReducer
 });

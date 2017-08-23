@@ -18,11 +18,6 @@ const defaultProps = {
 };
 
 class Grid extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   componentWillReceiveProps(nextProps) {
     const { user } = this.props;
     const nextUser = nextProps.user;
@@ -35,13 +30,10 @@ class Grid extends Component {
   // 2. HOC
   // 3. react router 기능.
 
-  componentDidMount() {
-  }
-
   renderChildren(items) {
     const { user } = this.props;
     return items.map(item => (
-      <Col key={item.id} md={ 3 }>
+      <Col key={ item.id } md={ 3 }>
         <GridItem { ...item } userName={ user.userName } />
       </Col>
     ));

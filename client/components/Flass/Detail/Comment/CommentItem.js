@@ -15,6 +15,11 @@ const DetailCommentItem = styled.div`
   border-bottom: solid 1px #d0d0d0;
 `;
 
+const Header = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
 const UserName = styled.span`
   font-size: 1.6rem;
   color: #4c4c4c;
@@ -22,7 +27,9 @@ const UserName = styled.span`
 
 const CommentMenu = styled.span`
   width: 55px;
-  float: right;
+  position: absolute;
+  right: 0px;
+  top: 0px;
 `;
 
 const HeartIcon = styled.img`
@@ -96,7 +103,7 @@ class CommentItem extends Component {
 
     return (
       <DetailCommentItem>
-        <div>
+        <Header>
           <UserName>{userName}</UserName>
           <CommentMenu className="flass-comment-item-float-box">
             <HeartIcon alt="like" src={ toggleHeart ? HeartActive : Heart } onClick={ this.handleToggleHeart } />
@@ -105,7 +112,7 @@ class CommentItem extends Component {
             {toggleMenu && <CommentItemMenu
               onDelete={ _.partial(onDelete, id) } />}
           </CommentMenu>
-        </div>
+        </Header>
         <Content>
           {content}
         </Content>

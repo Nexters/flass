@@ -108,11 +108,11 @@ class VideoModalComponent extends Component {
   @autobind
   renderChoices(answerIndex, SingleChoiceValues) {
     const { selectedChoiceIndex, isSolved, isCorrect } = this.state;
-    const { isVideoComplete, solvedQuestionsState, indexOfQuestion } = this.props;
+    const { solvedQuestionsState, indexOfQuestion } = this.props;
     const solvedQuestionState = solvedQuestionsState[indexOfQuestion];
 
     return SingleChoiceValues.map((singleChoiceValue, index) => (
-      !isVideoComplete ?
+      !this.shouldRenderCompleteChoiceComponent() ?
         <VideoModalSingleChoiceComponent
           key={ index }
           isChecked={ index ===  selectedChoiceIndex }
@@ -129,6 +129,13 @@ class VideoModalComponent extends Component {
     ));
   }
 
+  shouldRenderCompleteChoiceComponent() {
+    const { isVideoComplete, solvedQuestionsState, indexOfQuestion } = this.props;
+    const solvedQuestionState = solvedQuestionsState[indexOfQuestion];
+
+    return isVideoComplete || solvedQuestionState;
+  }
+
   @autobind
   onCheckboxClick(choiceIndex) {
     this.setState({ selectedChoiceIndex: choiceIndex });
@@ -137,9 +144,8 @@ class VideoModalComponent extends Component {
   @autobind
   renderModalBtn() {
     const { isSolved, isCorrect } = this.state;
-    const { isVideoComplete } = this.props;
 
-    if (!isVideoComplete) {
+    if (!this.shouldRenderCompleteCaseModalBtn()) {
       if (!isSolved) {
         return (
           <VideoModal.Button
@@ -167,12 +173,19 @@ class VideoModalComponent extends Component {
           onClick={ this.onClickVideoCompleteCaseKeepGoingBtn }
           isSolved={ isSolved }
           isCorrect={ isCorrect }
-          isVideoComplete={ isVideoComplete }
+          pointer
           selected={ this.isChoicesSelected() }>
           이어보기
         </VideoModal.Button>
       );
     }
+  }
+
+  shouldRenderCompleteCaseModalBtn() {
+    const { isVideoComplete, solvedQuestionsState, indexOfQuestion } = this.props;
+    const solvedQuestionState = solvedQuestionsState[indexOfQuestion];
+
+    return isVideoComplete || solvedQuestionState;
   }
 
   @autobind

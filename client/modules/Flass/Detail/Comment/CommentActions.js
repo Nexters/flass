@@ -12,6 +12,9 @@ function* fetchComment({ detailId }) {
 
   try {
     const comments = yield call(agent.Comment.byDetailId, detailId);
+    // const commentsWithLike = yield call(_.map, comments, (comment) => {
+    // });
+
     yield put({
       type: FETCH_COMMENT_SUCCESS,
       comments
@@ -33,6 +36,7 @@ function* addComment({ detailId, userId, userName, content }) {
   const commentId = Date.now().toString();
   yield put({
     type: ADD_READY_COMMENT,
+    parentId: action.commentId,
     comment: {
       id: commentId,
       detailId,
