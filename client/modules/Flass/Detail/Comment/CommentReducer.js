@@ -35,15 +35,21 @@ const fetchCommentReducer = {
 };
 
 const addCommentReducer = {
-  [ADD_READY_COMMENT]: (state, action) => ({
-    ...state,
-    comments: [...state.comments, action.comment]
-  }),
-  [ADD_COMMENT_SUCCESS]: (state, action) => ({
-    ...state,
-    comments: _.map(state.comments, comment =>
-      (comment.id === action.id ? { ...comment, id: action.newId } : comment))
-  }),
+  [ADD_READY_COMMENT]: (state, action) => {
+    const { parentId, comment } = action;
+
+    return ({
+      ...state,
+      comments: [...state.comments, action.comment]
+    });
+  },
+  [ADD_COMMENT_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      comments: _.map(state.comments, comment =>
+        (comment.id === action.id ? { ...comment, id: action.newId } : comment))
+    };
+  },
   [ADD_COMMENT_ERROR]: (state, action) => ({
     ...state,
     comments: _.filter(state.comments, comment => (comment.id !== action.id))

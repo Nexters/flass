@@ -36,6 +36,7 @@ function* addComment({ detailId, userId, userName, content }) {
   const commentId = Date.now().toString();
   yield put({
     type: ADD_READY_COMMENT,
+    parentId: action.commentId,
     comment: {
       id: commentId,
       detailId,
