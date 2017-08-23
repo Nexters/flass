@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { NOT_STARTED, UPLOADING, COMPLETED } from '../../../../modules/Constants';
 import Button from '../../../Flass/Button';
 import ProgressBar from '../../../Flass/ProgressBar';
-// import './infoBox.scss';
+import './uploader.scss';
 
 const propTypes = {
   back: PropTypes.func.isRequired,
@@ -37,8 +37,6 @@ class Uploader extends Component {
         <img src="https://png.icons8.com/pikachu-pokemon/color/24" alt="옵션 선택 취소" />
       </a>
     );
-
-    const thumbnail = (<div>VIDEO PREVIEW</div>);
 
     let body;
     switch(uploadStatus) {
@@ -78,12 +76,9 @@ class Uploader extends Component {
                 type="file"
                 id="file"
                 accept="video/*"
-                onChange={ e => this.selectFile(e) } />
-              <label htmlFor="file">
-                <div>
-                  파일 선택
-                </div>
-              </label>
+                onChange={ e => this.selectFile(e) }
+                className="inputFile" />
+              <label htmlFor="file">파일 선택</label>
             </div>
           );
         }
@@ -91,9 +86,8 @@ class Uploader extends Component {
     }
 
     return (
-      <div>
+      <div className={ file && 'blackBackground' }>
         { exit }
-        { thumbnail }
         { body }
       </div>
     );
