@@ -5,7 +5,7 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import color from '../common/colors.scss';
 import GridItem from './GridItem';
-import ContentTitleComponent from '../ContentTitle/ContentTitleComponent';
+import Header from '../Header';
 import './Grid.scss';
 
 const propTypes = {
@@ -50,7 +50,7 @@ class Grid extends Component {
     });
     return (
       <div>
-        <ContentTitleComponent title="Home Channel" />
+        <Header title="Home Channel" />
         <GridView>
           {renderAllItems}
         </GridView>
