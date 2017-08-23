@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { connect } from 'react-redux';
-import * as constants from '../../modules/Constants';
+import { STEP_1, STEP_2 } from '../../modules/Constants';
 import * as actions from '../../modules/Upload/Actions';
 
 import UploadInsertionContainer from './UploadInsertion/UploadInsertionContainer';
@@ -31,13 +31,13 @@ const propTypes = {
   thumbStatus: PropTypes.number,
 
   getThumbnail: PropTypes.func,
-  isGoogleAuth: PropTypes.bool.isRequired,
+  isGoogleAuth: PropTypes.number.isRequired,
   goToGoogleAuthPage: PropTypes.func,
   uploadYoutubeVideo: PropTypes.func
 };
 
 const defaultProps = {
-  step: constants.STEP_1,
+  step: STEP_1,
   setStep: () => handleError('setStep'),
   setVideoInfo: () => handleError('setVideoInfo'),
   title: '',
@@ -75,11 +75,11 @@ class Upload extends Component {
       <div className="headerContainer">
         <Header title="Upload new video" />
         <div className="steps">
-          <h2 className={ classNames('disabled', step == constants.STEP_1 && 'active') }>
+          <h2 className={ classNames('disabled', step == STEP_1 && 'active') }>
             영상 업로드
           </h2>
           <span className={ classNames('disabled', 'stepsDecorator') }>{'>'}</span>
-          <h2 className={ classNames('disabled', step == constants.STEP_2 && 'active') }>
+          <h2 className={ classNames('disabled', step == STEP_2 && 'active') }>
             퀴즈 삽입
           </h2>
         </div>
@@ -89,7 +89,7 @@ class Upload extends Component {
     let body;
     switch(step) {
       // step 1
-      case constants.STEP_1:
+      case STEP_1:
         body = (
           <div>
             <Step1
@@ -108,7 +108,7 @@ class Upload extends Component {
         break;
 
       // step 2
-      case constants.STEP_2:
+      case STEP_2:
       default:
         body = (
           <div>
@@ -128,14 +128,14 @@ class Upload extends Component {
 
   // *******************
   goToStep2 = videoInfo => {
-    this.props.setStep(constants.STEP_2);
+    this.props.setStep(STEP_2);
     console.log('******');
     console.log(videoInfo);
     this.props.setVideoInfo(videoInfo);
   }
 
   goToStepOne = () => {
-    const step = constants.STEP_1;
+    const step = STEP_1;
     this.props.setStep(step);
   }
 }

@@ -1,18 +1,18 @@
 import * as actions from './Actions';
-import * as constants from '../Constants';
+import { STEP_1, NO_URL, METHOD_NOT_SELECTED, INIT } from '../Constants';
 
 const initialState = {
-  step: constants.STEP_1,
+  step: STEP_1,
   title: '',
   subject: '',
   textbook: '',
   description: '',
   videoURL: '',
-  urlStatus: constants.NO_URL,
+  urlStatus: NO_URL,
   thumbStatus: actions.NO_THUMB,
   thumbURL: '',
-  method: constants.METHOD_NOT_SELECTED,
-  isGoogleAuth: false
+  method: METHOD_NOT_SELECTED,
+  isGoogleAuth: INIT
 };
 
 const UploadReducer = (state = initialState, action) => {

@@ -20,3 +20,9 @@ export const COMPLETED = 1;
 export const NO_URL = 0;
 export const SUCC_URL = 1;
 export const FAIL_URL = -1;
+
+// ******
+// Google
+export const INIT = 0;
+export const SUCC_AUTH = 1;
+export const FAIL_AUTH = -1;

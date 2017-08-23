@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import * as constants from '../../../modules/Constants';
+import { METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD, SUCC_URL } from '../../../modules/Constants';
 
 import '../step.scss';
 import InfoBox from './InfoBox';
@@ -19,7 +19,7 @@ const propTypes = {
   handleURLCheck: PropTypes.func.isRequired,
   thumbURL: PropTypes.string.isRequired,
   resetVideo: PropTypes.func.isRequired,
-  isGoogleAuth: PropTypes.bool.isRequired,
+  isGoogleAuth: PropTypes.number.isRequired,
   goToGoogleAuthPage: PropTypes.func.isRequired,
   handleYoutubeUpload: PropTypes.func.isRequired
 };
@@ -52,16 +52,16 @@ class Step1 extends Component {
 
     let right;
     switch(method) {
-      case constants.METHOD_NOT_SELECTED:
+      case METHOD_NOT_SELECTED:
         right = (
           <div className="box">
             <UploadOptionsBox
-              selectFileMethod={ () => setUploadMethod(constants.FILE_METHOD) }
-              selectURLMethod={ () => setUploadMethod(constants.URL_METHOD) } />
+              selectFileMethod={ () => setUploadMethod(FILE_METHOD) }
+              selectURLMethod={ () => setUploadMethod(URL_METHOD) } />
           </div>
         );
         break;
-      case constants.FILE_METHOD:
+      case FILE_METHOD:
         right = (
           <div className="box">
             <FileUploadBox
@@ -72,7 +72,7 @@ class Step1 extends Component {
           </div>
         );
         break;
-      case constants.URL_METHOD:
+      case URL_METHOD:
       default:
         right = (
           <div className="box">
@@ -114,7 +114,7 @@ class Step1 extends Component {
   // considers completed when title and videoURL fields are filled
   isComplete = () => {
     const { videoInfo } = this.state;
-    if (videoInfo.title && this.props.urlStatus == constants.SUCC_URL) {
+    if (videoInfo.title && this.props.urlStatus == SUCC_URL) {
       return true;
     }
     return false;

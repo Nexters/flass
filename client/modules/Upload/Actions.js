@@ -1,4 +1,8 @@
-import * as constants from '../Constants';
+import {
+  METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD,
+  NO_URL, FAIL_URL, SUCC_URL,
+  FAIL_AUTH, SUCC_AUTH
+} from '../Constants';
 import Google from '../Google';
 
 export const SET_STEP = 'SET_STEP';
@@ -37,10 +41,10 @@ const setUploadMethod = method => ({
 // handles upload method change and takes care of google api set up for accordingly
 export const handleSetUploadMethod = method => (dispatch => {
   switch(method) {
-    case constants.FILE_METHOD:
+    case FILE_METHOD:
       dispatch(initYoutubeUpload());
       break;
-    case constants.URL_METHOD:
+    case URL_METHOD:
       Google.initThumbClient();
       break;
     default:
@@ -55,12 +59,12 @@ export const handleURLCheck = videoURL => (dispatch => {
   if (videoURL.length != 11) {
     youtubeVideoId = parseYoutubeVideoId(videoURL);
   }
-  let urlStatus = constants.FAIL_URL;
+  let urlStatus = FAIL_URL;
   let thumbURL = '';
   Google.requestThumbClient(youtubeVideoId)
   .then(({ result }) => {
     if (result.pageInfo.totalResults == 1) {
-      urlStatus = constants.SUCC_URL;
+      urlStatus = SUCC_URL;
 
       const thumbnails = result.items[0].snippet.thumbnails;
       console.log(thumbnails);
@@ -96,10 +100,10 @@ const setURLStatus = urlStatus => ({
 });
 
 export const resetVideo = () => (dispatch => {
-  dispatch(setURLStatus(constants.NO_URL));
+  dispatch(setURLStatus(NO_URL));
   dispatch(setVideoURL(''));
   dispatch(setThumbURL(''));
-  dispatch(setUploadMethod(constants.METHOD_NOT_SELECTED));
+  dispatch(setUploadMethod(METHOD_NOT_SELECTED));
 });
 
 const setGoogleAuthStatus = isGoogleAuth => ({
@@ -109,7 +113,7 @@ const setGoogleAuthStatus = isGoogleAuth => ({
 
 export const initYoutubeUpload = () => (dispatch => {
   Google.initUploadClient(isGoogleAuth => {
-    dispatch(setGoogleAuthStatus(isGoogleAuth));
+    dispatch(setGoogleAuthStatus(isGoogleAuth ? SUCC_AUTH : FAIL_AUTH));
   });
 });
 
