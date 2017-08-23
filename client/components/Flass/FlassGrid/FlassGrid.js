@@ -5,7 +5,7 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import color from '../common/colors.scss';
 import FlassGridItem from './FlassGridItem';
-import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
+import Header from '../Header';
 import './FlassGrid.scss';
 
 const propTypes = {
@@ -41,7 +41,7 @@ class FlassGrid extends Component {
     });
     return (
       <div>
-        <FlassContentTitleComponent title="Home Channel" />
+        <Header title="Home Channel" />
         <Grid>
           {renderAllItems}
         </Grid>

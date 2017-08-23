@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
-import FlassContentTitleComponent from '../../Flass/FlassContentTitle/FlassContentTitleComponent';
+import Header from '../../Flass/Header';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
 
@@ -99,7 +99,7 @@ class UploadInsertionComponent extends Component {
 
     return (
       <div>
-        <FlassContentTitleComponent title="Upload new video" />
+        <Header title="Upload new video" />
         <div className="row">
           <div className="row__player-large-5">
             <VideoComponent

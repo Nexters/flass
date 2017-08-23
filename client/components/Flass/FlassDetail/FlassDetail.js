@@ -9,7 +9,7 @@ import Content from './Content/Content';
 import Comment from '../../../modules/Flass/FlassDetail/Comment/CommentContainer';
 import Analysis from './Analysis/Analysis';
 import Video from './Video/Video';
-import FlassContentTitleComponent from '../FlassContentTitle/FlassContentTitleComponent';
+import Header from '../Header';
 
 import contentImageActive from './images/tab-content-active.png';
 import contentImage from './images/tab-content.png';
@@ -94,7 +94,7 @@ class FlassDetail extends Component {
     }
     return (
       <div className="flass-detail">
-        <FlassContentTitleComponent title="Watching Video" />
+        <Header title="Watching Video" />
         <div className="flass-detail-contents">
           <Video
             VideoContainerClassName={ 'flass-detail-media' }

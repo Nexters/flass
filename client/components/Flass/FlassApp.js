@@ -11,8 +11,7 @@ import FlassDetail from '../../modules/Flass/FlassDetail/FlassDetailContainer';
 import Upload from '../Upload';
 
 import FlassDrawer from './FlassDrawer/FlassDrawer';
-import FlassContentWrapperComponent from './FlassContentWrapper/FlassContentWrapperComponent';
-import FlassContent from './FlassContent';
+import Content from './Content';
 import './FlassApp.scss';
 import FlassAppBar from './FlassAppBar/FlassAppBar';
 
@@ -61,12 +60,9 @@ class FlassApp extends Component {
         <div>
           <FlassDrawer />
           <FlassAppBar isLogin />
-
-          <FlassContent>
-            <FlassContentWrapperComponent>
-              {this.renderContent()}
-            </FlassContentWrapperComponent>
-          </FlassContent>
+          <Content>
+            {this.renderContent()}
+          </Content>
         </div>
       </MuiThemeProvider>
     );

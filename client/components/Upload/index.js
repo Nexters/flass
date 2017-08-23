@@ -1,41 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { connect } from 'react-redux';
+import * as constants from '../../modules/Constants';
 import * as actions from '../../modules/Upload/Actions';
 
-import VideoUpload from './VideoUpload';
 import UploadInsertionComponent from './UploadInsertion/UploadInsertionComponent';
-import './upload.scss';
+import './index.scss';
+
+// ********************************
+
+import Step1 from './Step1';
+import Step2 from './Step2';
+
+import Header from '../Flass/Header';
 
 const propTypes = {
   step: PropTypes.number,
   setStep: PropTypes.func,
-  setVideoData: PropTypes.func,
+  method: PropTypes.number.isRequired,
+  handleSetUploadMethod: PropTypes.func.isRequired,
+  setVideoInfo: PropTypes.func,
+  urlStatus: PropTypes.number.isRequired,
+  handleURLCheck: PropTypes.func.isRequired,
+  thumbURL: PropTypes.string.isRequired,
+  resetVideo: PropTypes.func.isRequired,
+
   title: PropTypes.string,
   thumbStatus: PropTypes.number,
-  thumbURL: PropTypes.string,
+
   getThumbnail: PropTypes.func,
-  method: PropTypes.number,
-  changeUploadMethod: PropTypes.func,
-  resetVideo: PropTypes.func,
-  isGoogleAuth: PropTypes.bool,
+  isGoogleAuth: PropTypes.bool.isRequired,
   goToGoogleAuthPage: PropTypes.func,
   uploadYoutubeVideo: PropTypes.func
 };
 
 const defaultProps = {
-  step: 0,
+  step: constants.STEP_1,
   setStep: () => handleError('setStep'),
-  setVideoData: () => handleError('setVideoData'),
+  setVideoInfo: () => handleError('setVideoInfo'),
   title: '',
   thumbStatus: actions.NO_THUMB,
   thumbURL: '',
   getThumbnail: () => handleError('getThumbnail'),
-  method: actions.URL_METHOD,
-  changeUploadMethod: () => handleError('changeUploadMethod'),
-  resetVideo: () => handleError('resetVideo'),
-  isGoogleAuth: null,
   goToGoogleAuthPage: () => handleError('goToGoogleAuthPage'),
   uploadYoutubeVideo: () => handleError('uploadYoutubeVideo')
 };
@@ -45,65 +53,91 @@ function handleError(func) {
 }
 
 class Upload extends Component {
-  componentDidMount() {
-    // set URL method as default
-    this.props.changeUploadMethod(actions.URL_METHOD);
-  }
-
   render() {
     const {
       title,
+      urlStatus,
+      handleURLCheck,
       thumbStatus,
       thumbURL,
       getThumbnail,
       method,
-      changeUploadMethod,
+      handleSetUploadMethod,
       resetVideo,
       isGoogleAuth,
       goToGoogleAuthPage,
-      uploadYoutubeVideo
+      uploadYoutubeVideo,
+
+      step
     } = this.props;
 
-    switch(this.props.step) {
+    const header = (
+      <div className="headerContainer">
+        <Header title="Upload new video" />
+        <div className="steps">
+          <h2 className={ classNames('disabled', step == constants.STEP_1 && 'active') }>
+            영상 업로드
+          </h2>
+          <span className={ classNames('disabled', 'stepsDecorator') }>{'>'}</span>
+          <h2 className={ classNames('disabled', step == constants.STEP_2 && 'active') }>
+            퀴즈 삽입
+          </h2>
+        </div>
+      </div>
+    );
+
+    let body;
+    switch(step) {
       // step 1
-      case 0:
-        return (
-          <VideoUpload
-            handleNext={ (title, description) => this.goToStepTwo(title, description) }
-            thumbStatus={ thumbStatus }
-            thumbURL={ thumbURL }
-            handleVideoURL={ videoURL => getThumbnail(videoURL) }
-            method={ method }
-            changeUploadMethod={ nextMethod => changeUploadMethod(nextMethod) }
-            resetVideo={ resetVideo }
-            isGoogleAuth={ isGoogleAuth }
-            goToGoogleAuthPage={ goToGoogleAuthPage }
-            handleUploadVideo={ file => uploadYoutubeVideo(file) } />
+      case constants.STEP_1:
+        body = (
+          <div>
+            <Step1
+              method={ method }
+              setUploadMethod={ method => handleSetUploadMethod(method) }
+              urlStatus={ urlStatus }
+              handleURLCheck={ videoURL => handleURLCheck(videoURL) }
+              handleNext={ videoInfo => this.goToStep2(videoInfo) }
+              thumbURL={ thumbURL }
+              resetVideo={ resetVideo }
+              isGoogleAuth={ isGoogleAuth }
+              goToGoogleAuthPage={ goToGoogleAuthPage }
+              handleYoutubeUpload={ file => uploadYoutubeVideo(file) } />
+          </div>
         );
+        break;
 
       // step 2
-      case 1:
+      case constants.STEP_2:
       default:
-        return (
-          <UploadInsertionComponent
-            videoTitle={ title }
-            goToStepOne={ this.goToStepOne } />
+        body = (
+          <div>
+            <Step2 />
+            <UploadInsertionComponent
+              videoTitle={ title }
+              goToStepOne={ this.goToStepOne } />
+          </div>
         );
     }
+
+    return (
+      <div>
+        { header }
+        { body }
+      </div>
+    );
   }
 
-  goToStepTwo = (title, description) => {
-    if (title == '') {
-      console.log('MUST HAVE A TITLE!');
-      return;
-    }
-    const step = 1;
-    this.props.setStep(step);
-    this.props.setVideoData(title, description);
+  // *******************
+  goToStep2 = videoInfo => {
+    this.props.setStep(constants.STEP_2);
+    console.log('******');
+    console.log(videoInfo);
+    this.props.setVideoInfo(videoInfo);
   }
 
   goToStepOne = () => {
-    const step = 0;
+    const step = constants.STEP_1;
     this.props.setStep(step);
   }
 }
@@ -114,17 +148,19 @@ Upload.defaultProps = defaultProps;
 const mapStateToProps = state => ({
   step: state.upload.step,
   title: state.upload.title,
+  urlStatus: state.upload.urlStatus,
   thumbStatus: state.upload.thumbStatus,
   thumbURL: state.upload.thumbURL,
   method: state.upload.method,
-  isGoogleAuth: state.upload.isGoogleAuth
+  isGoogleAuth: state.upload.isGoogleAuth,
 });
 
 const mapDispatchToProps = dispatch => ({
   setStep: step => dispatch(actions.setStep(step)),
-  setVideoData: (title, description) => dispatch(actions.setVideoData(title, description)),
+  handleSetUploadMethod: method => dispatch(actions.handleSetUploadMethod(method)),
+  setVideoInfo: videoInfo => dispatch(actions.setVideoInfo(videoInfo)),
+  handleURLCheck: videoURL => dispatch(actions.handleURLCheck(videoURL)),
   getThumbnail: videoURL => dispatch(actions.getThumbnail(videoURL)),
-  changeUploadMethod: method => dispatch(actions.changeUploadMethod(method)),
   resetVideo: () => dispatch(actions.resetVideo()),
   goToGoogleAuthPage: () => dispatch(actions.goToGoogleAuthPage()),
   uploadYoutubeVideo: file => dispatch(actions.uploadYoutubeVideo(file))

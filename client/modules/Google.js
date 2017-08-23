@@ -7,6 +7,7 @@ const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
 const BASE_URL = 'http://localhost:3000';
 
 let instance = null;
+let gauth;
 
 export default class Google {
   constructor() {
@@ -46,6 +47,7 @@ export default class Google {
         clientId: GOOGLE_CLIENT_KEY,
         scope: UPLOAD_SCOPE
       }).then(() => {
+        gauth = gapi.auth2.getAuthInstance();
         setGoogleAuthStatus(Google.isAuthenticated());
         // update auth status when signIn status changes
         gapi.auth2.getAuthInstance().isSignedIn.listen(() => {
@@ -68,7 +70,7 @@ export default class Google {
 
   static authenticate() {
     const auth = gapi.auth2.getAuthInstance();
-    auth.signIn();
+    gauth.signIn();
   }
 
   static uploadVideo(file, setThumbURL) {

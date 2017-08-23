@@ -1,13 +1,18 @@
 import * as actions from './Actions';
+import * as constants from '../Constants';
 
 const initialState = {
-  step: 0,
+  step: constants.STEP_1,
   title: '',
+  subject: '',
+  textbook: '',
   description: '',
+  videoURL: '',
+  urlStatus: constants.NO_URL,
   thumbStatus: actions.NO_THUMB,
   thumbURL: '',
-  method: actions.URL_METHOD,
-  isGoogleAuth: null
+  method: constants.METHOD_NOT_SELECTED,
+  isGoogleAuth: false
 };
 
 const UploadReducer = (state = initialState, action) => {
@@ -17,27 +22,33 @@ const UploadReducer = (state = initialState, action) => {
         ...state,
         step: action.step
       };
-    case actions.SET_VIDEO_DATA:
+    case actions.SET_UPLOAD_METHOD:
+      return {
+        ...state,
+        method: action.method
+      };
+    case actions.SET_VIDEO_INFO:
       return {
         ...state,
         title: action.title,
+        subject: action.subject,
+        textbook: action.textbook,
         description: action.description
       };
-    case actions.SET_THUMB_URL:
+    case actions.SET_URL_STATUS:
       return {
         ...state,
-        thumbStatus: action.thumbStatus,
-        thumbURL: action.thumbURL
+        urlStatus: action.urlStatus
       };
     case actions.SET_VIDEO_URL:
       return {
         ...state,
         videoURL: action.videoURL
       };
-    case actions.SET_UPLOAD_METHOD:
+    case actions.SET_THUMB_URL:
       return {
         ...state,
-        method: action.method
+        thumbURL: action.thumbURL
       };
     case actions.SET_GOOGLE_AUTH_STATUS:
       return {

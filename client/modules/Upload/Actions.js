@@ -1,11 +1,12 @@
+import * as constants from '../Constants';
 import Google from '../Google';
 
 export const SET_STEP = 'SET_STEP';
-export const SET_VIDEO_DATA = 'SET_VIDEO_DATA';
+export const SET_UPLOAD_METHOD = 'SET_UPLOAD_METHOD';
+export const SET_VIDEO_INFO = 'SET_VIDEO_INFO';
+export const SET_URL_STATUS = 'SET_URL_STATUS';
 export const SET_VIDEO_URL = 'SET_VIDEO_URL';
 export const SET_THUMB_URL = 'SET_THUMB_URL';
-export const SET_UPLOAD_METHOD = 'SET_UPLOAD_METHOD';
-export const CHANGE_UPLOAD_METHOD = 'CHANGE_UPLOAD_METHOD';
 export const SET_GOOGLE_AUTH_STATUS = 'SET_GOOGLE_AUTH_STATUS';
 
 export const NO_THUMB = 0;
@@ -20,21 +21,12 @@ export const setStep = step => ({
   step
 });
 
-export const setVideoData = (title, description) => ({
-  type: SET_VIDEO_DATA,
-  title,
-  description
-});
-
-export const setThumbURL = (thumbStatus, thumbURL) => ({
-  type: SET_THUMB_URL,
-  thumbStatus,
-  thumbURL
-});
-
-export const setVideoURL = videoURL => ({
-  type: SET_VIDEO_URL,
-  videoURL
+export const setVideoInfo = videoInfo => ({
+  type: SET_VIDEO_INFO,
+  title: videoInfo.title,
+  subject: videoInfo.subject,
+  textbook: videoInfo.textbook,
+  description: videoInfo.description
 });
 
 const setUploadMethod = method => ({
@@ -42,34 +34,43 @@ const setUploadMethod = method => ({
   method
 });
 
-// changes upload method and takes care of google api set up for the change
-export const changeUploadMethod = method => (dispatch => {
+// handles upload method change and takes care of google api set up for accordingly
+export const handleSetUploadMethod = method => (dispatch => {
   switch(method) {
-    case URL_METHOD:
+    case constants.FILE_METHOD:
+      dispatch(initYoutubeUpload());
+      break;
+    case constants.URL_METHOD:
       Google.initThumbClient();
       break;
-    case FILE_METHOD:
     default:
-      dispatch(initYoutubeUpload());
+      break;
   }
   dispatch(setUploadMethod(method));
 });
 
-export const getThumbnail = videoURL => (dispatch => {
+// checks URL status and retrieves thumbnail url from youtube
+export const handleURLCheck = videoURL => (dispatch => {
   let youtubeVideoId = videoURL;
   if (videoURL.length != 11) {
     youtubeVideoId = parseYoutubeVideoId(videoURL);
   }
-  let thumbStatus = FAIL_THUMB;
+  let urlStatus = constants.FAIL_URL;
   let thumbURL = '';
   Google.requestThumbClient(youtubeVideoId)
   .then(({ result }) => {
     if (result.pageInfo.totalResults == 1) {
-      thumbStatus = SUCC_THUMB;
-      thumbURL = result.items[0].snippet.thumbnails.high.url;
+      urlStatus = constants.SUCC_URL;
+
+      const thumbnails = result.items[0].snippet.thumbnails;
+      console.log(thumbnails);
+      const thumb = thumbnails.maxres || thumbnails.standard || thumbnails.high
+                    || thumbnails.medium || thumbnails.default;
+      thumbURL = thumb.url;
       dispatch(setVideoURL(videoURL));
+      dispatch(setThumbURL(thumbURL));
     }
-    dispatch(setThumbURL(thumbStatus, thumbURL));
+    dispatch(setURLStatus(urlStatus));
   });
 });
 
@@ -79,9 +80,26 @@ const parseYoutubeVideoId = videoURL => {
   return (match && match[2].length == 11) ? match[2] : '';
 };
 
+const setVideoURL = videoURL => ({
+  type: SET_VIDEO_URL,
+  videoURL
+});
+
+const setThumbURL = thumbURL => ({
+  type: SET_THUMB_URL,
+  thumbURL
+});
+
+const setURLStatus = urlStatus => ({
+  type: SET_URL_STATUS,
+  urlStatus
+});
+
 export const resetVideo = () => (dispatch => {
+  dispatch(setURLStatus(constants.NO_URL));
   dispatch(setVideoURL(''));
-  dispatch(setThumbURL(NO_THUMB, ''));
+  dispatch(setThumbURL(''));
+  dispatch(setUploadMethod(constants.METHOD_NOT_SELECTED));
 });
 
 const setGoogleAuthStatus = isGoogleAuth => ({
@@ -101,6 +119,6 @@ export const goToGoogleAuthPage = () => (() => {
 
 export const uploadYoutubeVideo = file => (dispatch => {
   Google.uploadVideo(file, thumbURL => {
-    dispatch(getThumbnail(thumbURL));
+    console.log('FINISHED UPLOADING');
   });
 });
