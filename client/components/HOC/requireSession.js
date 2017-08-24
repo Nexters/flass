@@ -25,6 +25,13 @@ export default function(ComposedComponent) {
       })
     };
 
+    componentWillMount() {
+      const { sessionValid } = this.props;
+      if (!sessionValid) {
+        this.context.router.history.push('/user/login');
+      }
+    }
+
     componentDidMount() {
       this.props.checkSession();
     }

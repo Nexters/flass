@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Divider, Subheader } from 'material-ui';
 import { Grid, Row, Col, Panel } from 'react-bootstrap';
 import styled from 'styled-components';
 import AnalysisItem from './AnalysisItem';
 import AnalysisHeaderItem from './AnalysisHeaderItem';
+import ChartComponent from './Chart/ChartComponent';
 
 const DetailAnalysis = styled.div`
   padding-top: 3rem;
@@ -32,39 +32,7 @@ class Analysis extends Component {
   render() {
     return (
       <DetailAnalysis>
-        <AnalysisHeader>
-          <Row>
-            <Col xs={ 3 } md={ 3 }>
-              <AnalysisHeaderItem
-                headerName="강의 완주율"
-                rangeComponent={<RangeFont color="#7f9d29" >96%</RangeFont>}
-                headerDetail="20명/30명"
-              />
-            </Col>
-            <Col xs={ 3 } md={ 3 }>
-              <AnalysisHeaderItem
-                headerName="강의 완주율"
-                rangeComponent={<RangeFont color="#7f9d29" >96%</RangeFont>}
-                headerDetail="20명/30명"
-              />
-            </Col>
-            <Col xs={ 3 } md={ 3 }>
-              <AnalysisHeaderItem
-                headerName="강의 완주율"
-                rangeComponent={<RangeFont color="#7f9d29" >96%</RangeFont>}
-                headerDetail="20명/30명"
-              />
-            </Col>
-            <Col xs={ 3 } md={ 3 }>
-              <AnalysisHeaderItem
-                headerName="강의 완주율"
-                rangeComponent={<RangeFont color="#7f9d29" >96%</RangeFont>}
-                headerDetail="20명/30명"
-              />
-            </Col>
-          </Row>
-        </AnalysisHeader>
-        <AnalysisItem />
+        <ChartComponent />
       </DetailAnalysis>
     );
   }

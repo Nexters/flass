@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Subheader } from 'material-ui';
 import Chart from 'chart.js';
 
 const propTypes = {};
@@ -51,7 +50,6 @@ class AnalysisItem extends Component {
   render() {
     return (
       <div>
-        <Subheader><span>03:25</span> 질문 내용1</Subheader>
         <canvas id="myChart" width="300" height="200" ref={chart => this.myChart = chart} />
       </div>
     );
