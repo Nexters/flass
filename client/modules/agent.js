@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const TYPE_OF_BACKEND = process.env.BACK_END;
-
+console.log('TYPE_OF_BACKEND');
+console.log(TYPE_OF_BACKEND);
 const API_JSON = 'http://localhost:4000';
 const API_LOCAL = 'http://localhost:3000';
 const API_PRODUCTION = 'https://conduit.productionready.io/api';
@@ -46,17 +47,30 @@ const Auth = {
 const UserJson = {
   me: () => requests.get('/json/FlassUser.json')
         .then(response => {
-          console.log('response');
+          console.log('response::UserJson');
           console.log(response);
           return response;
         })
 };
 const UserRails = {
-  me: token => requests.post('/users', { test_token: token })
-      .then(response => {
-        console.log(response);
-        return response;
-      }) // /json/FlassUser.json
+  me: token => requests.post('/users', { id_token: token }, config)
+    .then(response => {
+      console.log('response::UserRails');
+      console.log(response);
+      return response;
+    }), // /json/FlassUser.json
+  whoami: () => requests.get('/users')
+    .then(response => {
+      console.log('response::UserRails::whoami');
+      console.log(response);
+      return response;
+    }),
+  out: () => requests.get('/users/logout')
+    .then(response => {
+      console.log('response::UserRails::out');
+      console.log(response);
+      return response;
+    })
 };
 const User = selectAPIRequest(UserRails, UserJson);
 
@@ -84,8 +98,16 @@ const DetailRails = {
 const Detail = selectAPIRequest(DetailRails, DetailJson);
 
 
-const Question = {
+const QuestionJson = {
   byDetailId: detailId => requests.get('/json/FlassQuestion.json')
+};
+const QuestionRails = {
+  uploadByLectureId: body => requests.post('/questions', body)
+};
+const Question = selectAPIRequest(QuestionRails, QuestionJson);
+
+const Choice = {
+  upload: body => requests.post('/choices', body)
 };
 
 const Comment = {
@@ -93,6 +115,25 @@ const Comment = {
   postComment: (detailId, content) => requests.get('/json/FlassPostComment.json', { detailId, content }),
   deleteById: commentId => requests.del('')
 };
+
+const AnswerRails = {
+  uploadByQuestionId: body => requests.post('/answers', body)
+    .then(response => {
+      console.log('response::Answer');
+      console.log(response);
+      return response;
+    })
+};
+const AnswerJson = {
+  uploadByQuestionId: body => axios.post('http://localhost:3000/answers', body, config)
+    .then(response => {
+      console.log('response::Answer');
+      console.log(response);
+      return response;
+    })
+};
+const Answer = selectAPIRequest(AnswerRails, AnswerJson);
+
 
 const Analysis = {
 
@@ -106,5 +147,7 @@ export default {
   Question,
   Comment,
   Analysis,
+  Choice,
+  Answer,
   setToken: _token => { token = _token; }
 };

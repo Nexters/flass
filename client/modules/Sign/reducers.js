@@ -4,13 +4,16 @@ import {
   SUCCESS_LOGIN_GOOGLE_SERVICE,
   SUCCESS_LOGOUT_GOOGLE_SERVICE,
   USER_IS_SIGNEDIN,
-  USER_ISNOT_SIGNEDIN
+  USER_ISNOT_SIGNEDIN,
+  CHECK_SESSION_SUCCESS,
+  CHECK_SESSION_FAIL
 } from './actions';
 
 const initialState = {
   isUserSignedIn: false,
   needRedirect: false,
-  id_token: ''
+  id_token: '',
+  sessionExist: false
 };
 
 const userSignInReducer = {
@@ -40,6 +43,14 @@ const userIsSignedInReducer = {
     ...state,
     isUserSignedIn: false,
     needRedirect: false
+  }),
+  [CHECK_SESSION_SUCCESS]: state => ({
+    ...state,
+    sessionExist: true
+  }),
+  [CHECK_SESSION_FAIL]: state => ({
+    ...state,
+    sessionExist: false
   })
 };
 

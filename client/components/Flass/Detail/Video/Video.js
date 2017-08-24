@@ -296,7 +296,9 @@ class Video extends Component {
 
   @autobind
   onEnded() {
+    const { solvedQuestionsState } = this.props;
     this.setState({ isEnded: true, playing: false });
+    this.props.requestOnEnded(solvedQuestionsState);
     this.props.setCompleteVideoFlag();
   }
 
