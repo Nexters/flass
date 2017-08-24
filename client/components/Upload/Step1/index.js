@@ -21,7 +21,10 @@ const propTypes = {
   resetVideo: PropTypes.func.isRequired,
   isGoogleAuth: PropTypes.number.isRequired,
   goToGoogleAuthPage: PropTypes.func.isRequired,
-  handleYoutubeUpload: PropTypes.func.isRequired
+  handleYoutubeUpload: PropTypes.func.isRequired,
+  uploadStatus: PropTypes.number.isRequired,
+  uploadProgress: PropTypes.number.isRequired,
+  processProgress: PropTypes.number.isRequired
 };
 
 const defaultProps = {
@@ -39,7 +42,11 @@ class Step1 extends Component {
   };
 
   render() {
-    const { handleNext, method, setUploadMethod, urlStatus, handleURLCheck, thumbURL, resetVideo, isGoogleAuth, goToGoogleAuthPage, handleYoutubeUpload } = this.props;
+    const {
+      handleNext, method, setUploadMethod, urlStatus, handleURLCheck, thumbURL,
+      resetVideo, isGoogleAuth, goToGoogleAuthPage, handleYoutubeUpload,
+      uploadStatus, uploadProgress, processProgress
+    } = this.props;
     const { videoInfo } = this.state;
 
     const left = (
@@ -68,7 +75,11 @@ class Step1 extends Component {
               back={ resetVideo }
               isGoogleAuth={ isGoogleAuth }
               goToGoogleAuthPage={ goToGoogleAuthPage }
-              handleYoutubeUpload={ file => handleYoutubeUpload(file) } />
+              handleYoutubeUpload={ file => handleYoutubeUpload(file) }
+              uploadStatus={ uploadStatus }
+              uploadProgress={ uploadProgress }
+              processProgress={ processProgress }
+              thumbURL={ thumbURL } />
           </div>
         );
         break;

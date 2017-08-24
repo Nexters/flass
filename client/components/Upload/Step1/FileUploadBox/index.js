@@ -11,12 +11,19 @@ const propTypes = {
   back: PropTypes.func.isRequired,
   isGoogleAuth: PropTypes.number.isRequired,
   goToGoogleAuthPage: PropTypes.func.isRequired,
-  handleYoutubeUpload: PropTypes.func.isRequired
+  handleYoutubeUpload: PropTypes.func.isRequired,
+  uploadStatus: PropTypes.number.isRequired,
+  uploadProgress: PropTypes.number.isRequired,
+  processProgress: PropTypes.number.isRequired,
+  thumbURL: PropTypes.string.isRequired
 };
 
 class FileUploadBox extends Component {
   render() {
-    const { back, isGoogleAuth, goToGoogleAuthPage, handleYoutubeUpload } = this.props;
+    const {
+      back, isGoogleAuth, goToGoogleAuthPage, handleYoutubeUpload,
+      uploadStatus, uploadProgress, processProgress, thumbURL
+    } = this.props;
 
     switch(isGoogleAuth) {
       case FAIL_AUTH:
@@ -29,7 +36,11 @@ class FileUploadBox extends Component {
         return (
           <Uploader
             back={ back }
-            handleYoutubeUpload={ file => handleYoutubeUpload(file) } />
+            handleYoutubeUpload={ file => handleYoutubeUpload(file) }
+            uploadStatus={ uploadStatus }
+            uploadProgress={ uploadProgress }
+            processProgress={ processProgress }
+            thumbURL={ thumbURL } />
         );
       case INIT:
       default:
