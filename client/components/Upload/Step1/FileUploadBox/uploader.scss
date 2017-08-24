@@ -1,0 +1,25 @@
+.inputFile {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputFile + label {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border-radius: 100px;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  border: solid 1.5px;
+}
+
+.blackBackground {
+  height: 100%;
+  background-color: #000000;
+  background-size: cover;
+  border-radius: inherit;
+}

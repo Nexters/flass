@@ -7,8 +7,8 @@ import styled from 'styled-components';
 import Content from './Content/Content';
 import Comment from './Comment/CommentContainer';
 import Analysis from './Analysis/Analysis';
-import Video from './Video/VideoContainer';
-import ContentTitleComponent from '../ContentTitle/ContentTitleComponent';
+import Video from './Video/Video';
+import Header from '../Header';
 import { FlassDetailStyled } from './DetailStyled';
 
 import contentImageActive from './images/tab-content-active.png';
@@ -98,7 +98,7 @@ class Detail extends Component {
 
     return (
       <FlassDetailStyled.Wrapper>
-        <ContentTitleComponent title="Watching Video" />
+        <Header title="Watching Video" />
         <FlassDetailStyled.Content>
           <Video
             VideoBarClassName="bar--thinner"

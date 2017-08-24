@@ -5,6 +5,7 @@ import flassGrid from './Grid/GridActions';
 import flassDetail from './Detail/DetailActions';
 import flassComment from './Detail/Comment/CommentActions';
 import flassQuestion from './Detail/Question/QuestionActions';
+import flassVideo from './Detail/Video/sagas';
 
 export default function* rootSaga() {
   yield [
@@ -13,6 +14,7 @@ export default function* rootSaga() {
     fork(flassGrid),
     fork(flassDetail),
     fork(flassComment),
-    fork(flassQuestion)
+    fork(flassQuestion),
+    fork(flassVideo)
   ];
 }

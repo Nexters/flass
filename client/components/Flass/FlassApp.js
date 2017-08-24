@@ -10,8 +10,7 @@ import Detail from './Detail/DetailContainer';
 import Upload from '../Upload';
 
 import Drawer from './Drawer/Drawer';
-import ContentWrapperComponent from './ContentWrapper/ContentWrapperComponent';
-import Content from './FlassContent';
+import Content from './Content';
 import './FlassApp.scss';
 import AppBar from './AppBar/AppBar';
 
@@ -53,9 +52,7 @@ class FlassApp extends Component {
           <AppBar isLogin={id !== -1} />
 
           <Content>
-            <ContentWrapperComponent>
-              {this.renderContent()}
-            </ContentWrapperComponent>
+            {this.renderContent()}
           </Content>
         </div>
       </MuiThemeProvider>

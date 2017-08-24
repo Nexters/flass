@@ -1,7 +1,7 @@
 body {
-  font-family: NotoSansCJKkr;
+  font-family: NotoSansCJKkr, sans-serif;
   margin: 0;
-  background-color: #eee;
+  background-color: #f1f4f5;
 }
 
 .container {
