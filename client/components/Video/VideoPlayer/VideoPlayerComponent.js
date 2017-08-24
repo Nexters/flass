@@ -42,8 +42,6 @@ class VideoPlayerComponent extends Component {
       volume,
       styledProps
     } = this.props;
-    console.log('PlayerComponent::url');
-    console.log(url);
     return (
       <VideoPlayer.Wrapper styledProps={ styledProps }>
         <ReactPlayer
