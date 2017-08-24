@@ -11,7 +11,7 @@ export const FETCH_USER_ERROR = 'FETCH_USER_ERROR';
 function* fetchUser() {
   yield put({ type: FETCH_READY_USER });
   try {
-    const token = localStorage.getItem('flass_id_token');
+    const token = yield call(localStorage.getItem, 'flass_user_id');
     console.log('fetchUser::token');
     console.log(token);
     if (!token) {

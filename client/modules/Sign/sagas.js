@@ -2,6 +2,10 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import Google from '../Google';
 import agent from '../agent';
 import {
+  setItemToLocalStorage,
+  getItemFromLocalStorage
+} from '../sagasHelper';
+import {
   INIT_GOOGLE_SERVICE,
   LOGIN_GOOGLE_SERVICE,
   SUCCESS_LOGIN_GOOGLE_SERVICE,
@@ -25,32 +29,29 @@ import {
 
 function* initGoogleService() {
   yield call(Google.initGoogleAuthService);
-  const isUserSignedIn = yield call(Google.isUserSignedIn);
-
-  if (isUserSignedIn) {
-    yield put({ type: USER_IS_SIGNEDIN });
-  } else {
-    yield put({ type: USER_ISNOT_SIGNEDIN });
-  }
 }
 
 function* loginGoogleService() {
-  const authResponse = yield call(Google.authorizeForSignIn);
+  try {
+    const authResponse = yield call(Google.authorizeForSignIn);
+    const isGoogleAuthValid = yield call(isAuthResponseValid, authResponse);
 
-  if (isAuthResponseValid(authResponse)) {
-    const meResponse = yield call(agent.User.me, authResponse.id_token);
-    console.log('meResponse');
-    console.log(meResponse);
-
-    localStorage.setItem('flass_id_token', authResponse.id_token);
-
+    if (isGoogleAuthValid) {
+      const meResponse = yield call(agent.User.me, authResponse.id_token);
+      yield call(setItemToLocalStorage, 'flass_user_id', meResponse.id.toString());
+      yield put({
+        type: SET_USER,
+        user: meResponse
+      });
+      yield put({
+        type: SUCCESS_LOGIN_GOOGLE_SERVICE,
+        payload: authResponse
+      });
+    }
+  } catch (error) {
     yield put({
-      type: SET_USER,
-      user: meResponse
-    });
-    yield put({
-      type: SUCCESS_LOGIN_GOOGLE_SERVICE,
-      payload: authResponse
+      type: FAIL_LOGIN_GOOGLE_SERVICE,
+      error
     });
   }
 }
@@ -71,8 +72,13 @@ function* logoutGoogleService() {
 }
 
 function* checkSession() {
-  const response = yield call(agent.User.whoami);
   try {
+    const { id } = yield call(agent.User.whoami);
+    const flassUserId = yield call(getItemFromLocalStorage, 'flass_user_id');
+
+    if (id !== flassUserId) {
+      throw new Error('Invalid session');
+    }
     yield put({ type: CHECK_SESSION_SUCCESS });
   } catch (e) {
     yield put({ type: CHECK_SESSION_FAIL });
@@ -81,6 +87,7 @@ function* checkSession() {
 
 function* logoutFlassService() {
   const response = yield call(agent.User.out);
+  yield call(setItemToLocalStorage, 'flass_user_id', '');
   try {
     yield put({ type: SUCCESS_LOGOUT_FLASS_SERVICE });
   } catch (e) {

@@ -65,7 +65,7 @@ const UserRails = {
       console.log(response);
       return response;
     }),
-  out: () => requests.get('/users/logout')
+  out: () => requests.get('/logout', config)
     .then(response => {
       console.log('response::UserRails::out');
       console.log(response);

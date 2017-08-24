@@ -5,10 +5,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import { Route, Switch } from 'react-router-dom';
+
+import requireSession from '../HOC/requireSession';
 import Grid from './Grid/GridContainer';
 import Detail from './Detail/DetailContainer';
 import Upload from '../Upload';
-
 import Drawer from './Drawer/Drawer';
 import Content from './Content';
 import './FlassApp.scss';
@@ -62,10 +63,10 @@ class FlassApp extends Component {
   renderContent() {
     return (
       <Switch>
-        <Route exact path="/" component={ Grid } />
-        <Route path="/home" component={ Grid } />
-        <Route path="/detail/:id" component={ Detail } />
-        <Route path="/upload" component={ Upload } />
+        <Route exact path="/" component={ requireSession(Grid) } />
+        <Route path="/home" component={ requireSession(Grid) } />
+        <Route path="/detail/:id" component={ requireSession(Detail) } />
+        <Route path="/upload" component={ requireSession(Upload) } />
       </Switch>
     );
   }
