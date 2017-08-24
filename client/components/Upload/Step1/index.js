@@ -97,10 +97,15 @@ class Step1 extends Component {
     }
 
     const next = (
-      <Button
-        disabled={ !this.isComplete() }
-        color={ this.isComplete() ? '#176d99' : null }
-        onClick={ () => handleNext(videoInfo) }>다음</Button>
+      <div className="nextButton">
+        <Button
+          disabled={ !this.isComplete() }
+          fontSize="1.57rem"
+          color={ this.isComplete() ? '#176d99' : '#b6bfc1' }
+          margin="2.125rem 5.56rem 0 0"
+          padding="0.5625rem 2.06rem 0.3125rem 2.06rem"
+          onClick={ () => handleNext(videoInfo) }>다 음</Button>
+      </div>
     );
 
     return (

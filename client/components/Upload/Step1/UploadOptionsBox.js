@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-// import './infoBox.scss';
+import './uploadOptionsBox.scss';
+import Options from './img/options.png';
+import Options2x from './img/options@2x.png';
+import Options3x from './img/options@3x.png';
 import Button from '../../Flass/Button';
 
 const propTypes = {
@@ -21,17 +24,23 @@ class UploadOptionsBox extends Component {
 
   render() {
     const { selectFileMethod, selectURLMethod } = this.props;
-    // const { } = this.state;
     return (
       <div>
-        <img src="https://png.icons8.com/genie/color/24" alt="업로드 아이콘" />
-        <h3>업로드 방법을 선택하세요.</h3>
-        <Button
-          color="#9abf32"
-          onClick={ selectFileMethod }>파일 업로드</Button>
-        <Button
-          color="#9abf32"
-          onClick={ selectURLMethod }>유튜브 URL</Button>
+        <img
+          src={ Options }
+          srcSet={ `${Options2x} 2x,${Options3x} 3x` }
+          className="optionsBoxIcon"
+          alt="업로드 아이콘" />
+        <span className="optionsBoxMessage">업로드 방법을 선택하세요.</span>
+        <div className="buttonsContainer">
+          <Button
+            color="#9abf32"
+            margin="0 1.78rem 0 0"
+            onClick={ selectFileMethod }>파일 업로드</Button>
+          <Button
+            color="#9abf32"
+            onClick={ selectURLMethod }>유튜브 URL</Button>
+        </div>
       </div>
     );
   }
