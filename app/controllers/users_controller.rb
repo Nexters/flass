@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   def show
     render json: @user
   end
+
 =begin
   # POST /users
   # POST /users.json
@@ -36,6 +37,7 @@ class UsersController < ApplicationController
     end
   end
 =end
+
   # POST /users
   # POST /users.json
   api :POST, '/users', '회원 정보 생성 및 업데이트하기'
@@ -71,11 +73,7 @@ class UsersController < ApplicationController
     end
   end
 
-
-  def login
-  end
-
-  api :GET, '/users/logout', '회원 로그아웃'
+  api :GET, '/logout', '회원 로그아웃'
   def logout
     reset_session
     head :ok

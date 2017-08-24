@@ -8,6 +8,7 @@ const propTypes = {
   initGoogleAuthService: func.isRequired,
   goToGoogleAuthPage: func.isRequired,
   signOutGoogleService: func.isRequired,
+  signOutFlassService: func.isRequired,
 
   isUserSignedIn: bool.isRequired,
   needRedirect: bool.isRequired
@@ -53,6 +54,7 @@ class SignIn extends Component {
   @autobind
   onClickLogoutBtn() {
     this.props.signOutGoogleService();
+    this.props.signOutFlassService();
   }
 }
 
