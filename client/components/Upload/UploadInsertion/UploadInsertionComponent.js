@@ -108,12 +108,12 @@ class UploadInsertionComponent extends Component {
     const {
       isAdding,
       questionSecsStateArray,
-      stateOfFocusedQuestion
+      stateOfFocusedQuestion,
+      videoUrl
     } = this.props;
 
     return (
       <div>
-        <Header title="Upload new video" />
         <div className="row">
           <div className="row__player-large-5">
             <VideoComponent
@@ -135,6 +135,7 @@ class UploadInsertionComponent extends Component {
               setPlayedState={ this.setPlayedState }
               setIsQuizSecsState={ this.setIsQuizSecsState }
               onQuestionbarClick={ this.onQuestionbarClick }
+              url={ videoUrl }
               duration={ duration }
               played={ played }
               loaded={ loaded }
