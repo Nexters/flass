@@ -4,7 +4,7 @@ import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
 import MediaUploader from './MediaUploader';
 
 const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube';
-const LOGIN_SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
+const LOGIN_SCOPE = 'https://www.googleapis.com/auth/youtube';
 const BASE_URL = 'http://localhost:3000';
 const GET_UPLOAD_STATUS_INTERVAL_MILLIS = 60 * 1000;
 
