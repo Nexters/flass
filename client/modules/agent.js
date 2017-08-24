@@ -53,12 +53,24 @@ const UserJson = {
         })
 };
 const UserRails = {
-  me: token => requests.post('/users', { id_token: token })
-      .then(response => {
-        console.log('response::UserRails');
-        console.log(response);
-        return response;
-      }) // /json/FlassUser.json
+  me: token => requests.post('/users', { id_token: token }, config)
+    .then(response => {
+      console.log('response::UserRails');
+      console.log(response);
+      return response;
+    }), // /json/FlassUser.json
+  whoami: () => requests.get('/users')
+    .then(response => {
+      console.log('response::UserRails::whoami');
+      console.log(response);
+      return response;
+    }),
+  out: () => requests.get('/users/logout')
+    .then(response => {
+      console.log('response::UserRails::out');
+      console.log(response);
+      return response;
+    })
 };
 const User = selectAPIRequest(UserRails, UserJson);
 
@@ -120,8 +132,8 @@ const AnswerJson = {
       return response;
     })
 };
-
 const Answer = selectAPIRequest(AnswerRails, AnswerJson);
+
 
 const Analysis = {
 
