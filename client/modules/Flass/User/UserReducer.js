@@ -39,7 +39,11 @@ const fetchUserReducer = {
     email,
     userName: username
   }),
-  [FETCH_USER_ERROR]: (state, action) => initialState
+  [FETCH_USER_ERROR]: (state, { user: { id, email, username } }) => ({
+    id,
+    email,
+    userName: username
+  })
 };
 
 const UserReducer = createReducer(initialState, {

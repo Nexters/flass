@@ -7,11 +7,9 @@ const { func, bool, shape, object } = PropTypes;
 const propTypes = {
   initGoogleAuthService: func.isRequired,
   goToGoogleAuthPage: func.isRequired,
-  signOutGoogleService: func.isRequired,
-  signOutFlassService: func.isRequired,
 
   isUserSignedIn: bool.isRequired,
-  needRedirect: bool.isRequired
+  sessionValid: bool.isRequired
 };
 
 const defaultProps = {};
@@ -28,32 +26,29 @@ class SignIn extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.needRedirect) {
-      //this.context.router.history.push('/');
+    if (nextProps.sessionValid) {
+      this.context.router.history.push('/');
     }
   }
 
   render() {
+    // 예훈아 여기가 로그인화면이야!
     const {
       isUserSignedIn,
-      needRedirect
+      sessionValid
     } = this.props;
 
     return (
       <div>
         <button
           onClick={ this.onClickLoginBtn }>
-          구글 로그인
-        </button>
-        <button
-          onClick={ this.onClickLogoutBtn }>
-          구글 로그아웃
+          플래스 로그인
         </button>
         <div>
           Is user signed in?: { `${isUserSignedIn}` }
         </div>
         <div>
-          Is user need redirect?: { `${needRedirect}` }
+          Is user sessionValid?: { `${sessionValid}` }
         </div>
       </div>
     );
@@ -62,12 +57,6 @@ class SignIn extends Component {
   @autobind
   onClickLoginBtn() {
     this.props.goToGoogleAuthPage();
-  }
-
-  @autobind
-  onClickLogoutBtn() {
-    this.props.signOutGoogleService();
-    this.props.signOutFlassService();
   }
 }
 

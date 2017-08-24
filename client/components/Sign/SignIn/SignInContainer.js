@@ -3,33 +3,30 @@ import { bindActionCreators } from 'redux';
 import SignInComponent from './SignInComponent';
 import {
   INIT_GOOGLE_SERVICE,
-  LOGIN_GOOGLE_SERVICE,
-  LOGOUT_GOOGLE_SERVICE,
-  LOGOUT_FLASS_SERVICE
+  LOGIN_FLASS_SERVICE,
+  LOGOUT
 } from '../../../modules/Sign/actions';
 
 function mapStateToProps(state) {
-  const { isUserSignedIn, needRedirect } = state.sign;
+  const { isUserSignedIn, needRedirect, sessionValid } = state.sign;
 
   return {
     isUserSignedIn,
-    needRedirect
+    needRedirect,
+    sessionValid
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     goToGoogleAuthPage: () => ({
-      type: LOGIN_GOOGLE_SERVICE
+      type: LOGIN_FLASS_SERVICE
     }),
     initGoogleAuthService: () => ({
       type: INIT_GOOGLE_SERVICE
     }),
-    signOutGoogleService: () => ({
-      type: LOGOUT_GOOGLE_SERVICE
-    }),
     signOutFlassService: () => ({
-      type: LOGOUT_FLASS_SERVICE
+      type: LOGOUT
     })
   }, dispatch);
 }

@@ -3,54 +3,54 @@ import { createReducer } from '../reducerHelper';
 import {
   SUCCESS_LOGIN_GOOGLE_SERVICE,
   SUCCESS_LOGOUT_GOOGLE_SERVICE,
+
   USER_IS_SIGNEDIN,
   USER_ISNOT_SIGNEDIN,
+
   CHECK_SESSION_SUCCESS,
-  CHECK_SESSION_FAIL
+  CHECK_SESSION_FAIL,
+
+  SUCCESS_LOGOUT_FLASS_SERVICE,
+  FAIL_LOGOUT_FLASS_SERVICE,
+
+  SUCCESS_LOGIN_FLASS_SERVICE,
+  FAIL_LOGIN_FLASS_SERVICE,
 } from './actions';
 
 const initialState = {
   isUserSignedIn: false,
   needRedirect: false,
   id_token: '',
-  sessionExist: false
+  sessionValid: false
 };
 
 const userSignInReducer = {
-  [SUCCESS_LOGIN_GOOGLE_SERVICE]: (state, { payload }) => ({
+  [SUCCESS_LOGIN_FLASS_SERVICE]: (state, { payload }) => ({
     ...state,
     isUserSignedIn: true,
     needRedirect: true,
-    id_token: payload.id_token
+    id_token: payload.id_token,
+    sessionValid: true
   })
 };
 
 const userSignOutReducer = {
-  [SUCCESS_LOGOUT_GOOGLE_SERVICE]: state => ({
+  [SUCCESS_LOGOUT_FLASS_SERVICE]: state => ({
     ...state,
     isUserSignedIn: false,
-    id_token: ''
+    sessionValid: false,
+    id_token: '',
   })
 };
 
 const userIsSignedInReducer = {
-  [USER_IS_SIGNEDIN]: state => ({
-    ...state,
-    isUserSignedIn: true,
-    needRedirect: true
-  }),
-  [USER_ISNOT_SIGNEDIN]: state => ({
-    ...state,
-    isUserSignedIn: false,
-    needRedirect: false
-  }),
   [CHECK_SESSION_SUCCESS]: state => ({
     ...state,
-    sessionExist: true
+    sessionValid: true
   }),
   [CHECK_SESSION_FAIL]: state => ({
     ...state,
-    sessionExist: false
+    sessionValid: false
   })
 };
 
