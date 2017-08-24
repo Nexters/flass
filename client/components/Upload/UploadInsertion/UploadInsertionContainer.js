@@ -28,7 +28,9 @@ function mapStateToProps({ quizInsertion, upload }) {
   const {
     videoURL
   } = upload;
-
+  console.log('UploadInsertion::videoUrl');
+  console.log(upload);
+  console.log(videoURL);
   return {
     isAdding,
     type,
