@@ -61,12 +61,33 @@
   margin-bottom: 0.44rem;
 }
 
-.startMessage {
+.uploadMessage {
   display: block;
   font-size: 1.571rem;
   font-weight: 500;
   color: #ffffff;
   margin-bottom: 1.81rem;
+}
+
+.progressMessage {
+  margin-top: 0.7rem;
+  display: block;
+  font-size: 1.29rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.progressBarContainer {
+  height: inherit;
+  position: relative;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0.875rem;
+  left: 0;
 }
 
 .blackBackground {

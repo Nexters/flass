@@ -81,25 +81,45 @@ class Uploader extends Component {
         break;
       case PROCESSING:
         body = (
-          <div>
+          <div className="progressBarContainer">
             { whiteExit }
-            <img src="https://png.icons8.com/genie/color/24" alt="파일 업로드 아이콘" />
-            <h3>&quot;{file.name}&quot; 파일을 프로세싱 중입니다.</h3>
-            { /* Youtube 프로세싱이 100%에 도달하고나서도 프로세싱이 계속 되어서 임의로 설정해줌 */ }
-            <h4>{ processProgress == 100 ? 99 : Math.round(processProgress) }% to complete</h4>
-            <ProgressBar progress={ processProgress } />
+            <div className="alignCenter">
+              <img
+                src={ Upload }
+                srcSet={ `${Upload2x} 2x,${Upload3x} 3x` }
+                className="uploadIcon"
+                alt="업로드 아이콘" />
+              <span className="uploadMessage">&quot;{file.name}&quot; 파일을 프로세싱 중입니다.</span>
+              { /* Youtube 프로세싱이 100%에 도달하고나서도 프로세싱이 계속 되어서 임의로 설정해줌 */ }
+              <span className="progressMessage">
+                { processProgress == 100 ? 99 : Math.round(processProgress) }% to complete
+              </span>
+            </div>
+            <div className="progressBar">
+              <ProgressBar progress={ processProgress } />
+            </div>
           </div>
         );
         break;
       case UPLOADING:
         body = (
-          <div>
+          <div className="progressBarContainer">
             { whiteExit }
-            <img src="https://png.icons8.com/genie/color/24" alt="파일 업로드 아이콘" />
-            <h3>&quot;{file.name}&quot; 파일을 업로드 중입니다.</h3>
-            { /* Youtube 업로딩이 100%에 도달하고나서도 업로딩이 계속 되어서 임의로 설정해줌 */ }
-            <h4>{ uploadProgress == 100 ? 99 : Math.round(uploadProgress) }% to complete</h4>
-            <ProgressBar progress={ uploadProgress } />
+            <div className="alignCenter">
+              <img
+                src={ Upload }
+                srcSet={ `${Upload2x} 2x,${Upload3x} 3x` }
+                className="uploadIcon"
+                alt="업로드 아이콘" />
+              <span className="uploadMessage">&quot;{file.name}&quot; 파일을 업로드 중입니다.</span>
+              { /* Youtube 업로딩이 100%에 도달하고나서도 업로딩이 계속 되어서 임의로 설정해줌 */ }
+              <span className="progressMessage">
+                { uploadProgress == 100 ? 99 : Math.round(uploadProgress) }% to complete
+              </span>
+            </div>
+            <div className="progressBar">
+              <ProgressBar progress={ uploadProgress } />
+            </div>
           </div>
         );
         break;
@@ -115,7 +135,7 @@ class Uploader extends Component {
                   srcSet={ `${Upload2x} 2x,${Upload3x} 3x` }
                   className="uploadIcon"
                   alt="업로드 아이콘" />
-                <span className="startMessage">&quot;{file.name}&quot; 파일이 업로드 됩니다.</span>
+                <span className="uploadMessage">&quot;{file.name}&quot; 파일이 업로드 됩니다.</span>
                 <Button color="#ffffff" onClick={ () => handleYoutubeUpload(file) }>업로드 시작</Button>
               </div>
             </div>
