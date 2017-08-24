@@ -35,7 +35,7 @@ function* initGoogleService() {
 }
 
 function* loginGoogleService() {
-  const authResponse = yield call(Google.authenticateForSignIn);
+  const authResponse = yield call(Google.authorizeForSignIn);
 
   if (isAuthResponseValid(authResponse)) {
     const meResponse = yield call(agent.User.me, authResponse.id_token);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 
-const { func, bool } = PropTypes;
+const { func, bool, shape, object } = PropTypes;
 
 const propTypes = {
   initGoogleAuthService: func.isRequired,
@@ -17,9 +17,22 @@ const propTypes = {
 const defaultProps = {};
 
 class SignIn extends Component {
+  static contextTypes = {
+    router: shape({
+      history: object.isRequired
+    })
+  };
+
   componentDidMount() {
     this.props.initGoogleAuthService();
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.needRedirect) {
+      //this.context.router.history.push('/');
+    }
+  }
+
   render() {
     const {
       isUserSignedIn,
