@@ -10,7 +10,7 @@ class Root extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/user/login" exact component={ requireSession(SignInContainer) } />
+          <Route path="/user/login" exact component={ SignInContainer } />
           <Route path="/*" component={ requireSession(FlassApp) } />
         </Switch>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-const Question = {
+const QuestionBodyAdapter = {
   uploadByQuestionId: (lectureId, questionState) => {
     const {
       TitleInputValue,
@@ -6,25 +6,25 @@ const Question = {
       secsOfQuiz
     } = questionState;
 
-    return {
+    return Promise.resolve({
       lecture_id: lectureId,
       content: TitleInputValue,
       correct_answer: checkedQuizIndex.toString(),
       question_at: parseInt(secsOfQuiz)
-    };
+    });
   }
 };
 
-const Choice = {
+const ChoiceBodyAdapter = {
   upload: (questionId, singleChoiceValues) => {
     const {
       choiceTextValue
     } = singleChoiceValues;
 
-    return {
+    return Promise.resolve({
       question_id: questionId,
       answer: choiceTextValue
-    };
+    });
   }
 };
 
@@ -36,7 +36,7 @@ const Answer = {
 };
 
 export {
-  Question,
-  Choice,
+  QuestionBodyAdapter,
+  ChoiceBodyAdapter,
   Answer
 };
