@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-// import './infoBox.scss';
+import './googleLogin.scss';
+import Exit from './img/exit.png';
+import Google from './img/google.png';
+import Google2x from './img/google@2x.png';
+import Google3x from './img/google@3x.png';
 import Button from '../../../Flass/Button';
 
 const propTypes = {
@@ -20,12 +24,25 @@ class GoogleLogin extends Component {
     // const { } = this.state;
     return (
       <div>
-        <a onClick={ back }>
-          <img src="https://png.icons8.com/pikachu-pokemon/color/24" alt="옵션 선택 취소" />
-        </a>
-        <img src="https://png.icons8.com/genie/color/24" alt="구글 로고" />
-        <h3>유튜브 업로드를 위해 구글 로그인하세요.</h3>
-        <Button color="#9abf32" onClick={ goToGoogleAuthPage }>로그인</Button>
+        <div className="alignRight">
+          <a onClick={ back }>
+            <img
+              src={ Exit }
+              className="exitIcon"
+              alt="옵션 선택 취소" />
+          </a>
+        </div>
+        <div className="alignCenter">
+          <img
+            src={ Google }
+            srcSet={ `${Google2x} 2x,${Google3x} 3x` }
+            className="googleLoginIcon"
+            alt="구글 로고" />
+          <span className="googleLoginMessage">유튜브 업로드를 위해 구글 로그인하세요.</span>
+          <Button
+            color="#9abf32"
+            onClick={ goToGoogleAuthPage }>로그인</Button>
+        </div>
       </div>
     );
   }
