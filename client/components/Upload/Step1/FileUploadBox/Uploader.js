@@ -11,6 +11,9 @@ import File3x from './img/file@3x.png';
 import Upload from './img/upload.png';
 import Upload2x from './img/upload@2x.png';
 import Upload3x from './img/upload@3x.png';
+import Complete from './img/complete.png';
+import Complete2x from './img/complete@2x.png';
+import Complete3x from './img/complete@3x.png';
 import Button from '../../../Flass/Button';
 import ProgressBar from '../../../Flass/ProgressBar';
 import './uploader.scss';
@@ -73,8 +76,14 @@ class Uploader extends Component {
           <div style={ youtubeThumbnail } className="youtubeThumbnail" >
             <div className="overlay">
               { whiteExit }
-              <img src="https://png.icons8.com/genie/color/24" alt="업로드 완료 아이콘" />
-              <h3>성공적으로 영상이 업로드되었습니다</h3>
+              <div className="alignCenter">
+                <img
+                  src={ Complete }
+                  srcSet={ `${Complete2x} 2x,${Complete3x} 3x` }
+                  className="completeIcon"
+                  alt="업로드 완료 아이콘" />
+                <span className="completeMessage">성공적으로 영상이 업로드되었습니다</span>
+              </div>
             </div>
           </div>
         );

@@ -70,7 +70,7 @@
 }
 
 .progressMessage {
-  margin-top: 0.7rem;
+  margin-top: 0.943rem;
   display: block;
   font-size: 1.29rem;
   font-weight: 500;
@@ -88,6 +88,20 @@
   position: absolute;
   bottom: 0.875rem;
   left: 0;
+}
+
+.completeIcon {
+  margin-top: 6.73rem;
+  width: 4.75rem;
+  height: 4.75rem;
+  margin-bottom: 0.94rem;
+}
+
+.completeMessage {
+  display: block;
+  font-size: 1.57rem;
+  font-weight: 500;
+  color: #ffffff;
 }
 
 .blackBackground {
