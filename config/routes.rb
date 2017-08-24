@@ -30,7 +30,7 @@ Rails.application.routes.draw do
  #   end
  # end
 
-  get 'users/logout'
+  get '/logout' => "users#logout"
   get 'answers/question'
   get 'users/login'
 
