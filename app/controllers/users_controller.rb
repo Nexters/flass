@@ -73,11 +73,6 @@ class UsersController < ApplicationController
     end
   end
 
-
-
-  def login
-  end
-
   api :GET, '/logout', '회원 로그아웃'
   def logout
     reset_session
