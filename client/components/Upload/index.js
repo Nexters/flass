@@ -99,10 +99,7 @@ class Upload extends Component {
       case STEP_2:
       default:
         body = (
-          <div>
-            <Step2 />
-            <UploadInsertionContainer />
-          </div>
+          <UploadInsertionContainer />
         );
     }
 
