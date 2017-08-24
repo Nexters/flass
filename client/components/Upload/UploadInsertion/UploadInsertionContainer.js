@@ -15,16 +15,19 @@ import {
 } from '../../../modules/Upload/UploadInsertion/Quiz/QuizActions';
 import UploadInsertionComponent from './UploadInsertionComponent';
 
-function mapStateToProps({ quizInsertion }) {
+function mapStateToProps({ quizInsertion, upload }) {
   const {
     isAdding,
     type,
     questionSecsStateArray,
     stateOfFocusedQuestion,
     quizState,
-    isUploadingQuestionRequestSuccess,
-    videoUrl
+    isUploadingQuestionRequestSuccess
   } = quizInsertion;
+
+  const {
+    videoURL
+  } = upload;
 
   return {
     isAdding,
@@ -32,7 +35,7 @@ function mapStateToProps({ quizInsertion }) {
     questionSecsStateArray,
     stateOfFocusedQuestion,
     isUploadingQuestionRequestSuccess,
-    videoUrl,
+    videoUrl: videoURL,
     questionStateArray: quizState
   };
 }
