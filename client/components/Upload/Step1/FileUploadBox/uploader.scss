@@ -1,3 +1,34 @@
+.alignRight {
+  text-align: right;
+}
+
+.exitIcon {
+  width: 1.27rem;
+  height: 1.27rem;
+  margin: 1.5rem 1.563rem 0 0;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.fileIcon {
+  display: block;
+  margin: 0 auto;
+  margin-top: 7.86rem;
+  width: 3.38rem;
+  height: 2.94rem;
+  margin-bottom: 1.19rem;
+}
+
+.fileMessage {
+  display: block;
+  font-size: 1.571rem;
+  font-weight: 500;
+  color: #848B8C;
+  margin-bottom: 1.88rem;
+}
+
 .inputFile {
   width: 0.1px;
 	height: 0.1px;
@@ -8,13 +39,34 @@
 }
 
 .inputFile + label {
+  font-size: 1.429rem;
+  font-weight: 500;
+  color: #9abf32;
+  padding: 0.5625rem 1.188rem 0.4375rem 1.188rem;
   background-color: Transparent;
   background-repeat: no-repeat;
-  border-radius: 100px;
+  border-radius: 6.25rem;
   cursor: pointer;
   overflow: hidden;
   outline: none;
-  border: solid 1.5px;
+  border: solid 0.0625rem;
+}
+
+.uploadIcon {
+  display: block;
+  margin: 0 auto;
+  margin-top: 6.67rem;
+  width: 4.75rem;
+  height: 4.69rem;
+  margin-bottom: 0.44rem;
+}
+
+.startMessage {
+  display: block;
+  font-size: 1.571rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 1.81rem;
 }
 
 .blackBackground {

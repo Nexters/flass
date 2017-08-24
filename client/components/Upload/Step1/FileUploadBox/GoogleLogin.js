@@ -37,7 +37,7 @@ class GoogleLogin extends Component {
             src={ Google }
             srcSet={ `${Google2x} 2x,${Google3x} 3x` }
             className="googleLoginIcon"
-            alt="구글 로고" />
+            alt="구글 아이콘" />
           <span className="googleLoginMessage">유튜브 업로드를 위해 구글 로그인하세요.</span>
           <Button
             color="#9abf32"
