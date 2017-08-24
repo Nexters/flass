@@ -100,9 +100,6 @@ class VideoComponent extends Component {
 
   componentWillMount() {
     const { url } = this.props;
-    console.log('componentWillMount');
-    console.log(url);
-    console.log(url.toString().trim());
     this.setState({ url: url.toString().trim() });
   }
 
