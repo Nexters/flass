@@ -13,7 +13,7 @@
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test": "mocha --compilers js:./client/spec/compiler.js --require babel-polyfill ./client/spec/helper.js \"./client/**/*.spec.js\"",
     "test:watch": "npm run test -- --watch",
-    "dev:json": "cross-env BACK_END=\"json\" webpack-dev-server --hot --history-api-fallback --open",
+    "dev:json": "cross-env BACK_END=\"json\" webpack-dev-server --history-api-fallback --hot --open",
     "dev": "cross-env BACK_END=\"rails\" webpack-dev-server --hot --open",
     "webpack": "./node_modules/webpack/bin/webpack.js --progress --colors",
     "webpack-watch": "./node_modules/webpack/bin/webpack.js --progress --colors --watch",

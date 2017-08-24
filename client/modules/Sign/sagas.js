@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import Google from '../Google';
+import agent from '../agent';
 import {
   INIT_GOOGLE_SERVICE,
   LOGIN_GOOGLE_SERVICE,
@@ -29,6 +30,9 @@ function* loginGoogleService() {
   const authResponse = yield call(Google.authenticateForSignIn);
 
   if (authResponse) {
+    console.log('authResponse');
+    console.log(authResponse);
+    yield call(agent.User.me, authResponse.id_token);
     yield put({
       type: SUCCESS_LOGIN_GOOGLE_SERVICE,
       payload: authResponse

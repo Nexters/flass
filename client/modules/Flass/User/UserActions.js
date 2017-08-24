@@ -10,7 +10,8 @@ export const FETCH_USER_ERROR = 'FETCH_USER_ERROR';
 
 function* fetchUser({ token }) {
   yield put({ type: FETCH_READY_USER });
-
+  console.log('token');
+  console.log(token);
   try {
     const user = yield call(agent.User.me, token);
     yield put({

@@ -33,3 +33,5 @@ export function resetCompleteVideoFlag() {
     type: RESET_VIDEO_COMPLETE
   };
 }
+
+export const REQUEST_ON_ENDED = 'REQUEST_ON_ENDED';
