@@ -1,5 +1,5 @@
 
-import { createReducer } from '../../reduxHelper';
+import { createReducer } from '../../reducerHelper';
 import {
   FETCH_READY_USER,
   FETCH_USER_SUCCESS,

@@ -13,6 +13,7 @@ const propTypes = {
   onQuestionSolved: func.isRequired,
   onKeepGoingOnVideoCompleteCase: func.isRequired,
   textStateOfQuestions: arrayOf(shape({
+    id: number,
     answerIndex: number,
     singleChoiceValues: arrayOf(shape({
       isAnswer: bool,
@@ -109,6 +110,10 @@ class VideoModalComponent extends Component {
   renderChoices(answerIndex, SingleChoiceValues) {
     const { selectedChoiceIndex, isSolved, isCorrect } = this.state;
     const { solvedQuestionsState, indexOfQuestion } = this.props;
+    console.log('solvedQuestionsState');
+    console.log(solvedQuestionsState);
+    console.log('indexOfQuestion');
+    console.log(indexOfQuestion);
     const solvedQuestionState = solvedQuestionsState[indexOfQuestion];
 
     return SingleChoiceValues.map((singleChoiceValue, index) => (
@@ -212,9 +217,11 @@ class VideoModalComponent extends Component {
       selectedChoiceIndex
     } = this.state;
     const {
+      id,
       singleChoiceValues
     } = textStateOfQuestions[indexOfQuestion];
     const solvedQuestionState = {
+      id,
       indexOfQuestion,
       isCorrect,
       indexOfSelectedChoice: selectedChoiceIndex,
