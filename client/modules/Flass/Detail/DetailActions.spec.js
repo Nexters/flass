@@ -8,7 +8,7 @@ import agent from '../../agent';
 import { FETCH_VIDEO } from './Video/VideoActions';
 
 describe('DetailActions ', () => {
-  it('should success fetchDetailAll', () => {
+  xit('should success fetchDetailAll', () => {
     const param = { detailId: 1 };
     const { detailId } = param;
     const gen = fetchDetailAll(param);
