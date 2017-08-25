@@ -1,6 +1,10 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, take } from 'redux-saga/effects';
 import agent from '../../../agent';
-import requestBodyAdapter from '../../../../RequestBodyAdapter';
+import {
+  QuestionBodyAdapter,
+  ChoiceBodyAdapter
+} from '../../../../RequestBodyAdapter';
+
 import {
   REQUEST_UPLOAD_QUESTIONS,
   SUCCESS_UPLOAD_QUESTIONS,
@@ -8,20 +12,28 @@ import {
 } from './QuizActions';
 
 function* requestUploadQuestions({ questionState }) {
+  console.log('ChoiceBodyAdapter');
+  console.log(ChoiceBodyAdapter);
+  console.log('requestUploadQuestions::Hello');
+  console.log(questionState);
   const lectureId = 2;
 
   try {
     for (let questionIndex = 0; questionIndex < questionState.length; questionIndex += 1) {
       const questionstate = questionState[questionIndex];
-      const { SingleChoiceValues } = questionState;
-      const questionBody = requestBodyAdapter.Question.uploadByQuestionId(lectureId, questionstate);
-
+      const { SingleChoiceValues } = questionstate;
+      const questionBody = yield call(QuestionBodyAdapter.uploadByQuestionId, lectureId, questionstate);
       const { id } = yield call(agent.Question.uploadByLectureId, questionBody);
 
-      for (let choiceIndex = 0; i < SingleChoiceValues.length; choiceIndex += 1) {
+      for (let choiceIndex = 0; choiceIndex < SingleChoiceValues.length; choiceIndex += 1) {
+        console.log('choiceIndex');
+        console.log(choiceIndex);
         const singleChoiceValues = SingleChoiceValues[choiceIndex];
-        const choiceBody = requestBodyAdapter.Choice.upload(id, singleChoiceValues);
-
+        console.log('singleChoiceValues');
+        console.log(singleChoiceValues);
+        const choiceBody = yield call(ChoiceBodyAdapter.upload, id, singleChoiceValues);
+        console.log('choiceBody');
+        console.log(choiceBody);
         yield call(agent.Choice.upload, choiceBody);
       }
     }

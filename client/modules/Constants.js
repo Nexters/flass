@@ -13,7 +13,8 @@ export const URL_METHOD = 1;
 // Uploader.js - file upload status
 export const NOT_STARTED = -1;
 export const UPLOADING = 0;
-export const COMPLETED = 1;
+export const PROCESSING = 1;
+export const COMPLETED = 2;
 
 // URLUploadBox
 // index.js - URL status

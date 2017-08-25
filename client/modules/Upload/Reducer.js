@@ -1,5 +1,5 @@
 import * as actions from './Actions';
-import { STEP_1, NO_URL, METHOD_NOT_SELECTED, INIT } from '../Constants';
+import { STEP_1, NO_URL, METHOD_NOT_SELECTED, INIT, NOT_STARTED } from '../Constants';
 
 const initialState = {
   step: STEP_1,
@@ -11,7 +11,10 @@ const initialState = {
   urlStatus: NO_URL,
   thumbURL: '',
   method: METHOD_NOT_SELECTED,
-  isGoogleAuth: INIT
+  isGoogleAuth: INIT,
+  uploadStatus: NOT_STARTED,
+  uploadProgress: 0,
+  processProgress: 0
 };
 
 const UploadReducer = (state = initialState, action) => {
@@ -53,6 +56,21 @@ const UploadReducer = (state = initialState, action) => {
       return {
         ...state,
         isGoogleAuth: action.isGoogleAuth
+      };
+    case actions.SET_UPLOAD_STATUS:
+      return {
+        ...state,
+        uploadStatus: action.uploadStatus
+      };
+    case actions.SET_UPLOAD_PROGRESS:
+      return {
+        ...state,
+        uploadProgress: action.uploadProgress
+      };
+    case actions.SET_PROCESS_PROGRESS:
+      return {
+        ...state,
+        processProgress: action.processProgress
       };
     default:
       return state;

@@ -1,7 +1,10 @@
 import fetch from 'axios';
-import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
+import { call, fork, take, select, put, cancel, takeLatest, takeEvery } from 'redux-saga/effects';
 import _ from 'lodash';
 import agent from '../../agent';
+import {
+  getItemFromLocalStorage
+} from '../../sagasHelper';
 
 export const FETCH_USER = 'FETCH_USER';
 export const FETCH_READY_USER = 'FETCH_READY_USER';
@@ -11,14 +14,13 @@ export const FETCH_USER_ERROR = 'FETCH_USER_ERROR';
 function* fetchUser() {
   yield put({ type: FETCH_READY_USER });
   try {
-    const token = localStorage.getItem('flass_id_token');
-    console.log('fetchUser::token');
-    console.log(token);
+    const token = yield call(getItemFromLocalStorage, 'flass_user_id');
     if (!token) {
       throw new Error('Flass id token not exist');
     }
 
     const user = yield call(agent.User.me, token);
+
     yield put({
       type: FETCH_USER_SUCCESS,
       user

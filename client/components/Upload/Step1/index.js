@@ -21,7 +21,10 @@ const propTypes = {
   resetVideo: PropTypes.func.isRequired,
   isGoogleAuth: PropTypes.number.isRequired,
   goToGoogleAuthPage: PropTypes.func.isRequired,
-  handleYoutubeUpload: PropTypes.func.isRequired
+  handleYoutubeUpload: PropTypes.func.isRequired,
+  uploadStatus: PropTypes.number.isRequired,
+  uploadProgress: PropTypes.number.isRequired,
+  processProgress: PropTypes.number.isRequired
 };
 
 const defaultProps = {
@@ -39,7 +42,11 @@ class Step1 extends Component {
   };
 
   render() {
-    const { handleNext, method, setUploadMethod, urlStatus, handleURLCheck, thumbURL, resetVideo, isGoogleAuth, goToGoogleAuthPage, handleYoutubeUpload } = this.props;
+    const {
+      handleNext, method, setUploadMethod, urlStatus, handleURLCheck, thumbURL,
+      resetVideo, isGoogleAuth, goToGoogleAuthPage, handleYoutubeUpload,
+      uploadStatus, uploadProgress, processProgress
+    } = this.props;
     const { videoInfo } = this.state;
 
     const left = (
@@ -68,7 +75,11 @@ class Step1 extends Component {
               back={ resetVideo }
               isGoogleAuth={ isGoogleAuth }
               goToGoogleAuthPage={ goToGoogleAuthPage }
-              handleYoutubeUpload={ file => handleYoutubeUpload(file) } />
+              handleYoutubeUpload={ file => handleYoutubeUpload(file) }
+              uploadStatus={ uploadStatus }
+              uploadProgress={ uploadProgress }
+              processProgress={ processProgress }
+              thumbURL={ thumbURL } />
           </div>
         );
         break;
@@ -86,10 +97,15 @@ class Step1 extends Component {
     }
 
     const next = (
-      <Button
-        disabled={ !this.isComplete() }
-        color={ this.isComplete() ? '#176d99' : null }
-        onClick={ () => handleNext(videoInfo) }>다음</Button>
+      <div className="nextButton">
+        <Button
+          disabled={ !this.isComplete() }
+          fontSize="1.57rem"
+          color={ this.isComplete() ? '#176d99' : '#b6bfc1' }
+          margin="2.125rem 5.56rem 0 0"
+          padding="0.5625rem 2.06rem 0.3125rem 2.06rem"
+          onClick={ () => handleNext(videoInfo) }>다 음</Button>
+      </div>
     );
 
     return (

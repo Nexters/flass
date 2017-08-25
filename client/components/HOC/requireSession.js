@@ -5,12 +5,15 @@ import { connect } from 'react-redux';
 import {
   CHECK_SESSION
 } from '../../modules/Sign/actions';
+import {
+  FETCH_USER
+} from '../../modules/Flass/User/UserActions';
 
 const { shape, object, func, bool } = PropTypes;
 
 const propTypes = {
   checkSession: func.isRequired,
-  sessionExist: bool.isRequired
+  sessionValid: bool.isRequired
 };
 const defaultProps = {};
 
@@ -22,12 +25,19 @@ export default function(ComposedComponent) {
       })
     };
 
+    componentWillMount() {
+      const { sessionValid } = this.props;
+      if (!sessionValid) {
+        this.context.router.history.push('/user/login');
+      }
+    }
+
     componentDidMount() {
       this.props.checkSession();
     }
 
     componentWillReceiveProps(nextProps) {
-      if (!nextProps.sessionExist) {
+      if (!nextProps.sessionValid) {
         this.context.router.history.push('/user/login');
       }
     }
@@ -38,14 +48,17 @@ export default function(ComposedComponent) {
   }
 
   function mapStateToProps(state) {
-    const { sessionExist } = state.sign;
-    return { sessionExist };
+    const { sessionValid } = state.sign;
+    return { sessionValid };
   }
 
   function mapDispatchToProps(dispatch) {
     return bindActionCreators({
       checkSession: () => ({
         type: CHECK_SESSION
+      }),
+      fetchUser: () => ({
+        type: FETCH_USER
       })
     }, dispatch);
   }

@@ -17,35 +17,21 @@ import Step2 from './Step2';
 import Header from '../Flass/Header';
 
 const propTypes = {
-  step: PropTypes.number,
-  setStep: PropTypes.func,
+  step: PropTypes.number.isRequired,
+  setStep: PropTypes.func.isRequired,
   method: PropTypes.number.isRequired,
   handleSetUploadMethod: PropTypes.func.isRequired,
-  setVideoInfo: PropTypes.func,
+  setVideoInfo: PropTypes.func.isRequired,
   urlStatus: PropTypes.number.isRequired,
   handleURLCheck: PropTypes.func.isRequired,
   thumbURL: PropTypes.string.isRequired,
   resetVideo: PropTypes.func.isRequired,
-
-  title: PropTypes.string,
-  thumbStatus: PropTypes.number,
-
-  getThumbnail: PropTypes.func,
   isGoogleAuth: PropTypes.number.isRequired,
-  goToGoogleAuthPage: PropTypes.func,
-  uploadYoutubeVideo: PropTypes.func
-};
-
-const defaultProps = {
-  step: STEP_1,
-  setStep: () => handleError('setStep'),
-  setVideoInfo: () => handleError('setVideoInfo'),
-  title: '',
-  thumbStatus: actions.NO_THUMB,
-  thumbURL: '',
-  getThumbnail: () => handleError('getThumbnail'),
-  goToGoogleAuthPage: () => handleError('goToGoogleAuthPage'),
-  uploadYoutubeVideo: () => handleError('uploadYoutubeVideo')
+  goToGoogleAuthPage: PropTypes.func.isRequired,
+  uploadYoutubeVideo: PropTypes.func.isRequired,
+  uploadStatus: PropTypes.number.isRequired,
+  uploadProgress: PropTypes.number.isRequired,
+  processProgress: PropTypes.number.isRequired
 };
 
 function handleError(func) {
@@ -55,20 +41,19 @@ function handleError(func) {
 class Upload extends Component {
   render() {
     const {
-      title,
-      urlStatus,
-      handleURLCheck,
-      thumbStatus,
-      thumbURL,
-      getThumbnail,
+      step,
       method,
       handleSetUploadMethod,
+      urlStatus,
+      handleURLCheck,
+      thumbURL,
       resetVideo,
       isGoogleAuth,
       goToGoogleAuthPage,
       uploadYoutubeVideo,
-
-      step
+      uploadStatus,
+      uploadProgress,
+      processProgress
     } = this.props;
 
     const header = (
@@ -102,7 +87,10 @@ class Upload extends Component {
               resetVideo={ resetVideo }
               isGoogleAuth={ isGoogleAuth }
               goToGoogleAuthPage={ goToGoogleAuthPage }
-              handleYoutubeUpload={ file => uploadYoutubeVideo(file) } />
+              handleYoutubeUpload={ file => uploadYoutubeVideo(file) }
+              uploadStatus={ uploadStatus }
+              uploadProgress={ uploadProgress }
+              processProgress={ processProgress } />
           </div>
         );
         break;
@@ -111,10 +99,7 @@ class Upload extends Component {
       case STEP_2:
       default:
         body = (
-          <div>
-            <Step2 />
-            <UploadInsertionContainer />
-          </div>
+          <UploadInsertionContainer />
         );
     }
 
@@ -128,10 +113,8 @@ class Upload extends Component {
 
   // *******************
   goToStep2 = videoInfo => {
-    this.props.setStep(STEP_2);
-    console.log('******');
-    console.log(videoInfo);
     this.props.setVideoInfo(videoInfo);
+    this.props.setStep(STEP_2);
   }
 
   goToStepOne = () => {
@@ -141,7 +124,6 @@ class Upload extends Component {
 }
 
 Upload.propTypes = propTypes;
-Upload.defaultProps = defaultProps;
 
 const mapStateToProps = state => ({
   step: state.upload.step,
@@ -151,6 +133,9 @@ const mapStateToProps = state => ({
   thumbURL: state.upload.thumbURL,
   method: state.upload.method,
   isGoogleAuth: state.upload.isGoogleAuth,
+  uploadStatus: state.upload.uploadStatus,
+  uploadProgress: state.upload.uploadProgress,
+  processProgress: state.upload.processProgress
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -42,7 +42,6 @@ class VideoPlayerComponent extends Component {
       volume,
       styledProps
     } = this.props;
-
     return (
       <VideoPlayer.Wrapper styledProps={ styledProps }>
         <ReactPlayer

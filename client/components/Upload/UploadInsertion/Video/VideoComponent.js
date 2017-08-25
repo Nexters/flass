@@ -51,6 +51,7 @@ const propTypes = {
   setIsQuizSecsState: func.isRequired,
   setPlayedState: func.isRequired,
   onQuestionbarClick: func,
+  url: string.isRequired,
   duration: number,
   played: number,
   loaded: number,
@@ -87,7 +88,7 @@ class VideoComponent extends Component {
     super(props);
 
     this.state = {
-      url: 'https://www.youtube.com/watch?v=PTkKJI27NlE',
+      url: '',
       volume: 0.8,
       playbackRate: 1.0,
       volumeBeforeMute: 0,
@@ -95,6 +96,11 @@ class VideoComponent extends Component {
       isVolumeBtnMouseOver: false,
       isEnded: false
     };
+  }
+
+  componentWillMount() {
+    const { url } = this.props;
+    this.setState({ url: url.toString().trim() });
   }
 
   render() {
