@@ -113,7 +113,7 @@ class Video extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetCompleteVideoFlag();
+    // this.props.resetCompleteVideoFlag();
   }
 
   render() {

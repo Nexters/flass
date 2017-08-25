@@ -18,11 +18,21 @@ const defaultProps = {
 };
 
 class Grid extends Component {
+  componentDidMount() {
+    this.props.fetchRequestMyChannelItems();
+  }
   componentWillReceiveProps(nextProps) {
     const { user } = this.props;
     const nextUser = nextProps.user;
-    console.log(user, nextUser);
     if(user.id !== nextUser.id) {
+      this.props.fetchRequestMyChannelItems();
+    }
+  }
+
+  componentDidMount() {
+    const { user } = this.props;
+
+    if(user.id !== -1) {
       this.props.fetchRequestMyChannelItems();
     }
   }
@@ -41,6 +51,8 @@ class Grid extends Component {
 
   render() {
     const { items } = this.props;
+    console.log('render::items');
+    console.log(items);
     const renderAllItems = _.chunk(items, 4).map(splitItems => {
       return (
         <Row>

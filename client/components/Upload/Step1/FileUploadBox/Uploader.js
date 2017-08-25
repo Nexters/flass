@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { NOT_STARTED, UPLOADING, PROCESSING, COMPLETED } from '../../../../modules/Constants';
-import Exit from './img/exit.png';
-import WhiteExit from './img/whiteExit.png';
+import Exit from '../img/exit.png';
+import Exit2x from '../img/exit@2x.png';
+import Exit3x from '../img/exit@3x.png';
+import WhiteExit from '../img/whiteExit.png';
+import WhiteExit2x from '../img/whiteExit@2x.png';
+import WhiteExit3x from '../img/whiteExit@3x.png';
 import File1x from './img/file.png';
 import File2x from './img/file@2x.png';
 import File3x from './img/file@3x.png';
 import Upload from './img/upload.png';
 import Upload2x from './img/upload@2x.png';
 import Upload3x from './img/upload@3x.png';
-import Complete from './img/complete.png';
-import Complete2x from './img/complete@2x.png';
-import Complete3x from './img/complete@3x.png';
+import Complete from '../img/complete.png';
+import Complete2x from '../img/complete@2x.png';
+import Complete3x from '../img/complete@3x.png';
 import Button from '../../../Flass/Button';
 import ProgressBar from '../../../Flass/ProgressBar';
 import './uploader.scss';
@@ -49,6 +53,7 @@ class Uploader extends Component {
           <img
             src={ Exit }
             className="exitIcon"
+            srcSet={ `${Exit2x} 2x,${Exit3x} 3x` }
             alt="옵션 선택 취소" />
         </a>
       </div>
@@ -59,7 +64,8 @@ class Uploader extends Component {
         <a onClick={ back }>
           <img
             src={ WhiteExit }
-            className="exitIcon"
+            srcSet={ `${WhiteExit2x} 2x,${WhiteExit3x} 3x` }
+            className="whiteExitIcon"
             alt="옵션 선택 취소" />
         </a>
       </div>

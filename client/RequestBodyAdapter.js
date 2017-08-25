@@ -28,15 +28,36 @@ const ChoiceBodyAdapter = {
   }
 };
 
-const Answer = {
-  uploadByQuestionId: (questionId, indexOfSelectedChoice) => ({
+const AnswerBodyAdapter = {
+  uploadByQuestionId: (questionId, indexOfSelectedChoice) => Promise.resolve({
     question_id: questionId,
     answer: indexOfSelectedChoice
+  })
+};
+
+const LectureBodyAdapter = {
+  upload: ({
+    questionState,
+    title,
+    description,
+    subject,
+    textbook,
+    videoURL,
+    thumbURL
+  }) => Promise.resolve({
+    title,
+    subject,
+    content: description,
+    textbook_range: textbook,
+    url: videoURL,
+    thumbnail_url: thumbURL,
+    duration: questionState.duration
   })
 };
 
 export {
   QuestionBodyAdapter,
   ChoiceBodyAdapter,
-  Answer
+  AnswerBodyAdapter,
+  LectureBodyAdapter
 };

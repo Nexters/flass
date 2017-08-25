@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import autobind from 'autobind-decorator';
 
 import { connect } from 'react-redux';
 import { STEP_1, STEP_2 } from '../../modules/Constants';
@@ -31,7 +32,13 @@ const propTypes = {
   uploadYoutubeVideo: PropTypes.func.isRequired,
   uploadStatus: PropTypes.number.isRequired,
   uploadProgress: PropTypes.number.isRequired,
-  processProgress: PropTypes.number.isRequired
+  processProgress: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  subject: PropTypes.string.isRequired,
+  textbook: PropTypes.string.isRequired,
+  videoURL: PropTypes.string.isRequired,
+  uploadLectureAndQuestions: PropTypes.func.isRequired
 };
 
 function handleError(func) {
@@ -99,7 +106,8 @@ class Upload extends Component {
       case STEP_2:
       default:
         body = (
-          <UploadInsertionContainer />
+          <UploadInsertionContainer
+            onClickUploadBtn={ this.uploadLectureAndQuestions } />
         );
     }
 
@@ -121,6 +129,24 @@ class Upload extends Component {
     const step = STEP_1;
     this.props.setStep(step);
   }
+
+  @autobind
+  uploadLectureAndQuestions({ questionState }) {
+    const {
+      title, description, subject,
+      textbook, videoURL, thumbURL
+    } = this.props;
+
+    this.props.uploadLectureAndQuestions({
+      questionState,
+      title,
+      description,
+      subject,
+      textbook,
+      videoURL,
+      thumbURL
+    });
+  }
 }
 
 Upload.propTypes = propTypes;
@@ -128,6 +154,10 @@ Upload.propTypes = propTypes;
 const mapStateToProps = state => ({
   step: state.upload.step,
   title: state.upload.title,
+  subject: state.upload.subject,
+  textbook: state.upload.textbook,
+  description: state.upload.description,
+  videoURL: state.upload.videoURL,
   urlStatus: state.upload.urlStatus,
   thumbStatus: state.upload.thumbStatus,
   thumbURL: state.upload.thumbURL,
@@ -146,7 +176,19 @@ const mapDispatchToProps = dispatch => ({
   getThumbnail: videoURL => dispatch(actions.getThumbnail(videoURL)),
   resetVideo: () => dispatch(actions.resetVideo()),
   goToGoogleAuthPage: () => dispatch(actions.goToGoogleAuthPage()),
-  uploadYoutubeVideo: file => dispatch(actions.uploadYoutubeVideo(file))
+  uploadYoutubeVideo: file => dispatch(actions.uploadYoutubeVideo(file)),
+  uploadLectureAndQuestions: ({ questionState, title, description, subject, textbook, videoURL, thumbURL }) => {
+    dispatch({
+      type: actions.UPLOAD_LECTURE_AND_QUESTIONS,
+      questionState,
+      title,
+      description,
+      subject,
+      textbook,
+      videoURL,
+      thumbURL
+    });
+  }
 });
 
 export default connect(

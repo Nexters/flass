@@ -56,7 +56,9 @@ class Comment extends Component {
 
   componentDidMount() {
     const { detailId, fetchComment } = this.props;
-    fetchComment(detailId);
+    if(detailId !== -1) {
+      fetchComment(detailId);
+    }
   }
 
   renderPostComment = (form, name, commentId) => {

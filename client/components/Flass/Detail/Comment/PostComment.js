@@ -79,6 +79,7 @@ class PostComment extends Component {
   };
 
   renderTextArea({ input, meta: { touched, error }, id, label, userName, ...props }) {
+    console.log(input);
     return (
       <FormGroup controlId={id}>
         <TextArea

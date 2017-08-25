@@ -3,9 +3,15 @@
 }
 
 .exitIcon {
-  width: 1.27rem;
-  height: 1.27rem;
+  width: 1.313rem;
+  height: 1.375rem;
   margin: 1.5rem 1.563rem 0 0;
+}
+
+.whiteExitIcon {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: 1.375rem 1.5rem 0 0;
 }
 
 .alignCenter {
@@ -102,6 +108,7 @@
   font-size: 1.57rem;
   font-weight: 500;
   color: #ffffff;
+  text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.72);
 }
 
 .blackBackground {

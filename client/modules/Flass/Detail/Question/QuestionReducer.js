@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   totalCount: 0,
-  questions: {},
+  questions: [],
   solvedQuestionsState: []
 };
 

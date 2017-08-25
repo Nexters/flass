@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import './googleLogin.scss';
-import Exit from './img/exit.png';
+import Exit from '../img/exit.png';
+import Exit2x from '../img/exit@2x.png';
+import Exit3x from '../img/exit@3x.png';
 import Google from './img/google.png';
 import Google2x from './img/google@2x.png';
 import Google3x from './img/google@3x.png';
@@ -28,6 +30,7 @@ class GoogleLogin extends Component {
           <a onClick={ back }>
             <img
               src={ Exit }
+              srcSet={ `${Exit2x} 2x,${Exit3x} 3x` }
               className="exitIcon"
               alt="옵션 선택 취소" />
           </a>
