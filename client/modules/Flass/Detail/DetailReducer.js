@@ -3,7 +3,7 @@ import {
   FETCH_DETAIL_SUCCESS,
   FETCH_DETAIL_ERROR
 } from './DetailActions';
-import { createReducer } from '../../reduxHelper';
+import { createReducer } from '../../reducerHelper';
 
 const initialState = {
   isLoading: false,
