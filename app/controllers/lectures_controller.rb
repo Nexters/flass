@@ -75,6 +75,8 @@ class LecturesController < ApplicationController
     end
   end
 
+  api :GET, '/lectures/statistics', '강의의 질문 및 학생 답'
+  param :id, :number, :desc => "lecture ID"
   def statistics
     @ret = Hash.new
     
