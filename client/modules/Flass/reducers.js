@@ -9,5 +9,5 @@ export default combineReducers({
   badge,
   grid,
   detail,
-  user,
+  user
 });

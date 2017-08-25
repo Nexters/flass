@@ -110,10 +110,6 @@ class VideoModalComponent extends Component {
   renderChoices(answerIndex, SingleChoiceValues) {
     const { selectedChoiceIndex, isSolved, isCorrect } = this.state;
     const { solvedQuestionsState, indexOfQuestion } = this.props;
-    console.log('solvedQuestionsState');
-    console.log(solvedQuestionsState);
-    console.log('indexOfQuestion');
-    console.log(indexOfQuestion);
     const solvedQuestionState = solvedQuestionsState[indexOfQuestion];
 
     return SingleChoiceValues.map((singleChoiceValue, index) => (

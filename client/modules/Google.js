@@ -65,7 +65,7 @@ export default class Google {
           client_id: GOOGLE_CLIENT_KEY,
           scope: LOGIN_SCOPE
         })
-        .then(res => resolve(res));
+        .then(() => resolve());
       });
     });
   }
