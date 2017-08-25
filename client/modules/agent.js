@@ -7,11 +7,7 @@ const API_PRODUCTION = 'https://conduit.productionready.io/api';
 const API_ROOT = (TYPE_OF_BACKEND === 'rails' ? API_LOCAL : API_JSON);
 
 const encode = encodeURIComponent;
-const responseBody = res => {
-  console.log('responseBody::response');
-  console.log(res);
-  return res.data;
-};
+const responseBody = res => res.data;
 
 let token = null;
 const tokenPlugin = req => {
@@ -86,7 +82,7 @@ const GridJson = {
   all: () => requests.get('/json/FlassGrid.json')
 };
 const GridRails = {
-  all: () => requests.get('/lectures') // /json/FlassGrid.json
+  all: () => requests.get('/lectures')
 };
 const Grid = selectAPIRequest(GridRails, GridJson);
 
@@ -95,7 +91,7 @@ const DetailJson = {
   byId: detailId => requests.get('/json/FlassDetail.json')
 };
 const DetailRails = {
-  byId: detailId => requests.get(`/lectures/${detailId}`) // '/json/FlassDetail.json'
+  byId: detailId => requests.get(`/lectures/${detailId}`)
 };
 const Detail = selectAPIRequest(DetailRails, DetailJson);
 
@@ -104,6 +100,7 @@ const QuestionJson = {
   byDetailId: detailId => requests.get('/json/FlassQuestion.json')
 };
 const QuestionRails = {
+  byDetailId: detailId => requests.get(`/questions?lecture_id=${detailId}`),
   uploadByLectureId: body => requests.post('/questions', body)
 };
 const Question = selectAPIRequest(QuestionRails, QuestionJson);
@@ -112,11 +109,19 @@ const Choice = {
   upload: body => requests.post('/choices', body)
 };
 
-const Comment = {
+const CommentJson = {
   byDetailId: detailId => requests.get('/json/FlassComment.json'),
   postComment: (detailId, content) => requests.get('/json/FlassPostComment.json', { detailId, content }),
   deleteById: commentId => requests.del('')
 };
+
+const CommentRails = {
+  byDetailId: detailId => requests.get(`/comments?lecture_id=${detailId}`),
+  postComment: (detailId, content) => requests.get('/comments', { lecture_id: detailId, content }),
+  deleteById: commentId => requests.del('')
+};
+
+const Comment = selectAPIRequest(CommentRails, CommentJson);
 
 const AnswerRails = {
   uploadByQuestionId: body => requests.post('/answers', body)
@@ -141,6 +146,15 @@ const Analysis = {
 
 };
 
+const Lecture = {
+  upload: body => requests.post('/lectures', body)
+    .then(response => {
+      console.log('response::Lecture::upload');
+      console.log(response);
+      return response;
+    })
+};
+
 export default {
   Auth,
   User,
@@ -151,5 +165,6 @@ export default {
   Analysis,
   Choice,
   Answer,
+  Lecture,
   setToken: _token => { token = _token; }
 };

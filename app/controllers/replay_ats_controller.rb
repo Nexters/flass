@@ -11,7 +11,7 @@ class ReplayAtsController < ApplicationController
 
   api :POST, '/replay_ats', '유저의 해당 강의 재생시간 정보 생성'
   param :lecture_id, :number, :desc => "강의 ID"
-  param :playtime, String, :desc => "영상 본 시간"
+  param :playtime, :number, :desc => "영상 본 시간"
   def create
     @replay_at = ReplayAt.new(replay_at_params)
     if @replay_at.save
@@ -23,7 +23,7 @@ class ReplayAtsController < ApplicationController
 
   api :PUT, '/replay_ats', '유저의 해당 강의 재생시간 정보 업데이트'
   param :id, :number, :desc => "replay_at ID"
-  param :playtime, String, :desc => "영상 본 시간", :required => true
+  param :playtime, :number, :desc => "영상 본 시간", :required => true
   def update
     if @replay_at.update(replay_at_params)
       render json: @replay_at, status: :ok

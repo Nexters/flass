@@ -6,7 +6,8 @@ class ChoicesController < ApplicationController
   api :GET, '/choices', '특정 Question에 대한 보기(선지)'
   param :question_id, :number, :desc => "질문 ID"
   def show
-    @choices = Choice.where(question_id: params[:question_id])  
+    @choices = Choice.where(question_id: params[:question_id])
+    render json: @choices
   end
 
 
@@ -15,7 +16,7 @@ class ChoicesController < ApplicationController
   param :answer, String, :desc => "선지 내용"
   def create
     @choice = Choice.new(choice_params)
- 
+
     if @choice.save
       render json: @choice, status: :created
     else
@@ -67,4 +68,3 @@ class ChoicesController < ApplicationController
       params.require(:choice).permit(:question_id, :answer)
     end
 end
- 

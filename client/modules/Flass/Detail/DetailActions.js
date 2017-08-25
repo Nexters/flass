@@ -22,6 +22,8 @@ export function* fetchDetailAll({ detailId }) {
   // yield call(delay, 2000);
   try {
     const detail = yield call(agent.Detail.byId, detailId);
+    console.log('fetchDetailAll::detail');
+    console.log(detail);
     yield put({
       type: FETCH_QUESTION,
       detailId

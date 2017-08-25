@@ -191,10 +191,10 @@ const deleteQuestionReducer = {
 };
 
 const requestQuestionReducer = {
-  [SUCCESS_UPLOAD_QUESTIONS]: state => ({
+  [SUCCESS_UPLOAD_QUESTIONS]: (state, { payload }) => ({
     ...state,
     isUploadingQuestionRequestSuccess: true,
-    videoUrl: 'flass.com/videoUrl'
+    lectureUrl: `http://localhost:3000/lectures/${payload.lectureId}`
   }),
   [FAIL_UPLOAD_QUESTIONS]: state => ({
     ...state,
