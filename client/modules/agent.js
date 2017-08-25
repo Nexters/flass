@@ -146,7 +146,7 @@ const Answer = selectAPIRequest(AnswerRails, AnswerJson);
 
 
 const Analysis = {
-
+  fetch: lectureId => requests.get(`/lectures/statistics?id=${lectureId}`)
 };
 
 const Lecture = {
