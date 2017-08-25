@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { NO_URL, SUCC_URL, FAIL_URL } from '../../../../modules/Constants';
+import Exit from '../img/exit.png';
+import Url from './img/url.png';
+import Url2x from './img/url@2x.png';
+import Url3x from './img/url@3x.png';
 import Button from '../../../Flass/Button';
 import './urlUpload.scss';
 
@@ -25,7 +29,7 @@ class URLUpload extends Component {
     switch(urlStatus) {
       case FAIL_URL:
         errorMessage = (
-          <h4>유효하지 않은 URL입니다.</h4>
+          <span className="failMessage">유효하지 않은 URL입니다.</span>
         );
         break;
       case NO_URL:
@@ -36,19 +40,34 @@ class URLUpload extends Component {
     }
     return (
       <div>
-        <a onClick={ back }>
-          <img src="https://png.icons8.com/pikachu-pokemon/color/24" alt="옵션 선택 취소" />
-        </a>
-        <img src="https://png.icons8.com/genie/color/24" alt="URL 업로드 아이콘" />
-        <h3>유튜브에 업로드된 영상을 가져올 수 있습니다.</h3>
-        <input
-          placeholder="복사한 유튜브 URL을 입력하세요."
-          onChange={ this.handleChange }
-          className={ classNames(urlStatus == FAIL_URL && 'failUrl') } />
-        <Button
-          color="#9abf32"
-          onClick={ () => handleURLCheck(videoURL) }>입력</Button>
-        { errorMessage }
+        <div className="alignRight">
+          <a onClick={ back }>
+            <img
+              src={ Exit }
+              className="exitIcon"
+              alt="옵션 선택 취소" />
+          </a>
+        </div>
+        <div className="alignCenter">
+          <img
+            src={ Url }
+            srcSet={ `${Url2x} 2x,${Url3x} 3x` }
+            className="urlIcon"
+            alt="URL 업로드 아이콘" />
+          <span className="urlMessage">유튜브에 업로드된 영상을 가져올 수 있습니다.</span>
+          <div className="parentContainer">
+            <div className="childContainer">
+              <input
+                placeholder="복사한 유튜브 URL을 입력하세요."
+                onChange={ this.handleChange }
+                className={ classNames('urlInput', urlStatus == FAIL_URL && 'failUrl') } />
+              { errorMessage }
+            </div>
+            <Button
+              color="#9abf32"
+              onClick={ () => handleURLCheck(videoURL) }>입력</Button>
+          </div>
+        </div>
       </div>
     );
   }

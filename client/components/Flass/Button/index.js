@@ -16,7 +16,7 @@ const defaultProps = {
   fontSize: '1.429rem',
   color: '#b6bfc1',
   margin: '0',
-  padding: '0.5625rem 1.188rem 0.4375rem 1.188rem',
+  padding: '0.6rem 1.188rem 0.42rem 1.188rem',
   disabled: false,
   onClick: () => console.error('onClick is not defined'),
   children: ''

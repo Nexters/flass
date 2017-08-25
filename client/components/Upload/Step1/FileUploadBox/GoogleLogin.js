@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import './googleLogin.scss';
-import Exit from './img/exit.png';
+import Exit from '../img/exit.png';
 import Google from './img/google.png';
 import Google2x from './img/google@2x.png';
 import Google3x from './img/google@3x.png';
