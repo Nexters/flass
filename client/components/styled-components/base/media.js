@@ -2,7 +2,9 @@ import { css } from 'styled-components';
 
 const SIZES = {
   atLargeForControllerbar: 1400,
-  atMediumForControllerbar: 1010
+  atMediumForControllerbar: 1010,
+  atLarge: 1010,
+  atMedium: 800
 };
 
 const media = Object.keys(SIZES).reduce((acc, label) => {

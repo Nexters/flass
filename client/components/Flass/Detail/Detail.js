@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import Content from './Content/Content';
 import Comment from './Comment/CommentContainer';
-import Analysis from './Analysis/Analysis';
+import Analysis from './Analysis/AnalysisContainer';
 import Video from './Video/VideoContainer';
 import Header from '../Header';
 import { FlassDetailStyled } from './DetailStyled';
