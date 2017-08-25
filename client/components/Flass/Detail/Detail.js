@@ -72,7 +72,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 2,
+      selected: 1,
       videoUrl: ''
     };
   }
@@ -121,10 +121,11 @@ class Detail extends Component {
     );
   }
 
-  renderTabs() {
+  renderTabs = () => {
     const { detail: { detail }, comment } = this.props;
     const { selected } = this.state;
 
+    console.log(this.props);
     const tabTitle = (title, src) => (
       <TabTitle>
         <TabIcon alt="" src={ src } />

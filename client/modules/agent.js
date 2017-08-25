@@ -86,7 +86,7 @@ const GridJson = {
   all: () => requests.get('/json/FlassGrid.json')
 };
 const GridRails = {
-  all: () => requests.get('/lectures') // /json/FlassGrid.json
+  all: () => requests.get('/lectures')
 };
 const Grid = selectAPIRequest(GridRails, GridJson);
 
@@ -95,7 +95,7 @@ const DetailJson = {
   byId: detailId => requests.get('/json/FlassDetail.json')
 };
 const DetailRails = {
-  byId: detailId => requests.get(`/lectures/${detailId}`) // '/json/FlassDetail.json'
+  byId: detailId => requests.get(`/lectures/${detailId}`)
 };
 const Detail = selectAPIRequest(DetailRails, DetailJson);
 
@@ -104,7 +104,7 @@ const QuestionJson = {
   byDetailId: detailId => requests.get('/json/FlassQuestion.json')
 };
 const QuestionRails = {
-  byDetailId: detailId => requests.get('/questions', { lecture_id: detailId }),
+  byDetailId: detailId => requests.get(`/questions?lecture_id=${detailId}`),
   uploadByLectureId: body => requests.post('/questions', body)
 };
 const Question = selectAPIRequest(QuestionRails, QuestionJson);
@@ -113,11 +113,19 @@ const Choice = {
   upload: body => requests.post('/choices', body)
 };
 
-const Comment = {
+const CommentJson = {
   byDetailId: detailId => requests.get('/json/FlassComment.json'),
   postComment: (detailId, content) => requests.get('/json/FlassPostComment.json', { detailId, content }),
   deleteById: commentId => requests.del('')
 };
+
+const CommentRails = {
+  byDetailId: detailId => requests.get(`/comments?lecture_id=${detailId}`),
+  postComment: (detailId, content) => requests.get('/comments', { lecture_id: detailId, content }),
+  deleteById: commentId => requests.del('')
+};
+
+const Comment = selectAPIRequest(CommentRails, CommentJson);
 
 const AnswerRails = {
   uploadByQuestionId: body => requests.post('/answers', body)

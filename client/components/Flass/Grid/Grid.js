@@ -24,8 +24,15 @@ class Grid extends Component {
   componentWillReceiveProps(nextProps) {
     const { user } = this.props;
     const nextUser = nextProps.user;
-    console.log(user, nextUser);
     if(user.id !== nextUser.id) {
+      this.props.fetchRequestMyChannelItems();
+    }
+  }
+
+  componentDidMount() {
+    const { user } = this.props;
+
+    if(user.id !== -1) {
       this.props.fetchRequestMyChannelItems();
     }
   }
