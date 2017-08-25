@@ -141,6 +141,15 @@ const Analysis = {
 
 };
 
+const Lecture = {
+  upload: body => requests.post('/lectures', body)
+    .then(response => {
+      console.log('response::Lecture::upload');
+      console.log(response);
+      return response;
+    })
+};
+
 export default {
   Auth,
   User,
@@ -151,5 +160,6 @@ export default {
   Analysis,
   Choice,
   Answer,
+  Lecture,
   setToken: _token => { token = _token; }
 };

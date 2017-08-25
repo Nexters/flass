@@ -161,3 +161,5 @@ export const uploadYoutubeVideo = file => (dispatch => {
   Google.uploadVideo(file, handleUploading, handleUploadingFinished,
     handleProcessing, handleProcessingFinished);
 });
+
+export const UPLOAD_LECTURE_AND_QUESTIONS = 'UPLOAD_LECTURE_AND_QUESTIONS';

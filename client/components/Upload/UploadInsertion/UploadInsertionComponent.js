@@ -22,7 +22,8 @@ const propTypes = {
   focusOnQuestion: func.isRequired,
   completeEditQuestion: func.isRequired,
   deleteCompleteQuestion: func.isRequired,
-  requestUploadQuestions: func.isRequired,
+  // requestUploadQuestions: func.isRequired,
+  onClickUploadBtn: func.isRequired,
   isAdding: bool,
   questionSecsStateArray: arrayOf(shape({
     playedSeconds: number,
@@ -58,7 +59,8 @@ const propTypes = {
     })
   }),
   isUploadingQuestionRequestSuccess: bool.isRequired,
-  videoUrl: string.isRequired
+  videoUrl: string.isRequired,
+  lectureUrl: string.isRequired
 };
 const defaultProps = {
   isAdding: false,
@@ -178,11 +180,11 @@ class UploadInsertionComponent extends Component {
 
   @autobind
   renderModal() {
-    const { isUploadingQuestionRequestSuccess, videoUrl } = this.props;
+    const { isUploadingQuestionRequestSuccess, lectureUrl } = this.props;
     return (
       isUploadingQuestionRequestSuccess ?
         <ModalComponent
-          url={ videoUrl } /> :
+          url={ lectureUrl } /> :
         null
     );
   }
@@ -302,7 +304,8 @@ class UploadInsertionComponent extends Component {
   @autobind
   onClickUploadBtn() {
     const { questionStateArray } = this.props;
-    this.props.requestUploadQuestions({ questionState: questionStateArray });
+    // this.props.requestUploadQuestions({ questionState: questionStateArray });
+    this.props.onClickUploadBtn({ questionState: questionStateArray });
     this.setPlayingState(false);
   }
 }
