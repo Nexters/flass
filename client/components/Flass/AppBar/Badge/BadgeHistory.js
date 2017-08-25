@@ -5,22 +5,9 @@ import styled from 'styled-components';
 import color from '../../common/colors.scss';
 import BadgeItem from './BadgeItem';
 
-const Tabs = styled.ul`
-  height: 40px;
-  padding: 1rem 1rem;
-  list-style: none;
-  border-bottom: 1px solid #eee;
-  margin: 0;
-`;
-
-const Tab = styled.li`
-  padding: 0.5rem 0;
-  float: left;
-`;
-
 const propTypes = {
-  badgeItems: PropTypes.array.isRequired,
-  fetchBadgeHistory: PropTypes.func.isRequired,
+  badgeItems: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  fetchBadgeHistory: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
@@ -42,30 +29,22 @@ class BadgeHistory extends Component {
 
   componentDidMount() {}
 
-  renderChildren() {
-    const { badgeItems } = this.props;
-
-    return _.map(badgeItems, item => {
-      return (
-        <BadgeItem key={item.id} name={item.name} content={item.content} />
-      );
-    });
-  }
-
   render() {
-    const { fetchBadgeHistory } = this.props;
-
     return (
       <BadgeHistoryView>
-        <Tabs>
-          <Tab><span onClick={ _.partial(fetchBadgeHistory, 'comment') }>댓글</span></Tab>
-          <Tab><span onClick={ _.partial(fetchBadgeHistory, 'question') }>질문</span></Tab>
-        </Tabs>
         <div>
           {this.renderChildren()}
         </div>
       </BadgeHistoryView>
     );
+  }
+
+  renderChildren() {
+    const { badgeItems } = this.props;
+
+    return _.map(badgeItems, item => (
+      <BadgeItem key={item.id} name={item.name} content={item.content} />
+    ));
   }
 }
 

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
 import color from '../../common/colors.scss';
+import NewNotification from './images/new-notification.png';
 import BadgeIcon from './images/appbar-badge.png';
 import './Badge.scss';
 import BadgeHistory from './BadgeHistory';
@@ -39,13 +40,16 @@ class Badge extends Component {
     return (
       <BadgeView>
         <span className="flass-badge" onClick={ this.handleToggleBadge }>
+          <img alt="new notification" src={ NewNotification } />
           <img alt="badge" src={ BadgeIcon } />
         </span>
-        {toggleBadge
-          ? <BadgeHistory
+        {
+          toggleBadge
+          &&
+          <BadgeHistory
             badgeItems={ badgeItems }
             fetchBadgeHistory={ _.partial(this.fetchBadgeHistory, userId, _) } />
-          : ''}
+        }
       </BadgeView>
     );
   }

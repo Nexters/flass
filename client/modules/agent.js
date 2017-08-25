@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const TYPE_OF_BACKEND = process.env.BACK_END;
-const API_JSON = 'http://localhost:4000';
+const API_JSON = 'http://13.124.38.16/';
 const API_LOCAL = 'http://localhost:3000';
 const API_PRODUCTION = 'https://conduit.productionready.io/api';
 const API_ROOT = (TYPE_OF_BACKEND === 'rails' ? API_LOCAL : API_JSON);
@@ -76,7 +76,6 @@ const User = selectAPIRequest(UserRails, UserJson);
 const Badge = {
   byType: type => requests.get('/json/FlassBadgeHistory.json')
 };
-
 
 const GridJson = {
   all: () => requests.get('/json/FlassGrid.json')
