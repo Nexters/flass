@@ -49,18 +49,16 @@ const propTypes = {
   updateStateAfterSolveQuestion: func.isRequired,
   setCompleteVideoFlag: func.isRequired,
   resetCompleteVideoFlag: func.isRequired,
+  requestOnEnded: func.isRequired,
 
   videoUrl: string,
   questions: shape({
-    id: number,
-    content: string,
-    title: string,
-    questionAt: string,
     secsStateOfQuestions: array,
     textStateOfQuestions: array
   }).isRequired,
   isVideoComplete: bool.isRequired,
   solvedQuestionsState: arrayOf(shape({
+    id: number,
     indexOfQuestion: number,
     isCorrect: bool,
     indexOfSelectedChoice: number,
@@ -100,7 +98,8 @@ class Video extends Component {
       isVolumeBtnMouseOver: false,
       isQuizSecs: false,
       indexOfQuestion: -1,
-      searchableSecs: 0
+      searchableSecs: 0,
+      isSearchableSecsInit: false
     };
   }
 
@@ -113,7 +112,7 @@ class Video extends Component {
   }
 
   componentWillUnmount() {
-    // this.props.resetCompleteVideoFlag();
+    this.props.resetCompleteVideoFlag();
   }
 
   render() {
@@ -224,7 +223,7 @@ class Video extends Component {
   }
 
   updateSearchableSecsState({ searchableSecs, questions }) {
-    if (!this.isSearchableSecsInit()) {
+    if (!this.state.isSearchableSecsInit) {
       return this.initalizeSearchableSecs({ questions });
     }
     if (this.state.searchableSecs !== searchableSecs) {
@@ -232,14 +231,10 @@ class Video extends Component {
     }
   }
 
-  isSearchableSecsInit() {
-    return this.state.searchableSecs !== 0;
-  }
-
   initalizeSearchableSecs({ questions }) {
     const { secsStateOfQuestions } = questions;
     const searchableSecs = secsStateOfQuestions[0].playedSeconds;
-    this.setState({ searchableSecs });
+    this.setState({ searchableSecs, isSearchableSecsInit: true });
   }
 
 
@@ -403,6 +398,7 @@ class Video extends Component {
   @autobind
   onQuestionSolved(solvedQuestionState) {
     const {
+      id,
       indexOfQuestion,
       isCorrect,
       indexOfSelectedChoice,
@@ -419,6 +415,7 @@ class Video extends Component {
     });
     this.player.seekTo(updatedPlayedPercentage);
     this.props.updateStateAfterSolveQuestion({
+      id,
       indexOfQuestion,
       isCorrect,
       indexOfSelectedChoice,

@@ -16,17 +16,19 @@ const initialState = {
 };
 
 const fetchVideoReducer = {
-  [FETCH_VIDEO]: (state, action) => ({
+  [FETCH_VIDEO]: (state, { url }) => ({
     ...state,
-    videoUrl: 'https://www.youtube.com/watch?v=PTkKJI27NlE'
+    videoUrl: url
   })
 };
 
 const updateSearchableSecsReducer = {
-  [UPDATE_SEARCHABLE_SECS]: (state, { searchableSecs }) => ({
-    ...state,
-    searchableSecs
-  })
+  [UPDATE_SEARCHABLE_SECS]: (state, { searchableSecs }) => {
+    return ({
+      ...state,
+      searchableSecs
+    });
+  }
 };
 
 const updateVideoCompleteReducer = {

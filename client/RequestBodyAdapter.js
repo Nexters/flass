@@ -30,7 +30,7 @@ const ChoiceBodyAdapter = {
 
 const AnswerBodyAdapter = {
   uploadByQuestionId: (questionId, indexOfSelectedChoice) => Promise.resolve({
-    question_id: questionId,
+    question_id: parseInt(questionId),
     answer: indexOfSelectedChoice
   })
 };
