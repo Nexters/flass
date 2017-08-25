@@ -1,0 +1,39 @@
+@media only screen and (min-width: 1132.125px) {
+  /* For large screens: */
+  .container {
+    width: 1301.25px;
+  }
+}
+
+@media only screen and (max-width: 1132.125px) {
+  /* For small screens: */
+  .container {
+    width: 650.625px;
+  }
+
+  .box {
+    margin-bottom: 10px;
+  }
+}
+
+.box {
+  width: 618px;
+  height: 348px;
+  border-radius: 3px;
+  background-color: #fff;
+  box-shadow: 2.25px 3px 15px 0 rgba(0, 0, 0, 0.05);
+  border: solid 0.75px rgba(0, 0, 0, 0.04);
+  float: left;
+  margin-left: -4.5px;
+}
+
+.info-box {
+  margin-right: 20.62px;
+  padding-top: 28px;
+  padding-left: 37.5px;
+  padding-right: 37.5px;
+}
+
+.nextButton {
+  text-align: right;
+}

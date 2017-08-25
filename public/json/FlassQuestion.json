@@ -1,48 +1,46 @@
-[
-  {
-    "id": 1,
-    "content": "question1",
-    "questionAt": "20150101 00:00:00",
-    "options": [
-      {
-        "id": 1,
-        "content": "(1) ???"
-      },
-      {
-        "id": 2,
-        "content": "(2) ???"
-      },
-      {
-        "id": 3,
-        "content": "(3) ???"
-      }
-    ],
-    "hint": {
-      "id": 1,
-      "content": "hint1"
+{
+  "id": 1,
+  "content": "question1",
+  "questionAt": "20150101 00:00:00",
+  "title": "title1",
+  "secsStateOfQuestions": [
+    {
+      "playedSeconds": 1,
+      "label": "Q1"
+    },
+    {
+      "playedSeconds": 255,
+      "label": "Q2"
     }
-  },
-  {
-    "id": 2,
-    "content": "question2",
-    "questionAt": "20150101 00:00:00",
-    "options": [
-      {
-        "id": 1,
-        "content": "(1) ???"
-      },
-      {
-        "id": 2,
-        "content": "(2) ???"
-      },
-      {
-        "id": 3,
-        "content": "(3) ???"
-      }
-    ],
-    "hint": {
-      "id": 1,
-      "content": "hint2"
+  ],
+  "textStateOfQuestions": [
+    {
+      "title": "Question1",
+      "answerIndex": 0,
+      "singleChoiceValues": [
+        {
+          "isAnswer": true,
+          "textValue": "List1-1"
+        },
+        {
+          "isAnswer": false,
+          "textValue": "List1-2"
+        }
+      ]
+    },
+    {
+      "title": "Question2",
+      "answerIndex": 0,
+      "singleChoiceValues": [
+        {
+          "isAnswer": true,
+          "textValue": "List2-1"
+        },
+        {
+          "isAnswer": false,
+          "textValue": "List2-2"
+        }
+      ]
     }
-  }
-]
+  ]
+}

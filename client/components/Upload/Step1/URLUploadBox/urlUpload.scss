@@ -1,0 +1,112 @@
+.alignRight {
+  text-align: right;
+}
+
+.exitIcon {
+  width: 1.313rem;
+  height: 1.375rem;
+  margin: 1.5rem 1.563rem 0 0;
+}
+
+.whiteExitIcon {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: 1.375rem 1.5rem 0 0;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.urlIcon {
+  display: block;
+  margin: 0 auto;
+  margin-top: 7.6725rem;
+  width: 3.38rem;
+  height: 3.31rem;
+  margin-bottom: 1.07rem;
+}
+
+.urlMessage {
+  display: block;
+  font-size: 1.571rem;
+  font-weight: 500;
+  color: #848B8C;
+  margin-bottom: 1.81rem;
+}
+
+.parentContainer {
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.childContainer {
+  display: inline-grid;
+  width: fit-content;
+  margin-right: 1.063rem;
+}
+
+.urlInput {
+  width: 29.53rem;
+  padding: 0.6rem 1.08rem 0.42rem 1.08rem;
+  font-size: 1.43rem;
+  border: 0.0625rem solid #D3D9D9;
+  border-radius: 0.31rem;
+}
+::-webkit-input-placeholder { /* Chrome */
+  color: #CACDCD;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #CACDCD;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #CACDCD;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+  color: #CACDCD;
+}
+
+.failUrl {
+  border: 0.0625rem solid #d0011b;
+}
+
+.failMessage {
+  display: block;
+  text-align: left;
+  margin-top: 0.5013rem;
+  margin-left: 1.125rem;
+  font-size: 1.286rem;
+  color: #d0011b;
+}
+
+// URLSuccess.js
+.completeIcon {
+  margin-top: 6.73rem;
+  width: 4.75rem;
+  height: 4.75rem;
+  margin-bottom: 0.94rem;
+}
+
+.completeMessage {
+  display: block;
+  font-size: 1.57rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.72);
+}
+
+.youtubeThumbnail {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: inherit;
+}
+
+.overlay {
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-size: cover;
+  border-radius: inherit;
+}

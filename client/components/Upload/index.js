@@ -1,43 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import autobind from 'autobind-decorator';
 
 import { connect } from 'react-redux';
+import { STEP_1, STEP_2 } from '../../modules/Constants';
 import * as actions from '../../modules/Upload/Actions';
 
-import VideoUpload from './VideoUpload';
-import UploadInsertionComponent from './UploadInsertion/UploadInsertionComponent';
-import './upload.scss';
+import UploadInsertionContainer from './UploadInsertion/UploadInsertionContainer';
+import './index.scss';
+
+// ********************************
+
+import Step1 from './Step1';
+import Step2 from './Step2';
+
+import Header from '../Flass/Header';
 
 const propTypes = {
-  step: PropTypes.number,
-  setStep: PropTypes.func,
-  setVideoData: PropTypes.func,
-  title: PropTypes.string,
-  thumb: PropTypes.number,
-  thumbURL: PropTypes.string,
-  getThumbnail: PropTypes.func,
-  method: PropTypes.number,
-  setUploadMethod: PropTypes.func,
-  resetVideo: PropTypes.func,
-  isGoogleSignedIn: PropTypes.bool,
-  initYoutubeUpload: PropTypes.func,
-  signIn: PropTypes.func
-};
-
-const defaultProps = {
-  step: 0,
-  setStep: () => handleError('setStep'),
-  setVideoData: () => handleError('setVideoData'),
-  title: '',
-  thumb: actions.NO_THUMB,
-  thumbURL: '',
-  getThumbnail: () => handleError('getThumbnail'),
-  method: actions.URL_METHOD,
-  setUploadMethod: () => handleError('setUploadMethod'),
-  resetVideo: () => handleError('resetVideo'),
-  isGoogleSignedIn: false,
-  initYoutubeUpload: () => handleError('initYoutubeUpload'),
-  signIn: () => handleError('signIn')
+  step: PropTypes.number.isRequired,
+  setStep: PropTypes.func.isRequired,
+  method: PropTypes.number.isRequired,
+  handleSetUploadMethod: PropTypes.func.isRequired,
+  setVideoInfo: PropTypes.func.isRequired,
+  urlStatus: PropTypes.number.isRequired,
+  handleURLCheck: PropTypes.func.isRequired,
+  thumbURL: PropTypes.string.isRequired,
+  resetVideo: PropTypes.func.isRequired,
+  isGoogleAuth: PropTypes.number.isRequired,
+  goToGoogleAuthPage: PropTypes.func.isRequired,
+  uploadYoutubeVideo: PropTypes.func.isRequired,
+  uploadStatus: PropTypes.number.isRequired,
+  uploadProgress: PropTypes.number.isRequired,
+  processProgress: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  subject: PropTypes.string.isRequired,
+  textbook: PropTypes.string.isRequired,
+  videoURL: PropTypes.string.isRequired,
+  uploadLectureAndQuestions: PropTypes.func.isRequired
 };
 
 function handleError(func) {
@@ -47,82 +48,147 @@ function handleError(func) {
 class Upload extends Component {
   render() {
     const {
-      title,
-      thumb,
-      thumbURL,
-      getThumbnail,
+      step,
       method,
-      setUploadMethod,
+      handleSetUploadMethod,
+      urlStatus,
+      handleURLCheck,
+      thumbURL,
       resetVideo,
-      isGoogleSignedIn,
-      initYoutubeUpload,
-      signIn
+      isGoogleAuth,
+      goToGoogleAuthPage,
+      uploadYoutubeVideo,
+      uploadStatus,
+      uploadProgress,
+      processProgress
     } = this.props;
 
-    switch(this.props.step) {
+    const header = (
+      <div className="headerContainer">
+        <Header title="Upload new video" />
+        <div className="steps">
+          <h2 className={ classNames('disabled', step == STEP_1 && 'active') }>
+            영상 업로드
+          </h2>
+          <span className={ classNames('disabled', 'stepsDecorator') }>{'>'}</span>
+          <h2 className={ classNames('disabled', step == STEP_2 && 'active') }>
+            퀴즈 삽입
+          </h2>
+        </div>
+      </div>
+    );
+
+    let body;
+    switch(step) {
       // step 1
-      case 0:
-        return (
-          <VideoUpload
-            handleNext={ (title, description) => this.goToStepTwo(title, description) }
-            thumb={ thumb }
-            thumbURL={ thumbURL }
-            handleVideoURL={ videoURL => getThumbnail(videoURL) }
-            method={ method }
-            setUploadMethod={ nextMethod => setUploadMethod(nextMethod) }
-            resetVideo={ resetVideo }
-            isGoogleSignedIn={ isGoogleSignedIn }
-            initYoutubeUpload={ initYoutubeUpload }
-            signIn={ signIn } />
+      case STEP_1:
+        body = (
+          <div>
+            <Step1
+              method={ method }
+              setUploadMethod={ method => handleSetUploadMethod(method) }
+              urlStatus={ urlStatus }
+              handleURLCheck={ videoURL => handleURLCheck(videoURL) }
+              handleNext={ videoInfo => this.goToStep2(videoInfo) }
+              thumbURL={ thumbURL }
+              resetVideo={ resetVideo }
+              isGoogleAuth={ isGoogleAuth }
+              goToGoogleAuthPage={ goToGoogleAuthPage }
+              handleYoutubeUpload={ file => uploadYoutubeVideo(file) }
+              uploadStatus={ uploadStatus }
+              uploadProgress={ uploadProgress }
+              processProgress={ processProgress } />
+          </div>
         );
+        break;
 
       // step 2
-      case 1:
+      case STEP_2:
       default:
-        return (
-          <UploadInsertionComponent
-            videoTitle={ title }
-            goToStepOne={ this.goToStepOne } />
+        body = (
+          <UploadInsertionContainer
+            onClickUploadBtn={ this.uploadLectureAndQuestions } />
         );
     }
+
+    return (
+      <div>
+        { header }
+        { body }
+      </div>
+    );
   }
 
-  goToStepTwo = (title, description) => {
-    if(title == '') {
-      console.log('MUST HAVE A TITLE!');
-      return;
-    }
-    const step = 1;
-    this.props.setStep(step);
-    this.props.setVideoData(title, description);
+  // *******************
+  goToStep2 = videoInfo => {
+    this.props.setVideoInfo(videoInfo);
+    this.props.setStep(STEP_2);
   }
 
   goToStepOne = () => {
-    const step = 0;
+    const step = STEP_1;
     this.props.setStep(step);
+  }
+
+  @autobind
+  uploadLectureAndQuestions({ questionState }) {
+    const {
+      title, description, subject,
+      textbook, videoURL, thumbURL
+    } = this.props;
+
+    this.props.uploadLectureAndQuestions({
+      questionState,
+      title,
+      description,
+      subject,
+      textbook,
+      videoURL,
+      thumbURL
+    });
   }
 }
 
 Upload.propTypes = propTypes;
-Upload.defaultProps = defaultProps;
 
 const mapStateToProps = state => ({
   step: state.upload.step,
   title: state.upload.title,
-  thumb: state.upload.thumb,
+  subject: state.upload.subject,
+  textbook: state.upload.textbook,
+  description: state.upload.description,
+  videoURL: state.upload.videoURL,
+  urlStatus: state.upload.urlStatus,
+  thumbStatus: state.upload.thumbStatus,
   thumbURL: state.upload.thumbURL,
   method: state.upload.method,
-  isGoogleSignedIn: state.upload.isGoogleSignedIn
+  isGoogleAuth: state.upload.isGoogleAuth,
+  uploadStatus: state.upload.uploadStatus,
+  uploadProgress: state.upload.uploadProgress,
+  processProgress: state.upload.processProgress
 });
 
 const mapDispatchToProps = dispatch => ({
   setStep: step => dispatch(actions.setStep(step)),
-  setVideoData: (title, description) => dispatch(actions.setVideoData(title, description)),
+  handleSetUploadMethod: method => dispatch(actions.handleSetUploadMethod(method)),
+  setVideoInfo: videoInfo => dispatch(actions.setVideoInfo(videoInfo)),
+  handleURLCheck: videoURL => dispatch(actions.handleURLCheck(videoURL)),
   getThumbnail: videoURL => dispatch(actions.getThumbnail(videoURL)),
-  setUploadMethod: method => dispatch(actions.setUploadMethod(method)),
   resetVideo: () => dispatch(actions.resetVideo()),
-  initYoutubeUpload: () => dispatch(actions.initYoutubeUpload()),
-  signIn: () => dispatch(actions.signIn())
+  goToGoogleAuthPage: () => dispatch(actions.goToGoogleAuthPage()),
+  uploadYoutubeVideo: file => dispatch(actions.uploadYoutubeVideo(file)),
+  uploadLectureAndQuestions: ({ questionState, title, description, subject, textbook, videoURL, thumbURL }) => {
+    dispatch({
+      type: actions.UPLOAD_LECTURE_AND_QUESTIONS,
+      questionState,
+      title,
+      description,
+      subject,
+      textbook,
+      videoURL,
+      thumbURL
+    });
+  }
 });
 
 export default connect(

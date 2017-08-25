@@ -1,31 +1,17 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
-import FlassApp from './Flass/FlassApp';
-import SignApp from './Sign/SignApp';
-import SignUp from './Sign/SignUp/SignUp';
-import SignIn from './Sign/SignIn/SignIn';
+import requireSession from './HOC/requireSession';
+import FlassApp from './Flass/FlassAppContainer';
+import SignInContainer from './Sign/SignIn/SignInContainer';
 
 class Root extends Component {
-  signUp = () => (
-    <SignApp>
-      <SignUp />
-    </SignApp>
-  );
-
-  signIn = () => (
-    <SignApp>
-      <SignIn />
-    </SignApp>
-  );
-
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/signup" component={ this.signUp } />
-          <Route path="/signin" component={ this.signIn } />
-          <Route path="/*" component={ FlassApp } />
+          <Route path="/user/login" exact component={ SignInContainer } />
+          <Route path="/*" component={ requireSession(FlassApp) } />
         </Switch>
       </BrowserRouter>
     );

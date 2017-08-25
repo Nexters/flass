@@ -1,0 +1,17 @@
+$paddingTop: 87.75px;
+$paddingLeft: 9.9vw;
+$paddingLeftMin: 114px;
+
+@media only screen and (min-width: 1161px) {
+  /* For large screens: */
+  .content {
+    padding: $paddingTop 0 0 $paddingLeft;
+  }
+}
+
+@media only screen and (max-width: 1161px) {
+  /* For small screens: */
+  .content {
+    padding: $paddingTop 0 0 $paddingLeftMin;
+  }
+}

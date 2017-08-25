@@ -1,62 +1,45 @@
 [
   {
-    "key": 1,
-    "img": "http://via.placeholder.com/350x150",
+    "id": 0,
+    "thumbnail_url": "http://via.placeholder.com/350x150",
     "title": "Breakfast",
-    "author": "jill111"
+    "author": "jill111",
+    "user_id": "user1",
+    "subject": "subject",
+    "content": "content",
+    "textbook_range": "textbook_range",
+    "questionCount": 10,
+    "created_at": "created_at",
+    "updated_at": "updated_at",
+    "url": "url"
+
   },
   {
-    "key": 2,
-    "img": "http://via.placeholder.com/350x150",
+    "id": 1,
+    "thumbnail_url": "http://via.placeholder.com/350x150",
     "title": "Tasty burger",
-    "author": "pashminu"
+    "author": "pashminu",
+    "user_id": "user1",
+    "subject": "subject",
+    "content": "content",
+    "textbook_range": "textbook_range",
+    "questionCount": 10,
+    "created_at": "created_at",
+    "updated_at": "updated_at",
+    "url": "url"
   },
   {
-    "key": 3,
-    "img": "http://via.placeholder.com/350x150",
+    "id": 2,
+    "thumbnail_url": "http://via.placeholder.com/350x150",
     "title": "Camera",
-    "author": "Danson67"
-  },
-  {
-    "key": 4,
-    "img": "http://via.placeholder.com/350x150",
-    "title": "Morning",
-    "author": "fancycrave1"
-  },
-  {
-    "key": 5,
-    "img": "http://via.placeholder.com/350x150",
-    "title": "Hats",
-    "author": "Hans"
-  },
-  {
-    "key": 6,
-    "img": "http://via.placeholder.com/350x150",
-    "title": "Honey",
-    "author": "fancycravel"
-  },
-  {
-    "key": 7,
-    "img": "http://via.placeholder.com/350x150",
-    "title": "Vegetables",
-    "author": "jill111"
-  },
-  {
-    "key": 8,
-    "img": "http://via.placeholder.com/350x150",
-    "title": "Water plant",
-    "author": "BkrmadtyaKarki"
-  },
-  {
-    "key": 9,
-    "img": "http://via.placeholder.com/350x150",
-    "title": "Water plant1111",
-    "author": "BkrmadtyaKarki"
-  },
-  {
-    "key": 10,
-    "img": "http://via.placeholder.com/350x150",
-    "title": "Water plant2222",
-    "author": "BkrmadtyaKarki"
+    "author": "Danson67",
+    "user_id": "user1",
+    "subject": "subject",
+    "content": "content",
+    "textbook_range": "textbook_range",
+    "questionCount": 10,
+    "created_at": "created_at",
+    "updated_at": "updated_at",
+    "url": "url"
   }
 ]

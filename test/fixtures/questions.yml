@@ -3,13 +3,11 @@
 one:
   lecture_id: 1
   content: MyString
-  correct_answer: MyString
+  correct_answer: 1
   question_at: 2017-07-21 21:33:56
-  hint: MyString
 
 two:
   lecture_id: 1
   content: MyString
-  correct_answer: MyString
+  correct_answer: 1
   question_at: 2017-07-21 21:33:56
-  hint: MyString

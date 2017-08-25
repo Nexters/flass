@@ -8,11 +8,16 @@ module.exports = {
       'babel-polyfill',
       'react-hot-loader/patch',
       './client/index'
+    ],
+    sign: [
+      'babel-polyfill',
+      'react-hot-loader/patch',
+      './client/sign'
     ]
   },
   output: {
     path: path.resolve(__dirname, './public'),
-    filename: 'app.js'
+    filename: '[name].js'
   },
 
   devServer: {
@@ -20,7 +25,9 @@ module.exports = {
     inline: true,
     host: 'localhost',
     port: 4000,
-    historyApiFallback: true,
+    historyApiFallback: {
+      index: '/sign.html'
+    },
     contentBase: __dirname + '/public/'
   },
   module: {
@@ -63,6 +70,11 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        BACK_END: JSON.stringify(process.env.BACK_END)
+      }
+    })
   ]
 };

@@ -3,17 +3,15 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import keydown from 'react-keydown';
-import classNames from 'classnames';
 
 import VideoCustomBarComponent from './VideoCustomBarComponent';
 import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
+import { VideoProgressBar } from './VideoCustomProgressBarStyled';
+import { convertSecsToPercentage } from '../VideoUtils';
 
-import './VideoCustomProgressBarStyle.scss';
-
-const { func, number, string, oneOfType, arrayOf, bool } = PropTypes;
+const { func, number, string, oneOfType, arrayOf, bool, shape } = PropTypes;
 
 const propTypes = {
-  VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),
   VideoBarClassName: oneOfType([string, arrayOf(string)]),
   VideoPlayedBarClassName: oneOfType([string, arrayOf(string)]),
   VideoLoadedBarClassName: oneOfType([string, arrayOf(string)]),
@@ -24,17 +22,23 @@ const propTypes = {
   onCustomSeekBarMouseUp: func.isRequired,
   onCustomSeekBarClick: func.isRequired,
   onArrowKeyPressed: func.isRequired,
+  onQuestionbarClick: func,
   duration: number,
   playedPercentage: number,
   loadedPercentage: number,
 
-  quizTimeArray: arrayOf(number),
+  quizTimeArray: arrayOf(shape({
+    playedSeconds: number,
+    label: string,
+    indexOfQuestion: number
+  })),
   canChangeIsQuizSecs: func.isRequired,
-  isQuizSecs: bool.isRequired
+  isQuizSecs: bool.isRequired,
+  searchableSecs: number.isRequired
 };
 
 const defaultProps = {
-  VideoProgressBarClassName: '',
+  onQuestionbarClick: () => {},
   VideoBarClassName: '',
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
@@ -85,7 +89,6 @@ class VideoCustomProgressBarComponent extends Component {
     const { played, loaded, duration } = this.state;
     const {
       VideoBarClassName,
-      VideoProgressBarClassName,
       VideoPlayedBarClassName,
       VideoLoadedBarClassName,
       VideoQuizIndicatorClassName,
@@ -95,8 +98,7 @@ class VideoCustomProgressBarComponent extends Component {
     } = this.props;
 
     return (
-      <div
-        className={ classNames('player-progress-bar', VideoProgressBarClassName) }
+      <VideoProgressBar
         onMouseDown={ this.onCustomSeekBarMouseDown }
         onMouseMove={ this.onCustomSeekBarChange }
         onMouseUp={ this.onCustomSeekBarMouseUp }
@@ -110,10 +112,11 @@ class VideoCustomProgressBarComponent extends Component {
         <VideoCustomQuizBarComponent
           VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
           VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
+          onQuestionbarClick={ this.onQuestionbarClick }
           duration={ duration }
 
           quizTimeArray={ quizTimeArray } />
-      </div>
+      </VideoProgressBar>
     );
   }
 
@@ -136,9 +139,14 @@ class VideoCustomProgressBarComponent extends Component {
   @autobind
   onCustomSeekBarChange(e) {
     if (this.state.isDragging) {
+      const { searchableSecs } = this.props;
       const movedPosition = this.calculateMovedPosition(e);
-      this.setState({ played: movedPosition });
-      this.props.onCustomSeekBarChange(movedPosition);
+      const searchablePosition = this.calculateSearchablePosition(searchableSecs);
+
+      if (movedPosition < searchablePosition) {
+        this.setState({ played: movedPosition });
+        this.props.onCustomSeekBarChange(movedPosition);
+      }
     }
     e.stopPropagation();
     e.preventDefault;
@@ -155,9 +163,14 @@ class VideoCustomProgressBarComponent extends Component {
   @autobind
   onCustomSeekBarClick(e) {
     if (!this.state.isDragging) {
+      const { searchableSecs } = this.props;
       const movedPosition = this.calculateMovedPosition(e);
-      this.setState({ played: movedPosition });
-      this.props.onCustomSeekBarClick(movedPosition);
+      const searchablePosition = this.calculateSearchablePosition(searchableSecs);
+
+      if (movedPosition < searchablePosition) {
+        this.setState({ played: movedPosition });
+        this.props.onCustomSeekBarClick(movedPosition);
+      }
     }
   }
 
@@ -176,6 +189,11 @@ class VideoCustomProgressBarComponent extends Component {
     return movedPosition;
   }
 
+  calculateSearchablePosition(searchableSecs) {
+    const { duration } = this.props;
+    return convertSecsToPercentage(searchableSecs, duration) * 100;
+  }
+
   @autobind
   @keydown('left')
   onLeftArrowKeyPressed() {
@@ -188,6 +206,13 @@ class VideoCustomProgressBarComponent extends Component {
   onRightArrowKeyPressed() {
     const changedPlayed = this.state.played + SHIFT_AMOUNT_PERCENTAGE;
     this.props.onArrowKeyPressed(changedPlayed);
+  }
+
+  @autobind
+  onQuestionbarClick(e, { label }) {
+    this.props.onQuestionbarClick({ label });
+    e.stopPropagation();
+    e.preventDefault;
   }
 }
 

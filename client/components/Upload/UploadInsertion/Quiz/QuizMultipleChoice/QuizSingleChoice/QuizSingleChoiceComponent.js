@@ -4,18 +4,22 @@ import autobind from 'autobind-decorator';
 import classNames from 'classnames';
 
 import './QuizSingleChoiceComponentStyles.scss';
+import DeleteIcon from '../icons/x-copy-2@2x.png';
 
 const { string, bool, func, number } = PropTypes;
 
 const propTypes = {
   onCheckboxClick: func.isRequired,
   onChoiceInputChange: func.isRequired,
+  onSingleChoiceDeleteBtnClick: func.isRequired,
   numberingKeyword: string.isRequired,
   isChecked: bool,
-  quizIndex: number.isRequired
+  choiceIndex: number.isRequired,
+  choiceTextValue: string
 };
 const defaultProps = {
-  isChecked: false
+  isChecked: false,
+  choiceTextValue: ''
 };
 
 class QuizSingleChoiceComponent extends Component {
@@ -23,13 +27,22 @@ class QuizSingleChoiceComponent extends Component {
     super(props);
 
     this.state = {
-      isChoiceDirty: false,
+      isChoiceInputDirty: false,
       ChoiceInputValue: ''
     };
   }
 
   componentWillMount() {
     this.setState({ ChoiceInputValue: `${this.props.numberingKeyword} 문항을 입력하세요.` });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { choiceTextValue } = nextProps;
+    const { isChoiceInputDirty, ChoiceInputValue } = this.state;
+
+    if (choiceTextValue !== ChoiceInputValue && isChoiceInputDirty) {
+      this.setState({ ChoiceInputValue: choiceTextValue });
+    }
   }
 
   render() {
@@ -42,11 +55,11 @@ class QuizSingleChoiceComponent extends Component {
           className="quiz-single-choice__checkbox"
           onClick={ this.onCheckboxClick }>
           {
-            isChecked ? <div className="quiz-single-choice__check">{ ' ' }</div> : null
+            isChecked && <div className="quiz-single-choice__check">{ ' ' }</div>
           }
         </div>
 
-        <div>
+        <div className="quiz-single-choice__q-text-wrapper">
           <input
             type="text"
             className={ classNames(
@@ -56,7 +69,13 @@ class QuizSingleChoiceComponent extends Component {
             value={ ChoiceInputValue }
             onClick={ this.onChoiceInputClick }
             onChange={ this.onChoiceInputChange } />
+            <span className="quiz-single-choice__underline"></span>
         </div>
+        <span
+          className="quiz-single-choice__delete-btn"
+          onClick={ this.onDeleteBtnClick }>
+          <img alt="choice delete button" srcSet={ DeleteIcon } className="quiz-single-choice__delete-icon" />
+        </span>
       </div>
     );
   }
@@ -69,16 +88,22 @@ class QuizSingleChoiceComponent extends Component {
 
   @autobind
   onChoiceInputChange(e) {
-    const { quizIndex } = this.props;
+    const { choiceIndex } = this.props;
 
     this.setState({ ChoiceInputValue: e.target.value });
-    this.props.onChoiceInputChange(quizIndex, e.target.value);
+    this.props.onChoiceInputChange(choiceIndex, e.target.value);
   }
 
   @autobind
   onCheckboxClick() {
-    const quizIndex = parseInt(this.props.quizIndex);
-    this.props.onCheckboxClick(quizIndex);
+    const choiceIndex = parseInt(this.props.choiceIndex);
+    this.props.onCheckboxClick(choiceIndex);
+  }
+
+  @autobind
+  onDeleteBtnClick() {
+    const { choiceIndex } = this.props;
+    this.props.onSingleChoiceDeleteBtnClick(choiceIndex);
   }
 }
 
