@@ -104,6 +104,7 @@ const QuestionJson = {
   byDetailId: detailId => requests.get('/json/FlassQuestion.json')
 };
 const QuestionRails = {
+  byDetailId: detailId => requests.get('/questions', { lecture_id: detailId }),
   uploadByLectureId: body => requests.post('/questions', body)
 };
 const Question = selectAPIRequest(QuestionRails, QuestionJson);

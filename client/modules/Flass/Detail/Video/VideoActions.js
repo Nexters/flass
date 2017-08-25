@@ -29,6 +29,7 @@ export function setCompleteVideoFlag() {
 export const RESET_VIDEO_COMPLETE = 'RESET_VIDEO_COMPLETE';
 
 export function resetCompleteVideoFlag() {
+  console.log('actions::resetCompleteVideoFlag');
   return {
     type: RESET_VIDEO_COMPLETE
   };
