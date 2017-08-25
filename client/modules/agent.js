@@ -7,11 +7,7 @@ const API_PRODUCTION = 'https://conduit.productionready.io/api';
 const API_ROOT = (TYPE_OF_BACKEND === 'rails' ? API_LOCAL : API_JSON);
 
 const encode = encodeURIComponent;
-const responseBody = res => {
-  console.log('responseBody::response');
-  console.log(res);
-  return res.data;
-};
+const responseBody = res => res.data;
 
 let token = null;
 const tokenPlugin = req => {
