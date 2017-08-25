@@ -12,10 +12,6 @@ import {
 } from './QuizActions';
 
 function* requestUploadQuestions({ questionState }) {
-  console.log('ChoiceBodyAdapter');
-  console.log(ChoiceBodyAdapter);
-  console.log('requestUploadQuestions::Hello');
-  console.log(questionState);
   const lectureId = 2;
 
   try {
