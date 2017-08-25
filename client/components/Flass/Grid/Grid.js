@@ -51,8 +51,6 @@ class Grid extends Component {
 
   render() {
     const { items } = this.props;
-    console.log('render::items');
-    console.log(items);
     const renderAllItems = _.chunk(items, 4).map(splitItems => {
       return (
         <Row>

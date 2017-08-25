@@ -64,7 +64,7 @@ const BtnReply = styled.a`
 `;
 
 const propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   userName: PropTypes.string.isRequired,
   content: PropTypes.object.isRequired,
   isReply: PropTypes.bool.isRequired,

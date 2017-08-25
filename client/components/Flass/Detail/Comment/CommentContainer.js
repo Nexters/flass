@@ -10,6 +10,7 @@ import Comment from './Comment';
 function mapStateToProps(state) {
   return {
     comments: state.flass.detail.comment.comments,
+    commentchild: state.flass.detail.comment.commentchild,
     user: state.flass.user,
   };
 }

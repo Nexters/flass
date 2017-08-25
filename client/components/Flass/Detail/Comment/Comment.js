@@ -22,6 +22,7 @@ const Divider = styled.hr`
 const propTypes = {
   detailId: PropTypes.number.isRequired,
   comments: PropTypes.array.isRequired,
+  commentchild: PropTypes.object.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     userName: PropTypes.string.isRequired,
@@ -90,12 +91,14 @@ class Comment extends Component {
   };
 
   renderReply = comment => {
+    const { commentchild } = this.props;
+
     if (!comment) {
       return [];
     }
     const replyPostComments = [<ReplyPostComment
       component={ this.renderPostComment('replyPostComment', '답글 등록', comment.id) } />];
-    return _.map(comment.replyComments,
+    return _.map(commentchild[comment.id],
       ((comment, index) => {
         const commentView = this.renderComment(comment, index, true);
         return <ReplyComment key={ `reply${comment.id}` } component={ commentView } />;

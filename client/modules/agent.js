@@ -117,8 +117,10 @@ const CommentJson = {
 
 const CommentRails = {
   byDetailId: detailId => requests.get(`/comments?lecture_id=${detailId}`),
-  postComment: (detailId, content) => requests.get('/comments', { lecture_id: detailId, content }),
-  deleteById: commentId => requests.del('')
+  postComment: (detailId, content) => requests.post('/comments', { lecture_id: detailId, content }),
+  postReplyComment: (commentId, content) => requests.post('/commentchild', { comment_id: commentId, content }),
+  deleteById: commentId => requests.del(`/comments?id=${commentId}`),
+  deleteReplyById: id => requests.del(`/comment_children/destroy/${id}`)
 };
 
 const Comment = selectAPIRequest(CommentRails, CommentJson);
