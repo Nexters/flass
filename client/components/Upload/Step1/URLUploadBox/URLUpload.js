@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import { NO_URL, SUCC_URL, FAIL_URL } from '../../../../modules/Constants';
 import Exit from '../img/exit.png';
+import Exit2x from '../img/exit@2x.png';
+import Exit3x from '../img/exit@3x.png';
 import Url from './img/url.png';
 import Url2x from './img/url@2x.png';
 import Url3x from './img/url@3x.png';
@@ -44,6 +46,7 @@ class URLUpload extends Component {
           <a onClick={ back }>
             <img
               src={ Exit }
+              srcSet={ `${Exit2x} 2x,${Exit3x} 3x` }
               className="exitIcon"
               alt="옵션 선택 취소" />
           </a>

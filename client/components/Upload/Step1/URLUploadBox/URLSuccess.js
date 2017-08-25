@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import './urlUpload.scss';
-import Exit from '../img/exit.png';
+import WhiteExit from '../img/whiteExit.png';
+import WhiteExit2x from '../img/whiteExit@2x.png';
+import WhiteExit3x from '../img/whiteExit@3x.png';
 import Complete from '../img/complete.png';
 import Complete2x from '../img/complete@2x.png';
 import Complete3x from '../img/complete@3x.png';
@@ -26,8 +28,9 @@ class URLSuccess extends Component {
           <div className="alignRight">
             <a onClick={ back }>
               <img
-                src={ Exit }
-                className="exitIcon"
+                src={ WhiteExit }
+                srcSet={ `${WhiteExit2x} 2x,${WhiteExit3x} 3x` }
+                className="whiteExitIcon"
                 alt="옵션 선택 취소" />
             </a>
           </div>
