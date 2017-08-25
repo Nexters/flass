@@ -34,7 +34,7 @@ class LecturesController < ApplicationController
   param :textbook_range, String, :desc => "교재 범위"
   param :url, String, :desc => "강의 url 정보"
   param :thumbnail_url, String, :desc => "강의 thumbnail_url 정보"
-  param :duration, String, :desc => "강의 시간"
+  param :duration, :number, :desc => "강의 시간"
   def create
     @lecture = Lecture.new(lecture_params)
 
@@ -53,7 +53,7 @@ class LecturesController < ApplicationController
   param :textbook_range, String, :desc => "교재 범위"
   param :url, String, :desc => "강의 url"
   param :thumbnail_url, String, :desc => "강의 thumbnail_url"
-  param :duration, Time, :desc => "강의 시간"
+  param :duration, :number, :desc => "강의 시간"
   def update
     if @lecture.update(lecture_params)
       render json: @lecture, status: :ok
@@ -79,7 +79,7 @@ class LecturesController < ApplicationController
   param :id, :number, :desc => "lecture ID"
   def statistics
     @ret = Hash.new
-    
+
     @ret['questions'] = questions = @lecture.questions.order(id: :asc)
     @ret['answers'] = Hash.new
 
