@@ -22,13 +22,13 @@ const fetchQuestionReducer = {
 
 const updateSolvedQuestion = {
   [UPDATE_SOLVED_QUESTION]: (state, action) => {
-    const { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer } = action.payload;
+    const { id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer } = action.payload;
 
     return {
       ...state,
       solvedQuestionsState: _.concat(
         state.solvedQuestionsState,
-        { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
+        { id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
       )
     };
   }

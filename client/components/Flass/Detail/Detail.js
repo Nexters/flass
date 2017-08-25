@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Content from './Content/Content';
 import Comment from './Comment/CommentContainer';
 import Analysis from './Analysis/Analysis';
-import Video from './Video/Video';
+import Video from './Video/VideoContainer';
 import Header from '../Header';
 import { FlassDetailStyled } from './DetailStyled';
 
@@ -80,7 +80,6 @@ class Detail extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     const detailId = this.props.detail.detail.id;
-    console.log(this.props, detailId);
     if(detailId === -1) {
       this.props.fetchRequestDetailAll(id);
     }
@@ -125,7 +124,6 @@ class Detail extends Component {
     const { detail: { detail }, comment } = this.props;
     const { selected } = this.state;
 
-    console.log(this.props);
     const tabTitle = (title, src) => (
       <TabTitle>
         <TabIcon alt="" src={ src } />

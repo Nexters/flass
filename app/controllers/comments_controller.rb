@@ -25,6 +25,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
 
     if @comment.save
+      Notification.new_notification(session[:user_id], params[:lecture_id], 'comment')
       render json: @comment, status: :created
     else
       render json: {message: "내용을 반드시 입력하셔야 합니다."}, status: :bad_request
@@ -92,7 +93,7 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params[:user_id] = session[:user_id]
-      params.require(:comment).permit(:user_id, :lecture_id, :content)
+      params.permit(:user_id, :lecture_id, :content)
     end
 end
 

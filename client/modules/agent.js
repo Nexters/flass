@@ -106,7 +106,8 @@ const QuestionRails = {
 const Question = selectAPIRequest(QuestionRails, QuestionJson);
 
 const Choice = {
-  upload: body => requests.post('/choices', body)
+  upload: body => requests.post('/choices', body),
+  fetch: questionId => requests.get(`/choices?question_id=${questionId}`)
 };
 
 const CommentJson = {
