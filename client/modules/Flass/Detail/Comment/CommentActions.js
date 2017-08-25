@@ -70,11 +70,12 @@ export const DELETE_READY_COMMENT = 'DELETE_READY_COMMENT';
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 export const DELETE_COMMENT_ERROR = 'DELETE_COMMENT_ERROR';
 
-function* deleteComment({ commentId }) {
+function* deleteComment({ parentId, commentId }) {
   try {
-    yield call(agent.Comment.deleteById, commentId);
+    parentId ? yield call(agent.Comment.deleteReplyById, commentId) : yield call(agent.Comment.deleteById, commentId);
     yield put({
       type: DELETE_COMMENT_SUCCESS,
+      parentId,
       id: commentId
     });
   } catch (err) {

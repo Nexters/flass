@@ -67,7 +67,7 @@ const addCommentReducer = {
         ...state,
         commentchild: {
           ...state.commentchild,
-          [parentId]: _.map(state.commentchild[parentId] || [],
+          [parentId]: _.map(state.commentchild[parentId],
             comment => (comment.id === id ? { ...comment, id: newId } : comment))
         }
       };
@@ -85,10 +85,18 @@ const addCommentReducer = {
 };
 
 const removeCommentReducer = {
-  [DELETE_COMMENT_SUCCESS]: (state, action) => ({
-    ...state,
-    comments: _.filter(state.comments, comment => (comment.id !== action.id))
-  }),
+  [DELETE_COMMENT_SUCCESS]: (state, { parentId, id }) => {
+    if(parentId) {
+      return ({
+        ...state,
+        commentchild: _.filter(state.commentchild[parentId], comment => (comment.id !== id))
+      });
+    }
+    return ({
+      ...state,
+      comments: _.filter(state.comments, comment => (comment.id !== id))
+    });
+  },
   [DELETE_COMMENT_ERROR]: (state, action) => state
 };
 

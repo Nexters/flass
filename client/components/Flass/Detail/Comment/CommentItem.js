@@ -57,6 +57,7 @@ const Bottom = styled.div`
 
 const BtnReply = styled.a`
   height: 30px;
+  color: #337ab7;
   border: solid 1px ${color['steel-grey-two']};
   border-radius: 20px;
   padding: 5px 8px;
@@ -65,7 +66,7 @@ const BtnReply = styled.a`
 
 const propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
   content: PropTypes.object.isRequired,
   isReply: PropTypes.bool.isRequired,
   isSelectedReply: PropTypes.bool.isRequired,
@@ -73,6 +74,7 @@ const propTypes = {
   onDelete: PropTypes.func.isRequired,
 };
 const defaultProps = {
+  userName: '',
   isReply: false
 };
 
@@ -80,7 +82,7 @@ class CommentItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggleMenu: true,
+      toggleMenu: false,
       toggleHeart: false
     };
   }
