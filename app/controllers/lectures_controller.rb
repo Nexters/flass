@@ -85,7 +85,6 @@ class LecturesController < ApplicationController
       if !@ret['answers'].key?(question.id)
         @ret['answers'][question.id] = Hash.new
       end
-      answers
       @ret['answers'][question.id][index + 1] = Answer.where(question_id: question.id)
     end
 
