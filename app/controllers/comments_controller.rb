@@ -69,7 +69,7 @@ class CommentsController < ApplicationController
   api :PUT, '/comments/:id/like', '좋아요 누르고 좋아요 갯수까지 보여주기'
   param :id, :number, :desc => "Comment ID"
   def like
-    user = session[:user_id]
+    user = User.find(session[:user_id])
     if user
       if user.liked? @comment
         @comment.unliked_by(user)
