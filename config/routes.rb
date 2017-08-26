@@ -4,11 +4,11 @@ Rails.application.routes.draw do
 
   post 'comment_children' => "comment_children#create"
 
-  get 'comment_children/edit/:comment_children_id' => "comment_children#edit"
+  get 'comment_children/edit' => "comment_children#edit"
 
-  get 'comment_children/update/:comment_children_id' => "comment_children#update"
+  put 'comment_children' => "comment_children#update"
 
-  get 'comment_children/destroy/:comment_children_id' => "comment_children#destroy"
+  delete 'comment_children' => "comment_children#destroy"
 
   put 'comments/:id/like' => "comments#like"
 

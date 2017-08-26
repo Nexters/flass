@@ -16,7 +16,7 @@ class CommentChildrenController < ApplicationController
     end
   end
 
-  api :GET, '/comment_children/edit/:comment_children_id', '대댓글 수정 페이지'
+  api :GET, '/comment_children/edit', '대댓글 수정 페이지'
   param :id, :number, :desc => "CommentChild ID"
   def edit
     if @commentchild.user_id == session[:user_id]
@@ -27,7 +27,7 @@ class CommentChildrenController < ApplicationController
   end
 
 
-  api :GET, '/comment_children/update/:comment_children_id', '대댓글 수정'
+  api :PUT, '/comment_children', '대댓글 수정'
   param :id, :number, :desc => "CommentChild ID"
   param :content, String, :desc => "대댓글 내용"
   def update
@@ -39,8 +39,8 @@ class CommentChildrenController < ApplicationController
   end
 
 
-  api :GET, '/comment_children/destroy/:comment_children_id', '특정 대댓글 삭제'
-  param :id, :number, :desc => "Comment ID"
+  api :DELETE, '/comment_children', '특정 대댓글 삭제'
+  param :id, :number, :desc => "CommentChild ID"
   def destroy
     if @commentchild.user_id == session[:user_id]
       @commentchild.destroy
