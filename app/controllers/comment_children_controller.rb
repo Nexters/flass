@@ -3,7 +3,7 @@ class CommentChildrenController < ApplicationController
   before_action :set_commentchild, only: [:edit, :update, :destroy]
 
 
-  api :POST, '/commentchild', '특정 comment에 대한 대댓글 생성'
+  api :POST, '/comment_children', '특정 comment에 대한 대댓글 생성'
   param :comment_id, :number, :desc => "Comment ID"
   param :content, String, :desc => "대댓글 내용"
   def create
@@ -26,7 +26,7 @@ class CommentChildrenController < ApplicationController
     end
   end
 
- 
+
   api :GET, '/comment_children/update/:comment_children_id', '대댓글 수정'
   param :id, :number, :desc => "CommentChild ID"
   param :content, String, :desc => "대댓글 내용"
@@ -45,7 +45,7 @@ class CommentChildrenController < ApplicationController
     if @commentchild.user_id == session[:user_id]
       @commentchild.destroy
       head :ok
-    else   
+    else
       render json: {message: "댓글을 삭제할 권한이 없습니다."}, status: :unauthorized
     end
   end
