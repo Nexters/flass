@@ -44,7 +44,9 @@ const MenuIcon = styled.img`
 `;
 
 const Content = styled.div`
+  min-height: 60px;
   padding-top: 1rem;
+  padding-bottom: 1rem;
   font-size: 1.4rem;
   word-break: break-all;
 `;
@@ -57,22 +59,25 @@ const Bottom = styled.div`
 
 const BtnReply = styled.a`
   height: 30px;
+  color: #337ab7;
   border: solid 1px ${color['steel-grey-two']};
   border-radius: 20px;
   padding: 5px 8px;
+  margin-right: 13px;
   float: right;
 `;
 
 const propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
   content: PropTypes.object.isRequired,
   isReply: PropTypes.bool.isRequired,
   isSelectedReply: PropTypes.bool.isRequired,
   onSelectedReply: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 const defaultProps = {
+  userName: '',
   isReply: false
 };
 
@@ -80,7 +85,7 @@ class CommentItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggleMenu: true,
+      toggleMenu: false,
       toggleHeart: false
     };
   }
@@ -98,7 +103,7 @@ class CommentItem extends Component {
   componentDidMount() {}
 
   render() {
-    const { id, userName, content, isReply, isSelectedReply, onSelectedReply, onDelete } = this.props;
+    const { id, userName, content, isReply, replyCount, isSelectedReply, onSelectedReply, onDelete } = this.props;
     const { toggleMenu, toggleHeart } = this.state;
 
     return (
@@ -117,7 +122,10 @@ class CommentItem extends Component {
           {content}
         </Content>
         <Bottom>
-          2017.07.23 {!isReply && <BtnReply onClick={ onSelectedReply }>{ isSelectedReply ? '설명글 (0)' : '설명글 (0)' }</BtnReply>}
+          2017.07.23 {!isReply &&
+          <BtnReply onClick={ onSelectedReply }>{isSelectedReply
+          ? `설명글 (${replyCount})`
+          : `설명글 (${replyCount})`}</BtnReply>}
         </Bottom>
       </DetailCommentItem>
     );

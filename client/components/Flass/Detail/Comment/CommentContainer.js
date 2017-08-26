@@ -34,9 +34,10 @@ function mapDispatchToProps(dispatch) {
         content
       });
     },
-    deleteComment: (commentId) => {
+    deleteComment: (parentId, commentId) => {
       dispatch({
         type: DELETE_COMMENT,
+        parentId,
         commentId,
       });
     }

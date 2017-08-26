@@ -73,20 +73,22 @@ class Comment extends Component {
       addComment={ _.partial(addComment, commentId) } />);
   }
 
-  renderComment = (comment, index, isReply = false) => {
-    const { deleteComment } = this.props;
+  renderComment = (comment, index, parentId) => {
+    const { commentchild, deleteComment } = this.props;
     const { selectedReply } = this.state;
 
     const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
+    const replyCount = commentchild[comment.id] || [];
     return (<CommentItem
       key={ `comment${comment.id}` }
       id={ comment.id }
       userName={ comment.userName }
       content={ content }
-      isReply={ isReply }
+      isReply={ !!parentId }
+      replyCount={ replyCount.length }
       isSelectedReply={ selectedReply === index }
       onSelectedReply={ _.partial(this.handleSelectedReply, index) }
-      onDelete={ deleteComment }
+      onDelete={ _.partial(deleteComment, parentId) }
     />);
   };
 
@@ -98,9 +100,10 @@ class Comment extends Component {
     }
     const replyPostComments = [<ReplyPostComment
       component={ this.renderPostComment('replyPostComment', '답글 등록', comment.id) } />];
-    return _.map(commentchild[comment.id],
+    const parentId = comment.id;
+    return _.map(commentchild[parentId],
       ((comment, index) => {
-        const commentView = this.renderComment(comment, index, true);
+        const commentView = this.renderComment(comment, index, parentId);
         return <ReplyComment key={ `reply${comment.id}` } component={ commentView } />;
       }))
       .concat(replyPostComments);
