@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get 'lectures/statistics'
 
-  get 'comment_children/create' => "comment_children#create"
+  post 'comment_children' => "comment_children#create"
 
   get 'comment_children/edit/:comment_children_id' => "comment_children#edit"
 
