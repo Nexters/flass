@@ -12,9 +12,6 @@ function* fetchComment({ detailId }) {
 
   try {
     const response = yield call(agent.Comment.byDetailId, detailId);
-    // const commentsWithLike = yield call(_.map, comments, (comment) => {
-    // });
-
     yield put({
       type: FETCH_COMMENT_SUCCESS,
       comments: response.comments,
