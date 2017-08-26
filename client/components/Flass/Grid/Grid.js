@@ -24,7 +24,7 @@ class Grid extends Component {
   componentWillReceiveProps(nextProps) {
     const { user } = this.props;
     const nextUser = nextProps.user;
-    if(user.id !== nextUser.id) {
+    if (user.id !== nextUser.id) {
       this.props.fetchRequestMyChannelItems();
     }
   }
@@ -32,7 +32,7 @@ class Grid extends Component {
   componentDidMount() {
     const { user } = this.props;
 
-    if(user.id !== -1) {
+    if (user.id !== -1) {
       this.props.fetchRequestMyChannelItems();
     }
   }
@@ -51,11 +51,11 @@ class Grid extends Component {
 
   render() {
     const { items } = this.props;
-    console.log('render::items');
-    console.log(items);
+    let chunkIndex = 0;
     const renderAllItems = _.chunk(items, 4).map(splitItems => {
+      chunkIndex += 1;
       return (
-        <Row>
+        <Row key={ `row${chunkIndex}` }>
           {this.renderChildren(splitItems)}
         </Row>
       );
