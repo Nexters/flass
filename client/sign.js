@@ -11,7 +11,7 @@ import FireBaseConfig from './config/FirebaseConfig';
 import Sign from './components/Sign';
 
 const render = Component => {
-  console.log('init() :: App starts booting...');
+  console.log('npm run dev:sign :: init() :: App starts booting...');
   injectTapEventPlugin();
   FireBaseConfig.init();
 

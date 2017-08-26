@@ -5,7 +5,7 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import color from '../common/colors.scss';
 import GridItem from './GridItem';
-import ContentTitleComponent from '../ContentTitle/ContentTitleComponent';
+import Header from '../Header';
 import './Grid.scss';
 
 const propTypes = {
@@ -18,16 +18,21 @@ const defaultProps = {
 };
 
 class Grid extends Component {
-
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    this.props.fetchRequestMyChannelItems();
   }
-
   componentWillReceiveProps(nextProps) {
     const { user } = this.props;
     const nextUser = nextProps.user;
-    console.log(user, nextUser);
-    if(user.id !== nextUser.id) {
+    if (user.id !== nextUser.id) {
+      this.props.fetchRequestMyChannelItems();
+    }
+  }
+
+  componentDidMount() {
+    const { user } = this.props;
+
+    if (user.id !== -1) {
       this.props.fetchRequestMyChannelItems();
     }
   }
@@ -35,29 +40,29 @@ class Grid extends Component {
   // 2. HOC
   // 3. react router 기능.
 
-  componentDidMount() {
-  }
-
   renderChildren(items) {
+    const { user } = this.props;
     return items.map(item => (
-      <Col key={item.id} md={ 3 }>
-        <GridItem { ...item } />
+      <Col key={ item.id } md={ 3 }>
+        <GridItem { ...item } userName={ user.userName } />
       </Col>
     ));
   }
 
   render() {
     const { items } = this.props;
+    let chunkIndex = 0;
     const renderAllItems = _.chunk(items, 4).map(splitItems => {
+      chunkIndex += 1;
       return (
-        <Row>
+        <Row key={ `row${chunkIndex}` }>
           {this.renderChildren(splitItems)}
         </Row>
       );
     });
     return (
       <div>
-        <ContentTitleComponent title="Home Channel" />
+        <Header title="Home Channel" />
         <GridView>
           {renderAllItems}
         </GridView>

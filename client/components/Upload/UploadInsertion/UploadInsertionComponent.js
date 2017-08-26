@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
-import FlassContentTitleComponent from '../../Flass/ContentTitle/ContentTitleComponent';
+import Header from '../../Flass/Header';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
-
-import * as actions from '../../../modules/Upload/UploadInsertion/Quiz/QuizActions';
+import ModalComponent from '../Modal/ModalComponent';
 
 import './UploadInsertionComponentStyles.scss';
 
@@ -23,11 +22,24 @@ const propTypes = {
   focusOnQuestion: func.isRequired,
   completeEditQuestion: func.isRequired,
   deleteCompleteQuestion: func.isRequired,
+  // requestUploadQuestions: func.isRequired,
+  onClickUploadBtn: func.isRequired,
   isAdding: bool,
   questionSecsStateArray: arrayOf(shape({
     playedSeconds: number,
     label: string
   })),
+  questionStateArray: arrayOf(shape({
+    TitleInputValue: string,
+    checkedQuizIndex: number,
+    numOfChoice: number,
+    SingleChoiceValues: arrayOf(shape({
+      isAnswer: bool,
+      choiceTextValue: string
+    })),
+    secsOfQuiz: number,
+    indexOfQuestion: number
+  })).isRequired,
   stateOfFocusedQuestion: shape({
     secsStateOfFocusedQuestion: shape({
       playedSeconds: number,
@@ -45,7 +57,10 @@ const propTypes = {
       secsOfQuiz: oneOfType([string, number]),
       indexOfQuestion: number
     })
-  })
+  }),
+  isUploadingQuestionRequestSuccess: bool.isRequired,
+  videoUrl: string.isRequired,
+  lectureUrl: string.isRequired
 };
 const defaultProps = {
   isAdding: false,
@@ -95,19 +110,15 @@ class UploadInsertionComponent extends Component {
     const {
       isAdding,
       questionSecsStateArray,
-      stateOfFocusedQuestion
+      stateOfFocusedQuestion,
+      videoUrl
     } = this.props;
 
     return (
       <div>
-        <FlassContentTitleComponent title="Upload new video" />
         <div className="row">
           <div className="row__player-large-5">
             <VideoComponent
-              VideoContainerClassName={ 'flass-upload-insertion-media' }
-              VideoPlayerWrapperClassName="flass-upload-insertion-media__player-wrapper"
-              VideoPlayerClassName="flass-upload-insertion-media__player"
-              VideoControllerBarClassName="flass-upload-insertion-media__controller-bar"
               VideoBarClassName="bar--thinner"
               VideoPlayedBarClassName="played-bar--thinner"
               VideoLoadedBarClassName="loaded-bar--thinner"
@@ -116,7 +127,6 @@ class UploadInsertionComponent extends Component {
               VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
               VideoVolumeBtnClassName="video-btn"
               VideoVolumeBarClassName={ classNames('video-volume-bar') }
-              VideoFullscreenBtnClassName={ classNames('video-btn', 'video-btn--right', 'video-btn--r-margin') }
 
               setPlayer={ this.setPlayer }
               playerSeekTo={ this.playerSeekTo }
@@ -127,6 +137,7 @@ class UploadInsertionComponent extends Component {
               setPlayedState={ this.setPlayedState }
               setIsQuizSecsState={ this.setIsQuizSecsState }
               onQuestionbarClick={ this.onQuestionbarClick }
+              url={ videoUrl }
               duration={ duration }
               played={ played }
               loaded={ loaded }
@@ -153,11 +164,28 @@ class UploadInsertionComponent extends Component {
         </div>
 
         <div className="row row--t-margin-larger">
-          <div className="flass-upload-insertion-media__btn">
+          <div
+            className="flass-upload-insertion-media__btn"
+            onClick={ this.onClickUploadBtn }>
             업 로 드
           </div>
         </div>
+
+        {
+          this.renderModal()
+        }
       </div>
+    );
+  }
+
+  @autobind
+  renderModal() {
+    const { isUploadingQuestionRequestSuccess, lectureUrl } = this.props;
+    return (
+      isUploadingQuestionRequestSuccess ?
+        <ModalComponent
+          url={ lectureUrl } /> :
+        null
     );
   }
 
@@ -272,25 +300,17 @@ class UploadInsertionComponent extends Component {
     this.props.deleteCompleteQuestion({ indexOfQuestion });
     this.setPlayingState(true);
   }
+
+  @autobind
+  onClickUploadBtn() {
+    const { questionStateArray } = this.props;
+    // this.props.requestUploadQuestions({ questionState: questionStateArray });
+    this.props.onClickUploadBtn({ questionState: questionStateArray });
+    this.setPlayingState(false);
+  }
 }
 
 UploadInsertionComponent.propTypes = propTypes;
 UploadInsertionComponent.defaultProps = defaultProps;
 
-function mapStateToProps({ quizInsertion }) {
-  const {
-    isAdding,
-    type,
-    questionSecsStateArray,
-    stateOfFocusedQuestion
-  } = quizInsertion;
-
-  return {
-    isAdding,
-    type,
-    questionSecsStateArray,
-    stateOfFocusedQuestion
-  };
-}
-
-export default connect(mapStateToProps, actions)(UploadInsertionComponent);
+export default UploadInsertionComponent;

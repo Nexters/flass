@@ -16,22 +16,24 @@ import {
   VideoControllerWrapperComponent,
   VideoModalComponent,
   VideoControllerAndBarWrapperComponent,
-  VideoEndedPageComponent
+  VideoEndedPageComponent,
+
+  PlayBtnIcon,
+  PauseBtnIcon,
+  VolumeOnBtnIcon,
+  VolumeOffBtnIcon
 } from '../../../Video';
 
 import {
-  convertPercentageToSecs,
-  convertSecsToPercentage
+  convertSecsToPercentage,
+  updatePlayedPercentage
 } from '../../../Video/VideoUtils';
 
 import {
-  FlassDetailVideo
+  FlassDetailVideo,
+  StyledPlayerOnDetailPage,
+  EndedPageOnDetailPage
 } from './VideoStyled';
-
-import PlayBtnIcon from '../../../../../public/icons/play_btn.png';
-import PauseBtnIcon from '../../../../../public/icons/pause@2x.png';
-import VolumeOnBtnIcon from '../../../../../public/icons/speak_btn.png';
-import VolumeOffBtnIcon from '../../../../../public/icons/non-speak@2x.png';
 
 const { string, oneOfType, arrayOf, func, number, array, shape, bool } = PropTypes;
 
@@ -47,18 +49,16 @@ const propTypes = {
   updateStateAfterSolveQuestion: func.isRequired,
   setCompleteVideoFlag: func.isRequired,
   resetCompleteVideoFlag: func.isRequired,
+  requestOnEnded: func.isRequired,
 
   videoUrl: string,
   questions: shape({
-    id: number,
-    content: string,
-    title: string,
-    questionAt: string,
     secsStateOfQuestions: array,
     textStateOfQuestions: array
   }).isRequired,
   isVideoComplete: bool.isRequired,
   solvedQuestionsState: arrayOf(shape({
+    id: number,
     indexOfQuestion: number,
     isCorrect: bool,
     indexOfSelectedChoice: number,
@@ -98,7 +98,8 @@ class Video extends Component {
       isVolumeBtnMouseOver: false,
       isQuizSecs: false,
       indexOfQuestion: -1,
-      searchableSecs: 0
+      searchableSecs: 0,
+      isSearchableSecsInit: false
     };
   }
 
@@ -145,6 +146,7 @@ class Video extends Component {
     return (
       <FlassDetailVideo.Container>
         <VideoPlayerComponent
+          styledProps={ StyledPlayerOnDetailPage }
           url={ videoUrl }
           playing={ playing }
           volume={ volume }
@@ -181,6 +183,7 @@ class Video extends Component {
                 onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
                 onCustomSeekBarClick={ this.onCustomSeekBarClick }
                 onArrowKeyPressed={ this.onArrowKeyPressed }
+                onQuestionbarClick={ this.onQuestionbarClick }
 
                 quizTimeArray={ secsStateOfQuestions }
                 canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
@@ -220,7 +223,7 @@ class Video extends Component {
   }
 
   updateSearchableSecsState({ searchableSecs, questions }) {
-    if (!this.isSearchableSecsInit()) {
+    if (!this.state.isSearchableSecsInit) {
       return this.initalizeSearchableSecs({ questions });
     }
     if (this.state.searchableSecs !== searchableSecs) {
@@ -228,14 +231,12 @@ class Video extends Component {
     }
   }
 
-  isSearchableSecsInit() {
-    return this.state.searchableSecs !== 0;
-  }
-
   initalizeSearchableSecs({ questions }) {
     const { secsStateOfQuestions } = questions;
+    console.log('secsStateOfQuestions');
+    console.log(secsStateOfQuestions);
     const searchableSecs = secsStateOfQuestions[0].playedSeconds;
-    this.setState({ searchableSecs });
+    this.setState({ searchableSecs, isSearchableSecsInit: true });
   }
 
 
@@ -243,7 +244,8 @@ class Video extends Component {
   renderEndedPage(isEnded) {
     return isEnded ?
       <VideoEndedPageComponent
-        onReplayBtnClick={ this.onReplayBtnClick } /> :
+        onReplayBtnClick={ this.onReplayBtnClick }
+        styledProps={ EndedPageOnDetailPage } /> :
       null;
   }
 
@@ -291,7 +293,9 @@ class Video extends Component {
 
   @autobind
   onEnded() {
+    const { solvedQuestionsState } = this.props;
     this.setState({ isEnded: true, playing: false });
+    this.props.requestOnEnded(solvedQuestionsState);
     this.props.setCompleteVideoFlag();
   }
 
@@ -363,11 +367,6 @@ class Video extends Component {
     this.setState({ playing: !this.state.playing });
   }
 
-  @autobind
-  onClickFullscreen() {
-    screenfull.request(findDOMNode(this.player));
-  }
-
 
   @autobind
   canChangeIsQuizSecs(playedSecs) {
@@ -401,13 +400,14 @@ class Video extends Component {
   @autobind
   onQuestionSolved(solvedQuestionState) {
     const {
+      id,
       indexOfQuestion,
       isCorrect,
       indexOfSelectedChoice,
       indexOfAnswer
     } = solvedQuestionState;
     const { played, duration } = this.state;
-    const updatedPlayedPercentage = this.updatePlayedPercentage(played, duration);
+    const updatedPlayedPercentage = updatePlayedPercentage(played, duration, 1);
     const searchableSecs = this.findSearchableSecs(indexOfQuestion);
 
     this.setState({
@@ -417,6 +417,7 @@ class Video extends Component {
     });
     this.player.seekTo(updatedPlayedPercentage);
     this.props.updateStateAfterSolveQuestion({
+      id,
       indexOfQuestion,
       isCorrect,
       indexOfSelectedChoice,
@@ -428,7 +429,7 @@ class Video extends Component {
   @autobind
   onKeepGoingOnVideoCompleteCase() {
     const { played, duration } = this.state;
-    const updatedPlayedPercentage = this.updatePlayedPercentage(played, duration);
+    const updatedPlayedPercentage = updatePlayedPercentage(played, duration, 1);
 
     this.setState({
       isQuizSecs: false,
@@ -436,12 +437,6 @@ class Video extends Component {
       played: updatedPlayedPercentage
     });
     this.player.seekTo(updatedPlayedPercentage);
-  }
-
-  updatePlayedPercentage(played, duration) {
-    const solvedSecs = convertPercentageToSecs(played, duration);
-    const secsAddOneFromSolvedSecs = solvedSecs + 1;
-    return convertSecsToPercentage(secsAddOneFromSolvedSecs, duration);
   }
 
   findSearchableSecs(indexOfQuestion) {
@@ -459,6 +454,26 @@ class Video extends Component {
   onReplayBtnClick() {
     this.setState({ played: 0, playing: true, isEnded: false });
     this.player.seekTo(0);
+  }
+
+  @autobind
+  onQuestionbarClick({ label }) {
+    const { duration } = this.state;
+    const { questions: { secsStateOfQuestions } } = this.props;
+    const { playedSeconds } = this.findSecsStateByLabel(secsStateOfQuestions, label);
+    const updatedPlayedPercentage = updatePlayedPercentage(
+      convertSecsToPercentage(playedSeconds, duration),
+      duration,
+      -1
+    );
+    this.setState({ played: updatedPlayedPercentage });
+    this.player.seekTo(updatedPlayedPercentage);
+  }
+
+  findSecsStateByLabel(questionSecsStateArray, targetLabel) {
+    return List(questionSecsStateArray)
+      .filter(({ label }) => (label === targetLabel))
+      .toArray()[0];
   }
 }
 

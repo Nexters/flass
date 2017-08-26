@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   FETCH_QUESTION
 } from '../../../../modules/Flass/Detail/Question/QuestionActions';
 import {
   fetchVideo,
   SET_VIDEO_COMPLETE,
-  RESET_VIDEO_COMPLETE
+  RESET_VIDEO_COMPLETE,
+  REQUEST_ON_ENDED
 } from '../../../../modules/Flass/Detail/Video/VideoActions';
 import {
   UPDATE_STATE_AFTER_SOLVE_QUESTION
@@ -41,31 +43,27 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
+  return bindActionCreators({
     flassDetailLoadVideo: fetchVideo,
-    setCompleteVideoFlag: () => {
-      dispatch({
-        type: SET_VIDEO_COMPLETE
-      });
-    },
-    resetCompleteVideoFlag: () => {
-      dispatch({
-        type: RESET_VIDEO_COMPLETE
-      });
-    },
-    fetchQuestion: detailId => {
-      dispatch({
-        type: FETCH_QUESTION,
-        detailId
-      });
-    },
-    updateStateAfterSolveQuestion: newState => {
-      dispatch({
-        type: UPDATE_STATE_AFTER_SOLVE_QUESTION,
-        newState
-      });
-    }
-  };
+    setCompleteVideoFlag: () => ({
+      type: SET_VIDEO_COMPLETE
+    }),
+    resetCompleteVideoFlag: () => ({
+      type: RESET_VIDEO_COMPLETE
+    }),
+    fetchQuestion: detailId => ({
+      type: FETCH_QUESTION,
+      detailId
+    }),
+    updateStateAfterSolveQuestion: newState => ({
+      type: UPDATE_STATE_AFTER_SOLVE_QUESTION,
+      newState
+    }),
+    requestOnEnded: solvedQuestionsState => ({
+      type: REQUEST_ON_ENDED,
+      solvedQuestionsState
+    })
+  }, dispatch);
 }
 
 export default connect(

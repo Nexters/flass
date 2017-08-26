@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
   param :lecture_id, :number, :desc => "lecture ID"
   param :content, String, :desc => "질문 내용"
   param :correct_answer, String, :desc => "질문 정답"
-  param :question_at, Time, :desc => "질문 등장 시간"
+  param :question_at, :number, :desc => "질문 등장 시간"
   def create
     @question = Question.new(question_params)
 
@@ -41,7 +41,7 @@ class QuestionsController < ApplicationController
   param :id, :number, :desc => "question ID"
   param :content, String, :desc => "질문 내용"
   param :correct_answer, String, :desc => "질문 정답"
-  param :question_at, Time, :desc => "질문 등장 시간"
+  param :question_at, :number, :desc => "질문 등장 시간"
   def update
     if @question.update(question_params)
       render json: @question, status: :ok

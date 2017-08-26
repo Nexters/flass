@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 
-import { VideoEndedPage } from './VideoEndedPageStyled';
+import { StyledVideoEndedPage } from './VideoEndedPageStyled';
 
 import ReplayBtnIcon from '../../../../public/icons/replay-btn.png';
 
-const { bool, string, func } = PropTypes;
+const { func } = PropTypes;
 
 const propTypes = {
-  onReplayBtnClick: func.isRequired
+  onReplayBtnClick: func.isRequired,
+  styledProps: func.isRequired
 };
 const defaultProps = {
 };
@@ -29,18 +30,29 @@ class VideoEndedPageComponent extends Component {
 
   render() {
     const { isOpen } = this.state;
+    const { styledProps } = this.props;
+
     return (
-      <VideoEndedPage.Container isOpen={ isOpen }>
-        <VideoEndedPage.Title>
+      <StyledVideoEndedPage.Container
+        isOpen={ isOpen }
+        styledProps={ styledProps }>
+
+        <StyledVideoEndedPage.Title
+          styledProps={ styledProps }>
           강의를 모두 시청하였습니다.
-        </VideoEndedPage.Title>
-        <VideoEndedPage.ReplayBtn
+        </StyledVideoEndedPage.Title>
+
+        <StyledVideoEndedPage.ReplayBtn
+          styledProps={ styledProps }
           srcSet={ ReplayBtnIcon }
           onClick={ this.onReplayBtnClick } />
-        <VideoEndedPage.BtnLabel>
+
+        <StyledVideoEndedPage.BtnLabel
+          styledProps={ styledProps }>
           다시 시청하기
-        </VideoEndedPage.BtnLabel>
-      </VideoEndedPage.Container>
+        </StyledVideoEndedPage.BtnLabel>
+
+      </StyledVideoEndedPage.Container>
     );
   }
 

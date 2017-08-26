@@ -3,8 +3,10 @@ import axios from 'axios';
 import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
 import MediaUploader from './MediaUploader';
 
-const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
+const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube';
+const LOGIN_SCOPE = 'https://www.googleapis.com/auth/youtube';
 const BASE_URL = 'http://localhost:3000';
+const GET_UPLOAD_STATUS_INTERVAL_MILLIS = 60 * 1000;
 
 let instance = null;
 
@@ -16,7 +18,7 @@ export default class Google {
     return instance;
   }
 
-  static initThumbClient = () => {
+  static initYoutubeThumbnail() {
     gapi.load('client', () => {
       gapi.client.init({
         apiKey: GOOGLE_API_KEY
@@ -24,7 +26,7 @@ export default class Google {
     });
   }
 
-  static isAuthenticated() {
+  static isAuthorized() {
     const that = this;
     const auth = gapi.auth2.getAuthInstance();
     const user = auth.currentUser.get();
@@ -39,23 +41,48 @@ export default class Google {
     return hasGrantedScopes;
   }
 
-  static initUploadClient(setGoogleAuthStatus) {
+  static initYoutubeUpload(setGoogleAuthStatus) {
     gapi.load('client:auth2', () => {
       gapi.client.init({
         apiKey: GOOGLE_API_KEY,
         clientId: GOOGLE_CLIENT_KEY,
         scope: UPLOAD_SCOPE
       }).then(() => {
-        setGoogleAuthStatus(Google.isAuthenticated());
+        setGoogleAuthStatus(Google.isAuthorized());
         // update auth status when signIn status changes
         gapi.auth2.getAuthInstance().isSignedIn.listen(() => {
-          setGoogleAuthStatus(Google.isAuthenticated());
+          setGoogleAuthStatus(Google.isAuthorized());
         });
       });
     });
   }
 
-  static requestThumbClient(youtubeVideoId) {
+  static initGoogleAuthService() {
+    return new Promise(resolve => {
+      gapi.load('client:auth2', () => {
+        gapi.client.init({
+          apiKey: GOOGLE_API_KEY,
+          client_id: GOOGLE_CLIENT_KEY,
+          scope: LOGIN_SCOPE
+        })
+        .then(() => resolve());
+      });
+    });
+  }
+
+  static getAccessToken() {
+    const auth = gapi.auth2.getAuthInstance();
+    const user = auth.currentUser.get();
+    const hasGrantedScopes = user.hasGrantedScopes(LOGIN_SCOPE);
+    if (hasGrantedScopes) {
+      return new Promise(resolve => {
+        user.reloadAuthResponse()
+          .then(response => resolve(response));
+      });
+    }
+  }
+
+  static getYoutubeThumbnail(youtubeVideoId) {
     return gapi.client.request({
       method: 'GET',
       path: '/youtube/v3/videos',
@@ -66,21 +93,45 @@ export default class Google {
     });
   }
 
-  static authenticate() {
+  static authorize() {
     const auth = gapi.auth2.getAuthInstance();
     auth.signIn();
   }
 
-  static uploadVideo(file, setThumbURL) {
+  static authorizeForSignIn() {
+    const auth = gapi.auth2.getAuthInstance();
+
+    return new Promise(resolve => (
+      auth.signIn().then(() => {
+        const user = auth.currentUser.get();
+
+        user.reloadAuthResponse()
+          .then(response => resolve(response));
+      })
+    ));
+  }
+
+  static isUserSignedIn() {
+    const auth = gapi.auth2.getAuthInstance();
+    return auth.isSignedIn.get();
+  }
+
+  static signOutUser() {
+    const auth = gapi.auth2.getAuthInstance();
+    return auth.signOut();
+  }
+
+  static uploadVideo(file,
+    handleUploading, handleUploadingFinished,
+    handleProcessing, handleProcessingFinished) {
     if (file == null) {
       return;
     }
     const that = this;
     var metadata = {
       snippet: {
-        title: 'title',
-        description: 'description'
-        // tags: ["tag1", ["tag2"]]
+        title: 'Flass',
+        description: '강의 동영상'
       },
       status: {
         privacyStatus: 'unlisted'
@@ -96,9 +147,6 @@ export default class Google {
       },
       onError(data) {
         var message = data;
-        // Assuming the error is raised by the YouTube API, data will be
-        // a JSON string with error.message set. That may not be the
-        // only time onError will be raised, though.
         try {
           var errorResponse = JSON.parse(data);
           message = errorResponse.error.message;
@@ -107,38 +155,64 @@ export default class Google {
         }
       },
       onProgress(data) {
-        // var currentTime = Date.now();
-        var bytesUploaded = data.loaded;
-        var totalBytes = data.total;
-        // The times are in millis, so we need to divide by 1000 to get seconds.
-        // var bytesPerSecond = bytesUploaded / ((currentTime - uploadStartTime) / 1000);
-        // var estimatedSecondsRemaining = (totalBytes - bytesUploaded) / bytesPerSecond;
-        // var percentageComplete = (bytesUploaded * 100) / totalBytes;
-
-        // $('#upload-progress').attr({
-        //   value: bytesUploaded,
-        //   max: totalBytes
-        // });
-        //
-        // $('#percent-transferred').text(percentageComplete);
-        // $('#bytes-transferred').text(bytesUploaded);
-        // $('#total-bytes').text(totalBytes);
-        //
-        // $('.during-upload').show();
-        console.log(`${bytesUploaded} / ${totalBytes}`);
+        const progress = data.loaded / data.total;
+        handleUploading(progress * 100);
       },
       onComplete(data) {
         var uploadResponse = JSON.parse(data);
-        // this.videoId = uploadResponse.id;
-        // $('#video-id').text(this.videoId);
-        // $('.post-upload').show();
-        // this.pollForVideoStatus();
-        // console.log(uploadResponse);
-        setThumbURL(uploadResponse.id);
+        handleUploadingFinished();
+        Google.getUploadStatus(uploadResponse.id, handleProcessing, handleProcessingFinished);
       }
     });
     // This won't correspond to the *exact* start of the upload, but it should be close enough.
     uploader.upload();
+  }
+
+  static getUploadStatus(videoId, handleProcessing, handleProcessingFinished) {
+    return gapi.client.request({
+      path: '/youtube/v3/videos',
+      params: {
+        part: 'status,processingDetails,snippet',
+        id: videoId
+      },
+      callback: response => {
+        if (response.error) {
+          // The status polling failed.
+          console.error(response.error.message);
+          setTimeout(Google.getUploadStatus(videoId, handleProcessing, handleProcessingFinished),
+            GET_UPLOAD_STATUS_INTERVAL_MILLIS);
+        } else {
+          var uploadStatus = response.items[0].status.uploadStatus;
+          const processingDetails = response.items[0].processingDetails;
+          let progress;
+          switch(uploadStatus) {
+            // This is a non-final status, so we need to poll again.
+            case 'uploaded':
+              if (processingDetails.processingProgress) {
+                progress = processingDetails.processingProgress.partsProcessed
+                  / processingDetails.processingProgress.partsTotal;
+                handleProcessing(progress * 100);
+              }
+              setTimeout(Google.getUploadStatus(videoId, handleProcessing, handleProcessingFinished),
+                GET_UPLOAD_STATUS_INTERVAL_MILLIS);
+              break;
+            // The video was successfully transcoded and is available.
+            case 'processed':
+              if (processingDetails.thumbnailsAvailability == 'inProgress') {
+                setTimeout(Google.getUploadStatus(videoId, handleProcessing, handleProcessingFinished),
+                  GET_UPLOAD_STATUS_INTERVAL_MILLIS);
+              } else {
+                handleProcessingFinished(videoId, response.items[0].snippet.thumbnails);
+              }
+              break;
+            // All other statuses indicate a permanent transcoding failure.
+            default:
+              console.error('ERROR');
+              break;
+          }
+        }
+      }
+    });
   }
 
   static storeAccessToken() {

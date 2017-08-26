@@ -1,4 +1,4 @@
-import { delay } from 'redux-saga'
+import { delay } from 'redux-saga';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import agent from '../../agent';
 
@@ -19,9 +19,10 @@ export const FETCH_DETAIL_ERROR = 'FETCH_DETAIL_ERROR';
 
 export function* fetchDetailAll({ detailId }) {
   yield put({ type: FETCH_READY_DETAIL });
-  yield call(delay, 2000);
+  // yield call(delay, 2000);
   try {
     const detail = yield call(agent.Detail.byId, detailId);
+
     yield put({
       type: FETCH_QUESTION,
       detailId
@@ -31,7 +32,8 @@ export function* fetchDetailAll({ detailId }) {
       detail
     });
     yield put({
-      type: FETCH_VIDEO
+      type: FETCH_VIDEO,
+      url: detail.url
     });
   } catch (err) {
     yield put({
@@ -45,6 +47,7 @@ export const UPDATE_STATE_AFTER_SOLVE_QUESTION = 'UPDATE_STATE_AFTER_SOLVE_QUEST
 
 export function* updateStateAfterSolveQuestion({ newState }) {
   const {
+    id,
     indexOfQuestion,
     isCorrect,
     indexOfSelectedChoice,
@@ -54,7 +57,7 @@ export function* updateStateAfterSolveQuestion({ newState }) {
 
   yield put({
     type: UPDATE_SOLVED_QUESTION,
-    payload: { indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
+    payload: { id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
   });
   yield put({
     type: UPDATE_SEARCHABLE_SECS,

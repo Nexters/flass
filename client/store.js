@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import reducer from './reducers';
-import rootSaga from './modules/Flass/sagas';
+import rootSaga from './sagas';
 
 export default function configureStore(initialState) {
   const sagaMiddleware = createSagaMiddleware();

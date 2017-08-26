@@ -15,6 +15,11 @@ const DetailCommentItem = styled.div`
   border-bottom: solid 1px #d0d0d0;
 `;
 
+const Header = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
 const UserName = styled.span`
   font-size: 1.6rem;
   color: #4c4c4c;
@@ -22,7 +27,9 @@ const UserName = styled.span`
 
 const CommentMenu = styled.span`
   width: 55px;
-  float: right;
+  position: absolute;
+  right: 0px;
+  top: 0px;
 `;
 
 const HeartIcon = styled.img`
@@ -37,27 +44,42 @@ const MenuIcon = styled.img`
 `;
 
 const Content = styled.div`
+  min-height: 60px;
   padding-top: 1rem;
+  padding-bottom: 1rem;
   font-size: 1.4rem;
   word-break: break-all;
 `;
 
-const Bottom = styled.span`
+const Bottom = styled.div`
   color: ${color['steel-grey']};
   font-weight: 300;
   font-size: 1.2rem;
 `;
 
+const BtnReply = styled.a`
+  height: 30px;
+  color: #337ab7;
+  border: solid 1px ${color['steel-grey-two']};
+  border-radius: 20px;
+  padding: 5px 8px;
+  margin-right: 13px;
+  float: right;
+`;
+
 const propTypes = {
-  id: PropTypes.number.isRequired,
-  userName: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  isAdmin: PropTypes.bool.isRequired,
+  userName: PropTypes.string,
   content: PropTypes.object.isRequired,
   isReply: PropTypes.bool.isRequired,
+  replyCount: PropTypes.number.isRequired,
   isSelectedReply: PropTypes.bool.isRequired,
   onSelectedReply: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 const defaultProps = {
+  userName: '',
   isReply: false
 };
 
@@ -65,7 +87,7 @@ class CommentItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggleMenu: true,
+      toggleMenu: false,
       toggleHeart: false
     };
   }
@@ -82,27 +104,37 @@ class CommentItem extends Component {
 
   componentDidMount() {}
 
+  renderAdminMenu() {
+    const { id, isAdmin, onDelete } = this.props;
+    const { toggleMenu } = this.state;
+
+    return toggleMenu && <CommentItemMenu
+      onDelete={ _.partial(onDelete, id) } />;
+  }
+
   render() {
-    const { id, userName, content, isReply, isSelectedReply, onSelectedReply, onDelete } = this.props;
+    const { userName, content, isReply, replyCount, isSelectedReply, onSelectedReply } = this.props;
     const { toggleMenu, toggleHeart } = this.state;
 
     return (
       <DetailCommentItem>
-        <div>
+        <Header>
           <UserName>{userName}</UserName>
           <CommentMenu className="flass-comment-item-float-box">
             <HeartIcon alt="like" src={ toggleHeart ? HeartActive : Heart } onClick={ this.handleToggleHeart } />
-            11
+            X
             <MenuIcon alt="menu" src={ toggleMenu ? MenuActive : Menu } onClick={ this.handleToggleMenu } />
-            {toggleMenu && <CommentItemMenu
-              onDelete={ _.partial(onDelete, id) } />}
+            {this.renderAdminMenu()}
           </CommentMenu>
-        </div>
+        </Header>
         <Content>
           {content}
         </Content>
         <Bottom>
-          2017.07.23 {!isReply && <a onClick={ onSelectedReply }>{ isSelectedReply ? '답글 닫기' : '답글 보기' }</a>}
+          2017.07.23 {!isReply &&
+          <BtnReply onClick={ onSelectedReply }>{isSelectedReply
+          ? `설명글 (${replyCount})`
+          : `설명글 (${replyCount})`}</BtnReply>}
         </Bottom>
       </DetailCommentItem>
     );

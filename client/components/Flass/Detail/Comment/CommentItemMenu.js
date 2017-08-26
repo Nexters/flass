@@ -10,6 +10,7 @@ const CommentItemMenuView = styled.div`
   right: 40px;
   border-radius: 3px;
   border: solid 1px ${color['cool-grey']};
+  background-color: ${color['white']};
 `;
 
 const List = styled.ul`
@@ -22,6 +23,7 @@ const List = styled.ul`
 const Item = styled.li`
   padding: 5px;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
 `;
 
 const propTypes = {

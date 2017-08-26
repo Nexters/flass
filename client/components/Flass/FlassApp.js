@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import autobind from 'autobind-decorator';
 import { cyan500 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import { Route, Switch } from 'react-router-dom';
+
 import Grid from './Grid/GridContainer';
-import VideoComponent from '../Video/VideoComponent';
 import Detail from './Detail/DetailContainer';
 import Upload from '../Upload';
-
 import Drawer from './Drawer/Drawer';
-import ContentWrapperComponent from './ContentWrapper/ContentWrapperComponent';
-import Content from './FlassContent';
+import Content from './Content';
 import './FlassApp.scss';
 import AppBar from './AppBar/AppBar';
 
+const { func, number, object, bool } = PropTypes;
+
 const childContextTypes = {
-  muiTheme: PropTypes.object.isRequired
+  muiTheme: object.isRequired
 };
 const propTypes = {
-  id: PropTypes.number.isRequired,
-  fetchUser: PropTypes.func.isRequired,
+  signOutFlassService: func.isRequired,
+  id: number.isRequired,
 };
 
 const defaultProps = {};
@@ -36,28 +37,8 @@ const flassTheme = getMuiTheme({
 });
 
 class FlassApp extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   getChildContext() {
     return { muiTheme: getMuiTheme(baseTheme) };
-  }
-
-  componentDidMount() {
-    this.props.fetchUser('token');
-  }
-
-  renderContent() {
-    return (
-      <Switch>
-        <Route exact path="/" component={ Grid } />
-        <Route path="/home" component={ Grid } />
-        <Route path="/detail/:id" component={ Detail } />
-        <Route path="/video" component={ VideoComponent } />
-        <Route path="/upload" component={ Upload } />
-      </Switch>
-    );
   }
 
   render() {
@@ -67,16 +48,32 @@ class FlassApp extends Component {
       <MuiThemeProvider muiTheme={ flassTheme }>
         <div>
           <Drawer />
-          <AppBar isLogin={id !== -1} />
+          <AppBar
+            isLogin={id !== -1}
+            onClickLogoutBtn={ this.signOutFlassService } />
 
           <Content>
-            <ContentWrapperComponent>
-              {this.renderContent()}
-            </ContentWrapperComponent>
+            {this.renderContent()}
           </Content>
         </div>
       </MuiThemeProvider>
     );
+  }
+
+  renderContent() {
+    return (
+      <Switch>
+        <Route exact path="/" component={ Grid } />
+        <Route path="/home" component={ Grid } />
+        <Route path="/detail/:id" component={ Detail } />
+        <Route path="/upload" component={ Upload } />
+      </Switch>
+    );
+  }
+
+  @autobind
+  signOutFlassService() {
+    this.props.signOutFlassService();
   }
 }
 

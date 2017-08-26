@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170817074247) do
+ActiveRecord::Schema.define(version: 20170825154556) do
 
   create_table "answers", force: :cascade do |t|
     t.integer "user_id"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20170817074247) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer "user_id"
-    t.string "notification_type"
+    t.integer "notification_type"
     t.string "content"
     t.string "url"
     t.datetime "created_at", null: false
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20170817074247) do
     t.integer "lecture_id"
     t.string "content"
     t.integer "correct_answer"
-    t.time "question_at"
+    t.integer "question_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20170817074247) do
   create_table "replay_ats", force: :cascade do |t|
     t.integer "user_id"
     t.integer "lecture_id"
-    t.time "playtime"
+    t.integer "playtime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

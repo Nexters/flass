@@ -22,6 +22,7 @@ const Divider = styled.hr`
 const propTypes = {
   detailId: PropTypes.number.isRequired,
   comments: PropTypes.array.isRequired,
+  commentchild: PropTypes.object.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     userName: PropTypes.string.isRequired,
@@ -56,7 +57,9 @@ class Comment extends Component {
 
   componentDidMount() {
     const { detailId, fetchComment } = this.props;
-    fetchComment(detailId);
+    if(detailId !== -1) {
+      fetchComment(detailId);
+    }
   }
 
   renderPostComment = (form, name, commentId) => {
@@ -70,32 +73,39 @@ class Comment extends Component {
       addComment={ _.partial(addComment, commentId) } />);
   }
 
-  renderComment = (comment, index, isReply = false) => {
-    const { deleteComment } = this.props;
+  renderComment = (comment, index, parentId) => {
+    const { user, commentchild, deleteComment } = this.props;
     const { selectedReply } = this.state;
 
+    console.log(comment['user_id'], user.id);
     const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
+    const replyCount = commentchild[comment.id] || [];
     return (<CommentItem
       key={ `comment${comment.id}` }
       id={ comment.id }
+      isAdmin={ comment['user_id'] == user.id }
       userName={ comment.userName }
       content={ content }
-      isReply={ isReply }
+      isReply={ !!parentId }
+      replyCount={ replyCount.length }
       isSelectedReply={ selectedReply === index }
       onSelectedReply={ _.partial(this.handleSelectedReply, index) }
-      onDelete={ deleteComment }
+      onDelete={ _.partial(deleteComment, parentId) }
     />);
   };
 
   renderReply = comment => {
+    const { commentchild } = this.props;
+
     if (!comment) {
       return [];
     }
     const replyPostComments = [<ReplyPostComment
       component={ this.renderPostComment('replyPostComment', '답글 등록', comment.id) } />];
-    return _.map(comment.replyComments,
+    const parentId = comment.id;
+    return _.map(commentchild[parentId],
       ((comment, index) => {
-        const commentView = this.renderComment(comment, index, true);
+        const commentView = this.renderComment(comment, index, parentId);
         return <ReplyComment key={ `reply${comment.id}` } component={ commentView } />;
       }))
       .concat(replyPostComments);

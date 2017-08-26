@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import autobind from 'autobind-decorator';
 import { Navbar, NavItem } from 'react-bootstrap';
 import styled from 'styled-components';
 import NavbarComponent from './Navbar/NavbarComponent';
@@ -16,8 +17,11 @@ const NavTitle = styled.span`
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.26);
 `;
 
+const { func, bool } = PropTypes;
+
 const propTypes = {
-  isLogin: PropTypes.bool
+  onClickLogoutBtn: func.isRequired,
+  isLogin: bool
 };
 
 const defaultProps = {
@@ -40,9 +44,18 @@ class AppBar extends Component {
 
         <NavComponent isRight>
           { isLogin && <UserAppBar /> }
+          <button
+            onClick={ this.onClickLogoutBtn }>
+            플래스 로그아웃
+          </button>
         </NavComponent>
       </NavbarComponent>
     );
+  }
+  
+  @autobind
+  onClickLogoutBtn() {
+    this.props.onClickLogoutBtn();
   }
 }
 

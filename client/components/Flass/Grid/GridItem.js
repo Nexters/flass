@@ -61,28 +61,31 @@ const Analysis = styled.div`
 const propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  img: PropTypes.string.isRequired
+  thumbnailUrl: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  questionCount: PropTypes.number,
 };
 
-const defaultProps = {};
+const defaultProps = {
+  questionCount: 0,
+};
 
 const GridItem = props => {
-  const { id, title, author, img } = props;
+  const { id, title, thumbnailUrl, createdAt, questionCount } = props;
 
   return (
-    <Item src={ img }>
+    <Item src={ thumbnailUrl }>
       <Header>12주차 수업</Header>
       <Link to={ `/detail/${id}` }>
         <Title>
           { title }
         </Title>
         <Date>
-          { author }
+          { createdAt }
         </Date>
       </Link>
       <div>
-        <Question>질문 13개</Question>
+        <Question>질문 { questionCount }개</Question>
         <Analysis>분석</Analysis>
       </div>
     </Item>

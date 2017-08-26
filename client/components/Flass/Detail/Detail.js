@@ -6,9 +6,9 @@ import styled from 'styled-components';
 
 import Content from './Content/Content';
 import Comment from './Comment/CommentContainer';
-import Analysis from './Analysis/Analysis';
+import Analysis from './Analysis/AnalysisContainer';
 import Video from './Video/VideoContainer';
-import ContentTitleComponent from '../ContentTitle/ContentTitleComponent';
+import Header from '../Header';
 import { FlassDetailStyled } from './DetailStyled';
 
 import contentImageActive from './images/tab-content-active.png';
@@ -72,7 +72,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 2,
+      selected: 1,
       videoUrl: ''
     };
   }
@@ -80,7 +80,6 @@ class Detail extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     const detailId = this.props.detail.detail.id;
-    console.log(this.props, detailId);
     if(detailId === -1) {
       this.props.fetchRequestDetailAll(id);
     }
@@ -98,7 +97,7 @@ class Detail extends Component {
 
     return (
       <FlassDetailStyled.Wrapper>
-        <ContentTitleComponent title="Watching Video" />
+        <Header title="Watching Video" />
         <FlassDetailStyled.Content>
           <Video
             VideoBarClassName="bar--thinner"
@@ -121,7 +120,7 @@ class Detail extends Component {
     );
   }
 
-  renderTabs() {
+  renderTabs = () => {
     const { detail: { detail }, comment } = this.props;
     const { selected } = this.state;
 
@@ -135,7 +134,12 @@ class Detail extends Component {
         eventKey={ 1 }
         title={ tabTitle('강의 정보',
           selected === 1 ? contentImageActive : contentImage) }>
-        <Content content={ detail.content } />
+        <Content
+          title={ detail.title }
+          subject={ detail.subject }
+          content={ detail.content }
+          tetextbookRangextbookRange={ detail['textbook_range'] }
+        />
       </Tab>
       <Tab
         eventKey={ 2 }

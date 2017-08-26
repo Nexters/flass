@@ -16,7 +16,8 @@ const propTypes = {
   setPlayer: func.isRequired,
   url: string,
   playing: bool,
-  volume: number.isRequired
+  volume: number.isRequired,
+  styledProps: string
 };
 
 const defaultProps = {
@@ -24,8 +25,11 @@ const defaultProps = {
   playing: false,
   youtubeConfig: undefined,
   VideoPlayerWrapperClassName: '',
-  VideoPlayerClassName: ''
+  VideoPlayerClassName: '',
+  styledProps: ''
 };
+
+const PROGRESS_FREQUENCY = 500;
 
 class VideoPlayerComponent extends Component {
   render() {
@@ -35,17 +39,18 @@ class VideoPlayerComponent extends Component {
       setPlayer,
       url,
       playing,
-      volume
+      volume,
+      styledProps
     } = this.props;
-
     return (
-      <VideoPlayer.Wrapper>
+      <VideoPlayer.Wrapper styledProps={ styledProps }>
         <ReactPlayer
           ref={ player => setPlayer(player) }
           className={ classNames('react-player', 'player') }
           width="100%"
           height="100%"
           url={ url }
+          progressFrequency={ PROGRESS_FREQUENCY }
           playing={ playing }
           volume={ volume }
           onEnded={ this.onEnded }

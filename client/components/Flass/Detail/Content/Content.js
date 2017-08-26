@@ -30,46 +30,42 @@ const RightContent = styled.p`
 `;
 
 const propTypes = {
-  content: PropTypes.string.isRequired
+  title: PropTypes.string,
+  subject: PropTypes.string,
+  content: PropTypes.string,
+  textbookRange: PropTypes.string,
 };
 
-const defaultProps = {};
+const defaultProps = {
+  title: '',
+  subject: '',
+  content: '',
+  textbookRange: '',
+};
 
 const Content = props => {
-  const { content } = props;
+  const { title, subject, content, textbookRange } = props;
   return (
     <DetailContent>
       <Row className="show-grid">
         <Col xs={ 6 } md={ 6 }>
           <Title>강의 제목</Title>
           <LeftContent>
-            Basic panel example
+            { title }
           </LeftContent>
-          <Title>오프라인 수업 장소</Title>
+          <Title>강의 과목</Title>
           <LeftContent>
-            Basic panel example
+            { subject }
           </LeftContent>
-          <Title>학습 교과서</Title>
+          <Title>교재 범위</Title>
           <LeftContent>
-            Basic panel example
-          </LeftContent>
-          <Title>학급 명</Title>
-          <LeftContent>
-            Basic panel example
-          </LeftContent>
-          <Title>수업 일시</Title>
-          <LeftContent>
-            Basic panel example
+            { textbookRange }
           </LeftContent>
         </Col>
         <Col xs={ 4 } md={ 4 }>
-          <Title>학습 목표</Title>
+          <Title>강의 설명</Title>
           <RightContent>
-            Look I'm in a well!
-          </RightContent>
-          <Title>학습 공지</Title>
-          <RightContent>
-            Look I'm in a well!
+            { content }
           </RightContent>
         </Col>
       </Row>

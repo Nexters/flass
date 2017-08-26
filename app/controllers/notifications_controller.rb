@@ -4,13 +4,13 @@ class NotificationsController < ApplicationController
 
   api :GET, '/notifications', '유저 알림'
   def show
-    @notifications = Notification.where(user_id: session[:user_id]).order(created_at: :desc)
+    @notifications = Notification.where(user_id: session[:user_id]).order(created_at: :desc).limit(20)
     render json: @notifications
   end
 
   api :POST, '/notifications', '유저 알림 생성'
   param :user_id, :number, :desc => "알림을 보낼 유저 ID"
-  param :notification_type, String, :desc => "알림 타입"
+  param :notification_type, :number, :desc => "알림 타입"
   param :content, String, :desc => "알림 내용"
   param :url, String, :desc => "알림 url 정보"
   def create
@@ -25,7 +25,7 @@ class NotificationsController < ApplicationController
 
   api :PUT, '/notifications', '유저 알림 업데이트'
   param :id, :number, :desc => "notification ID"
-  param :notification_type, String, :desc => "알림 타입"
+  param :notification_type, :number, :desc => "알림 타입"
   param :content, String, :desc => "알림 내용"
   param :url, String, :desc => "알림 url 정보"
   def update
@@ -44,6 +44,15 @@ class NotificationsController < ApplicationController
       head :ok
     else
       render json: {message: "알람을 삭제할 권한이 없습니다."}, status: :unauthorized
+    end
+  end
+
+  api :POST, '/notifications/check'
+  def check
+    if Notification.where(user_id: session[:user_id]).update_all(notification_type: 0)
+      head :ok
+    else
+      render json: {message: "알람 상태를 업데이트 하지 못 했습니다."}, status: :bad_request
     end
   end
 

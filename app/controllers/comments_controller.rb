@@ -7,12 +7,19 @@ class CommentsController < ApplicationController
   def show
     @ret = Hash.new
     @comments = Comment.where(lecture_id: params[:lecture_id]).paginate(page: params[:page], per_page:20)
-    @ret[:comments] = @comments
+    @ret['comments'] = Array.new
+    @comments.each do |comment|
+      el = comment.as_json
+      el['userName'] = comment.user.username
+      @ret['comments'].push(el)
+    end
 
     @ret['commentchild'] = Hash.new
     @comments.each do |comment|
       @ret['commentchild'][comment.id] = CommentChild.where(comment_id: comment.id)
     end
+
+    puts @ret
 
     render json: @ret
   end
@@ -25,6 +32,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
 
     if @comment.save
+      Notification.new_notification(session[:user_id], params[:lecture_id], 'comment')
       render json: @comment, status: :created
     else
       render json: {message: "내용을 반드시 입력하셔야 합니다."}, status: :bad_request
@@ -65,10 +73,10 @@ class CommentsController < ApplicationController
     end
   end
 
-  api :PUT, '/comments/:id/like'
+  api :PUT, '/comments/:id/like', '좋아요 누르고 좋아요 갯수까지 보여주기'
   param :id, :number, :desc => "Comment ID"
   def like
-    user = session[:user_id]
+    user = User.find(session[:user_id])
     if user
       if user.liked? @comment
         @comment.unliked_by(user)
@@ -83,7 +91,6 @@ class CommentsController < ApplicationController
       render json: @comment1
   end
 
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
@@ -93,7 +100,7 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params[:user_id] = session[:user_id]
-      params.require(:comment).permit(:user_id, :lecture_id, :content)
+      params.permit(:user_id, :lecture_id, :content)
     end
 end
 
