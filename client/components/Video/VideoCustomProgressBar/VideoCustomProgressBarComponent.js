@@ -172,6 +172,8 @@ class VideoCustomProgressBarComponent extends Component {
         this.props.onCustomSeekBarClick(movedPosition);
       }
     }
+    e.stopPropagation();
+    e.preventDefault;
   }
 
   calculateMovedPosition(e) {

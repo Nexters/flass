@@ -223,6 +223,8 @@ class Video extends Component {
   }
 
   updateSearchableSecsState({ searchableSecs, questions }) {
+    console.log('searchableSecs::');
+    console.log(searchableSecs);
     if (!this.state.isSearchableSecsInit) {
       return this.initalizeSearchableSecs({ questions });
     }
@@ -337,7 +339,9 @@ class Video extends Component {
 
   @autobind
   onCustomSeekBarChange(changedPlayed) {
+    console.log('changed::');
     const changedPlayedPercentage = changedPlayed / 100;
+    console.log(changedPlayedPercentage);
     this.setState({ played: changedPlayedPercentage });
   }
 
@@ -351,6 +355,8 @@ class Video extends Component {
   @autobind
   onCustomSeekBarClick(changedPlayed) {
     const changedPlayedPercentage = changedPlayed / 100;
+    console.log('clicked::');
+    console.log(changedPlayedPercentage);
     this.setState({ played: changedPlayedPercentage });
     this.player.seekTo(changedPlayedPercentage);
   }

@@ -13,11 +13,11 @@ class SingleChoiceComponent extends Component {
         <SingleChoice.Header>
           <SingleChoice.Dot>{''}</SingleChoice.Dot>
           <SingleChoice.Title>
-            Title
+            선택지
           </SingleChoice.Title>
         </SingleChoice.Header>
         <SingleChoice.Body>
-          Body
+          
         </SingleChoice.Body>
       </SingleChoice.Wrapper>
     );
