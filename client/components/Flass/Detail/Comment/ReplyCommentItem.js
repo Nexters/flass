@@ -30,7 +30,6 @@ const defaultProps = {};
 const ReplyComment = ({ component }) => {
   return (
     <ReplayCommentView>
-      <ReplyIcon src={ Reply } />
       <ReplyContent>
         { component }
       </ReplyContent>
