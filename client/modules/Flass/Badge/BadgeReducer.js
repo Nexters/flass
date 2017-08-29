@@ -1,9 +1,9 @@
-import { FETCH_READY_BADGE_HISTORY, FETCH_BADGE_HISTORY_SUCCESS, FETCH_BADGE_HISTORY_ERROR, TOGGLE_BADGE_HISTORY } from './BadgeActions';
+import { FETCH_READY_BADGE_HISTORY, FETCH_BADGE_HISTORY_SUCCESS, FETCH_BADGE_HISTORY_ERROR, TOGGLE_BADGE_HISTORY, FETCH_NEW_NOTIFICATION } from './BadgeActions';
 
 const initialState = {
-  badgeType: 'comment',
   badgeItems: [],
   toggleBadge: false,
+  newNotification: false
 };
 
 const BadgeReducer = (state = initialState, action) => {
@@ -11,7 +11,6 @@ const BadgeReducer = (state = initialState, action) => {
     case FETCH_BADGE_HISTORY_SUCCESS:
       return {
         ...state,
-        badgeType: action.badgeType || state.badgeType,
         badgeItems: action.badgeItems,
       };
     case FETCH_BADGE_HISTORY_ERROR:
@@ -24,6 +23,11 @@ const BadgeReducer = (state = initialState, action) => {
       return {
         ...state,
         toggleBadge: !state.toggleBadge,
+      };
+    case FETCH_NEW_NOTIFICATION:
+      return {
+        ...state,
+        newNotification: action.newNotification
       };
     default:
       return state;

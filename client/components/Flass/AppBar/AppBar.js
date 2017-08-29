@@ -7,6 +7,7 @@ import NavbarComponent from './Navbar/NavbarComponent';
 import NavComponent from './Nav/NavComponent';
 import UserAppBar from './UserAppBarContainer';
 import color from '../common/colors.scss';
+import LogOut from './images/logout.png';
 import './AppBar.scss';
 
 const NavTitle = styled.span`
@@ -44,15 +45,16 @@ class AppBar extends Component {
 
         <NavComponent isRight>
           { isLogin && <UserAppBar /> }
-          <button
-            onClick={ this.onClickLogoutBtn }>
-            플래스 로그아웃
-          </button>
+          <a onClick={ this.onClickLogoutBtn }>
+            <img
+              src={ LogOut }
+              alt="로그아웃" />
+          </a>
         </NavComponent>
       </NavbarComponent>
     );
   }
-  
+
   @autobind
   onClickLogoutBtn() {
     this.props.onClickLogoutBtn();

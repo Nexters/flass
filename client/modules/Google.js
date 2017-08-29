@@ -5,6 +5,7 @@ import MediaUploader from './MediaUploader';
 
 const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube';
 const LOGIN_SCOPE = 'https://www.googleapis.com/auth/youtube';
+const SESSION_URL = 'http://13.124.38.16/';
 const BASE_URL = 'http://localhost:3000';
 const GET_UPLOAD_STATUS_INTERVAL_MILLIS = 60 * 1000;
 
@@ -219,7 +220,7 @@ export default class Google {
     const form = new FormData();
     form.append('id_token', this.idToken);
 
-    axios.post(`${BASE_URL}/users.json`, form)
+    axios.post(`${SESSION_URL}/users.json`, form)
     .then(response => {
       console.log(response);
     })

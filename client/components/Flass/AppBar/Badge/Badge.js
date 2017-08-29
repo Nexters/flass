@@ -15,10 +15,12 @@ const BadgeView = styled.div`
 
 const propTypes = {
   userId: PropTypes.number.isRequired,
-  badgeItems: PropTypes.array.isRequired,
+  badgeItems: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   toggleBadge: PropTypes.bool.isRequired,
   toggleBadgeHistory: PropTypes.func.isRequired,
-  fetchBadgeHistory: PropTypes.func.isRequired
+  fetchBadgeHistory: PropTypes.func.isRequired,
+  newNotification: PropTypes.bool.isRequired,
+  postNotificationCheck: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
@@ -26,21 +28,27 @@ const defaultProps = {};
 class Badge extends Component {
   handleToggleBadge = () => {
     this.props.toggleBadgeHistory();
+    this.props.postNotificationCheck();
   }
 
-  fetchBadgeHistory = (userId, badgeType) => {
-    this.props.fetchBadgeHistory(userId, badgeType);
+  fetchBadgeHistory = () => {
+    this.props.fetchBadgeHistory();
+    setTimeout(fetchBadgeHistory(), 10000);
   }
 
   componentDidMount() {}
 
   render() {
-    const { userId, badgeItems, toggleBadge } = this.props;
+    const { userId, badgeItems, toggleBadge, newNotification } = this.props;
 
     return (
       <BadgeView>
         <span className="flass-badge" onClick={ this.handleToggleBadge }>
-          <img alt="new notification" src={ NewNotification } />
+          {
+            newNotification
+            &&
+            <img alt="new notification" src={ NewNotification } />
+          }
           <img alt="badge" src={ BadgeIcon } />
         </span>
         {
@@ -48,7 +56,7 @@ class Badge extends Component {
           &&
           <BadgeHistory
             badgeItems={ badgeItems }
-            fetchBadgeHistory={ _.partial(this.fetchBadgeHistory, userId, _) } />
+            fetchBadgeHistory={ this.fetchBadgeHistory } />
         }
       </BadgeView>
     );

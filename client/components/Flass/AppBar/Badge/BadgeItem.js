@@ -8,27 +8,26 @@ const BadgeItemView = styled.div`
   border-bottom: 1px solid #eee;
 `;
 
-const Name = styled.div`
-  display: inline-block;
-  margin: 0 1rem;
-`;
+// const Name = styled.div`
+//   display: inline-block;
+//   margin: 0 1rem;
+// `;
 
 const Content = styled.div`
   display: inline-block;
 `;
 
 const propTypes = {
-  name: PropTypes.string.isRequired,
+  // name: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired
 };
 
 const defaultProps = {};
 
-const BadgeItem = ({ name, content }) => {
+const BadgeItem = ({ content }) => {
   console.log(name, content);
   return (
     <BadgeItemView>
-      <Name>{name}</Name>
       <Content>{content}</Content>
     </BadgeItemView>
   );

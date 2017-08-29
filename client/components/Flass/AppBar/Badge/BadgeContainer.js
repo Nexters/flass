@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { FETCH_BADGE_HISTORY, TOGGLE_BADGE_HISTORY } from '../../../../modules/Flass/Badge/BadgeActions';
+import { FETCH_BADGE_HISTORY, TOGGLE_BADGE_HISTORY, POST_NOTIFICATION_CHECK } from '../../../../modules/Flass/Badge/BadgeActions';
 import Badge from './Badge';
 
 function mapStateToProps(state) {
@@ -20,6 +20,11 @@ function mapDispatchToProps(dispatch) {
     toggleBadgeHistory: () => {
       dispatch({
         type: TOGGLE_BADGE_HISTORY
+      });
+    },
+    postNotificationCheck: () => {
+      dispatch({
+        type: POST_NOTIFICATION_CHECK
       });
     }
   };

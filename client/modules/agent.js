@@ -74,7 +74,8 @@ const User = selectAPIRequest(UserRails, UserJson);
 
 
 const Badge = {
-  byType: type => requests.get('/json/FlassBadgeHistory.json')
+  all: () => requests.get('/notifications'),
+  check: () => requests.post('/notifications/check')
 };
 
 const GridJson = {
@@ -159,6 +160,7 @@ const Lecture = {
 
 export default {
   Auth,
+  Badge,
   User,
   Grid,
   Detail,

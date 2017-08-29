@@ -6,7 +6,7 @@ import color from '../../common/colors.scss';
 import BadgeItem from './BadgeItem';
 
 const propTypes = {
-  badgeItems: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  badgeItems: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   fetchBadgeHistory: PropTypes.func.isRequired
 };
 
@@ -22,12 +22,9 @@ const BadgeHistoryView = styled.div`
 `;
 
 class BadgeHistory extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     this.props.fetchBadgeHistory();
   }
-
-  componentDidMount() {}
 
   render() {
     return (
@@ -42,9 +39,16 @@ class BadgeHistory extends Component {
   renderChildren() {
     const { badgeItems } = this.props;
 
-    return _.map(badgeItems, item => (
-      <BadgeItem key={item.id} name={item.name} content={item.content} />
-    ));
+    return (
+      <div style={ { padding: '20px' } }>
+        <h3>새 질문 알림</h3>
+        {
+          _.map(badgeItems, item => (
+            <BadgeItem key={ item.id } content={ item.content } />
+          ))
+        }
+      </div>
+    );
   }
 }
 
