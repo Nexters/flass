@@ -72,7 +72,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 1,
+      selected: 3,
       videoUrl: ''
     };
   }
@@ -151,7 +151,9 @@ class Detail extends Component {
         eventKey={ 3 }
         title={ tabTitle('분석',
           selected === 3 ? analysisImageActive : analysisImage) }>
-        <Analysis />
+        <Analysis
+
+        />
       </Tab>
     </Tabs>);
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import autobind from 'autobind-decorator';
 import ChartComponent from './Chart/ChartComponent';
 import SingleChoiceComponent from './SingleChoice/SingleChoiceComponent';
@@ -7,18 +8,22 @@ import {
   AnalysisStyled
 } from './AnalysisStyled';
 
-const { string, func, arrayOf, shape, element, number } = PropTypes;
+const { Tab, TabWrapper, TabItem, Wrapper, Header, Body, Row, Title, Col5, ChartTextWrapper, ChartTextTitle, ChartTextNumber } = AnalysisStyled;
+const { string, func, arrayOf, shape, array, number } = PropTypes;
+
 
 const propTypes = {
   requestLectureAnalysis: func.isRequired,
-  lectureId: string.isRequired,
+  lectureId: number.isRequired,
   questions: arrayOf(shape({
-    content: string,
-    correct_answer: string,
     id: number,
+    content: string,
+    correct_answer: number,
     question_at: number
   })).isRequired,
-  answers: element.isRequired
+  answers: arrayOf(shape({
+
+  })).isRequired
 };
 
 const defaultProps = {};
@@ -28,9 +33,14 @@ class Analysis extends Component {
     super(props);
 
     this.state = {
-      selectedQuestionIndex: 0,
-      questions: []
+      selectedIndex: 0,
     };
+  }
+
+  handleSelect = (index) => {
+    this.setState({
+      selectedIndex: index,
+    });
   }
 
   componentDidMount() {
@@ -39,63 +49,60 @@ class Analysis extends Component {
   }
 
   render() {
-    const { selectedQuestionIndex } = this.state;
+    const { selectedIndex } = this.state;
     const { questions } = this.props;
 
     if (questions.length === 0) {
       return null;
     }
-    const question = questions[selectedQuestionIndex];
+    const question = questions[selectedIndex];
     console.log('question::render');
     console.log(question);
 
     return (
-      <AnalysisStyled.Wrapper>
-        <AnalysisStyled.Header>
-          {
-            this.renderQuestions()
-          }
-        </AnalysisStyled.Header>
-        <AnalysisStyled.Body>
-          <AnalysisStyled.Row>
-            <AnalysisStyled.Title>
-              { `Q${selectedQuestionIndex + 1}. ${question.content}` }
-            </AnalysisStyled.Title>
-          </AnalysisStyled.Row>
-          <AnalysisStyled.Row marginTop>
-            <AnalysisStyled.Col5>
-              <AnalysisStyled.ChartTextWrapper>
-                <AnalysisStyled.ChartTextTitle>
+      <Wrapper>
+        <Header>
+          {this.renderQuestions()}
+        </Header>
+        <Body>
+          <Row>
+            <Title>
+              { `Q${selectedIndex + 1}. ${question.content}` }
+            </Title>
+          </Row>
+          <Row marginTop>
+            <Col5>
+              <ChartTextWrapper>
+                <ChartTextTitle>
                   퀴즈 완료 학생 수
-                </AnalysisStyled.ChartTextTitle>
-                <AnalysisStyled.ChartTextNumber>
-                  {
-                    `${this.calcaulteTotalNumOfStudentsSolved(question)}명`
-                  }
-                </AnalysisStyled.ChartTextNumber>
-              </AnalysisStyled.ChartTextWrapper>
+                </ChartTextTitle>
+                <ChartTextNumber>
+                  {`${this.calcaulteTotalNumOfStudentsSolved(question)}명`}
+                </ChartTextNumber>
+              </ChartTextWrapper>
               <ChartComponent />
-            </AnalysisStyled.Col5>
-
-            <AnalysisStyled.Col5>
-              {
-                this.renderSingleChoices(question)
-              }
-            </AnalysisStyled.Col5>
-          </AnalysisStyled.Row>
-        </AnalysisStyled.Body>
-      </AnalysisStyled.Wrapper>
+            </Col5>
+            <Col5>
+              {this.renderSingleChoices(question)}
+            </Col5>
+          </Row>
+        </Body>
+      </Wrapper>
     );
   }
 
   @autobind
   renderQuestions() {
     const { questions } = this.props;
-    return questions.map((question, i) => (
-      <AnalysisStyled.Tooltip key={ question.id }>
-        { `Q${i}` }
-      </AnalysisStyled.Tooltip>
+
+    const questionTabs = _.map(questions, (question, index) => (
+      <TabWrapper>
+        <TabItem key={ question.id } onClick={() => this.handleSelect(index)}>
+          { `Q${index}` }
+        </TabItem>
+      </TabWrapper>
     ));
+    return <Tab> { questionTabs } </Tab>;
   }
 
   @autobind
@@ -105,7 +112,9 @@ class Analysis extends Component {
     const selectedAnswers = answers[id];
     return Object.keys(selectedAnswers).map(key => {
       return (
-        <SingleChoiceComponent />
+        <SingleChoiceComponent
+          
+        />
       );
     });
   }

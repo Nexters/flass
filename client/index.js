@@ -17,10 +17,10 @@ function initWhyDidYouUpdate() {
       createClass = nextCreateClass;
     }
   });
-  whyDidYouUpdate(React, { exclude: [/^Connect/, /^styled/, /^Route/, /^Tab/, /^Styled/, /^Row/, /^Col/, /^Safe/, /^Link/] });
+  whyDidYouUpdate(React, { exclude: [/^Connect/, /^styled/, /^Route/, /^Tab/, /^Styled/, /^Row/, /^Col/, /^Safe/, /^Link/, /^Fade/] });
 }
 
-initWhyDidYouUpdate();
+// initWhyDidYouUpdate();
 
 const render = Component => {
   console.log('init() :: App starts booting...');
