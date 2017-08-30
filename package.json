@@ -55,6 +55,7 @@
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.1",
+    "redux-devtools-extension": "^2.13.2",
     "redux-form": "^7.0.2",
     "redux-logger": "^3.0.6",
     "redux-react-session": "^2.1.0",
