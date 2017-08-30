@@ -15,6 +15,7 @@
     "test:watch": "npm run test -- --watch",
     "dev:json": "cross-env BACK_END=\"json\" webpack-dev-server --hot --open",
     "dev": "cross-env BACK_END=\"rails\" webpack-dev-server --history-api-fallback --hot --open",
+    "dev-rails": "rails s || npm run dev",
     "webpack": "./node_modules/webpack/bin/webpack.js --progress --colors",
     "webpack-watch": "./node_modules/webpack/bin/webpack.js --progress --colors --watch",
     "webpack-production": "./node_modules/webpack/bin/webpack.js --colors --config webpack.config.prod",
