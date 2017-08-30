@@ -17,7 +17,7 @@ function initWhyDidYouUpdate() {
       createClass = nextCreateClass;
     }
   });
-  whyDidYouUpdate(React, { exclude: /^Connect/ });
+  whyDidYouUpdate(React, { exclude: [/^Connect/, /^styled/, /^Route/, /^Tab/, /^Styled/, /^Row/, /^Col/, /^Safe/, /^Link/] });
 }
 
 initWhyDidYouUpdate();
