@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AACA,MAAO;EACL,KAAK,EAAE,GAAG;EACV,KAAK,EAAE,IAAI;EACX,YAAY,EAAE,IAAI",
-"sources": ["MemoList.scss"],
-"names": [],
-"file": "MemoList.css"
-}
