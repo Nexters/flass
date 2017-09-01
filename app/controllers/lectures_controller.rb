@@ -80,10 +80,10 @@ class LecturesController < ApplicationController
   def statistics
     @ret = Hash.new
 
-    @ret['questions'] = questions = @lecture.questions.order(id: :asc)
+    @ret['questions'] = @lecture.questions.order(id: :asc)
     @ret['answers'] = Hash.new
 
-    questions.each_with_index do |question, index|
+    @ret['questions'].each_with_index do |question, index|
       if !@ret['answers'].key?(question.id)
         @ret['answers'][question.id] = Hash.new
       end
