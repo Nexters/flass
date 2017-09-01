@@ -233,10 +233,13 @@ class Video extends Component {
 
   initalizeSearchableSecs({ questions }) {
     const { secsStateOfQuestions } = questions;
-    console.log('secsStateOfQuestions');
-    console.log(secsStateOfQuestions);
+    if(_.isEmpty(secsStateOfQuestions)) {
+      return;
+    }
     const searchableSecs = secsStateOfQuestions[0].playedSeconds;
-    this.setState({ searchableSecs, isSearchableSecsInit: true });
+    if(searchableSecs) {
+      this.setState({ searchableSecs, isSearchableSecsInit: true });
+    }
   }
 
 

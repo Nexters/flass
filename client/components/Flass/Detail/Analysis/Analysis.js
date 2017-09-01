@@ -9,7 +9,7 @@ import {
 } from './AnalysisStyled';
 
 const { Tab, TabWrapper, TabItem, Wrapper, Header, Body, Row, Title, Col5, ChartTextWrapper, ChartTextTitle, ChartTextNumber } = AnalysisStyled;
-const { string, func, arrayOf, shape, array, number } = PropTypes;
+const { string, func, arrayOf, shape, array, number, objectOf } = PropTypes;
 
 
 const propTypes = {
@@ -21,8 +21,13 @@ const propTypes = {
     correct_answer: number,
     question_at: number
   })).isRequired,
-  answers: arrayOf(shape({
-
+  answers: objectOf(shape({
+    id: number,
+    user_id: number,
+    question_id: number,
+    answer: string,
+    created_at: string,
+    updated_at: string,
   })).isRequired
 };
 
@@ -45,7 +50,10 @@ class Analysis extends Component {
 
   componentDidMount() {
     const { lectureId } = this.props;
-    this.props.requestLectureAnalysis(lectureId);
+
+    if(lectureId !== -1) {
+      this.props.requestLectureAnalysis(lectureId);
+    }
   }
 
   render() {
@@ -96,8 +104,8 @@ class Analysis extends Component {
     const { questions } = this.props;
 
     const questionTabs = _.map(questions, (question, index) => (
-      <TabWrapper>
-        <TabItem key={ question.id } onClick={() => this.handleSelect(index)}>
+      <TabWrapper key={ question.id }>
+        <TabItem onClick={() => this.handleSelect(index)}>
           { `Q${index}` }
         </TabItem>
       </TabWrapper>
@@ -113,7 +121,7 @@ class Analysis extends Component {
     return Object.keys(selectedAnswers).map(key => {
       return (
         <SingleChoiceComponent
-          
+          key={ key }
         />
       );
     });
