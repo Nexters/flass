@@ -37,19 +37,26 @@ const propTypes = {
   fetchRequestDetailAll: PropTypes.func.isRequired,
   match: PropTypes.object,
   detail: PropTypes.shape({
-    detail: {
-      id: PropTypes.number.isRequired,
-      userId: PropTypes.string.isRequired,
-      userName: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      replayAt: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired
-    }
+    isLoading: PropTypes.bool,
+    detail: PropTypes.shape({
+      id: PropTypes.number,
+      userId: PropTypes.number,
+      title: PropTypes.string,
+      content: PropTypes.string,
+      duration: PropTypes.number,
+      subject: PropTypes.string,
+      textbookRange: PropTypes.string,
+      url: PropTypes.string,
+      thumbnailUrl: PropTypes.string,
+      createdAt: PropTypes.string,
+      updatedAt: PropTypes.string,
+    }),
   }).isRequired,
   question: PropTypes.shape({
-    questions: PropTypes.object
+    questions: PropTypes.shape({
+      textStateOfQuestions: PropTypes.array,
+      secsStateOfQuestions: PropTypes.array
+    }),
   }).isRequired,
   comment: PropTypes.shape({
     comments: PropTypes.array,
@@ -72,7 +79,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 1,
+      selected: 3,
       videoUrl: ''
     };
   }
@@ -151,7 +158,9 @@ class Detail extends Component {
         eventKey={ 3 }
         title={ tabTitle('분석',
           selected === 3 ? analysisImageActive : analysisImage) }>
-        <Analysis />
+        <Analysis
+
+        />
       </Tab>
     </Tabs>);
   }

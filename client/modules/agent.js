@@ -56,7 +56,8 @@ const UserRails = {
       console.log('response::UserRails');
       console.log(response);
       return response;
-    }), // /json/FlassUser.json
+    }),
+  byId: id => requests.get(`/users/${id}`),
   whoami: () => requests.get('/users')
     .then(response => {
       console.log('response::UserRails::whoami');
@@ -119,9 +120,9 @@ const CommentJson = {
 const CommentRails = {
   byDetailId: detailId => requests.get(`/comments?lecture_id=${detailId}`),
   postComment: (detailId, content) => requests.post('/comments', { lecture_id: detailId, content }),
-  postReplyComment: (commentId, content) => requests.post('/commentchild', { comment_id: commentId, content }),
+  postReplyComment: (commentId, content) => requests.post('/comment_children', { comment_id: commentId, content }),
   deleteById: commentId => requests.del(`/comments?id=${commentId}`),
-  deleteReplyById: id => requests.del(`/comment_children/destroy/${id}`)
+  deleteReplyById: id => requests.del('/comment_children', { id })
 };
 
 const Comment = selectAPIRequest(CommentRails, CommentJson);

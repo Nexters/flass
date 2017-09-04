@@ -38,7 +38,14 @@ const AnalysisStyled = {
     float: left;
     width: 50%;
   `,
-  Tooltip: styled.div`
+  Tab: styled.ul`
+    padding: 0;
+    list-style: none;
+  `,
+  TabWrapper: styled.li`
+    float: left;
+  `,
+  TabItem: styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -55,10 +62,6 @@ const AnalysisStyled = {
     border-radius: 3px;
     color: #cacdcd;
     transition: all .5s ease-out;
-
-    &:first-child {
-      margin-left: 1.3125rem;
-    }
 
     &:hover {
       background-color: #87ac1e;

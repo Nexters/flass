@@ -23,6 +23,7 @@ const List = styled.ul`
 const Item = styled.li`
   padding: 5px;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
 `;
 
 const propTypes = {

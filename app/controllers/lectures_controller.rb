@@ -80,14 +80,16 @@ class LecturesController < ApplicationController
   def statistics
     @ret = Hash.new
 
-    @ret['questions'] = questions = @lecture.questions.order(id: :asc)
+    @ret['questions'] = lectures = @lecture.questions.order(id: :asc)
     @ret['answers'] = Hash.new
 
-    questions.each_with_index do |question, index|
+    lectures.each do |question|
+=begin
       if !@ret['answers'].key?(question.id)
-        @ret['answers'][question.id] = Hash.new
+        @ret['answers'][question.id] = Array.new
       end
-      @ret['answers'][question.id][index + 1] = Answer.where(question_id: question.id)
+=end
+      @ret['answers'][question.id] = Answer.where(question_id: question.id)
     end
 
     render json: @ret

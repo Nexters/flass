@@ -7,12 +7,19 @@ class CommentsController < ApplicationController
   def show
     @ret = Hash.new
     @comments = Comment.where(lecture_id: params[:lecture_id]).paginate(page: params[:page], per_page:20)
-    @ret[:comments] = @comments
+    @ret['comments'] = Array.new
+    @comments.each do |comment|
+      el = comment.as_json
+      el['userName'] = comment.user.username
+      @ret['comments'].push(el)
+    end
 
     @ret['commentchild'] = Hash.new
     @comments.each do |comment|
       @ret['commentchild'][comment.id] = CommentChild.where(comment_id: comment.id)
     end
+
+    puts @ret
 
     render json: @ret
   end

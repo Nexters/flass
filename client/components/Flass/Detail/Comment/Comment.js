@@ -74,14 +74,16 @@ class Comment extends Component {
   }
 
   renderComment = (comment, index, parentId) => {
-    const { commentchild, deleteComment } = this.props;
+    const { user, commentchild, deleteComment } = this.props;
     const { selectedReply } = this.state;
 
+    console.log(comment['user_id'], user.id);
     const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
     const replyCount = commentchild[comment.id] || [];
     return (<CommentItem
       key={ `comment${comment.id}` }
       id={ comment.id }
+      isAdmin={ comment['user_id'] == user.id }
       userName={ comment.userName }
       content={ content }
       isReply={ !!parentId }
