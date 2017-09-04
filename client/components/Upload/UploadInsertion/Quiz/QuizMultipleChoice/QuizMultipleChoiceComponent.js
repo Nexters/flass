@@ -45,7 +45,8 @@ class QuizMultipleChoiceComponent extends Component {
   render() {
     const {
       TitleInputValue,
-      numOfChoice
+      numOfChoice,
+      isTitleInputDirty
     } = this.state;
 
     const {
@@ -64,7 +65,8 @@ class QuizMultipleChoiceComponent extends Component {
               type="text"
               value={ TitleInputValue }
               onClick={ this.onTitleInputClick }
-              onChange={ this.onTitleInputChange } />
+              onChange={ this.onTitleInputChange }
+              isTitleInputDirty={ isTitleInputDirty } />
             <QuizMultipleChoice.underline />
           </QuizMultipleChoice.QuestionTitleWrapper>
         </QuizMultipleChoice.Header>
