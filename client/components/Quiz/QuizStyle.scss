@@ -1,9 +1,0 @@
-@import "../../css/base/mixins";
-
-.quiz {
-  @include atLarge {
-    &__button {
-      background-color: grey;
-    }
-  }
-}
