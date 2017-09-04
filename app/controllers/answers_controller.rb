@@ -16,11 +16,11 @@ class AnswersController < ApplicationController
     @answers = Answer.where(user_id: 22)
     @answers2 = Array.new
     @answers.each do |answer|
-      if answer.question.lecture_id == params[:lecture_id]
+      if answer.question.lecture_id == params[:lecture_id].to_i
         @answers2 << answer
       end
     end
-    render json: @answers
+    render json: @answers2
   end
 
   api :POST, '/answers', '특정 question에 대한 학생의 답 생성'
