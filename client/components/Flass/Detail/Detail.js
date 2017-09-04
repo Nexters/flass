@@ -81,6 +81,12 @@ const defaultProps = {
 };
 
 class Detail extends Component {
+  static contextTypes = {
+    router: shape({
+      history: object.isRequired
+    })
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -90,12 +96,8 @@ class Detail extends Component {
   }
 
   componentDidMount() {
-    // const { id } = this.props.match.params;
-
     if (!this.isDetailAlreadyFetch()) {
       const id = this.selectLectureId();
-      console.log('Detail::id');
-      console.log(id);
       this.props.fetchRequestDetailAll(id);
     }
   }
@@ -149,6 +151,7 @@ class Detail extends Component {
         <TabIcon alt="" src={ src } />
         {title}
       </TabTitle>);
+
     return (<Tabs id="detail-tabs" activeKey={ selected } onSelect={ this.handleSelect }>
       <Tab
         eventKey={ 1 }
@@ -167,15 +170,21 @@ class Detail extends Component {
           selected === 2 ? commentImageActive : commentImage) }>
         <Comment detailId={ detail.id } />
       </Tab>
-      <Tab
-        eventKey={ 3 }
-        title={ tabTitle('분석',
-          selected === 3 ? analysisImageActive : analysisImage) }>
-        <Analysis
-
-        />
-      </Tab>
+      {
+        this.isAnalysisTabExist() ? (
+          <Tab
+            eventKey={ 3 }
+            title={ tabTitle('분석',
+              selected === 3 ? analysisImageActive : analysisImage) }>
+            <Analysis />
+          </Tab>
+        ) : null
+      }
     </Tabs>);
+  }
+
+  isAnalysisTabExist() {
+    return this.context.router.history.location.pathname.split('/')[1] === 'detail';
   }
 
   handleSelect = selected => {
