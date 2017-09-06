@@ -39,6 +39,7 @@ const Header = styled.span`
   font-family: NotoSansCJKkr;
   font-size: 0.81rem;
   font-weight: 100;
+  padding-bottom: .19rem;
   border-bottom: 1px solid ${color['white']};
 `;
 
@@ -91,26 +92,29 @@ const Text = styled.span`
   z-index: 50;
 `;
 
+const { number, string } = PropTypes;
 
 const propTypes = {
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  thumbnailUrl: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  questionCount: PropTypes.number,
+  id: number.isRequired,
+  title: string.isRequired,
+  thumbnailUrl: string.isRequired,
+  createdAt: string.isRequired,
+  questionCount: number,
+  textbookRange: string
 };
 
 const defaultProps = {
-  questionCount: 0
+  questionCount: 0,
+  textbookRange: ''
 };
 
 const GridItem = props => {
-  const { id, title, thumbnailUrl, createdAt, questionCount } = props;
+  const { id, title, thumbnailUrl, createdAt, questionCount, textbookRange } = props;
 
   return (
     <Item src={ thumbnailUrl }>
       <Container>
-        <Header>12주차 수업</Header>
+        <Header>{ `수업범위: ${textbookRange}` }</Header>
         <Link to={ `/detail/${id}` }>
           <Title>
             { title }

@@ -65,5 +65,5 @@
 }
 
 .Row {
-  margin-bottom: 3.31rem;
+  @include clearfix;
 }
