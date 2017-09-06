@@ -39,6 +39,7 @@ const Header = styled.span`
   font-family: NotoSansCJKkr;
   font-size: 0.81rem;
   font-weight: 100;
+  padding-bottom: .19rem;
   border-bottom: 1px solid ${color['white']};
 `;
 

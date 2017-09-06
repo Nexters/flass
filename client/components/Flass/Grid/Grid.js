@@ -30,6 +30,7 @@ class Grid extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps::Grid');
     const { user } = this.props;
     const nextUser = nextProps.user;
     if (user.id !== nextUser.id) {
