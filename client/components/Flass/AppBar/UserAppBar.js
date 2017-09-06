@@ -1,37 +1,56 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import autobind from 'autobind-decorator';
 import styled from 'styled-components';
 import color from '../common/colors.scss';
 import Badge from './Badge/BadgeContainer';
 
+import {
+  LogoutIcon
+} from './icons';
+
+const { func, shape, number, string } = PropTypes;
+
 const FlassUserAppBarView = styled.div`
-  width: 180px;
+  overflow: auto;
+  vertical-align: center;
 `;
 
 const UserName = styled.span`
   font-family: NotoSansCJKkr;
-  text-decoration: none;
-  letter-spacing: 5px;
-  font-size: 15px;
-  font-weight: 100;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
+  letter-spacing: 0.3571rem;
+  font-size: 1.38rem;;
+  font-weight: 500;
+  color: #5F7477;
   color: ${color['slate-grey-two']};
+`;
+
+const LogoutBtn = styled.span`
+  position: relative;
+  width: 1.19rem;
+  height: 1.19rem;
+  margin-left: 1.2rem;
+`;
+
+const LogoutBtnIcon = styled.img`
+  width: 1.19rem;
+  height: 1.19rem;
+  cursor: pointer;
 `;
 
 const Divider = styled.span`
   width: 1px;
-  border-left: solid 2px #afbfc1;
+  border-left: solid 0.1428rem #afbfc1;
   margin: 0 2rem;
 `;
 
 const propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    userName: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
+  user: shape({
+    id: number.isRequired,
+    userName: string.isRequired,
+    email: string.isRequired,
   }).isRequired,
+  onClickLogoutBtn: func.isRequired
 };
 
 const defaultProps = {};
@@ -44,11 +63,20 @@ class UserAppBar extends Component {
 
     return (
       <FlassUserAppBarView>
-        <Badge userId={user.id} />
-        <Divider />
         <UserName>{user.userName}</UserName>
+        <LogoutBtn>
+          <LogoutBtnIcon
+            src={ LogoutIcon }
+            alt="logout button"
+            onClick={ this.onClickLogoutBtn } />
+        </LogoutBtn>
       </FlassUserAppBarView>
     );
+  }
+
+  @autobind
+  onClickLogoutBtn() {
+    this.props.onClickLogoutBtn();
   }
 }
 

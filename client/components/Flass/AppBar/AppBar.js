@@ -9,14 +9,12 @@ import UserAppBar from './UserAppBarContainer';
 import color from '../common/colors.scss';
 import './AppBar.scss';
 
-import LogoutIcon from '../../../../public/icons/logout@2x.png';
-
 const NavTitle = styled.span`
   font-family: NotoSansCJKkr;
-  font-size: 20px;
+  font-size: 1.4285rem;
   font-weight: 100;
   color: ${color['cool-grey']};
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.26);
+  text-shadow: 0.0714rem 0.0714rem 0.0714rem rgba(0, 0, 0, 0.26);
 `;
 
 const { func, bool } = PropTypes;
@@ -44,9 +42,17 @@ class AppBar extends Component {
           </NavTitle>
         </NavComponent>
 
-        <NavComponent isRight>
-          { isLogin && <UserAppBar /> }
-        </NavComponent>
+        {
+          isLogin ?
+          (
+            <NavComponent isRight>
+              <UserAppBar
+                onClickLogoutBtn={ this.onClickLogoutBtn } />
+            </NavComponent>
+          ) :
+          null
+        }
+
       </NavbarComponent>
     );
   }

@@ -6,6 +6,8 @@ import FlassApp from './Flass/FlassAppContainer';
 import SignInContainer from './Sign/SignIn/SignInContainer';
 import FlassViewContainer from './FlassView/FlassViewContainer';
 
+import '../css/base/global.scss';
+
 class Root extends Component {
   render() {
     return (

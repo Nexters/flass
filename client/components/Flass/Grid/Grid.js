@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Grid as GridView, Row } from 'react-bootstrap';
+import { Row, Grid as GridView } from 'react-bootstrap';
 import _ from 'lodash';
-import styled from 'styled-components';
-import color from '../common/colors.scss';
 import GridItem from './GridItem';
 import Header from '../Header';
 import './Grid.scss';
@@ -30,7 +28,6 @@ class Grid extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps::Grid');
     const { user } = this.props;
     const nextUser = nextProps.user;
     if (user.id !== nextUser.id) {
@@ -45,7 +42,7 @@ class Grid extends Component {
       <div>
         <Header title="Home Channel" />
         <GridView>
-          {renderAllItems}
+          { renderAllItems }
         </GridView>
       </div>
     );
@@ -62,6 +59,7 @@ class Grid extends Component {
       );
     });
   }
+
   renderChildren(items) {
     const { user } = this.props;
     return items.map(item => (
