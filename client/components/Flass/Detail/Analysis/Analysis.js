@@ -27,7 +27,7 @@ const propTypes = {
     question_id: number,
     answer: string,
     created_at: string,
-    updated_at: string,
+    updated_at: string
   }))).isRequired
 };
 
@@ -38,21 +38,22 @@ class Analysis extends Component {
     super(props);
 
     this.state = {
-      selectedIndex: 0,
+      selectedIndex: 0
     };
   }
 
-  handleSelect = (index) => {
+  handleSelect = index => {
     this.setState({
-      selectedIndex: index,
+      selectedIndex: index
     });
   }
 
   componentDidMount() {
+    const { selectedIndex } = this.state;
     const { lectureId } = this.props;
 
-    if(lectureId !== -1) {
-      this.props.requestLectureAnalysis(lectureId);
+    if (lectureId !== -1) {
+      this.props.requestLectureAnalysis(lectureId, selectedIndex);
     }
   }
 
@@ -64,8 +65,6 @@ class Analysis extends Component {
       return null;
     }
     const question = questions[selectedIndex];
-    console.log('question::render');
-    console.log(question);
 
     return (
       <Wrapper>
@@ -101,15 +100,25 @@ class Analysis extends Component {
 
   @autobind
   renderQuestions() {
+    const { selectedIndex } = this.state;
     const { questions } = this.props;
 
-    const questionTabs = _.map(questions, (question, index) => (
-      <TabWrapper key={ question.id }>
-        <TabItem onClick={() => this.handleSelect(index)}>
-          { `Q${index}` }
-        </TabItem>
-      </TabWrapper>
-    ));
+    const questionTabs = _.map(questions, (question, index) => {
+      const activeStyle = (index === selectedIndex) ? {
+        backgroundColor: '#87ac1e',
+        border: '1px #87ac1e solid',
+        color: 'white'
+      } : {};
+      return (
+        <TabWrapper key={ question.id }>
+          <TabItem
+            style={ activeStyle }
+            onClick={ () => this.handleSelect(index) }>
+            { `Q${index + 1}` }
+          </TabItem>
+        </TabWrapper>
+      );
+    });
     return <Tab> { questionTabs } </Tab>;
   }
 
@@ -118,14 +127,11 @@ class Analysis extends Component {
     const { id } = question;
     const { answers } = this.props;
     const selectedAnswers = answers[id];
-    return selectedAnswers.map(answer => {
-      return (
-        <SingleChoiceComponent
-          key={ answer.key }
-          {...answer}
-        />
-      );
-    });
+    return selectedAnswers.map(answer => (
+      <SingleChoiceComponent
+        key={ answer.id }
+        { ...answer } />
+      ));
   }
 
   @autobind

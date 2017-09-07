@@ -1,4 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
+import _ from 'lodash';
 import {
   REQUEST_LECTURE_ANALYSIS,
   SUCCESS_REQUEST_LECTURE_ANALYSIS,
@@ -6,14 +7,21 @@ import {
 } from './actions';
 import agent from '../../../agent';
 
-function* requestLectureAnalysis({ id }) {
+function* requestLectureAnalysis({ lectureId, questionIndex }) {
   try {
-    const [analysis, answers] = yield [call(agent.Analysis.fetch, id), call(agent.Answer.byLectureId, id)];
+    const [analysis, answers] = yield [call(agent.Analysis.fetch, lectureId), call(agent.Answer.byLectureId, lectureId)];
     console.log('requestLectureAnalysis::statistics');
     console.log(analysis, answers);
+
+    const { questions } = analysis;
+    const questionId = questions[questionIndex] || -1;
+
     yield put({
       type: SUCCESS_REQUEST_LECTURE_ANALYSIS,
-      payload: analysis
+      payload: {
+        ...analysis,
+        question_answers: _.filter(answers, answer => answer['question_id'] == questionId)
+      }
     });
   } catch (e) {
     yield put({
