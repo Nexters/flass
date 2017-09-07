@@ -8,12 +8,12 @@ import agent from '../../../agent';
 
 function* requestLectureAnalysis({ id }) {
   try {
-    const response = yield call(agent.Analysis.fetch, id);
+    const [analysis, answers] = yield [call(agent.Analysis.fetch, id), call(agent.Answer.byLectureId, id)];
     console.log('requestLectureAnalysis::statistics');
-    console.log(response);
+    console.log(analysis, answers);
     yield put({
       type: SUCCESS_REQUEST_LECTURE_ANALYSIS,
-      payload: response
+      payload: analysis
     });
   } catch (e) {
     yield put({

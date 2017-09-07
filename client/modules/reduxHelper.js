@@ -5,7 +5,7 @@ function createReducer(initialState, handlers) {
     } else {
       return state;
     }
-  }
+  };
 }
 
 export {

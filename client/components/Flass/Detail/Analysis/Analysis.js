@@ -21,14 +21,14 @@ const propTypes = {
     correct_answer: number,
     question_at: number
   })).isRequired,
-  answers: objectOf(shape({
+  answers: objectOf(arrayOf(shape({
     id: number,
     user_id: number,
     question_id: number,
     answer: string,
     created_at: string,
     updated_at: string,
-  })).isRequired
+  }))).isRequired
 };
 
 const defaultProps = {};
@@ -118,10 +118,11 @@ class Analysis extends Component {
     const { id } = question;
     const { answers } = this.props;
     const selectedAnswers = answers[id];
-    return Object.keys(selectedAnswers).map(key => {
+    return selectedAnswers.map(answer => {
       return (
         <SingleChoiceComponent
           key={ key }
+          {...answer}
         />
       );
     });
@@ -129,15 +130,10 @@ class Analysis extends Component {
 
   @autobind
   calcaulteTotalNumOfStudentsSolved(question) {
-    let numOfStudentsSolvedQuestion = 0;
     const { id } = question;
     const { answers } = this.props;
     const selectedAnswers = answers[id];
-    Object.keys(selectedAnswers).forEach(key => {
-      numOfStudentsSolvedQuestion += selectedAnswers[key].length;
-    });
-
-    return numOfStudentsSolvedQuestion;
+    return selectedAnswers.length;
   }
 }
 

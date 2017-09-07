@@ -23,18 +23,16 @@ export function* fetchDetailAll({ detailId }) {
   try {
     const detail = yield call(agent.Detail.byId, detailId);
 
-    yield put({
+    yield [put({
       type: FETCH_QUESTION,
       detailId
-    });
-    yield put({
+    }), put({
       type: FETCH_DETAIL_SUCCESS,
       detail
-    });
-    yield put({
+    }), put({
       type: FETCH_VIDEO,
       url: detail.url
-    });
+    })];
   } catch (err) {
     yield put({
       type: FETCH_DETAIL_ERROR,
@@ -55,14 +53,13 @@ export function* updateStateAfterSolveQuestion({ newState }) {
     searchableSecs
   } = newState;
 
-  yield put({
+  yield [put({
     type: UPDATE_SOLVED_QUESTION,
     payload: { id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
-  });
-  yield put({
+  }), put({
     type: UPDATE_SEARCHABLE_SECS,
     searchableSecs
-  });
+  })];
 }
 
 export default function* rootSaga() {
