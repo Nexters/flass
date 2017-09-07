@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Grid, Panel, Row, Well } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import color from '../../common/colors.scss';
 import './Content.scss';
 
-const DetailContent = styled(Grid)`
+const DetailContent = styled.div`
   width: 100%;
   padding-top: 3rem;
   padding-bottom: 4rem;
