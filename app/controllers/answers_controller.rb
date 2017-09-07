@@ -13,8 +13,14 @@ class AnswersController < ApplicationController
   api :GET, '/answers', '특정 학생의 특정 강의에 대한 답 리스트'
   param :lecture_id, :number, :desc => "강의 ID", :required => true
   def show
-    @answers = Answer.where(lecture_id: params[:lecture_id], user_id: session[:user_id])
-    render json: @answers
+    @answers = Answer.where(user_id: session[:user_id])
+    @answers2 = Array.new
+    @answers.each do |answer|
+      if answer.question.lecture_id == params[:lecture_id].to_i
+        @answers2 << answer
+      end
+    end
+    render json: @answers2
   end
 
   api :POST, '/answers', '특정 question에 대한 학생의 답 생성'

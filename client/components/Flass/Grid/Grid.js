@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Grid as GridView, Row } from 'react-bootstrap';
+import { Row, Grid as GridView } from 'react-bootstrap';
 import _ from 'lodash';
-import styled from 'styled-components';
-import color from '../common/colors.scss';
 import GridItem from './GridItem';
 import Header from '../Header';
 import './Grid.scss';
+import '../../../css/base/_row.scss';
 
 const propTypes = {
   user: PropTypes.object.isRequired,
@@ -17,10 +16,17 @@ const propTypes = {
 const defaultProps = {
 };
 
+const NUM_OF_ITEMS_PER_COLS = 4;
+
 class Grid extends Component {
   componentDidMount() {
-    this.props.fetchRequestMyChannelItems();
+    const { user } = this.props;
+
+    if (user.id !== -1) {
+      this.props.fetchRequestMyChannelItems();
+    }
   }
+
   componentWillReceiveProps(nextProps) {
     const { user } = this.props;
     const nextUser = nextProps.user;
@@ -29,45 +35,38 @@ class Grid extends Component {
     }
   }
 
-  componentDidMount() {
-    const { user } = this.props;
-
-    if (user.id !== -1) {
-      this.props.fetchRequestMyChannelItems();
-    }
-  }
-  // 1. receive TODO
-  // 2. HOC
-  // 3. react router 기능.
-
-  renderChildren(items) {
-    const { user } = this.props;
-    return items.map(item => (
-      <Col key={ item.id } md={ 3 }>
-        <GridItem { ...item } userName={ user.userName } />
-      </Col>
-    ));
-  }
-
   render() {
     const { items } = this.props;
-    let chunkIndex = 0;
-    const renderAllItems = _.chunk(items, 4).map(splitItems => {
-      chunkIndex += 1;
-      return (
-        <Row key={ `row${chunkIndex}` }>
-          {this.renderChildren(splitItems)}
-        </Row>
-      );
-    });
+    const renderAllItems = this.renderRowsAndCols(items);
     return (
       <div>
         <Header title="Home Channel" />
         <GridView>
-          {renderAllItems}
+          { renderAllItems }
         </GridView>
       </div>
     );
+  }
+
+  renderRowsAndCols(items) {
+    let chunkIndex = 0;
+    return _.chunk(items, NUM_OF_ITEMS_PER_COLS).map(splitItems => {
+      chunkIndex += 1;
+      return (
+        <Row key={ `row${chunkIndex}` } bsClass="Row">
+          {this.renderChildren(splitItems)}
+        </Row>
+      );
+    });
+  }
+
+  renderChildren(items) {
+    const { user } = this.props;
+    return items.map(item => (
+      <div key={ item.id } className="Col__grid">
+        <GridItem { ...item } userName={ user.userName } />
+      </div>
+    ));
   }
 }
 

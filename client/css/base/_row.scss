@@ -51,3 +51,19 @@
     }
   }
 }
+
+.Col {
+  @include clearfix;
+
+  @include atLarge {
+    &__grid {
+      float: left;
+      width: 23.44rem;
+      margin-right: 3.31rem;
+    }
+  }
+}
+
+.Row {
+  @include clearfix;
+}
