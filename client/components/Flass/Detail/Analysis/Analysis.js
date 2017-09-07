@@ -121,7 +121,7 @@ class Analysis extends Component {
     return selectedAnswers.map(answer => {
       return (
         <SingleChoiceComponent
-          key={ key }
+          key={ answer.key }
           {...answer}
         />
       );
