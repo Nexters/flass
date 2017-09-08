@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :login_check, only: [:index, :show, :create, :destroy]
+  before_action :login_check, only: [:index, :create, :destroy]
   before_action :set_answer, only: :destroy
 
   api :GET, '/answers/question', '특정 question에 대한 학생들의 답'
@@ -13,12 +13,14 @@ class AnswersController < ApplicationController
   api :GET, '/answers', '특정 학생의 특정 강의에 대한 답 리스트'
   param :lecture_id, :number, :desc => "강의 ID", :required => true
   def show
-    @answers = Answer.where(user_id: session[:user_id])
+    @answers = Answer.where(user_id: 22)
     @answers2 = Hash.new
     @answers.each do |answer|
       if answer.question.lecture_id == params[:lecture_id].to_i
-        answer2_key = answer.question_id
-        @answers2[answer2_key] = answer
+        unless @answers2.key?(answer.question_id)
+          @answers2[answer.question_id] = Array.new
+        end
+        @answers2[answer.question_id] << answer
       end
     end
     render json: @answers2
