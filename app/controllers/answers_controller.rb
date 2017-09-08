@@ -14,10 +14,11 @@ class AnswersController < ApplicationController
   param :lecture_id, :number, :desc => "강의 ID", :required => true
   def show
     @answers = Answer.where(user_id: session[:user_id])
-    @answers2 = Array.new
+    @answers2 = Hash.new
     @answers.each do |answer|
       if answer.question.lecture_id == params[:lecture_id].to_i
-        @answers2 << answer
+        answer2_key = answer.question_id
+        @answers2[answer2_key] = answer
       end
     end
     render json: @answers2
