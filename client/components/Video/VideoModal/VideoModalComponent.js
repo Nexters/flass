@@ -153,7 +153,9 @@ class VideoModalComponent extends Component {
             right
             onClick={ this.isChoicesSelected() ? this.onClickSolveBtn : null }
             selected={ this.isChoicesSelected() }>
-            확인
+            <VideoModal.Text>
+              확인
+            </VideoModal.Text>
           </VideoModal.Button>
         );
       }
@@ -164,7 +166,9 @@ class VideoModalComponent extends Component {
           isSolved={ isSolved }
           isCorrect={ isCorrect }
           selected={ this.isChoicesSelected() }>
-          이어보기
+          <VideoModal.Text>
+            이어보기
+          </VideoModal.Text>
         </VideoModal.Button>
       );
     } else {
@@ -176,7 +180,9 @@ class VideoModalComponent extends Component {
           isCorrect={ isCorrect }
           pointer
           selected={ this.isChoicesSelected() }>
-          이어보기
+          <VideoModal.Text>
+            이어보기
+          </VideoModal.Text>
         </VideoModal.Button>
       );
     }

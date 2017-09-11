@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 const GRAY = 'gray';
 
-const $playerHeight = '650px';
+const $playerHeight = '40.625rem';
 const $QuizEditColorBlack = '#3f4a4b';
 const $FlassGreenColor = '#9abf32';
 const $FlassGrayColor = '#9b9b9b';
@@ -15,7 +15,7 @@ export const VideoModal = {
     position: absolute;
     top: 0;
     width: ${props => (props.isOpen ? '100%' : 0)};
-    padding: 50px 0;
+    padding: 3.4375rem 0;
     height: ${props => (props.isOpen ? $playerHeight : 0)};
     opacity: ${props => (props.isOpen ? 1 : 0)};
     z-index: ${props => (props.isOpen ? 10 : -10)};
@@ -24,7 +24,7 @@ export const VideoModal = {
     transition: opacity .5s ease-out;
   `,
   Inner: styled.div`
-    width: 900px;
+    width: 56.33rem;
     height: 100%;
     margin: 0 auto;
     background-color: rgba(255, 255, 255, .9);
@@ -38,7 +38,7 @@ export const VideoModal = {
   `,
   ContentWrapper: styled.div`
     position: relative;
-    padding: 58px 60px;
+    padding: 3.625rem 3.75rem;
     z-index: 20;
     height: 100%;
   `,
@@ -49,42 +49,44 @@ export const VideoModal = {
     text-align: left;
   `,
   QuestionNum: styled.span`
-    font-size: 25px;
+    font-size: 1.7857rem;
     font-weight: 500;
     color: ${$QuizEditColorBlack};
   `,
   QuestionTitle: styled.span`
-    margin-left: 20px;
-    font-size: 20px;
+    margin-left: 1.25rem;
+    font-size: 1.4285rem;
     border: none;
-    height: 30px;
+    height: 1.875rem;
     color: ${$QuizEditColorBlack};
   `,
   Body: styled.div`
-    margin-top: 60px;
+    margin-top: 3.75rem;
   `,
   Footer: styled.div`
     position: absolute;
-    bottom: 35px;
-    right: 47px;
+    bottom: 2.1875rem;
+    right: 2.9375rem;
   `,
   Button: styled.div`
-    padding: 1rem 1.2rem;
-    display: inline-block;
-    width: 110px;
-    height: 51px;
-    border: solid 1.5px ${props => selectBtnColor(props)};
-    border-radius: 100px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 2rem;
+    display: table;
+    width: 6.875rem;
+    height: 3.1875rem;
+    border: solid 0.093rem ${props => selectBtnColor(props)};
+    border-radius: 6.25rem;
     color: ${props => selectBtnColor(props)};
-    cursor: ${props => selectCursor(props)};
-
     float: ${props => (props.right ? 'right' : 'none')};
+    cursor: ${props => selectCursor(props)};
     margin-left: ${props => (props.right ? '15px' : '0')};
 
     transition: color 1s ease-out, border 1s ease-out;
+  `,
+  Text: styled.span`
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.4285rem;
   `
 };
 function selectColor({ color }) {
