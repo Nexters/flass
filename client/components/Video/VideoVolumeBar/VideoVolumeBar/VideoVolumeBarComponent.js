@@ -4,7 +4,6 @@ import autobind from 'autobind-decorator';
 
 import { VideoVolumeBar } from './VideoVolumeBarStyled';
 
-import './InputRangeStyles.scss';
 import './VideoVolumeBarComponentStyles.scss';
 
 const { func, bool, number } = PropTypes;

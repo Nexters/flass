@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 export const VideoVolume = styled.div`
-  position: absolute;
-  display: inline-block;
+  display: inline-flex;
   right: 0;
-  width: 105px;
-  height: 30px;
-  padding: 5px 0;
+  height: 1.875rem;
+  padding: 0.3125rem 0;
+  margin-left: 1rem;
 `;

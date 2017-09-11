@@ -1,5 +1,5 @@
 .video-btn {
-  display: inline-block;
+  display: inline-flex;
   border: none;
   padding: 0,inherit;
   background: none;
@@ -11,15 +11,15 @@
   }
 
   &--l-margin {
-    margin-left: 10px;
+    margin-left: 2.1875rem;
   }
 
   &--r-margin {
-    margin-right: 10px;
+    margin-right: 0.625rem;
   }
 
   &__icon {
-    height: 30px;
-    width: 30px;
+    height: 1.5625rem;
+    width: 1.3125rem;
   }
 }

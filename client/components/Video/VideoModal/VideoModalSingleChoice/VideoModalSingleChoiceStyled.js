@@ -5,10 +5,11 @@ const $NormalGreenColor = '#9abf32';
 const $NormalGrayColor = '#a7acad';
 const $NormalBlackColor = '#3f4a4b';
 const $WrongRedColor = '#f8490d';
+const $borderWidth = '0.09375rem';
 
 export const VideoModalSingleChoice = {
   Wrapper: styled.div`
-    margin-top: 35px;
+    margin-top: 2.1875rem;
     display: flex;
 
     & > div {
@@ -17,27 +18,27 @@ export const VideoModalSingleChoice = {
     }
   `,
   Checkbox: styled.div`
-    width: 30px;
-    height: 30px;
-    padding: 3.5px 3.5px;
-    border: solid 1.5px ${$checkboxBorderColor};
+    width: 1.875rem;
+    height: 1.875rem;
+    padding: 0.21875rem 0.21875rem;
+    border: solid ${$borderWidth} ${$checkboxBorderColor};
     border-radius: 50%;
   `,
   Check: styled.div`
-    width: 20px;
-    height: 20px;
-    border: solid 1.5px ${props => selectCheckColor(props)};
+    width: 1.25rem;
+    height: 1.25rem;
+    border: solid ${$borderWidth} ${props => selectCheckColor(props)};
     border-radius: 50%;
     background-color: ${props => selectCheckColor(props)};
   `,
   QuestionText: styled.div`
-    margin-left: 20px;
-    font-size: 20px;
+    margin-left: 1.25rem;
+    font-size: 1.25rem;
     border: none;
     font-weight: ${props => selectFontWeight(props)};
-    height: 30px;
+    height: 1.875rem;
     color: ${props => selectTextColor(props)};;
-    width: 250px;
+    width: 15.625rem;
   `
 };
 
