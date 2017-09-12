@@ -103,8 +103,6 @@ class Step1 extends Component {
           disabled={ !this.isComplete() }
           fontSize="1.57rem"
           color={ this.isComplete() ? '#176d99' : '#b6bfc1' }
-          margin="2.125rem 5.56rem 0 0"
-          padding="0.5625rem 2.06rem 0.3125rem 2.06rem"
           onClick={ () => handleNext(videoInfo) }>다 음</Button>
       </div>
     );
@@ -120,7 +118,7 @@ class Step1 extends Component {
           </div>
         </div>
 
-        <div className="Row">
+        <div className={ classNames('Row', 'Row--t-small-margin') }>
           { next }
         </div>
       </div>
