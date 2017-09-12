@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import media from '../../../styled-components/base/media';
 
 const playerHeight = 30.25;
-const progressbarHeight = 5;
 const borderWidth = 0.1875;
 
 export const VideoStyled = {
@@ -15,8 +14,7 @@ export const VideoStyled = {
     position: absolute;
     width: 100%;
     margin: 0 auto;
-    height: ${progressbarHeight}rem;
-    top: ${playerHeight - progressbarHeight}rem;
+    bottom: 0;
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, .32);
@@ -56,24 +54,25 @@ export const EndedPageOnUploadPage = props => {
       transition: opacity .5s ease-out;
     `,
     Title: `
-      margin-top: 12.25rem;
+      margin-top: 9.25rem;
       color: white;
       text-align: center;
-      font-size: 2.0714rem;
+      font-size: 1.5714rem;
       font-weight: 500;
     `,
     ReplayBtn: `
       position: relative;
-      margin-top: 2.125rem;
+      margin-top: 1.875rem;
+      width: 4.6875rem;
       left: 50%;
       transform: translateX(-50%);
       cursor: pointer;
     `,
     BtnLabel: `
-      margin-top: 0.875rem;
+      margin-top: 0.6875rem;
       color: white;
       text-align: center;
-      font-size: 1.5714rem;
+      font-size: 1.4285rem;
       font-weight: 500;
     `
   };

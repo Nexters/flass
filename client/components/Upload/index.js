@@ -10,8 +10,9 @@ import * as actions from '../../modules/Upload/Actions';
 import UploadInsertionContainer from './UploadInsertion/UploadInsertionContainer';
 import SubHeader from './SubHeader/SubHeaderComponent';
 import './index.scss';
-
-// ********************************
+import {
+  Container
+} from './styled';
 
 import Step1 from './Step1';
 
@@ -72,22 +73,20 @@ class Upload extends Component {
     switch(step) {
       case STEP_1:
         body = (
-          <div>
-            <Step1
-              method={ method }
-              setUploadMethod={ method => handleSetUploadMethod(method) }
-              urlStatus={ urlStatus }
-              handleURLCheck={ videoURL => handleURLCheck(videoURL) }
-              handleNext={ videoInfo => this.goToStep2(videoInfo) }
-              thumbURL={ thumbURL }
-              resetVideo={ resetVideo }
-              isGoogleAuth={ isGoogleAuth }
-              goToGoogleAuthPage={ goToGoogleAuthPage }
-              handleYoutubeUpload={ file => uploadYoutubeVideo(file) }
-              uploadStatus={ uploadStatus }
-              uploadProgress={ uploadProgress }
-              processProgress={ processProgress } />
-          </div>
+          <Step1
+            method={ method }
+            setUploadMethod={ method => handleSetUploadMethod(method) }
+            urlStatus={ urlStatus }
+            handleURLCheck={ videoURL => handleURLCheck(videoURL) }
+            handleNext={ videoInfo => this.goToStep2(videoInfo) }
+            thumbURL={ thumbURL }
+            resetVideo={ resetVideo }
+            isGoogleAuth={ isGoogleAuth }
+            goToGoogleAuthPage={ goToGoogleAuthPage }
+            handleYoutubeUpload={ file => uploadYoutubeVideo(file) }
+            uploadStatus={ uploadStatus }
+            uploadProgress={ uploadProgress }
+            processProgress={ processProgress } />
         );
         break;
 
@@ -100,10 +99,10 @@ class Upload extends Component {
     }
 
     return (
-      <div>
+      <Container>
         { header }
         { body }
-      </div>
+      </Container>
     );
   }
 

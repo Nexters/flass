@@ -4,12 +4,13 @@ import classNames from 'classnames';
 
 import { METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD, SUCC_URL } from '../../../modules/Constants';
 
-import '../step.scss';
 import InfoBox from './InfoBox';
 import UploadOptionsBox from './UploadOptionsBox';
 import FileUploadBox from './FileUploadBox';
 import URLUploadBox from './URLUploadBox';
 import Button from '../../Flass/Button';
+import '../step.scss';
+import '../../../css/base/_row.scss';
 
 const propTypes = {
   handleNext: PropTypes.func.isRequired,
@@ -110,9 +111,18 @@ class Step1 extends Component {
 
     return (
       <div className="container">
-        { left }
-        { right }
-        { next }
+        <div className="Row">
+          <div className="Row__large-5">
+            { left }
+          </div>
+          <div className={ classNames('Row__large-5', 'Row--l-padding') }>
+            { right }
+          </div>
+        </div>
+
+        <div className="Row">
+          { next }
+        </div>
       </div>
 
     );
