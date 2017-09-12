@@ -115,7 +115,7 @@ class Step1 extends Component {
           <div className="Row__large-5">
             { left }
           </div>
-          <div className={ classNames('Row__large-5', 'Row--l-padding') }>
+          <div className={ classNames('Row__large-5', 'Row--l-padding', 'Row--t-margin') }>
             { right }
           </div>
         </div>

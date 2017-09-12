@@ -67,19 +67,36 @@
 .Row {
   @include clearfix;
 
-  &--l-padding {
-    padding-left: 1.34375rem;
+  @include atLarge {
+    &--l-padding {
+      padding-left: 1.34375rem;
+    }
   }
 
-  &--r-padding {
-    padding-right: 1.6875rem;
+  &--t-margin {
+    margin-top: 3rem;
+
+    @include atLarge {
+      margin-top: 0;
+    }
   }
+
+
 
   @include atLarge {
-    &__large-5 {
+    &--r-padding {
+      padding-right: 1.6875rem;
+    }
+  }
+
+
+  &__large-5 {
+    @include atLarge {
       float: left;
       width: 50%;
     }
+
+    overflow: auto;
   }
 
 }
