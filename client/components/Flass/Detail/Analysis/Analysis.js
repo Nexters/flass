@@ -26,7 +26,7 @@ const propTypes = {
     question_id: number,
     answer: string,
     created_at: string,
-    updated_at: string,
+    updated_at: string
   })).isRequired,
   answers: arrayOf(shape({
     id: number,
@@ -98,7 +98,7 @@ class Analysis extends Component {
                   {`${answers.length}명`}
                 </ChartTextNumber>
               </ChartTextWrapper>
-              <ChartComponent />
+              {this.renderChart()}
             </Col5>
             <Col5>
               {this.renderSingleChoices()}
@@ -109,8 +109,7 @@ class Analysis extends Component {
     );
   }
 
-  @autobind
-  renderQuestions() {
+  renderQuestions = () => {
     const { selectedIndex } = this.state;
     const { questions } = this.props;
 
@@ -133,19 +132,33 @@ class Analysis extends Component {
     return <Tab> { questionTabs } </Tab>;
   }
 
+  renderChart = () => {
+    const usersOfAnswers = this.getUsersOfAnswers();
+
+    const labels = usersOfAnswers.map(usersOfAnswer => usersOfAnswer.answer);
+    const data = usersOfAnswers.map(usersOfAnswer => usersOfAnswer.userAnswers.length);
+    return (<ChartComponent
+      labels={ labels }
+      data={ data } />);
+  };
+
   renderSingleChoices = () => {
+    const usersOfAnswers = this.getUsersOfAnswers();
+    return usersOfAnswers.map(usersOfAnswer => (<SingleChoiceComponent
+      key={ usersOfAnswer.id }
+      { ...usersOfAnswer } />));
+  }
+
+  getUsersOfAnswers = () => {
     const { question_answers, answers } = this.props;
 
-    return question_answers.map((questionAnswer, index) => {
-      return (<SingleChoiceComponent
-        key={ questionAnswer.id }
-        answer={questionAnswer.answer}
-        userAnswers={ answers.filter(answer => {
-          return index == parseInt(answer.answer);
-        }) }
-      />);
-    });
+    return question_answers.map((questionAnswer, index) => ({
+      id: questionAnswer.id,
+      answer: questionAnswer.answer,
+      userAnswers: answers.filter(answer => index == parseInt(answer.answer))
+    }));
   }
+
 }
 
 Analysis.propTypes = propTypes;

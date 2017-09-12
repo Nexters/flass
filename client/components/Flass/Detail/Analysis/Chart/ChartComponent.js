@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Chart from 'chart.js';
 
-const propTypes = {};
+const propTypes = {
+  labels: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+};
 const defaultProps = {};
 
 class ChartComponent extends Component {
@@ -30,11 +34,15 @@ class ChartComponent extends Component {
       '#9abf32',
       '#9abf32'
     ];
+
+    const { labels, data } = this.props;
+
     const myChart = new Chart(this.myChart, {
       type: 'doughnut',
       data: {
+        labels,
         datasets: [{
-          data: [12, 19, 3, 5],
+          data,
           backgroundColor: myBackgroundColor,
           borderColor: myBorderColor,
           borderWidth: [1, 1, 1, 1],
