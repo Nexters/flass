@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-const $progressbarMarginTop = '16px';
+const $progressbarMarginTop = '1rem';
 
 export const VideoProgressBar = styled.div`
   position: relative;
 
-  @media (min-width: 1010px) {
+  @media (min-width: 63.125rem) {
     width: 100%;
     background-color: transparent;
 

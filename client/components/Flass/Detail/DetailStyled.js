@@ -15,7 +15,9 @@ const $playerWindowWidthAtLarge = 860;
 const $playerWindowWidthAtMedium = '624px';
 
 export const FlassDetailStyled = {
-  Wrapper: styled.div``,
+  Wrapper: styled.div`
+    padding-right: 5.81rem;
+  `,
   Content: styled.div`
     min-height: 21rem;
 

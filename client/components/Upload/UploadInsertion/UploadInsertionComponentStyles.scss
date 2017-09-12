@@ -51,7 +51,7 @@
     width: 864px;
     margin: 0 auto;
     height: $progressbarHeight;
-    top: $playerHeight - $progressbarHeight - 1px;
+    top: $playerHeight - $progressbarHeight;
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, .32);

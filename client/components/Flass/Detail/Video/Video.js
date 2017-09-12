@@ -223,8 +223,6 @@ class Video extends Component {
   }
 
   updateSearchableSecsState({ searchableSecs, questions }) {
-    console.log('searchableSecs::');
-    console.log(searchableSecs);
     if (!this.state.isSearchableSecsInit) {
       return this.initalizeSearchableSecs({ questions });
     }
@@ -235,11 +233,11 @@ class Video extends Component {
 
   initalizeSearchableSecs({ questions }) {
     const { secsStateOfQuestions } = questions;
-    if(_.isEmpty(secsStateOfQuestions)) {
+    if (_.isEmpty(secsStateOfQuestions)) {
       return;
     }
     const searchableSecs = secsStateOfQuestions[0].playedSeconds;
-    if(searchableSecs) {
+    if (searchableSecs) {
       this.setState({ searchableSecs, isSearchableSecsInit: true });
     }
   }
