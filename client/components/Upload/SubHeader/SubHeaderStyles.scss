@@ -1,0 +1,24 @@
+$FlassGrayColor: #9b9b9b;
+$FlassBlueColor: #176d99;
+
+.steps {
+  display: inline-block;
+}
+
+.disabled {
+  display: inline;
+  margin: 0;
+  font-size: 1.11em;
+  font-weight: bold;
+  text-align: left;
+  color: $FlassGrayColor;
+}
+
+.active {
+  color: $FlassBlueColor;
+}
+
+.stepsDecorator {
+  margin-left: 18.75px;
+  margin-right: 21px;
+}

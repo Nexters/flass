@@ -9,7 +9,10 @@ import Content from './Content/Content';
 import Comment from './Comment/CommentContainer';
 import Analysis from './Analysis/AnalysisContainer';
 import Video from './Video/VideoContainer';
-import Header from '../Header';
+import {
+  Title,
+  Header
+} from '../../FlassCommon';
 import { FlassDetailStyled } from './DetailStyled';
 
 import {
@@ -112,7 +115,10 @@ class Detail extends Component {
 
     return (
       <FlassDetailStyled.Wrapper>
-        <Header title="Watching Video" />
+        <Header
+          Title={ () => <Title title="Watching Video" />}
+          SubTitle={ () => null } />
+        
         <FlassDetailStyled.Content>
           <Video
             VideoBarClassName="bar--thinner"

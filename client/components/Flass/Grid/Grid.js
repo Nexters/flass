@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Row, Grid as GridView } from 'react-bootstrap';
 import _ from 'lodash';
 import GridItem from './GridItem';
-import Header from '../Header';
+import {
+  Title,
+  Header
+} from '../../FlassCommon';
 import './Grid.scss';
 import '../../../css/base/_row.scss';
 
@@ -40,7 +43,9 @@ class Grid extends Component {
     const renderAllItems = this.renderRowsAndCols(items);
     return (
       <div>
-        <Header title="Home Channel" />
+        <Header
+          Title={ () => <Title title="Home Channel" /> }
+          SubTitle={ () => null } />
         <GridView>
           { renderAllItems }
         </GridView>

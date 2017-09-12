@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
-import Header from '../../Flass/Header';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
 import ModalComponent from '../Modal/ModalComponent';
