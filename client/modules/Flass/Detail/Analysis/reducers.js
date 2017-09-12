@@ -8,7 +8,8 @@ import {
 
 const initialState = {
   questions: [],
-  answers: {}
+  answers: [],
+  question_answers: []
 };
 
 const requestStatisticsReducer = {

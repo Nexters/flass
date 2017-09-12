@@ -21,14 +21,21 @@ const propTypes = {
     correct_answer: number,
     question_at: number
   })).isRequired,
-  answers: objectOf(arrayOf(shape({
+  question_answers: arrayOf(shape({
+    id: number,
+    question_id: number,
+    answer: string,
+    created_at: string,
+    updated_at: string,
+  })).isRequired,
+  answers: arrayOf(shape({
     id: number,
     user_id: number,
     question_id: number,
     answer: string,
     created_at: string,
     updated_at: string
-  }))).isRequired
+  })).isRequired
 };
 
 const defaultProps = {};
@@ -36,7 +43,6 @@ const defaultProps = {};
 class Analysis extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       selectedIndex: 0
     };
@@ -46,20 +52,25 @@ class Analysis extends Component {
     this.setState({
       selectedIndex: index
     });
+    this.updateLectureAnalysis();
   }
 
   componentDidMount() {
+    this.updateLectureAnalysis();
+  }
+
+  updateLectureAnalysis = () => {
     const { selectedIndex } = this.state;
     const { lectureId } = this.props;
 
     if (lectureId !== -1) {
       this.props.requestLectureAnalysis(lectureId, selectedIndex);
     }
-  }
+  };
 
   render() {
     const { selectedIndex } = this.state;
-    const { questions } = this.props;
+    const { questions, answers } = this.props;
 
     if (questions.length === 0) {
       return null;
@@ -84,13 +95,13 @@ class Analysis extends Component {
                   퀴즈 완료 학생 수
                 </ChartTextTitle>
                 <ChartTextNumber>
-                  {`${this.calcaulteTotalNumOfStudentsSolved(question)}명`}
+                  {`${answers.length}명`}
                 </ChartTextNumber>
               </ChartTextWrapper>
               <ChartComponent />
             </Col5>
             <Col5>
-              {this.renderSingleChoices(question)}
+              {this.renderSingleChoices()}
             </Col5>
           </Row>
         </Body>
@@ -122,24 +133,18 @@ class Analysis extends Component {
     return <Tab> { questionTabs } </Tab>;
   }
 
-  @autobind
-  renderSingleChoices(question) {
-    const { id } = question;
-    const { answers } = this.props;
-    const selectedAnswers = answers[id];
-    return selectedAnswers.map(answer => (
-      <SingleChoiceComponent
-        key={ answer.id }
-        { ...answer } />
-      ));
-  }
+  renderSingleChoices = () => {
+    const { question_answers, answers } = this.props;
 
-  @autobind
-  calcaulteTotalNumOfStudentsSolved(question) {
-    const { id } = question;
-    const { answers } = this.props;
-    const selectedAnswers = answers[id];
-    return selectedAnswers.length;
+    return question_answers.map((questionAnswer, index) => {
+      return (<SingleChoiceComponent
+        key={ questionAnswer.id }
+        answer={questionAnswer.answer}
+        userAnswers={ answers.filter(answer => {
+          return index == parseInt(answer.answer);
+        }) }
+      />);
+    });
   }
 }
 

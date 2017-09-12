@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeEvery } from 'redux-saga/effects';
 import _ from 'lodash';
 import {
   REQUEST_LECTURE_ANALYSIS,
@@ -7,23 +7,34 @@ import {
 } from './actions';
 import agent from '../../../agent';
 
+function* makeSelectedAnswer(answer) {
+  const user = yield call(agent.User.byId, answer['user_id']);
+  console.log(user);
+  return {
+    ...answer,
+    userName: user.username,
+  };
+}
+
 function* requestLectureAnalysis({ lectureId, questionIndex }) {
   try {
-    const [analysis, answers] = yield [call(agent.Analysis.fetch, lectureId), call(agent.Answer.byLectureId, lectureId)];
-    console.log('requestLectureAnalysis::statistics');
-    console.log(analysis, answers);
+    const analysis = yield call(agent.Analysis.fetch, lectureId);
+    const { questions, answers } = analysis;
+    const questionId = questions[questionIndex].id || -1;
 
-    const { questions } = analysis;
-    const questionId = questions[questionIndex] || -1;
+    const selectedAnswers = yield all(answers[questionId].map(answer => makeSelectedAnswer(answer)));
+    const questionAnswers = yield call(agent.Choice.fetch, questionId);
 
     yield put({
       type: SUCCESS_REQUEST_LECTURE_ANALYSIS,
       payload: {
-        ...analysis,
-        question_answers: _.filter(answers, answer => answer['question_id'] == questionId)
+        questions,
+        answers: selectedAnswers,
+        question_answers: questionAnswers
       }
     });
   } catch (e) {
+    console.error(e);
     yield put({
       type: FAIL_REQUEST_LECTURE_ANALYSIS
     });

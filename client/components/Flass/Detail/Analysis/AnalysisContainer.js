@@ -14,12 +14,14 @@ function mapStateToProps(state) {
     },
     analysis: {
       questions,
+      question_answers,
       answers,
     }
   } = state.flass.detail;
   return {
     lectureId: id,
     questions,
+    question_answers,
     answers,
   };
 }
