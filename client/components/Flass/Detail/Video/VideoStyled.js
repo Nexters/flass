@@ -18,7 +18,7 @@ export const FlassDetailVideo = {
     bottom: 0;
     background-color: rgba(0, 0, 0, .32);
 
-    @media (min-width: 87.5rem) {
+    @media (min-width: 57.625rem) {
       width: ${$playerWindowWidthAtLarge}rem;
       margin: 0 auto;
       left: 0;
@@ -56,7 +56,7 @@ export const EndedPageOnDetailPage = props => {
       position: absolute;
       top: 0;
       width: ${isOpen ? '100%' : 0};
-      height: ${isOpen ? 40.625 : 0}rem;
+      height: ${isOpen ? 100 : 0}%;
       opacity: ${isOpen ? 1 : 0};
       z-index: ${isOpen ? 10 : -10};
       background-color: black;
@@ -73,6 +73,7 @@ export const EndedPageOnDetailPage = props => {
     ReplayBtn: `
       position: relative;
       margin-top: 2.125rem;
+      width: 9.375rem;
       left: 50%;
       transform: translateX(-50%);
       cursor: pointer;
