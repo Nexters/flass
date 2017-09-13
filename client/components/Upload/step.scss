@@ -1,3 +1,4 @@
+@import './variables.scss';
 // @media only screen and (min-width: 1132.125px) {
 //   /* For large screens: */
 //   .container {
@@ -22,7 +23,7 @@
 
 .box {
   width: 100%;
-  min-height: 29rem;
+  min-height: $boxMinHeight;
   border-radius: 0.1875rem;
   background-color: #fff;
   box-shadow: 0.1406rem 0.1875rem 0.9375rem 0 rgba(0, 0, 0, 0.05);

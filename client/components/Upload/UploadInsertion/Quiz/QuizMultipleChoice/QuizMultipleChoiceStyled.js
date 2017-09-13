@@ -6,6 +6,9 @@ const $FlassGrayColor = '#9b9b9b';
 
 export const QuizMultipleChoice = {
   Wrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     padding: 3.125rem 3.125rem;
   `,
   Header: styled.div`
@@ -55,8 +58,9 @@ export const QuizMultipleChoice = {
     cursor: pointer;
   `,
   Button: styled.div`
-    display: table-cell;
-    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 5.125rem;
     height: 2.6875rem;
     border: solid 1.5px ${props => selectBorderColor(props)};
@@ -88,12 +92,11 @@ export const QuizMultipleChoice = {
     flex: 1;
   `,
   Body: styled.div`
-    margin-top: 3.75rem;
+    margin-top: .5rem;
   `,
   Footer: styled.div`
-    margin-top: 2.1875rem;
-    display: table;
     float: right;
+    margin-top: auto;
   `
 };
 

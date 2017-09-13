@@ -13,9 +13,11 @@ $spaceBetweenInputAndDeleteBtn: 1.5rem;
   &__checkbox {
     width: 1.875rem;
     height: 1.875rem;
-    padding: 0.21875rem 0.21875rem;
+    justify-content: center;
+    align-items: center;
     border: solid 1.5px #3f4a4b;
     border-radius: 50%;
+    user-select: none;
   }
 
   &__check {
@@ -58,6 +60,7 @@ $spaceBetweenInputAndDeleteBtn: 1.5rem;
     right: $spaceBetweenInputAndDeleteBtn;
     margin-left: 1.25rem;
     width: 0;
+    opacity: 0;
     border: .5px solid #d3d9d9;
     transition: all 0.5s linear;
   }

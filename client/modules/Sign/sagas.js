@@ -9,6 +9,8 @@ import {
   INIT_GOOGLE_SERVICE,
 
   CHECK_SESSION,
+  CHECK_SESSION_START,
+  CHECK_SESSION_FIN,
   CHECK_SESSION_SUCCESS,
   CHECK_SESSION_FAIL,
 
@@ -61,6 +63,7 @@ function isAuthResponseValid(authResponse) {
 
 function* checkSession() {
   try {
+    yield put({ type: CHECK_SESSION_START });
     const responseData = yield call(agent.User.whoami);
     const flassUserId = yield call(getItemFromLocalStorage, 'flass_user_id');
 
@@ -68,13 +71,13 @@ function* checkSession() {
       throw new Error('Invalid session');
     }
 
-    yield put({
-      type: SET_USER,
-      user: responseData
-    });
+    yield put({ type: SET_USER, user: responseData });
+
     yield put({ type: CHECK_SESSION_SUCCESS });
+    yield put({ type: CHECK_SESSION_FIN });
   } catch (error) {
     yield put({ type: CHECK_SESSION_FAIL });
+    yield put({ type: CHECK_SESSION_FIN });
   }
 }
 

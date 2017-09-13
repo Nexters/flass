@@ -9,8 +9,8 @@ import {
 } from '../../modules/Flass/User/UserActions';
 
 function mapStateToProps(state) {
-  const { sessionValid } = state.sign;
-  return { sessionValid };
+  const { sessionValid, isSessionChecking } = state.sign;
+  return { sessionValid, isSessionChecking };
 }
 
 function mapDispatchToProps(dispatch) {

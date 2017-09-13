@@ -40,11 +40,6 @@ class SignIn extends Component {
   }
 
   render() {
-    const {
-      isUserSignedIn,
-      sessionValid
-    } = this.props;
-
     return (
       <div className="signInBackground">
         <div className="signInContainer">
