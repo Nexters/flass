@@ -45,40 +45,22 @@
       animation: move 1s ease-out;
     }
   }
-
-  &__controller-bar {
-    position: absolute;
-    width: 864px;
-    margin: 0 auto;
-    height: $progressbarHeight;
-    top: $playerHeight - $progressbarHeight;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, .32);
-
-    @include atPlayerLargeForControllerbar {
-      width: $playerWindowWidthAtLarge;
-      margin: 0 auto;
-      left: 0;
-      right: 0;
-    }
-
-    @include atPlayerMediumForControllerbar {
-      width: 100%;
-    }
+  &__container {
+    display: table;
+    float: right;
+    margin-right: 1.5rem;
   }
 
   &__btn {
-    float: right;
-    padding: .75rem 1.2rem;
-    display: block;
-    width: 133px;
-    height: 47px;
+    display: table-cell;
+    vertical-align: middle;
+    width: 8.3125rem;
+    height: 2.9375rem;
     border: solid 1.5px $FlassBlueColor;
-    border-radius: 100px;
+    border-radius: 6.25rem;
     text-align: center;
     text-decoration: none;
-    font-size: 2rem;
+    font-size: 1.5714rem;
     color: $FlassBlueColor;
     cursor: pointer;
   }

@@ -81,13 +81,17 @@ class QuizMultipleChoiceComponent extends Component {
           <QuizMultipleChoice.Button
             right
             onClick={ this.onRegisterBtnClick }>
-            입력
+            <span>
+              입력
+            </span>
           </QuizMultipleChoice.Button>
           <QuizMultipleChoice.Button
             right
             gray
             onClick={ this.onCancelBtnClick }>
-            삭제
+            <span>
+              삭제
+            </span>
           </QuizMultipleChoice.Button>
         </QuizMultipleChoice.Footer>
       </QuizMultipleChoice.Wrapper>
@@ -128,7 +132,7 @@ class QuizMultipleChoiceComponent extends Component {
           isChecked={ this.isCheckedQuizIndexSameWithIndex(i) }
           onCheckboxClick={ this.onCheckboxClick }
           onChoiceInputChange={ this.onSingleChoiceInputChange }
-          onSingleChoiceDeleteBtnClick={ this.onSingleChoiceDeleteBtnClick }/>
+          onSingleChoiceDeleteBtnClick={ this.onSingleChoiceDeleteBtnClick } />
       );
     }
 

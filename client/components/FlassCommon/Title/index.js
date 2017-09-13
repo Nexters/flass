@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './styles.scss';
 
+const { string, element } = PropTypes;
+
 const propTypes = {
-  title: PropTypes.string.isRequired
+  title: string.isRequired,
 };
 const defaultProps = {
-  title: ''
 };
 
-const Header = props => (
+const Header = ({ title }) => (
   <div className={ classNames('header') }>
-    { props.title }
+    { title }
   </div>
 );
 

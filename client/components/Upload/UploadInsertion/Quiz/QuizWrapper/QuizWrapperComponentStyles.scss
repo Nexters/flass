@@ -2,10 +2,10 @@
 
 .quiz-wrapper {
   padding-left: 0;
-  margin-top: 15px;
+  margin-top: 0.9375rem;
 
   @include atPlayerLarge {
-    padding-left: 30px;
+    padding-left: 1.875rem;
     margin-top: 0;
   }
 

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
-import Header from '../../Flass/Header';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
 import ModalComponent from '../Modal/ModalComponent';
@@ -164,11 +162,16 @@ class UploadInsertionComponent extends Component {
         </div>
 
         <div className="row row--t-margin-larger">
-          <div
-            className="flass-upload-insertion-media__btn"
-            onClick={ this.onClickUploadBtn }>
-            업 로 드
+          <div className="flass-upload-insertion-media__container">
+            <div
+              className="flass-upload-insertion-media__btn"
+              onClick={ this.onClickUploadBtn }>
+              <span>
+                업 로 드
+              </span>
+            </div>
           </div>
+
         </div>
 
         {
