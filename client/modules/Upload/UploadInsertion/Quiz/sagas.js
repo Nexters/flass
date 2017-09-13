@@ -22,14 +22,8 @@ function* requestUploadQuestions({ questionState }) {
       const { id } = yield call(agent.Question.uploadByLectureId, questionBody);
 
       for (let choiceIndex = 0; choiceIndex < SingleChoiceValues.length; choiceIndex += 1) {
-        console.log('choiceIndex');
-        console.log(choiceIndex);
         const singleChoiceValues = SingleChoiceValues[choiceIndex];
-        console.log('singleChoiceValues');
-        console.log(singleChoiceValues);
         const choiceBody = yield call(ChoiceBodyAdapter.upload, id, singleChoiceValues);
-        console.log('choiceBody');
-        console.log(choiceBody);
         yield call(agent.Choice.upload, choiceBody);
       }
     }
