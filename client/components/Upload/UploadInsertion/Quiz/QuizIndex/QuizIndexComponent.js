@@ -26,10 +26,14 @@ class QuizIndexComponent extends Component {
           <div className="quiz-index__text">
             퀴즈를 추가하세요.
           </div>
-          <div
-            className="quiz-index__btn"
-            onClick={ onAddMultipleChoiceQuizBtnClick }>
-            객관식
+          <div className="quiz-index__container">
+            <div
+              className="quiz-index__btn"
+              onClick={ onAddMultipleChoiceQuizBtnClick }>
+              <span>
+                객관식
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -162,11 +162,16 @@ class UploadInsertionComponent extends Component {
         </div>
 
         <div className="row row--t-margin-larger">
-          <div
-            className="flass-upload-insertion-media__btn"
-            onClick={ this.onClickUploadBtn }>
-            업 로 드
+          <div className="flass-upload-insertion-media__container">
+            <div
+              className="flass-upload-insertion-media__btn"
+              onClick={ this.onClickUploadBtn }>
+              <span>
+                업 로 드
+              </span>
+            </div>
           </div>
+
         </div>
 
         {
