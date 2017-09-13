@@ -17,7 +17,15 @@ export const VideoStyled = {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, .32);
+    background-color: transparent;
+    opacity: 0;
+    transition: opacity 1s ease-out;
+    transition-delay: 1s;
+
+    &:hover {
+      opacity: 1;
+      transition: opacity 1s ease-out;
+    }
 
     ${media.atLargeForControllerbar`
       width: 54rem;

@@ -16,13 +16,23 @@ export const FlassDetailVideo = {
     position: absolute;
     width: 100%;
     bottom: 0;
-    background-color: rgba(0, 0, 0, .32);
+    background-color: transparent;
+    opacity: 0;
+    transition: opacity 1s ease-out;
+    transition-delay: 1s;
+
 
     @media (min-width: 57.625rem) {
       width: ${$playerWindowWidthAtLarge}rem;
       margin: 0 auto;
       left: 0;
       right: 0;
+    }
+
+    &:hover {
+      opacity: 1;
+      transition: opacity 1s ease-out;
+
     }
   `,
   EndedPage: styled.div`
