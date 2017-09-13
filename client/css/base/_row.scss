@@ -85,6 +85,10 @@
     margin-top: 1.525rem;
   }
 
+  &--t-large-margin {
+    margin-top: 2.0625rem;
+  }
+
 
 
   @include atLarge {
@@ -101,6 +105,13 @@
     }
 
     overflow: auto;
+  }
+
+  @include atPlayerLarge {
+    &__player-large-5 {
+      float: left;
+      width: 50%;
+    }
   }
 
 }

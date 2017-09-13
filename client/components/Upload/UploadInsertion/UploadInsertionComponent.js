@@ -114,8 +114,8 @@ class UploadInsertionComponent extends Component {
 
     return (
       <div>
-        <div className="row">
-          <div className="row__player-large-5">
+        <div className="Row">
+          <div className="Row__player-large-5">
             <VideoComponent
               VideoBarClassName="bar--thinner"
               VideoPlayedBarClassName="played-bar--thinner"
@@ -144,7 +144,7 @@ class UploadInsertionComponent extends Component {
               questionSecsStateArray={ questionSecsStateArray } />
           </div>
 
-          <div className="row__player-large-5">
+          <div className="Row__player-large-5">
             <QuizComponent
               saveMultipleChoiceQuestion={ this.saveMultipleChoiceQuestion }
               setPlayingState={ this.setPlayingState }
@@ -161,7 +161,7 @@ class UploadInsertionComponent extends Component {
           </div>
         </div>
 
-        <div className="row row--t-margin-larger">
+        <div className="Row Row--t-large-margin">
           <div className="flass-upload-insertion-media__container">
             <div
               className="flass-upload-insertion-media__btn"
