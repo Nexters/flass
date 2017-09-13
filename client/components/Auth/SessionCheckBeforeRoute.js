@@ -7,7 +7,8 @@ const { func, bool, shape, object } = PropTypes;
 const propTypes = {
   component: func.isRequired,
   checkSession: func.isRequired,
-  sessionValid: bool.isRequired
+  sessionValid: bool.isRequired,
+  isSessionChecking: bool.isRequired
 };
 
 const defaultProps = {};
@@ -19,20 +20,43 @@ class SessionCheckBeforeRoute extends Component {
     })
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isSessionChecking: true,
+      sessionValid: false
+    };
+  }
+
   componentWillMount() {
     this.props.checkSession();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { sessionValid, isSessionChecking } = nextProps;
+    this.setState({ sessionValid, isSessionChecking });
   }
 
   render() {
     const {
       component,
-      sessionValid,
       ...rest
     } = this.props;
+    const {
+      isSessionChecking,
+      sessionValid
+    } = this.state;
 
-    return sessionValid ?
-      <Route { ...rest } component={ component } /> :
-      <Redirect to="/user/login" />;
+    if (isSessionChecking) {
+      return <div>Session Checking Now!</div>;
+    }
+
+    if (sessionValid) {
+      return <Route { ...rest } component={ component } />;
+    } else {
+      return <Redirect to="/user/login" />;
+    }
   }
 }
 

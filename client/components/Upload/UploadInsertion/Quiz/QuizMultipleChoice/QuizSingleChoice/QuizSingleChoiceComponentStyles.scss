@@ -58,6 +58,7 @@ $spaceBetweenInputAndDeleteBtn: 1.5rem;
     right: $spaceBetweenInputAndDeleteBtn;
     margin-left: 1.25rem;
     width: 0;
+    opacity: 0;
     border: .5px solid #d3d9d9;
     transition: all 0.5s linear;
   }
