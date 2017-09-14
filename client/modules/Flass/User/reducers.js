@@ -5,7 +5,7 @@ import {
   FETCH_USER_SUCCESS,
   FETCH_USER_ERROR,
   SET_USER
-} from './UserActions';
+} from './actions';
 
 const initialState = {
   id: -1,

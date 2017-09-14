@@ -2,16 +2,16 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   FETCH_QUESTION
-} from '../../../../modules/Flass/Detail/Question/QuestionActions';
+} from '../../../../modules/Flass/Detail/Question/actions';
 import {
   fetchVideo,
   SET_VIDEO_COMPLETE,
   RESET_VIDEO_COMPLETE,
   REQUEST_ON_ENDED
-} from '../../../../modules/Flass/Detail/Video/VideoActions';
+} from '../../../../modules/Flass/Detail/Video/actions';
 import {
   UPDATE_STATE_AFTER_SOLVE_QUESTION
-} from '../../../../modules/Flass/Detail/DetailActions';
+} from '../../../../modules/Flass/Detail/actions';
 
 import Video from './Video';
 

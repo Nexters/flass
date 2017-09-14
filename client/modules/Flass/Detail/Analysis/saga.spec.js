@@ -2,10 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import chai, { expect } from 'chai';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
-import { fetchDetailAll, FETCH_READY_DETAIL, FETCH_DETAIL_SUCCESS } from './DetailActions';
-import { FETCH_QUESTION } from './Question/QuestionActions';
-import agent from '../../agent';
-import { FETCH_VIDEO } from './Video/VideoActions';
 
 describe('DetailActions ', () => {
   xit('should success fetchDetailAll', () => {

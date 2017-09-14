@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form';
 import {
   FETCH_COMMENT, fetchReplyComment, ADD_COMMENT,
   DELETE_COMMENT,
-} from '../../../../modules/Flass/Detail/Comment/CommentActions';
+} from '../../../../modules/Flass/Detail/Comment/actions';
 import Comment from './Comment';
 
 

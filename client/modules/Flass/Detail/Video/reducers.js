@@ -7,7 +7,7 @@ import {
   UPDATE_SEARCHABLE_SECS,
   SET_VIDEO_COMPLETE,
   RESET_VIDEO_COMPLETE
-} from './VideoActions';
+} from './actions';
 
 const initialState = {
   videoUrl: '',

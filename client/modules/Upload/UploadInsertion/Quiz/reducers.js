@@ -12,7 +12,7 @@ import {
   DELETE_COMPLETE_QUESTION,
   SUCCESS_UPLOAD_QUESTIONS,
   FAIL_UPLOAD_QUESTIONS
-} from './QuizActions';
+} from './actions';
 
 const INITIAL_STATE = {
   questionSecsStateArray: [],

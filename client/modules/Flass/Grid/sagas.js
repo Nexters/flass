@@ -1,14 +1,12 @@
-import fetch from 'axios';
 import { takeEvery } from 'redux-saga';
 import { call, fork, take, select, put, cancel } from 'redux-saga/effects';
 import _ from 'lodash';
 import agent from '../../agent';
-import { FETCH_USER } from '../User/UserActions';
-
-export const FETCH_MY_CHANNEL = 'FETCH_MY_CHANNEL';
-export const FETCH_READY_MY_CHANNEL = 'FETCH_READY_MY_CHANNEL';
-export const FETCH_MY_CHANNEL_SUCCESS = 'FETCH_MY_CHANNEL_SUCCESS';
-export const FETCH_MY_CHANNEL_ERROR = 'FETCH_MY_CHANNEL_ERROR';
+import {
+  FETCH_MY_CHANNEL,
+  FETCH_MY_CHANNEL_ERROR, FETCH_MY_CHANNEL_SUCCESS,
+  FETCH_READY_MY_CHANNEL,
+} from './actions';
 
 function* fetchMyChannelItems() {
   yield put({

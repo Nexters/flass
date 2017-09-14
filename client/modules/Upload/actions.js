@@ -3,7 +3,7 @@ import {
   NO_URL, FAIL_URL, SUCC_URL,
   FAIL_AUTH, SUCC_AUTH,
   NOT_STARTED, UPLOADING, PROCESSING, COMPLETED
-} from '../Constants';
+} from '../constants';
 import Google from '../Google';
 
 export const SET_STEP = 'SET_STEP';

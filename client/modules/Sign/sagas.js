@@ -25,7 +25,7 @@ import {
 
 import {
   SET_USER
-} from '../Flass/User/UserActions';
+} from '../Flass/User/actions';
 
 function* initGoogleService() {
   yield call(Google.initGoogleAuthService);

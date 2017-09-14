@@ -5,7 +5,7 @@ import {
 import {
   FETCH_QUESTION_SUCCESS,
   UPDATE_SOLVED_QUESTION
-} from './QuestionActions';
+} from './actions';
 
 const initialState = {
   totalCount: 0,

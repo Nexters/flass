@@ -1,10 +1,11 @@
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import agent from '../../agent';
-
-export const FETCH_BADGE_HISTORY = 'FETCH_BADGE_HISTORY';
-export const FETCH_READY_BADGE_HISTORY = 'FETCH_READY_BADGE_HISTORY';
-export const FETCH_BADGE_HISTORY_SUCCESS = 'FETCH_BADGE_HISTORY_SUCCESS';
-export const FETCH_BADGE_HISTORY_ERROR = 'FETCH_BADGE_HISTORY_ERROR';
+import {
+  FETCH_BADGE_HISTORY,
+  FETCH_BADGE_HISTORY_ERROR,
+  FETCH_BADGE_HISTORY_SUCCESS,
+  FETCH_READY_BADGE_HISTORY,
+} from './actions';
 
 function* fetchBadgeHistory({ badgeType }) {
   yield put({ type: FETCH_READY_BADGE_HISTORY });
@@ -24,7 +25,6 @@ function* fetchBadgeHistory({ badgeType }) {
   }
 }
 
-export const TOGGLE_BADGE_HISTORY = 'TOGGLE_BADGE_HISTORY';
 
 export default function* rootSaga() {
   yield takeLatest(FETCH_BADGE_HISTORY, fetchBadgeHistory);

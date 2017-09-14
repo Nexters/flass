@@ -6,7 +6,7 @@ import {
 } from '../../modules/Sign/actions';
 import {
   FETCH_USER
-} from '../../modules/Flass/User/UserActions';
+} from '../../modules/Flass/User/actions';
 
 function mapStateToProps(state) {
   const { sessionValid, isSessionChecking } = state.sign;

@@ -9,7 +9,7 @@ import {
   REQUEST_UPLOAD_QUESTIONS,
   SUCCESS_UPLOAD_QUESTIONS,
   FAIL_UPLOAD_QUESTIONS
-} from './QuizActions';
+} from './actions';
 
 function* requestUploadQuestions({ questionState }) {
   const lectureId = 2;

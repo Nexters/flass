@@ -1,5 +1,5 @@
-import * as actions from './Actions';
-import { STEP_1, NO_URL, METHOD_NOT_SELECTED, INIT, NOT_STARTED } from '../Constants';
+import * as actions from './actions';
+import { STEP_1, NO_URL, METHOD_NOT_SELECTED, INIT, NOT_STARTED } from '../constants';
 
 const initialState = {
   step: STEP_1,

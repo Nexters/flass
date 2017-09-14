@@ -1,4 +1,4 @@
-import { FETCH_READY_MY_CHANNEL, FETCH_MY_CHANNEL_SUCCESS, FETCH_MY_CHANNEL_ERROR } from './GridActions';
+import { FETCH_READY_MY_CHANNEL, FETCH_MY_CHANNEL_SUCCESS, FETCH_MY_CHANNEL_ERROR } from './actions';
 
 const initialState = {
   items: []

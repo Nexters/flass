@@ -8,7 +8,7 @@ import {
   ADD_COMMENT_ERROR,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_ERROR
-} from './CommentActions';
+} from './actions';
 import { createReducer } from '../../../reduxHelper';
 
 const initialState = {
