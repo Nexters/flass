@@ -22,7 +22,7 @@ export function* fetchDetailAll({ detailId }) {
       detail
     }), put({
       type: FETCH_VIDEO,
-      url: detail.url
+      url: detail && detail.url
     })];
   } catch (err) {
     yield put({

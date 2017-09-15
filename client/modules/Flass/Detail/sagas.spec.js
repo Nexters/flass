@@ -15,9 +15,10 @@ describe('DetailActions ', () => {
     const gen = fetchDetailAll(param);
     expect(gen.next().value).to.deep.equal(put({ type: FETCH_READY_DETAIL }));
     expect(gen.next().value).to.deep.equal(call(agent.Detail.byId, detailId));
-    expect(gen.next().value).to.deep.equal(put({ type: FETCH_QUESTION, detailId }));
-    expect(gen.next().value).to.deep.equal(put({ type: FETCH_DETAIL_SUCCESS, detail: undefined }));
-    expect(gen.next().value).to.deep.equal(put({ type: FETCH_VIDEO }));
+    expect(gen.next().value).to.deep.equal(
+      [put({ type: FETCH_QUESTION, detailId }),
+        put({ type: FETCH_DETAIL_SUCCESS, detail: undefined }),
+        put({ type: FETCH_VIDEO, url: undefined })]);
     expect(gen.next().done).to.equal(true);
   });
 });
