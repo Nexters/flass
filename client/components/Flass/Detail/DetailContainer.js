@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import Detail from './Detail';
-import { FETCH_DETAIL } from '../../../modules/Flass/Detail/DetailActions';
+import { FETCH_DETAIL } from '../../../modules/Flass/Detail/actions';
 import {
   LOAD_VIDEO
-} from '../../../modules/Flass/Detail/Video/VideoActions';
+} from '../../../modules/Flass/Detail/Video/actions';
 import withLoading from './withLoading';
 
 function mapStateToProps(state) {

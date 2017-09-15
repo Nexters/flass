@@ -1,44 +1,45 @@
 import styled from 'styled-components';
 
-const $playerHeight = 650;
-const $playerWidth = 100;
-const $progressbarHeight = 80;
-const $progressbarHeightThinner = '10px';
-const $progressbarHeightThicker = '50px';
+const $playerHeight = 41.125;
+const $borderWidth = '0.1875rem';
 
-const $quizIndicatorBarHeight = '30px';
-const $quizIndicatorBarHeightThinner = '10px';
-const $quizIndicatorBarHeightThicker = '50px';
-
-const $playerWindowWidthAtLarge = 1155;
-const $playerWindowWidthAtMedium = '624px';
+const $playerWindowWidthAtLarge = 72.1875;
 
 
 export const FlassDetailVideo = {
   Container: styled.div`
     position: relative;
-    height: ${$playerHeight}px;
-    border-radius: 3px;
+    height: ${$playerHeight}rem;
+    border-radius: ${$borderWidth};
   `,
   ControllerBar: styled.div`
     position: absolute;
-    width: ${$playerWidth}%;
-    height: ${$progressbarHeight}px;
-    top: ${$playerHeight - $progressbarHeight - 1}px;
-    background-color: rgba(0, 0, 0, .32);
+    width: 100%;
+    bottom: 0;
+    background-color: transparent;
+    opacity: 0;
+    transition: opacity 1s ease-out;
+    transition-delay: 1s;
 
-    @media (min-width: 1400px) {
-      width: ${$playerWindowWidthAtLarge}px;
+
+    @media (min-width: 57.625rem) {
+      width: ${$playerWindowWidthAtLarge}rem;
       margin: 0 auto;
       left: 0;
       right: 0;
+    }
+
+    &:hover {
+      opacity: 1;
+      transition: opacity 1s ease-out;
+
     }
   `,
   EndedPage: styled.div`
     position: absolute;
     top: 0;
     width: 100%;
-    height: ${$playerHeight}px;
+    height: ${$playerHeight}rem;
     background-color: rgba(0, 0, 0, .32);
   `
 };
@@ -53,8 +54,8 @@ export const ReplayBtn = styled.img`
 
 export const StyledPlayerOnDetailPage = `
   width: 100%;
-  border-radius: 3px;
-  height: 650px;
+  border-radius: ${$borderWidth};
+  height: 100%;
 `;
 
 export const EndedPageOnDetailPage = props => {
@@ -65,32 +66,33 @@ export const EndedPageOnDetailPage = props => {
       position: absolute;
       top: 0;
       width: ${isOpen ? '100%' : 0};
-      height: ${isOpen ? 650 : 0}px;
+      height: ${isOpen ? 100 : 0}%;
       opacity: ${isOpen ? 1 : 0};
       z-index: ${isOpen ? 10 : -10};
       background-color: black;
-      border-radius: 3px;
+      border-radius: 0.1875rem;
       transition: opacity .5s ease-out;
     `,
     Title: `
-      margin-top: 196px;
+      margin-top: 12.25rem;
       color: white;
       text-align: center;
-      font-size: 29px;
+      font-size: 2.0714rem;
       font-weight: 500;
     `,
     ReplayBtn: `
       position: relative;
-      margin-top: 34px;
+      margin-top: 2.125rem;
+      width: 9.375rem;
       left: 50%;
       transform: translateX(-50%);
       cursor: pointer;
     `,
     BtnLabel: `
-      margin-top: 14px;
+      margin-top: 0.875rem;
       color: white;
       text-align: center;
-      font-size: 22px;
+      font-size: 1.5714rem;
       font-weight: 500;
     `
   };

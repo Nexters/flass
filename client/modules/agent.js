@@ -128,6 +128,7 @@ const CommentRails = {
 const Comment = selectAPIRequest(CommentRails, CommentJson);
 
 const AnswerRails = {
+  byLectureId: lectureId => requests.get(`/answers?lecture_id=${lectureId}`),
   uploadByQuestionId: body => requests.post('/answers', body)
     .then(response => {
       console.log('response::Answer');
@@ -136,6 +137,7 @@ const AnswerRails = {
     })
 };
 const AnswerJson = {
+  byLectureId: () => {},
   uploadByQuestionId: body => axios.post('http://localhost:3000/answers', body, config)
     .then(response => {
       console.log('response::Answer');

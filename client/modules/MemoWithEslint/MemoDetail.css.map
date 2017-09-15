@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,YAAa;EACX,OAAO,EAAE,KAAK;EACd,KAAK,EAAE,IAAI;;AAGb,aAAc;EACZ,QAAQ,EAAE,QAAQ;EAClB,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,IAAI",
-"sources": ["MemoDetail.scss"],
-"names": [],
-"file": "MemoDetail.css"
-}

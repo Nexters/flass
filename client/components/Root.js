@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
-import requireSession from './HOC/requireSession';
+import SessionCheckBeforeRoute from './Auth/SessionCheckBeforeRouteContainer';
 import FlassApp from './Flass/FlassAppContainer';
 import SignInContainer from './Sign/SignIn/SignInContainer';
+import FlassViewContainer from './FlassView/FlassViewContainer';
+
+import '../css/base/global.scss';
 
 class Root extends Component {
   render() {
@@ -11,7 +14,8 @@ class Root extends Component {
       <BrowserRouter>
         <Switch>
           <Route path="/user/login" exact component={ SignInContainer } />
-          <Route path="/*" component={ requireSession(FlassApp) } />
+          <SessionCheckBeforeRoute path="/v/:id" component={ FlassViewContainer } />
+          <SessionCheckBeforeRoute path="/*" component={ FlassApp } />
         </Switch>
       </BrowserRouter>
     );

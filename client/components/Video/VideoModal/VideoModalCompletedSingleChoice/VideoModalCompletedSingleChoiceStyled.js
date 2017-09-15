@@ -7,7 +7,7 @@ const $WrongRedColor = '#f8490d';
 
 export const CompletedSingleChoice = {
   Wrapper: styled.div`
-    margin-top: 35px;
+    margin-top: 2.1875rem;
     display: flex;
 
     & > div {
@@ -16,27 +16,27 @@ export const CompletedSingleChoice = {
     }
   `,
   Checkbox: styled.div`
-    width: 30px;
-    height: 30px;
-    padding: 3.5px 3.5px;
+    width: 1.875rem;
+    height: 1.875rem;
+    padding: 0.21875rem 0.21875rem;
     border: solid 1.5px ${$checkboxBorderColor};
     border-radius: 50%;
   `,
   Check: styled.div`
-    width: 20px;
-    height: 20px;
-    border: solid 1.5px ${props => selectCheckColor(props)};
+    width: 1.875rem;
+    height: 1.25rem;
+    border: solid 0.09375rem ${props => selectCheckColor(props)};
     border-radius: 50%;
     background-color: ${props => selectCheckColor(props)};
   `,
   QuestionText: styled.div`
-    margin-left: 20px;
-    font-size: 20px;
+    margin-left: 1.25rem;
+    font-size: 1.4285rem;
     border: none;
     font-weight: ${props => selectFontWeight(props)};
-    height: 30px;
+    height: 1.875rem;
     color: ${props => selectTextColor(props)};;
-    width: 250px;
+    width: 15.625rem;
   `
 };
 

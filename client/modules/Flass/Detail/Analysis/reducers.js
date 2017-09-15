@@ -8,16 +8,18 @@ import {
 
 const initialState = {
   questions: [],
-  answers: {}
+  answers: [],
+  question_answers: []
 };
 
 const requestStatisticsReducer = {
   [SUCCESS_REQUEST_LECTURE_ANALYSIS]: (state, { payload }) => {
-    const { answers, questions } = payload;
+    const { answers, questions, question_answers } = payload;
     return {
       ...state,
       answers,
-      questions
+      questions,
+      question_answers,
     };
   },
   [FAIL_REQUEST_LECTURE_ANALYSIS]: state => state

@@ -8,7 +8,7 @@
   }
 
   &--t-margin-larger {
-    margin-top: 214px;
+    margin-top: 2.0625rem;
   }
 
   &--equal-height-at-large {
@@ -50,4 +50,68 @@
       width: 50%;
     }
   }
+}
+
+.Col {
+  @include clearfix;
+
+  @include atLarge {
+    &__grid {
+      float: left;
+      width: 23.44rem;
+      margin-right: 3.31rem;
+    }
+  }
+}
+
+.Row {
+  @include clearfix;
+
+  @include atLarge {
+    &--l-padding {
+      padding-left: 1.34375rem;
+    }
+  }
+
+  &--t-margin {
+    margin-top: 3rem;
+
+    @include atLarge {
+      margin-top: 0;
+    }
+  }
+
+  &--t-small-margin {
+    margin-top: 1.525rem;
+  }
+
+  &--t-large-margin {
+    margin-top: 2.0625rem;
+  }
+
+
+
+  @include atLarge {
+    &--r-padding {
+      padding-right: 1.6875rem;
+    }
+  }
+
+
+  &__large-5 {
+    @include atLarge {
+      float: left;
+      width: 50%;
+    }
+
+    overflow: auto;
+  }
+
+  @include atPlayerLarge {
+    &__player-large-5 {
+      float: left;
+      width: 50%;
+    }
+  }
+
 }

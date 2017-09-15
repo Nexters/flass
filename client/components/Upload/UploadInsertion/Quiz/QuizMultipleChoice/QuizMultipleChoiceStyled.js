@@ -6,40 +6,43 @@ const $FlassGrayColor = '#9b9b9b';
 
 export const QuizMultipleChoice = {
   Wrapper: styled.div`
-    padding: 50px 50px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 3.125rem 3.125rem;
   `,
   Header: styled.div`
     width: 100%;
-    height: 37px;
+    height: 2.3125rem;
     text-align: left;
   `,
   QuestionNumber: styled.span`
-    font-size: 25px;
+    font-size: 1.7857rem;
     font-weight: 500;
     color: #3f4a4b;
   `,
   QuestionTitleWrapper: styled.span`
     position: relative;
     display: inline-block;
-    padding: 0 30px 0 0;
-    width: 500px;
+    padding: 0 1.875rem 0 0;
+    width: 31.25rem;
   `,
   underline: styled.span`
     position: absolute;
     width: 0;
     bottom: 0;
     left: 0;
-    margin-left: 20px;
+    margin-left: 1.25rem;
     border: .5px solid #d3d9d9;
     transition: all 0.3s linear;
     opacity: 0;
   `,
   QuestionTitle: styled.input`
-    margin-left: 20px;
-    font-size: 20px;
+    margin-left: 1.25rem;
+    font-size: 1.4285rem;
     border: none;
     border-bottom: solid .5px white;
-    height: 30px;
+    height: 1.875rem;
     width: 100%;
     outline: none;
     color: ${props => selectInputTitleColor(props)};
@@ -50,20 +53,21 @@ export const QuizMultipleChoice = {
     }
   `,
   Icon: styled.img`
-    width: 30px;
-    height: 30px;
+    width: 1.875rem;
+    height: 1.875rem;
     cursor: pointer;
   `,
   Button: styled.div`
-    padding: .75rem 1.2rem;
-    display: inline-block;
-    width: 82px;
-    height: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5.125rem;
+    height: 2.6875rem;
     border: solid 1.5px ${props => selectBorderColor(props)};
-    border-radius: 100px;
+    border-radius: 6.25rem;
     text-align: center;
     text-decoration: none;
-    font-size: 2rem;
+    font-size: 1.4285rem;
     color: ${props => selectFontColor(props)};
     cursor: pointer;
 
@@ -71,7 +75,7 @@ export const QuizMultipleChoice = {
     margin-left: ${props => (props.right ? '15px' : '0')};
   `,
   AddButton: styled.div`
-    margin-top: 30px;
+    margin-top: 1.875rem;
     display: flex;
 
     & > div {
@@ -80,18 +84,19 @@ export const QuizMultipleChoice = {
     }
   `,
   AddButtonText: styled.div`
-    margin-left: 20px;
-    font-size: 20px;
+    margin-left: 1.25rem;
+    font-size: 1.4285rem;
     border: none;
-    height: 30px;
+    height: 1.875rem;
     color: #edeeee;
-    width: 250px;
+    flex: 1;
   `,
   Body: styled.div`
-    margin-top: 60px;
+    margin-top: .5rem;
   `,
   Footer: styled.div`
-    margin-top: 35px;
+    float: right;
+    margin-top: auto;
   `
 };
 

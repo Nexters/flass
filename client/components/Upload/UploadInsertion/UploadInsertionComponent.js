@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
-import Header from '../../Flass/Header';
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
 import ModalComponent from '../Modal/ModalComponent';
@@ -116,8 +114,8 @@ class UploadInsertionComponent extends Component {
 
     return (
       <div>
-        <div className="row">
-          <div className="row__player-large-5">
+        <div className="Row">
+          <div className="Row__player-large-5">
             <VideoComponent
               VideoBarClassName="bar--thinner"
               VideoPlayedBarClassName="played-bar--thinner"
@@ -146,7 +144,7 @@ class UploadInsertionComponent extends Component {
               questionSecsStateArray={ questionSecsStateArray } />
           </div>
 
-          <div className="row__player-large-5">
+          <div className="Row__player-large-5">
             <QuizComponent
               saveMultipleChoiceQuestion={ this.saveMultipleChoiceQuestion }
               setPlayingState={ this.setPlayingState }
@@ -163,12 +161,17 @@ class UploadInsertionComponent extends Component {
           </div>
         </div>
 
-        <div className="row row--t-margin-larger">
-          <div
-            className="flass-upload-insertion-media__btn"
-            onClick={ this.onClickUploadBtn }>
-            업 로 드
+        <div className="Row Row--t-large-margin">
+          <div className="flass-upload-insertion-media__container">
+            <div
+              className="flass-upload-insertion-media__btn"
+              onClick={ this.onClickUploadBtn }>
+              <span>
+                업 로 드
+              </span>
+            </div>
           </div>
+
         </div>
 
         {

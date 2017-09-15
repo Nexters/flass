@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { NO_URL, SUCC_URL, FAIL_URL } from '../../../../modules/Constants';
+import { NO_URL, SUCC_URL, FAIL_URL } from '../../../../modules/constants';
 import URLSuccess from './URLSuccess';
 import URLUpload from './URLUpload';
 

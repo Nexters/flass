@@ -14,25 +14,24 @@ function mapStateToProps(state) {
     },
     analysis: {
       questions,
+      question_answers,
       answers,
-      selectedQuestions
     }
   } = state.flass.detail;
-  console.log('state.flass.detail');
-  console.log(state.flass.detail);
   return {
     lectureId: id,
     questions,
+    question_answers,
     answers,
-    selectedQuestions
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    requestLectureAnalysis: lectureId => ({
+    requestLectureAnalysis: (lectureId, questionIndex) => ({
       type: REQUEST_LECTURE_ANALYSIS,
-      id: lectureId
+      lectureId,
+      questionIndex
     })
   }, dispatch);
 }

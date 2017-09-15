@@ -1,10 +1,10 @@
 import { fork } from 'redux-saga/effects';
-import flassUser from './User/UserActions';
-import flassBadge from './Badge/BadgeActions';
-import flassGrid from './Grid/GridActions';
-import flassDetail from './Detail/DetailActions';
-import flassComment from './Detail/Comment/CommentActions';
-import flassQuestion from './Detail/Question/QuestionActions';
+import flassUser from './User/sagas';
+import flassBadge from './Badge/sagas';
+import flassGrid from './Grid/sagas';
+import flassDetail from './Detail/sagas';
+import flassComment from './Detail/Comment/sagas';
+import flassQuestion from './Detail/Question/sagas';
 import flassVideo from './Detail/Video/sagas';
 import flassAnalysis from './Detail/Analysis/sagas';
 

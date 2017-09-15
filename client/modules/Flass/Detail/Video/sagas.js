@@ -3,7 +3,7 @@ import agent from '../../../agent';
 import { AnswerBodyAdapter } from '../../../../RequestBodyAdapter';
 import {
   REQUEST_ON_ENDED
-} from './VideoActions';
+} from './actions';
 
 function* requestOnEnded({ solvedQuestionsState }) {
   for (let i = 0; i < solvedQuestionsState.length; i += 1) {

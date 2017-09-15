@@ -35,6 +35,10 @@ Client
 - SASS and StyleLint support
 - chart.js : 그래프 라이브러리
 
+- Redux DevTools Extension
+http://extension.remotedev.io/#usage
+
+
 ## Exit Asset Pipeline, Enter Webpack
 
 Why Webpack?  

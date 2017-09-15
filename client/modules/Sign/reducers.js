@@ -7,6 +7,8 @@ import {
   USER_IS_SIGNEDIN,
   USER_ISNOT_SIGNEDIN,
 
+  CHECK_SESSION_START,
+  CHECK_SESSION_FIN,
   CHECK_SESSION_SUCCESS,
   CHECK_SESSION_FAIL,
 
@@ -21,7 +23,8 @@ const initialState = {
   isUserSignedIn: false,
   needRedirect: false,
   id_token: '',
-  sessionValid: false
+  sessionValid: false,
+  isSessionChecking: false
 };
 
 const userSignInReducer = {
@@ -44,6 +47,14 @@ const userSignOutReducer = {
 };
 
 const userIsSignedInReducer = {
+  [CHECK_SESSION_START]: state => ({
+    ...state,
+    isSessionChecking: true
+  }),
+  [CHECK_SESSION_FIN]: state => ({
+    ...state,
+    isSessionChecking: false
+  }),
   [CHECK_SESSION_SUCCESS]: state => ({
     ...state,
     sessionValid: true

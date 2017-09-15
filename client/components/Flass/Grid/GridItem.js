@@ -5,89 +5,137 @@ import styled from 'styled-components';
 import color from '../common/colors.scss';
 
 const Item = styled.div`
+  position: relative;
   display: block;
-  width: 230px;
-  height: 200px;
+  width: 23.44rem;
+  height: 19.81rem;
   color: ${color['white']};
-  padding: 10px;
+  margin-bottom: 3.31rem;
+  margin-right: 3.31rem;
   background-image: url(${props => props.src});
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   background-color: #000;
-  margin-bottom: 15px;
+
+`;
+
+const Container = styled.div`
+  height: 100%;
+  padding-top: 1.46rem;
+  padding-left: 1.49rem;
+  padding-bottom: 1.34rem;
+  padding-right: 1.36rem;
+  background-color: rgba(0, 0, 0, .5);
+
+  transition: background-color .3s ease-out;
+
+  &:hover {
+    background-color: rgba(23, 110, 153, .5);
+  }
 `;
 
 const Header = styled.span`
   font-family: NotoSansCJKkr;
-  font-size: 8px;
+  font-size: 0.81rem;
   font-weight: 100;
+  padding-bottom: .19rem;
   border-bottom: 1px solid ${color['white']};
 `;
 
 const Title = styled.div`
-  margin-top: 80px;
+  margin-top: 8.25rem;
   font-family: NotoSansCJKkr;
-  font-size: 18px;
+  font-size: 1.56rem;
   font-weight: 100;
   color: ${color['white']};
 `;
 
 const Date = styled.div`
   font-family: NotoSansCJKkr;
-  font-size: 8px;
+  font-size: 0.81rem;
   color: #d8d8d8;
-  margin-bottom: 15px;
+  margin-bottom: 1.9rem;
+`;
+
+const Body = styled.div`
+  posiiton: relative;
 `;
 
 const Question = styled.div`
-  font-size: 9px;
-  padding: 4px 6px;
-  margin: 5px;
-  border-radius: 100px;
+  display: table;
+  vertical-align: middle;
+  width: 6.94rem;
+  height: 1.86rem;
+  font-size: 0.81rem;
+  text-align: center;
+  border-radius: 6.25rem;
   border: solid 1px ${color['white']};
   float: left;
 `;
 
 const Analysis = styled.div`
-  font-size: 9px;
-  padding: 4px 6px;
-  margin: 5px;
-  border-radius: 100px;
+  display: table;
+  vertical-align: middle;
+  width: 4.91rem;
+  height: 1.83rem;
+  font-size: 0.81rem;
+  text-align: center;
+  border-radius: 6.25rem;
   border: solid 1px ${color['white']};
   float: right;
 `;
 
+const Text = styled.span`
+  display: table-cell;
+  vertical-align: middle;
+  z-index: 50;
+`;
+
+const { number, string } = PropTypes;
+
 const propTypes = {
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  thumbnailUrl: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  questionCount: PropTypes.number,
+  id: number.isRequired,
+  title: string.isRequired,
+  thumbnailUrl: string.isRequired,
+  createdAt: string.isRequired,
+  questionCount: number,
+  textbookRange: string
 };
 
 const defaultProps = {
   questionCount: 0,
+  textbookRange: ''
 };
 
 const GridItem = props => {
-  const { id, title, thumbnailUrl, createdAt, questionCount } = props;
+  const { id, title, thumbnailUrl, createdAt, questionCount, textbookRange } = props;
 
   return (
     <Item src={ thumbnailUrl }>
-      <Header>12주차 수업</Header>
-      <Link to={ `/detail/${id}` }>
-        <Title>
-          { title }
-        </Title>
-        <Date>
-          { createdAt }
-        </Date>
-      </Link>
-      <div>
-        <Question>질문 { questionCount }개</Question>
-        <Analysis>분석</Analysis>
-      </div>
+      <Container>
+        <Header>{ `수업범위: ${textbookRange}` }</Header>
+        <Link to={ `/detail/${id}` }>
+          <Title>
+            { title }
+          </Title>
+          <Date>
+            { createdAt }
+          </Date>
+        </Link>
+        <Body>
+          <Question>
+            <Text>
+              질문 { questionCount }개
+            </Text>
+          </Question>
+          <Analysis>
+            <Text>
+              분석
+            </Text>
+          </Analysis>
+        </Body>
+      </Container>
     </Item>
   );
 };

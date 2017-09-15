@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD, SUCC_URL } from '../../../modules/Constants';
+import { METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD, SUCC_URL } from '../../../modules/constants';
 
-import '../step.scss';
 import InfoBox from './InfoBox';
 import UploadOptionsBox from './UploadOptionsBox';
 import FileUploadBox from './FileUploadBox';
 import URLUploadBox from './URLUploadBox';
 import Button from '../../Flass/Button';
+import '../step.scss';
+import '../../../css/base/_row.scss';
 
 const propTypes = {
   handleNext: PropTypes.func.isRequired,
@@ -102,17 +103,24 @@ class Step1 extends Component {
           disabled={ !this.isComplete() }
           fontSize="1.57rem"
           color={ this.isComplete() ? '#176d99' : '#b6bfc1' }
-          margin="2.125rem 5.56rem 0 0"
-          padding="0.5625rem 2.06rem 0.3125rem 2.06rem"
           onClick={ () => handleNext(videoInfo) }>다 음</Button>
       </div>
     );
 
     return (
       <div className="container">
-        { left }
-        { right }
-        { next }
+        <div className="Row">
+          <div className="Row__large-5">
+            { left }
+          </div>
+          <div className={ classNames('Row__large-5', 'Row--l-padding', 'Row--t-margin') }>
+            { right }
+          </div>
+        </div>
+
+        <div className={ classNames('Row', 'Row--t-small-margin') }>
+          { next }
+        </div>
       </div>
 
     );

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Grid from './Grid';
-import { FETCH_MY_CHANNEL } from '../../../modules/Flass/Grid/GridActions';
+import { FETCH_MY_CHANNEL } from '../../../modules/Flass/Grid/actions';
 
 function mapStateToProps(state) {
   return {

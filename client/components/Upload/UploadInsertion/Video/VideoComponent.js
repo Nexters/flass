@@ -25,11 +25,6 @@ import {
   EndedPageOnUploadPage
 } from './VideoStyled';
 
-import {
-  convertPercentageToSecs,
-  convertSecsToPercentage
-} from '../../../Video/VideoUtils';
-
 const { string, oneOfType, arrayOf, func, number, bool, shape } = PropTypes;
 
 const propTypes = {

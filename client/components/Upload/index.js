@@ -4,18 +4,22 @@ import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
 import { connect } from 'react-redux';
-import { STEP_1, STEP_2 } from '../../modules/Constants';
-import * as actions from '../../modules/Upload/Actions';
+import { STEP_1, STEP_2 } from '../../modules/constants';
+import * as actions from '../../modules/Upload/actions';
 
 import UploadInsertionContainer from './UploadInsertion/UploadInsertionContainer';
+import SubHeader from './SubHeader/SubHeaderComponent';
 import './index.scss';
-
-// ********************************
+import {
+  Container
+} from './styled';
 
 import Step1 from './Step1';
-import Step2 from './Step2';
 
-import Header from '../Flass/Header';
+import {
+  Title,
+  Header
+} from '../FlassCommon';
 
 const propTypes = {
   step: PropTypes.number.isRequired,
@@ -41,10 +45,6 @@ const propTypes = {
   uploadLectureAndQuestions: PropTypes.func.isRequired
 };
 
-function handleError(func) {
-  console.error(`${func} is not defined`);
-}
-
 class Upload extends Component {
   render() {
     const {
@@ -64,45 +64,32 @@ class Upload extends Component {
     } = this.props;
 
     const header = (
-      <div className="headerContainer">
-        <Header title="Upload new video" />
-        <div className="steps">
-          <h2 className={ classNames('disabled', step == STEP_1 && 'active') }>
-            영상 업로드
-          </h2>
-          <span className={ classNames('disabled', 'stepsDecorator') }>{'>'}</span>
-          <h2 className={ classNames('disabled', step == STEP_2 && 'active') }>
-            퀴즈 삽입
-          </h2>
-        </div>
-      </div>
+      <Header
+        Title={ () =>  <Title title="Upload new video" /> }
+        SubTitle={ () => <SubHeader step={ step } STEP_1={ STEP_1 } STEP_2={ STEP_2 } /> } />
     );
 
     let body;
     switch(step) {
-      // step 1
       case STEP_1:
         body = (
-          <div>
-            <Step1
-              method={ method }
-              setUploadMethod={ method => handleSetUploadMethod(method) }
-              urlStatus={ urlStatus }
-              handleURLCheck={ videoURL => handleURLCheck(videoURL) }
-              handleNext={ videoInfo => this.goToStep2(videoInfo) }
-              thumbURL={ thumbURL }
-              resetVideo={ resetVideo }
-              isGoogleAuth={ isGoogleAuth }
-              goToGoogleAuthPage={ goToGoogleAuthPage }
-              handleYoutubeUpload={ file => uploadYoutubeVideo(file) }
-              uploadStatus={ uploadStatus }
-              uploadProgress={ uploadProgress }
-              processProgress={ processProgress } />
-          </div>
+          <Step1
+            method={ method }
+            setUploadMethod={ method => handleSetUploadMethod(method) }
+            urlStatus={ urlStatus }
+            handleURLCheck={ videoURL => handleURLCheck(videoURL) }
+            handleNext={ videoInfo => this.goToStep2(videoInfo) }
+            thumbURL={ thumbURL }
+            resetVideo={ resetVideo }
+            isGoogleAuth={ isGoogleAuth }
+            goToGoogleAuthPage={ goToGoogleAuthPage }
+            handleYoutubeUpload={ file => uploadYoutubeVideo(file) }
+            uploadStatus={ uploadStatus }
+            uploadProgress={ uploadProgress }
+            processProgress={ processProgress } />
         );
         break;
 
-      // step 2
       case STEP_2:
       default:
         body = (
@@ -112,10 +99,10 @@ class Upload extends Component {
     }
 
     return (
-      <div>
+      <Container>
         { header }
         { body }
-      </div>
+      </Container>
     );
   }
 

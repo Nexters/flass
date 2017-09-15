@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FETCH_USER }  from '../../modules/Flass/User/UserActions';
+import { FETCH_USER }  from '../../modules/Flass/User/actions';
 import { LOGOUT } from '../../modules/Sign/actions';
 import FlassApp from './FlassApp';
 
