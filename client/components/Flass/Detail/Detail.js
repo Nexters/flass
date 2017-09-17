@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import autobind from 'autobind-decorator';
 import { Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -118,7 +117,7 @@ class Detail extends Component {
         <Header
           Title={ () => <Title title="Watching Video" />}
           SubTitle={ () => null } />
-        
+
         <FlassDetailStyled.Content>
           <Video
             VideoBarClassName="bar--thinner"
