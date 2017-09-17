@@ -1,5 +1,5 @@
 class LecturesController < ApplicationController
-  before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
+  before_action :login_check, only: [:show, :edit, :create, :update, :destroy, :v]
   before_action :set_lecture, only: [:show, :edit, :update, :destroy, :statistics]
 
   api :GET, '/lectures', '(특정 유저가 업로드한) 강의들 불러오기'
