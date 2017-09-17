@@ -7,11 +7,11 @@ import {
 } from '../../RequestBodyAdapter';
 import {
   UPLOAD_LECTURE_AND_QUESTIONS
-} from './Actions';
+} from './actions';
 import {
   SUCCESS_UPLOAD_QUESTIONS,
   FAIL_UPLOAD_QUESTIONS
-} from './UploadInsertion/Quiz/QuizActions';
+} from './UploadInsertion/Quiz/actions';
 
 function* uploadLectureAndQuestions({
   questionState,

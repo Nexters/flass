@@ -25,7 +25,7 @@ import {
 
 import {
   SET_USER
-} from '../Flass/User/UserActions';
+} from '../Flass/User/actions';
 
 function* initGoogleService() {
   yield call(Google.initGoogleAuthService);
@@ -76,6 +76,7 @@ function* checkSession() {
     yield put({ type: CHECK_SESSION_SUCCESS });
     yield put({ type: CHECK_SESSION_FIN });
   } catch (error) {
+    console.log(error);
     yield put({ type: CHECK_SESSION_FAIL });
     yield put({ type: CHECK_SESSION_FIN });
   }

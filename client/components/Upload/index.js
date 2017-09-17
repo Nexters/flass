@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
 import { connect } from 'react-redux';
-import { STEP_1, STEP_2 } from '../../modules/Constants';
-import * as actions from '../../modules/Upload/Actions';
+import { STEP_1, STEP_2 } from '../../modules/constants';
+import * as actions from '../../modules/Upload/actions';
 
 import UploadInsertionContainer from './UploadInsertion/UploadInsertionContainer';
 import SubHeader from './SubHeader/SubHeaderComponent';

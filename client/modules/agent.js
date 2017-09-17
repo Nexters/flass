@@ -4,7 +4,7 @@ const TYPE_OF_BACKEND = process.env.BACK_END;
 const API_JSON = 'http://localhost:4000';
 const API_LOCAL = 'http://localhost:3000';
 const API_PRODUCTION = 'https://conduit.productionready.io/api';
-const API_ROOT = (TYPE_OF_BACKEND === 'rails' ? API_LOCAL : API_JSON);
+const API_ROOT = (TYPE_OF_BACKEND === 'json' ? API_JSON : API_LOCAL );
 
 const encode = encodeURIComponent;
 const responseBody = res => res.data;
@@ -163,6 +163,7 @@ const Lecture = {
 
 export default {
   Auth,
+  Badge,
   User,
   Grid,
   Detail,

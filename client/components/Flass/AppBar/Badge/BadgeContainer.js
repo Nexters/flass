@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { FETCH_BADGE_HISTORY, TOGGLE_BADGE_HISTORY } from '../../../../modules/Flass/Badge/BadgeActions';
+import { FETCH_BADGE_HISTORY, TOGGLE_BADGE_HISTORY } from '../../../../modules/Flass/Badge/actions';
 import Badge from './Badge';
 
 function mapStateToProps(state) {
