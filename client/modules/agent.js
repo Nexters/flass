@@ -4,7 +4,7 @@ const TYPE_OF_BACKEND = process.env.BACK_END;
 const API_JSON = 'http://localhost:4000';
 const API_LOCAL = 'http://localhost:3000';
 const API_PRODUCTION = 'https://conduit.productionready.io/api';
-const API_ROOT = (TYPE_OF_BACKEND === 'json' ? API_JSON : API_LOCAL );
+const API_ROOT = (TYPE_OF_BACKEND === 'json' ? API_JSON : API_LOCAL);
 
 const encode = encodeURIComponent;
 const responseBody = res => res.data;
@@ -24,7 +24,7 @@ const config = {
 };
 
 function selectAPIRequest(railsRequest = {}, jsonRequest = {}) {
-  return TYPE_OF_BACKEND === 'rails' ? railsRequest : jsonRequest;
+  return TYPE_OF_BACKEND === 'json' ?  jsonRequest : railsRequest;
 }
 
 const requests = {
