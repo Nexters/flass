@@ -163,6 +163,7 @@ const Lecture = {
 
 export default {
   Auth,
+  Badge,
   User,
   Grid,
   Detail,

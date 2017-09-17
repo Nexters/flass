@@ -11,7 +11,7 @@ import {
   FETCH_READY_COMMENT,
 } from './actions';
 
-function* fetchComment({ detailId }) {
+export function* fetchComment({ detailId }) {
   yield put({ type: FETCH_READY_COMMENT });
 
   try {
@@ -29,8 +29,7 @@ function* fetchComment({ detailId }) {
   }
 }
 
-function* addComment({ commentId, detailId, userId, userName, content }) {
-  console.log(commentId, detailId, userId, userName, content);
+export function* addComment({ commentId, detailId, userId, userName, content }) {
   const tmpCommentId = Date.now().toString();
   yield put({
     type: ADD_READY_COMMENT,

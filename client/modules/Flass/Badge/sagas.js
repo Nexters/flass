@@ -7,7 +7,7 @@ import {
   FETCH_READY_BADGE_HISTORY,
 } from './actions';
 
-function* fetchBadgeHistory({ badgeType }) {
+export function* fetchBadgeHistory({ badgeType }) {
   yield put({ type: FETCH_READY_BADGE_HISTORY });
 
   try {

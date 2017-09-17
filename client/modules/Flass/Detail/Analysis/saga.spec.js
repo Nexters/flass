@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import chai, { expect } from 'chai';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
+import {fetchDetailAll} from '../sagas';
 
 describe('DetailActions ', () => {
   xit('should success fetchDetailAll', () => {
