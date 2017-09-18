@@ -13,7 +13,7 @@ class ErrorComponent extends Component {
       <Wrapper>
         <Icon srcSet={ ErrorIcon } />
         <ErrorResponseCode>
-          Error 400
+          Error 404
         </ErrorResponseCode>
         <ErrorText>
           이 웹페이지를 찾는 도중 문제가 발생하였습니다.

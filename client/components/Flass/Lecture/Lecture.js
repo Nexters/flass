@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import classNames from 'classnames';
 import { Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -72,7 +73,8 @@ const propTypes = {
   video: shape({
     videoUrl: string
   }).isRequired,
-  lectureId: string
+  lectureId: string,
+  isError: bool.isRequired
 };
 
 const defaultProps = {
@@ -109,10 +111,13 @@ class Detail extends Component {
   render() {
     const {
       question: { questions },
-      video: { videoUrl }
+      video: { videoUrl },
+      detail: { isError }
     } = this.props;
 
-    return (
+    return isError ?
+      <Redirect to="/error" /> :
+
       <FlassLectureStyled.Wrapper>
         <Header
           Title={ () => <Title title="Watching Video" />}
@@ -136,8 +141,7 @@ class Detail extends Component {
             {this.renderTabs()}
           </FlassLectureStyled.Tab>
         </FlassLectureStyled.Content>
-      </FlassLectureStyled.Wrapper>
-    );
+      </FlassLectureStyled.Wrapper>;
   }
 
   selectLectureId() {
