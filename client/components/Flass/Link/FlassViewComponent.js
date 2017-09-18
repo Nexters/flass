@@ -14,7 +14,7 @@ import Content from '../../FlassCommon/Content';
 import AppBar from '../../FlassCommon/AppBar/AppBar';
 import Lecture from '../Lecture/LectureContainer';
 
-const { shape, string, object, number } = PropTypes;
+const { shape, string, object, number, func } = PropTypes;
 
 const childContextTypes = {
   muiTheme: object.isRequired
@@ -26,7 +26,8 @@ const propTypes = {
       id: string
     })
   }).isRequired,
-  id: number.isRequired
+  id: number.isRequired,
+  signOutFlassService: func.isRequired
 };
 const defaultProps = {};
 
@@ -58,7 +59,8 @@ class FlassViewComponent extends Component {
         <div>
           <Drawer />
           <AppBar
-            isLogin={ this.isUserLogin() } />
+            isLogin={ this.isUserLogin() }
+            onClickLogoutBtn={ this.signOutFlassService } />
 
           <Content>
             <Lecture
@@ -73,6 +75,11 @@ class FlassViewComponent extends Component {
   isUserLogin() {
     const { id } = this.props;
     return id !== -1;
+  }
+
+  @autobind
+  signOutFlassService() {
+    this.props.signOutFlassService();
   }
 }
 

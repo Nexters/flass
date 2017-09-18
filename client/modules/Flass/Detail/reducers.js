@@ -24,13 +24,15 @@ const initialState = {
     created_at: '',
     updated_at: '',
     url: ''
-  }
+  },
+  isError: false
 };
 
 const fetchDetailReducer = {
   [FETCH_READY_DETAIL]: (state, action) => ({
     ...state,
-    isLoading: true
+    isLoading: true,
+    isError: false
   }),
   [FETCH_DETAIL_SUCCESS]: (state, action) => {
     const { detail } = action;
@@ -48,12 +50,14 @@ const fetchDetailReducer = {
         duration: detail.duration,
         createdAt: detail['created_at'],
         updatedAt: detail['updated_at']
-      }
+      },
+      isError: false
     };
   },
   [FETCH_DETAIL_ERROR]: (state, action) => ({
     ...state,
-    isLoading: false
+    isLoading: false,
+    isError: true
   })
 };
 

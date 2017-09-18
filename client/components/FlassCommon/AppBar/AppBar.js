@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-import { Navbar, NavItem } from 'react-bootstrap';
 import styled from 'styled-components';
 import NavbarComponent from './Navbar/NavbarComponent';
 import NavComponent from './Nav/NavComponent';
-import UserAppBar from './UserAppBarContainer';
+import UserAppBar from './UserAppBar/UserAppBarContainer';
 import color from '../../../css/base/colors.scss';
 import './AppBar.scss';
 
