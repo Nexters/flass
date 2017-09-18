@@ -3,8 +3,8 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import SessionCheckBeforeRoute from './Auth/SessionCheckBeforeRouteContainer';
 import FlassApp from './Flass/FlassAppContainer';
-import SignInContainer from './Sign/SignIn/SignInContainer';
-import FlassViewContainer from './FlassView/FlassViewContainer';
+import SignInContainer from './Flass/Sign/SignIn/SignInContainer';
+import FlassViewContainer from './Flass/Link/FlassViewContainer';
 
 import '../css/base/global.scss';
 
