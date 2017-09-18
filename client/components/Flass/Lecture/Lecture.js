@@ -23,7 +23,7 @@ import {
   analysisImage
 } from './icons';
 
-import color from '../../FlassCommon/common/colors.scss';
+import color from '../../../css/base/colors.scss';
 import './Lecture.scss';
 
 const TabIcon = styled.img`

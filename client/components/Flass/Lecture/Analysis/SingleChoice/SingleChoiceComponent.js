@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { SingleChoice } from './SingleChoiceStyled';
-import colors from '../../../../FlassCommon/common/colors.scss';
+import colors from '../../../../../css/base/colors.scss';
 
 const UserView = styled.span`
   padding: 0.3rem;
@@ -30,7 +30,13 @@ class SingleChoiceComponent extends Component {
           </SingleChoice.Title>
         </SingleChoice.Header>
         <SingleChoice.Body>
-          { userAnswers.map((userAnswer, index) => <UserView key={`user${index}`}>{userAnswer.userName}</UserView>) }
+          {
+            userAnswers.map((userAnswer, index) => (
+              <UserView key={ `user${index}` }>
+                { userAnswer.userName }
+              </UserView>
+            ))
+          }
         </SingleChoice.Body>
       </SingleChoice.Wrapper>
     );

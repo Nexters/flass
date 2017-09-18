@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
-import color from '../../common/colors.scss';
+import color from '../../../../css/base/colors.scss';
 import BadgeItem from './BadgeItem';
 
 const Tabs = styled.ul`

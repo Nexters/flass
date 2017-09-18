@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import styled from 'styled-components';
-import color from '../common/colors.scss';
+import color from '../../../css/base/colors.scss';
 import Badge from './Badge/BadgeContainer';
 
 import {

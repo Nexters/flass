@@ -8,7 +8,7 @@ import { reduxForm, Field } from 'redux-form';
 import _ from 'lodash';
 import styled from 'styled-components';
 import normalizePostComment from './normalizePostComment';
-import color from '../../../FlassCommon/common/colors.scss';
+import color from '../../../../css/base/colors.scss';
 import './PostComment.scss';
 
 const DetailForm = styled(Form)``;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import color from '../../../FlassCommon/common/colors.scss';
+import color from '../../../../css/base/colors.scss';
 
 const DetailContent = styled.div`
   width: 100%;

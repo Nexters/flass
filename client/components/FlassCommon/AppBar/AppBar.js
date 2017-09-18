@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import NavbarComponent from './Navbar/NavbarComponent';
 import NavComponent from './Nav/NavComponent';
 import UserAppBar from './UserAppBarContainer';
-import color from '../common/colors.scss';
+import color from '../../../css/base/colors.scss';
 import './AppBar.scss';
 
 const NavTitle = styled.span`

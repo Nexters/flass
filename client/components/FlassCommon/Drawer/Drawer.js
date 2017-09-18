@@ -6,7 +6,7 @@ import SideHome from './images/side-home.png';
 import SideHomeActive from './images/side-home-active.png';
 import SideUpload from './images/side-upload.png';
 import SideUploadActive from './images/side-upload-active.png';
-import color from '../common/colors.scss';
+import color from '../../../css/base/colors.scss';
 import './Drawer.scss';
 
 const FlassMark = styled.div`

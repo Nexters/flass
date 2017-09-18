@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import color from '../../../FlassCommon/common/colors.scss';
+import color from '../../../../css/base/colors.scss';
 
 const CommentItemMenuView = styled.div`
   width: 80px;
