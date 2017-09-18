@@ -3,7 +3,7 @@ import axios from 'axios';
 const TYPE_OF_BACKEND = process.env.BACK_END;
 const API_JSON = 'http://localhost:4000';
 const API_LOCAL = 'http://localhost:3000';
-const API_PRODUCTION = 'http://13.124.245.121';
+const API_PRODUCTION = 'http://13.124.245.121.xip.io';
 export const API_ROOT = (function() {
   switch (TYPE_OF_BACKEND) {
     case 'json' :
