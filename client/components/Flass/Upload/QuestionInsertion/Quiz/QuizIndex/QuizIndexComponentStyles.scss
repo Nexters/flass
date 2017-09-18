@@ -1,0 +1,41 @@
+@import '../../../variables';
+
+.quiz-index {
+  &__content {
+    padding-top: 10.625rem;
+  }
+
+  &__container {
+    display: table;
+    overflow: auto;
+    margin: 1.5625rem auto 0 auto;
+  }
+
+  &__icon {
+    display: block;
+    margin: 0 auto;
+    width: 2.625rem;
+    height: 3.125rem;
+  }
+
+  &__text {
+    margin: 0.625rem auto 0 auto;
+    font-size: 1.5714rem;
+    color: $FlassGrayColor;
+    text-align: center;
+  }
+
+  &__btn {
+    display: table-cell;
+    vertical-align: middle;
+    width: 6.4375rem;
+    height: 2.8125rem;
+    border: solid 1.5px $FlassGreenColor;
+    border-radius: 6.25rem;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.4285rem;
+    color: $FlassGreenColor;
+    cursor: pointer;
+  }
+}

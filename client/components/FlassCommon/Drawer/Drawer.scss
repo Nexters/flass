@@ -1,0 +1,19 @@
+$flassDrawerWidth: 8rem;
+
+.flass-drawer {
+  height: 100%;
+  position: fixed;
+  width: $flassDrawerWidth;
+  top: 0;
+  left: 0;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.11);
+  z-index: 5;
+}
+
+.flass-user-app-bar {
+  width: 160px;
+  color: #fff;
+}

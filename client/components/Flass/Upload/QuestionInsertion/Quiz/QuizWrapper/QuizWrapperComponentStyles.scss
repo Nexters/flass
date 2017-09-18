@@ -1,0 +1,12 @@
+@import '../../../../../../css/base/mixins';
+
+.quiz-wrapper {
+  padding-left: 0;
+  margin-top: 0.9375rem;
+
+  @include atPlayerLarge {
+    padding-left: 1.875rem;
+    margin-top: 0;
+  }
+
+}

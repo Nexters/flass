@@ -1,0 +1,135 @@
+.alignRight {
+  text-align: right;
+}
+
+.exitIcon {
+  width: 1.313rem;
+  height: 1.375rem;
+  margin: 1.5rem 1.563rem 0 0;
+}
+
+.whiteExitIcon {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: 1.375rem 1.5rem 0 0;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.fileIcon {
+  display: block;
+  margin: 0 auto;
+  margin-top: 7.86rem;
+  width: 3.38rem;
+  height: 2.94rem;
+  margin-bottom: 1.19rem;
+}
+
+.fileMessage {
+  display: block;
+  font-size: 1.571rem;
+  font-weight: 500;
+  color: #848B8C;
+  margin-bottom: 1.88rem;
+}
+
+.inputFile {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputFile + label {
+  font-size: 1.429rem;
+  font-weight: 500;
+  color: #9abf32;
+  padding: 0.5625rem 1.188rem 0.4375rem 1.188rem;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border-radius: 6.25rem;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  border: solid 0.0625rem;
+}
+
+.uploadIcon {
+  display: block;
+  margin: 0 auto;
+  margin-top: 6.67rem;
+  width: 4.75rem;
+  height: 4.69rem;
+  margin-bottom: 0.44rem;
+}
+
+.uploadMessage {
+  display: block;
+  font-size: 1.571rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 1.81rem;
+}
+
+.progressMessage {
+  margin-top: 0.943rem;
+  display: block;
+  font-size: 1.29rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.progressBarContainer {
+  height: inherit;
+  position: relative;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0.875rem;
+  left: 0;
+}
+
+.completeIcon {
+  margin-top: 6.73rem;
+  width: 4.75rem;
+  height: 4.75rem;
+  margin-bottom: 0.94rem;
+}
+
+.completeMessage {
+  display: block;
+  font-size: 1.57rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.72);
+}
+
+.blackBackground {
+  height: 100%;
+  background-color: #000000;
+  background-size: cover;
+  border-radius: inherit;
+}
+
+// Upload COMPLETED
+.youtubeThumbnail {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: inherit;
+}
+
+.overlay {
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-size: cover;
+  border-radius: inherit;
+}
