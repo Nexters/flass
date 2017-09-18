@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import LoadingComponent from './Loading/LoadingComponent';
 
 const { func, bool, shape, object } = PropTypes;
 
@@ -49,7 +50,7 @@ class SessionCheckBeforeRoute extends Component {
     } = this.state;
 
     if (isSessionChecking) {
-      return <div>Session Checking Now!</div>;
+      return <LoadingComponent />;
     }
 
     if (sessionValid) {
