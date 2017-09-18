@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import styled from 'styled-components';
-import color from '../../../css/base/colors.scss';
-import Badge from './Badge/BadgeContainer';
+import color from '../../../../css/base/colors.scss';
 
 import {
   LogoutIcon
@@ -36,12 +35,6 @@ const LogoutBtnIcon = styled.img`
   width: 1.19rem;
   height: 1.19rem;
   cursor: pointer;
-`;
-
-const Divider = styled.span`
-  width: 1px;
-  border-left: solid 0.1428rem #afbfc1;
-  margin: 0 2rem;
 `;
 
 const propTypes = {
