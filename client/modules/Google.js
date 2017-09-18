@@ -2,10 +2,11 @@ import axios from 'axios';
 
 import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
 import MediaUploader from './MediaUploader';
+import { API_ROOT } from './agent';
 
 const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube';
 const LOGIN_SCOPE = 'https://www.googleapis.com/auth/youtube';
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = API_ROOT;
 const GET_UPLOAD_STATUS_INTERVAL_MILLIS = 60 * 1000;
 
 let instance = null;
