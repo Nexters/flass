@@ -7,19 +7,17 @@ import {
 } from './actions';
 import agent from '../../../agent';
 
-function* makeSelectedAnswer(answer) {
+export function* makeSelectedAnswer(answer) {
   const user = yield call(agent.User.byId, answer['user_id']);
-  console.log(user);
   return {
     ...answer,
     userName: user.username,
   };
 }
 
-function* requestLectureAnalysis({ lectureId, questionIndex }) {
+export function* requestLectureAnalysis({ detailId, questionIndex }) {
   try {
-    const analysis = yield call(agent.Analysis.fetch, lectureId);
-    const { questions, answers } = analysis;
+    const { questions, answers } = yield call(agent.Analysis.fetch, detailId);
     const questionId = questions[questionIndex].id || -1;
 
     const selectedAnswers = yield all(answers[questionId].map(answer => makeSelectedAnswer(answer)));
