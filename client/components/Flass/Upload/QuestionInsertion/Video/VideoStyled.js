@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import media from '../../../../styled-components/base/media';
+import media from '../../../../../css/styled/base/media';
 
 const playerHeight = 30.25;
 const borderWidth = 0.1875;

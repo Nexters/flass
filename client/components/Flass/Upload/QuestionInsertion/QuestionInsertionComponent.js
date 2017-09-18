@@ -7,7 +7,7 @@ import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
 import ModalComponent from '../Modal/ModalComponent';
 
-import './UploadInsertionComponentStyles.scss';
+import './QuestionInsertionComponentStyles.scss';
 
 const { func, string, bool, arrayOf, number, shape, oneOfType } = PropTypes;
 
@@ -80,7 +80,7 @@ const defaultProps = {
   }
 };
 
-class UploadInsertionComponent extends Component {
+class QuestionInsertionComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -313,7 +313,7 @@ class UploadInsertionComponent extends Component {
   }
 }
 
-UploadInsertionComponent.propTypes = propTypes;
-UploadInsertionComponent.defaultProps = defaultProps;
+QuestionInsertionComponent.propTypes = propTypes;
+QuestionInsertionComponent.defaultProps = defaultProps;
 
-export default UploadInsertionComponent;
+export default QuestionInsertionComponent;

@@ -6,14 +6,14 @@ import { connect } from 'react-redux';
 import { STEP_1, STEP_2 } from '../../../modules/constants';
 import * as actions from '../../../modules/Upload/actions';
 
-import UploadInsertionContainer from './UploadInsertion/UploadInsertionContainer';
+import VideoInfo from './VideoInfo';
+import QuestionInsertionContainer from './QuestionInsertion/QuestionInsertionContainer';
 import SubHeader from './SubHeader/SubHeaderComponent';
 import './index.scss';
 import {
   Container
 } from './styled';
 
-import Step1 from './Step1';
 
 import {
   Title,
@@ -72,7 +72,7 @@ class Upload extends Component {
     switch(step) {
       case STEP_1:
         body = (
-          <Step1
+          <VideoInfo
             method={ method }
             setUploadMethod={ method => handleSetUploadMethod(method) }
             urlStatus={ urlStatus }
@@ -92,7 +92,7 @@ class Upload extends Component {
       case STEP_2:
       default:
         body = (
-          <UploadInsertionContainer
+          <QuestionInsertionContainer
             onClickUploadBtn={ this.uploadLectureAndQuestions } />
         );
     }

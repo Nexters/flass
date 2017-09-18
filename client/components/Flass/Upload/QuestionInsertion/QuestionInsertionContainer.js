@@ -13,7 +13,7 @@ import {
   completeEditQuestion,
   deleteCompleteQuestion
 } from '../../../../modules/Upload/UploadInsertion/Quiz/actions';
-import UploadInsertionComponent from './UploadInsertionComponent';
+import QuestionInsertionComponent from './QuestionInsertionComponent';
 
 function mapStateToProps({ quizInsertion, upload }) {
   const {
@@ -63,4 +63,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UploadInsertionComponent);
+)(QuestionInsertionComponent);

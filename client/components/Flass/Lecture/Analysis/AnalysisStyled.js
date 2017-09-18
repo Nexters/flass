@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import media from '../../../styled-components/base/media';
+import media from '../../../../css/styled/base/media';
 
 const tooltipWidth = 3.4375;
 const tooltipHeight = 3.125;

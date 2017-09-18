@@ -1,4 +1,4 @@
-import { getStyledComponent } from '../../../styled-components/helper';
+import { getStyledComponent } from '../../../../css/styled/helper';
 
 const template = {
   Container: {

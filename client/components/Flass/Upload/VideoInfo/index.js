@@ -32,7 +32,7 @@ const defaultProps = {
 
 };
 
-class Step1 extends Component {
+class VideoInfo extends Component {
   state = {
     videoInfo: {
       title: '',
@@ -145,7 +145,7 @@ class Step1 extends Component {
   }
 }
 
-Step1.propTypes = propTypes;
-Step1.defaultProps = defaultProps;
+VideoInfo.propTypes = propTypes;
+VideoInfo.defaultProps = defaultProps;
 
-export default Step1;
+export default VideoInfo;
