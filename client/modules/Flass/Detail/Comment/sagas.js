@@ -11,7 +11,7 @@ import {
   FETCH_READY_COMMENT,
 } from './actions';
 
-function* fetchComment({ detailId }) {
+export function* fetchComment({ detailId }) {
   yield put({ type: FETCH_READY_COMMENT });
 
   try {
@@ -29,14 +29,13 @@ function* fetchComment({ detailId }) {
   }
 }
 
-function* addComment({ commentId, detailId, userId, userName, content }) {
-  console.log(commentId, detailId, userId, userName, content);
-  const tmpCommentId = Date.now().toString();
+export function* addComment({ tempId, commentId, detailId, userId, userName, content }) {
+  const tempCommentId = tempId || Date.now().toString();
   yield put({
     type: ADD_READY_COMMENT,
     parentId: commentId,
     comment: {
-      id: tmpCommentId,
+      id: tempCommentId,
       detailId,
       userId,
       userName,
@@ -49,14 +48,14 @@ function* addComment({ commentId, detailId, userId, userName, content }) {
     yield put({
       type: ADD_COMMENT_SUCCESS,
       parentId: commentId,
-      id: tmpCommentId,
+      id: tempCommentId,
       newId: res.id
     });
   } catch (err) {
     yield put({
       type: ADD_COMMENT_ERROR,
       message: err.message,
-      id: tmpCommentId
+      id: tempCommentId
     });
   }
 }

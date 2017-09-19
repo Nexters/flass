@@ -3,8 +3,17 @@ import axios from 'axios';
 const TYPE_OF_BACKEND = process.env.BACK_END;
 const API_JSON = 'http://localhost:4000';
 const API_LOCAL = 'http://localhost:3000';
-const API_PRODUCTION = 'https://conduit.productionready.io/api';
-const API_ROOT = (TYPE_OF_BACKEND === 'rails' ? API_LOCAL : API_JSON);
+const API_PRODUCTION = 'http://13.124.245.121.xip.io';
+export const API_ROOT = (function() {
+  switch (TYPE_OF_BACKEND) {
+    case 'json' :
+      return API_JSON;
+    case 'local':
+      return API_LOCAL;
+    default:
+      return API_PRODUCTION;
+  }
+})();
 
 const encode = encodeURIComponent;
 const responseBody = res => res.data;
@@ -24,7 +33,7 @@ const config = {
 };
 
 function selectAPIRequest(railsRequest = {}, jsonRequest = {}) {
-  return TYPE_OF_BACKEND === 'rails' ? railsRequest : jsonRequest;
+  return TYPE_OF_BACKEND === 'json' ?  jsonRequest : railsRequest;
 }
 
 const requests = {
@@ -163,6 +172,7 @@ const Lecture = {
 
 export default {
   Auth,
+  Badge,
   User,
   Grid,
   Detail,

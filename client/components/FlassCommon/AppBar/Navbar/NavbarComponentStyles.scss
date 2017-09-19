@@ -1,0 +1,18 @@
+$flassDrawerWidth: 8rem;
+$AppBarMinHeight: 6rem;
+$silver-four: #d3d9d9;
+
+.flass-app-bar {
+  position: absolute;
+  top: 0;
+  padding-left: $flassDrawerWidth;
+  width: 100%;
+  min-height: $AppBarMinHeight;
+  border-bottom: 1px solid $silver-four;
+  background-color: transparent;
+
+  &--no-b-margin {
+    margin-bottom: 0;
+  }
+
+}

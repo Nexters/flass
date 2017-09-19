@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import {
   MuiThemeProvider,
@@ -11,11 +11,11 @@ import {
 } from '../FlassCommon/MaterialUI';
 
 import Grid from './Grid/GridContainer';
-import Detail from './Detail/DetailContainer';
-import Upload from '../Upload';
-import Drawer from './Drawer/Drawer';
-import Content from './Content';
-import AppBar from './AppBar/AppBar';
+import Lecture from './Lecture/LectureContainer';
+import Upload from './Upload';
+import Drawer from '../FlassCommon/Drawer/Drawer';
+import Content from '../FlassCommon/Content';
+import AppBar from '../FlassCommon/AppBar/AppBar';
 
 import './FlassApp.scss';
 
@@ -59,8 +59,9 @@ class FlassApp extends Component {
       <Switch>
         <Route exact path="/" component={ Grid } />
         <Route exact path="/home" component={ Grid } />
-        <Route exact path="/detail/:id" component={ Detail } />
+        <Route exact path="/detail/:id" component={ Lecture } />
         <Route exact path="/upload" component={ Upload } />
+        <Route path="/*" render={ () => <Redirect to="/error" /> } />
       </Switch>
     );
   }

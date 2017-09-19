@@ -95,6 +95,12 @@ class LecturesController < ApplicationController
     render json: @ret
   end
 
+  api :GET, '/v/:id', '(학생용) 특정 강의 링크'
+  param :id, :number, :desc => "lecture ID"
+  def v
+    render file: 'public/index.html'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_lecture
