@@ -97,7 +97,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 3,
+      selected: 1,
       videoUrl: ''
     };
   }
@@ -205,7 +205,6 @@ class Detail extends Component {
   }
 
   saveQuestionsStateOnEnded = solvedQuestionsState => {
-    console.log(this.props.detail.detail);
     const { userId } = this.props.detail.detail;
     this.props.saveQuestionsStateOnEnded(solvedQuestionsState, userId);
   }

@@ -71,23 +71,6 @@ class PostComment extends Component {
     this.renderTextArea = this.renderTextArea.bind(this);
   }
 
-  submit = ({ content }) => {
-    const { detailId, user, addComment, reset } = this.props;
-    addComment(detailId, user.id, user.userName, content);
-    reset();
-  };
-
-  renderTextArea({ input, meta: { touched, error }, id, label, userName, ...props }) {
-    return (
-      <FormGroup controlId={id}>
-        <TextArea
-          { ...input }
-          componentClass="textarea"
-          { ...props } />
-      </FormGroup>
-    );
-  }
-
   render() {
     const { name, user, handleSubmit } = this.props;
     return (
@@ -109,6 +92,25 @@ class PostComment extends Component {
       </DetailForm>
     );
   }
+
+  renderTextArea({ input, meta: { touched, error }, id, label, userName, ...props }) {
+    return (
+      <FormGroup controlId={ id }>
+        <TextArea
+          { ...input }
+          componentClass="textarea"
+          { ...props } />
+      </FormGroup>
+    );
+  }
+
+  submit = ({ content }) => {
+    if (content) {
+      const { detailId, user, addComment, reset } = this.props;
+      addComment(detailId, user.id, user.userName, content);
+      reset();
+    }
+  };
 }
 
 PostComment.propTypes = propTypes;
