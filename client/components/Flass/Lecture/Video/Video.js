@@ -47,7 +47,7 @@ const propTypes = {
   updateStateAfterSolveQuestion: func.isRequired,
   setCompleteVideoFlag: func.isRequired,
   resetCompleteVideoFlag: func.isRequired,
-  requestOnEnded: func.isRequired,
+  saveQuestionsStateOnEnded: func.isRequired,
 
   videoUrl: string,
   questions: shape({
@@ -296,7 +296,7 @@ class Video extends Component {
   onEnded() {
     const { solvedQuestionsState } = this.props;
     this.setState({ isEnded: true, playing: false });
-    this.props.requestOnEnded(solvedQuestionsState);
+    this.props.saveQuestionsStateOnEnded(solvedQuestionsState);
     this.props.setCompleteVideoFlag();
   }
 
