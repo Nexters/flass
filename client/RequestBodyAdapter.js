@@ -35,29 +35,8 @@ const AnswerBodyAdapter = {
   })
 };
 
-const LectureBodyAdapter = {
-  upload: ({
-    questionState,
-    title,
-    description,
-    subject,
-    textbook,
-    videoURL,
-    thumbURL
-  }) => Promise.resolve({
-    title,
-    subject,
-    content: description,
-    textbook_range: textbook,
-    url: videoURL,
-    thumbnail_url: thumbURL,
-    duration: questionState.duration
-  })
-};
-
 export {
   QuestionBodyAdapter,
   ChoiceBodyAdapter,
   AnswerBodyAdapter,
-  LectureBodyAdapter
 };

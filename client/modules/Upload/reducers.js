@@ -72,6 +72,8 @@ const UploadReducer = (state = initialState, action) => {
         ...state,
         processProgress: action.processProgress
       };
+    case actions.INIT_UPLOAD:
+      return initialState;
     default:
       return state;
   }

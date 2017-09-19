@@ -10,6 +10,7 @@ import {
   FOCUS_ON_QUESTION,
   COMPLETE_EDIT_QUESTION,
   DELETE_COMPLETE_QUESTION,
+  INIT_UPLOAD_QUESTIONS,
   SUCCESS_UPLOAD_QUESTIONS,
   FAIL_UPLOAD_QUESTIONS
 } from './actions';
@@ -191,6 +192,9 @@ const deleteQuestionReducer = {
 };
 
 const requestQuestionReducer = {
+  [INIT_UPLOAD_QUESTIONS]: (state) => {
+    return INITIAL_STATE;
+  },
   [SUCCESS_UPLOAD_QUESTIONS]: (state, { payload }) => ({
     ...state,
     isUploadingQuestionRequestSuccess: true,

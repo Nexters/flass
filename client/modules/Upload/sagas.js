@@ -1,20 +1,17 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
+import _ from 'lodash';
 import agent from '../agent';
 import {
-  LectureBodyAdapter,
-  QuestionBodyAdapter,
-  ChoiceBodyAdapter
-} from '../../RequestBodyAdapter';
-import {
-  UPLOAD_LECTURE_AND_QUESTIONS
+  INIT_LECTURE_AND_QUESTIONS, initUpload,
+  UPLOAD_LECTURE_AND_QUESTIONS,
 } from './actions';
 import {
   SUCCESS_UPLOAD_QUESTIONS,
-  FAIL_UPLOAD_QUESTIONS
+  FAIL_UPLOAD_QUESTIONS, INIT_UPLOAD_QUESTIONS, initUploadQuestions,
 } from './UploadInsertion/Quiz/actions';
 
 function* uploadLectureAndQuestions({
-  questionState,
+  questionStates,
   title,
   description,
   subject,
@@ -23,40 +20,17 @@ function* uploadLectureAndQuestions({
   thumbURL
 }) {
   try {
-    const lectureBody = yield call(LectureBodyAdapter.upload, {
-      questionState,
+    const lectureResponse = yield call(agent.Lecture.upload, {
       title,
-      description,
       subject,
-      textbook,
-      videoURL,
-      thumbURL
+      content: description,
+      textbook_range: textbook,
+      url: videoURL,
+      thumbnail_url: thumbURL,
+      duration: questionStates.duration
     });
-
-    const lectureResponse = yield call(agent.Lecture.upload, lectureBody);
-
-    for (let qIndex = 0; qIndex < questionState.length; qIndex += 1) {
-      const questionstate = questionState[qIndex];
-      const questionBody = yield call(
-        QuestionBodyAdapter.uploadByQuestionId,
-        lectureResponse.id,
-        questionstate
-      );
-      const questionResponse = yield call(agent.Question.uploadByLectureId, questionBody);
-
-      const { SingleChoiceValues } = questionstate;
-
-      for (let cIndex = 0; cIndex < SingleChoiceValues.length; cIndex += 1) {
-        const singleChoiceValues = SingleChoiceValues[cIndex];
-        const choiceBody = yield call(
-          ChoiceBodyAdapter.upload,
-          questionResponse.id,
-          singleChoiceValues
-        );
-        yield call(agent.Choice.upload, choiceBody);
-      }
-    }
-
+    yield all(_.map(questionStates,
+      questionState => uploadQuestion(lectureResponse, questionState)));
     yield put({
       type: SUCCESS_UPLOAD_QUESTIONS,
       payload: {
@@ -68,6 +42,42 @@ function* uploadLectureAndQuestions({
   }
 }
 
+function* uploadQuestion(lectureResponse, questionState) {
+  const {
+    TitleInputValue,
+    checkedQuizIndex,
+    secsOfQuiz
+  } = questionState;
+
+  const questionResponse = yield call(agent.Question.uploadByLectureId, {
+    lecture_id: lectureResponse.id,
+    content: TitleInputValue,
+    correct_answer: checkedQuizIndex.toString(),
+    question_at: parseInt(secsOfQuiz)
+  });
+  const { SingleChoiceValues } = questionState;
+  yield all(_.map(SingleChoiceValues,
+    singleChoiceValue => uploadChoice(questionResponse,
+      singleChoiceValue)));
+}
+
+function* uploadChoice(questionResponse, singleChoiceValue) {
+  const {
+    choiceTextValue
+  } = singleChoiceValue;
+
+  yield call(agent.Choice.upload, {
+    question_id: questionResponse.id,
+    answer: choiceTextValue
+  });
+}
+
+function* initUploadLectureAndQuestions() {
+  yield put(initUpload());
+  yield put(initUploadQuestions());
+}
+
 export default function* rootSaga() {
   yield takeLatest(UPLOAD_LECTURE_AND_QUESTIONS, uploadLectureAndQuestions);
+  yield takeLatest(INIT_LECTURE_AND_QUESTIONS, initUploadLectureAndQuestions);
 }

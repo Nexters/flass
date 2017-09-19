@@ -79,5 +79,12 @@ export function deleteCompleteQuestion({ indexOfQuestion }) {
 }
 
 export const REQUEST_UPLOAD_QUESTIONS = 'request_upload_questions';
+export const INIT_UPLOAD_QUESTIONS = 'INIT_UPLOAD_QUESTIONS';
+export function initUploadQuestions() {
+  return {
+    type: INIT_UPLOAD_QUESTIONS
+  };
+}
+
 export const SUCCESS_UPLOAD_QUESTIONS = 'success_upload_questions';
 export const FAIL_UPLOAD_QUESTIONS = 'fail_upload_questions';

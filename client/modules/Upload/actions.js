@@ -16,6 +16,7 @@ export const SET_GOOGLE_AUTH_STATUS = 'SET_GOOGLE_AUTH_STATUS';
 export const SET_UPLOAD_STATUS = 'SET_UPLOAD_STATUS';
 export const SET_UPLOAD_PROGRESS = 'SET_UPLOAD_PROGRESS';
 export const SET_PROCESS_PROGRESS = 'SET_PROCESS_PROGRESS';
+export const INIT_UPLOAD = 'INIT_UPLOAD';
 
 export const setStep = step => ({
   type: SET_STEP,
@@ -34,6 +35,8 @@ const setUploadMethod = method => ({
   type: SET_UPLOAD_METHOD,
   method
 });
+
+export const initUpload = () => ({ type: INIT_UPLOAD });
 
 // handles upload method change and takes care of google api set up for accordingly
 export const handleSetUploadMethod = method => (dispatch => {
@@ -163,3 +166,4 @@ export const uploadYoutubeVideo = file => (dispatch => {
 });
 
 export const UPLOAD_LECTURE_AND_QUESTIONS = 'UPLOAD_LECTURE_AND_QUESTIONS';
+export const INIT_LECTURE_AND_QUESTIONS = 'INIT_LECTURE_AND_QUESTIONS';

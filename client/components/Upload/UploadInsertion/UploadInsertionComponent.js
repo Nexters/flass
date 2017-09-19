@@ -187,7 +187,8 @@ class UploadInsertionComponent extends Component {
     return (
       isUploadingQuestionRequestSuccess ?
         <ModalComponent
-          url={ lectureUrl } /> :
+          url={ lectureUrl }
+        /> :
         null
     );
   }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
 import { connect } from 'react-redux';
@@ -42,10 +41,16 @@ const propTypes = {
   subject: PropTypes.string.isRequired,
   textbook: PropTypes.string.isRequired,
   videoURL: PropTypes.string.isRequired,
-  uploadLectureAndQuestions: PropTypes.func.isRequired
+  uploadLectureAndQuestions: PropTypes.func.isRequired,
+  initUpload: PropTypes.func.isRequired,
 };
 
 class Upload extends Component {
+  componentDidMount() {
+    const { initUpload } = this.props;
+    initUpload();
+  }
+
   render() {
     const {
       step,
@@ -167,7 +172,7 @@ const mapDispatchToProps = dispatch => ({
   uploadLectureAndQuestions: ({ questionState, title, description, subject, textbook, videoURL, thumbURL }) => {
     dispatch({
       type: actions.UPLOAD_LECTURE_AND_QUESTIONS,
-      questionState,
+      questionStates: questionState,
       title,
       description,
       subject,
@@ -175,7 +180,8 @@ const mapDispatchToProps = dispatch => ({
       videoURL,
       thumbURL
     });
-  }
+  },
+  initUpload: () => dispatch({ type: actions.INIT_LECTURE_AND_QUESTIONS }),
 });
 
 export default connect(

@@ -56,7 +56,7 @@ function mapDispatchToProps(dispatch) {
     requestUploadQuestions: ({ questionState }) => ({
       type: REQUEST_UPLOAD_QUESTIONS,
       questionState
-    })
+    }),
   }, dispatch);
 }
 
