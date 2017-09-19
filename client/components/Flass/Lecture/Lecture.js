@@ -75,7 +75,8 @@ const propTypes = {
   video: shape({
     videoUrl: string
   }).isRequired,
-  lectureId: string
+  lectureId: string,
+  isForExternal: bool
 };
 
 const defaultProps = {
@@ -84,7 +85,8 @@ const defaultProps = {
       id: -1
     }
   },
-  lectureId: '-1'
+  lectureId: '-1',
+  isForExternal: false
 };
 
 class Detail extends Component {
@@ -205,8 +207,8 @@ class Detail extends Component {
   }
 
   saveQuestionsStateOnEnded = solvedQuestionsState => {
-    const { userId } = this.props.detail.detail;
-    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, userId);
+    const { detail: { detail: { userId } }, isForExternal } = this.props;
+    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, userId, isForExternal);
   }
 }
 
