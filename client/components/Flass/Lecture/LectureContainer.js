@@ -18,10 +18,11 @@ function mapDispatchToProps(dispatch) {
       type: FETCH_DETAIL,
       detailId
     }),
-    saveQuestionsStateOnEnded: (solvedQuestionsState, userId) => ({
+    saveQuestionsStateOnEnded: (solvedQuestionsState, userId, isForExternal) => ({
       type: REQUEST_ON_ENDED,
       solvedQuestionsState,
-      userId
+      userId,
+      isForExternal
     })
   }, dispatch);
 }

@@ -5,13 +5,13 @@ import {
   REQUEST_ON_ENDED
 } from './actions';
 
-function* requestOnEnded({ solvedQuestionsState, userId }) {
+function* requestOnEnded({ solvedQuestionsState, userId, isForExternal }) {
   try {
     if (isSolvedQuestionsExist(solvedQuestionsState)) {
       const id = getQuestionId(solvedQuestionsState);
       const response = yield call(agent.Answer.getAnswerByQuestionId, id);
 
-      if (!isUserIdExist(response, userId)) {
+      if (!isUserIdExist(response, userId) && isForExternal) {
         for (let i = 0; i < solvedQuestionsState.length; i += 1) {
           const { id, indexOfSelectedChoice } = solvedQuestionsState[i];
           const requestBody = yield call(
@@ -23,7 +23,9 @@ function* requestOnEnded({ solvedQuestionsState, userId }) {
           yield call(agent.Answer.uploadByQuestionId, requestBody);
         }
       } else {
-        console.log('User already solved questions');
+        !isForExternal ?
+          console.log('This is not external access') :
+          console.log('User already solved questions');
       }
     }
   } catch (e) {
