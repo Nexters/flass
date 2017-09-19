@@ -43,6 +43,7 @@ const { string, func, shape, array, object, bool, number } = PropTypes;
 
 const propTypes = {
   fetchRequestDetailAll: func.isRequired,
+  saveQuestionsStateOnEnded: func.isRequired,
   match: object,
   detail: shape({
     isLoading: bool,
@@ -58,7 +59,8 @@ const propTypes = {
       thumbnailUrl: string,
       createdAt: string,
       updatedAt: string
-    })
+    }),
+    isError: bool.isRequired
   }).isRequired,
   question: shape({
     questions: shape({
@@ -73,8 +75,7 @@ const propTypes = {
   video: shape({
     videoUrl: string
   }).isRequired,
-  lectureId: string,
-  isError: bool.isRequired
+  lectureId: string
 };
 
 const defaultProps = {
@@ -134,6 +135,7 @@ class Detail extends Component {
             VideoVolumeBtnClassName="video-btn"
             VideoVolumeBarClassName={ classNames('video-volume-bar') }
 
+            saveQuestionsStateOnEnded={ this.saveQuestionsStateOnEnded }
             videoUrl={ videoUrl }
             questions={ questions } />
 
@@ -200,6 +202,12 @@ class Detail extends Component {
 
   handleSelect = selected => {
     this.setState({ selected });
+  }
+
+  saveQuestionsStateOnEnded = solvedQuestionsState => {
+    console.log(this.props.detail.detail);
+    const { userId } = this.props.detail.detail;
+    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, userId);
   }
 }
 

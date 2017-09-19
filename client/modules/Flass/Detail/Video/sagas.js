@@ -5,17 +5,43 @@ import {
   REQUEST_ON_ENDED
 } from './actions';
 
-function* requestOnEnded({ solvedQuestionsState }) {
-  for (let i = 0; i < solvedQuestionsState.length; i += 1) {
-    const { id, indexOfSelectedChoice } = solvedQuestionsState[i];
-    const requestBody = yield call(
-      AnswerBodyAdapter.uploadByQuestionId,
-      id,
-      indexOfSelectedChoice.toString()
-    );
+function* requestOnEnded({ solvedQuestionsState, userId }) {
+  try {
+    if (isSolvedQuestionsExist(solvedQuestionsState)) {
+      const id = getQuestionId(solvedQuestionsState);
+      const response = yield call(agent.Answer.getAnswerByQuestionId, id);
 
-    yield call(agent.Answer.uploadByQuestionId, requestBody);
+      if (!isUserIdExist(response, userId)) {
+        for (let i = 0; i < solvedQuestionsState.length; i += 1) {
+          const { id, indexOfSelectedChoice } = solvedQuestionsState[i];
+          const requestBody = yield call(
+            AnswerBodyAdapter.uploadByQuestionId,
+            id,
+            indexOfSelectedChoice.toString()
+          );
+
+          yield call(agent.Answer.uploadByQuestionId, requestBody);
+        }
+      } else {
+        console.log('User already solved questions');
+      }
+    }
+  } catch (e) {
+    console.error(e);
   }
+}
+
+function isSolvedQuestionsExist(solvedQuestions) {
+  return solvedQuestions.length > 0;
+}
+
+function getQuestionId(questions) {
+  return questions[0].id;
+}
+
+function isUserIdExist(answers, userId) {
+  const filteredAnswers = answers.filter(answer => answer.user_id === userId);
+  return filteredAnswers.length > 0;
 }
 
 export default function* rootSaga() {

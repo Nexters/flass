@@ -7,7 +7,6 @@ import {
   fetchVideo,
   SET_VIDEO_COMPLETE,
   RESET_VIDEO_COMPLETE,
-  REQUEST_ON_ENDED
 } from '../../../../modules/Flass/Detail/Video/actions';
 import {
   UPDATE_STATE_AFTER_SOLVE_QUESTION
@@ -58,10 +57,6 @@ function mapDispatchToProps(dispatch) {
     updateStateAfterSolveQuestion: newState => ({
       type: UPDATE_STATE_AFTER_SOLVE_QUESTION,
       newState
-    }),
-    requestOnEnded: solvedQuestionsState => ({
-      type: REQUEST_ON_ENDED,
-      solvedQuestionsState
     })
   }, dispatch);
 }
