@@ -15,9 +15,9 @@ export function* makeSelectedAnswer(answer) {
   };
 }
 
-export function* requestLectureAnalysis({ lectureId, questionIndex }) {
+export function* requestLectureAnalysis({ detailId, questionIndex }) {
   try {
-    const { questions, answers } = yield call(agent.Analysis.fetch, lectureId);
+    const { questions, answers } = yield call(agent.Analysis.fetch, detailId);
     const questionId = questions[questionIndex].id || -1;
 
     const selectedAnswers = yield all(answers[questionId].map(answer => makeSelectedAnswer(answer)));
