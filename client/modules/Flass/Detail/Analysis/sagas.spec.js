@@ -9,10 +9,10 @@ import { SUCCESS_REQUEST_LECTURE_ANALYSIS } from './actions';
 
 describe('Analysis ', () => {
   it('분석 요청하기 - 성공', () => {
-    const param = { detailId: 1, questionIndex: 0 };
+    const param = { lectureId: 1, questionIndex: 0 };
     const gen = requestLectureAnalysis(param);
 
-    expect(gen.next().value).to.deep.equal(call(agent.Analysis.fetch, param.detailId));
+    expect(gen.next().value).to.deep.equal(call(agent.Analysis.fetch, param.lectureId));
     const analysis = {
       questions: [{ id: 1 }],
       answers: {
