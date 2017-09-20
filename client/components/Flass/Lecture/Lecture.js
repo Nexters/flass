@@ -43,6 +43,7 @@ const { string, func, shape, array, object, bool, number } = PropTypes;
 
 const propTypes = {
   fetchRequestDetailAll: func.isRequired,
+  saveQuestionsStateOnEnded: func.isRequired,
   match: object,
   detail: shape({
     isLoading: bool,
@@ -58,7 +59,8 @@ const propTypes = {
       thumbnailUrl: string,
       createdAt: string,
       updatedAt: string
-    })
+    }),
+    isError: bool.isRequired
   }).isRequired,
   question: shape({
     questions: shape({
@@ -74,7 +76,7 @@ const propTypes = {
     videoUrl: string
   }).isRequired,
   lectureId: string,
-  isError: bool.isRequired
+  isForExternal: bool
 };
 
 const defaultProps = {
@@ -83,7 +85,8 @@ const defaultProps = {
       id: -1
     }
   },
-  lectureId: '-1'
+  lectureId: '-1',
+  isForExternal: false
 };
 
 class Detail extends Component {
@@ -96,7 +99,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 3,
+      selected: 1,
       videoUrl: ''
     };
   }
@@ -134,6 +137,7 @@ class Detail extends Component {
             VideoVolumeBtnClassName="video-btn"
             VideoVolumeBarClassName={ classNames('video-volume-bar') }
 
+            saveQuestionsStateOnEnded={ this.saveQuestionsStateOnEnded }
             videoUrl={ videoUrl }
             questions={ questions } />
 
@@ -200,6 +204,11 @@ class Detail extends Component {
 
   handleSelect = selected => {
     this.setState({ selected });
+  }
+
+  saveQuestionsStateOnEnded = solvedQuestionsState => {
+    const { detail: { detail: { userId } }, isForExternal } = this.props;
+    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, userId, isForExternal);
   }
 }
 

@@ -138,21 +138,13 @@ const Comment = selectAPIRequest(CommentRails, CommentJson);
 
 const AnswerRails = {
   byLectureId: lectureId => requests.get(`/answers?lecture_id=${lectureId}`),
-  uploadByQuestionId: body => requests.post('/answers', body)
-    .then(response => {
-      console.log('response::Answer');
-      console.log(response);
-      return response;
-    })
+  uploadByQuestionId: body => requests.post('/answers', body),
+  getAnswerByQuestionId: questionId => requests.get(`/answers/question?question_id=${questionId}`)
 };
 const AnswerJson = {
   byLectureId: () => {},
-  uploadByQuestionId: body => axios.post('http://localhost:3000/answers', body, config)
-    .then(response => {
-      console.log('response::Answer');
-      console.log(response);
-      return response;
-    })
+  uploadByQuestionId: body => axios.post('http://localhost:3000/answers', body, config),
+  getAnswerByQuestionId: () => {}
 };
 const Answer = selectAPIRequest(AnswerRails, AnswerJson);
 
@@ -163,11 +155,6 @@ const Analysis = {
 
 const Lecture = {
   upload: body => requests.post('/lectures', body)
-    .then(response => {
-      console.log('response::Lecture::upload');
-      console.log(response);
-      return response;
-    })
 };
 
 export default {
