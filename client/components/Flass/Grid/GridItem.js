@@ -115,7 +115,7 @@ const GridItem = props => {
     <Item src={ thumbnailUrl }>
       <Container>
         <Header>{ `수업범위: ${textbookRange}` }</Header>
-        <Link to={ `/detail/${id}` }>
+        <Link to={ `/lecture/${id}` }>
           <Title>
             { title }
           </Title>

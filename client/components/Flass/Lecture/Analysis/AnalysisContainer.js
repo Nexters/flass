@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 import Analysis from './Analysis';
 import {
   REQUEST_LECTURE_ANALYSIS
-} from '../../../../modules/Flass/Detail/Analysis/actions';
+} from '../../../../modules/Flass/Lecture/Analysis/actions';
 
 function mapStateToProps(state) {
   const {
-    detail: {
-      detail: {
+    lecture: {
+      lecture: {
         id
       }
     },
@@ -17,7 +17,7 @@ function mapStateToProps(state) {
       question_answers,
       answers
     }
-  } = state.flass.detail;
+  } = state.flass.lecture;
   return {
     lectureId: id,
     questions,
@@ -30,7 +30,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     requestLectureAnalysis: (lectureId, questionIndex) => ({
       type: REQUEST_LECTURE_ANALYSIS,
-      detailId: lectureId,
+      lectureId,
       questionIndex
     })
   }, dispatch);

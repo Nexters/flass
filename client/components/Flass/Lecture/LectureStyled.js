@@ -21,13 +21,13 @@ export const FlassLectureStyled = {
   Content: styled.div`
     min-height: 21rem;
 
-    & .flass-detail-media__player-wrapper {
+    & .flass-lecture-media__player-wrapper {
       width: ${$playerWidth}%;
       height: ${$playerHeight}px;
       border-radius: 3px;
     }
 
-    & .flass-detail-media__player {
+    & .flass-lecture-media__player {
       &::after {
         position: absolute;
         top: 0;
@@ -38,7 +38,7 @@ export const FlassLectureStyled = {
       }
     }
 
-    & .flass-detail-media__modal {
+    & .flass-lecture-media__modal {
 
     }
   `,

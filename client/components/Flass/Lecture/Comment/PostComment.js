@@ -11,9 +11,9 @@ import normalizePostComment from './normalizePostComment';
 import color from '../../../../css/base/colors.scss';
 import './PostComment.scss';
 
-const DetailForm = styled(Form)``;
+const LectureForm = styled(Form)``;
 
-const DetailPostComment = styled.div`
+const LecturePostComment = styled.div`
   padding: 5px;
   border-radius: 3px;
   background-color: ${color['white']};
@@ -52,7 +52,7 @@ const BtnPostComment = styled.button`
 `;
 
 const propTypes = {
-  detailId: PropTypes.number.isRequired,
+  lectureId: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -74,8 +74,8 @@ class PostComment extends Component {
   render() {
     const { name, user, handleSubmit } = this.props;
     return (
-      <DetailForm onSubmit={ handleSubmit(this.submit) }>
-        <DetailPostComment>
+      <LectureForm onSubmit={ handleSubmit(this.submit) }>
+        <LecturePostComment>
           <Field
             id="content"
             name="content"
@@ -85,11 +85,11 @@ class PostComment extends Component {
             component={ this.renderTextArea }
             normalize={ normalizePostComment }
           />
-        </DetailPostComment>
+        </LecturePostComment>
         <Bottom>
           <BtnPostComment type="submit">{ name }</BtnPostComment>
         </Bottom>
-      </DetailForm>
+      </LectureForm>
     );
   }
 
@@ -106,8 +106,8 @@ class PostComment extends Component {
 
   submit = ({ content }) => {
     if (content) {
-      const { detailId, user, addComment, reset } = this.props;
-      addComment(detailId, user.id, user.userName, content);
+      const { lectureId, user, addComment, reset } = this.props;
+      addComment(lectureId, user.id, user.userName, content);
       reset();
     }
   };

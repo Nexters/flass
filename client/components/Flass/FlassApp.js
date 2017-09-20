@@ -59,7 +59,7 @@ class FlassApp extends Component {
       <Switch>
         <Route exact path="/" component={ Grid } />
         <Route exact path="/home" component={ Grid } />
-        <Route exact path="/detail/:id" component={ Lecture } />
+        <Route exact path="/lecture/:id" component={ Lecture } />
         <Route exact path="/upload" component={ Upload } />
         <Route path="/*" render={ () => <Redirect to="/error" /> } />
       </Switch>

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { CircularProgress } from 'material-ui';
 
 const propTypes = {
-  detail: PropTypes.shape({
+  lecture: PropTypes.shape({
     isLoading: PropTypes.bool
   }).isRequired
 };
@@ -12,7 +12,7 @@ const defaultProps = {
 };
 
 const withLoadingComponent = (props, options, WrappedComponent) => {
-  const { isLoading } = props.detail;
+  const { isLoading } = props.lecture;
 
   if (isLoading) {
     return (<div style={ { textAlign: 'center' } }>

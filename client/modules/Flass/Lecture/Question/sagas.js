@@ -7,7 +7,7 @@ import {
 } from './actions';
 import { QuestionResDataAdapter } from '../../../../ResponseDataAdapter';
 
-function* fetchQuestion({ detailId }) {
+function* fetchQuestion({ lectureId }) {
   yield put({ type: FETCH_READY_QUESTION });
 
   try {
@@ -15,7 +15,7 @@ function* fetchQuestion({ detailId }) {
       textStateOfQuestions: [],
       secsStateOfQuestions: []
     };
-    const questions = yield call(agent.Question.byDetailId, detailId);
+    const questions = yield call(agent.Question.byLectureId, lectureId);
     /*
       @params Array
         content

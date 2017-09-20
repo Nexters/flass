@@ -87,7 +87,6 @@ const Badge = {
   byType: type => requests.get('/json/FlassBadgeHistory.json')
 };
 
-
 const GridJson = {
   all: () => requests.get('/json/FlassGrid.json')
 };
@@ -97,20 +96,21 @@ const GridRails = {
 const Grid = selectAPIRequest(GridRails, GridJson);
 
 
-const DetailJson = {
-  byId: detailId => requests.get('/json/FlassDetail.json')
+const LectureJson = {
+  byId: lectureId => requests.get('/json/FlassLecture.json')
 };
-const DetailRails = {
-  byId: detailId => requests.get(`/lectures/${detailId}`)
+const LectureRails = {
+  byId: lectureId => requests.get(`/lectures/${lectureId}`),
+  upload: body => requests.post('/lectures', body)
 };
-const Detail = selectAPIRequest(DetailRails, DetailJson);
+const Lecture = selectAPIRequest(LectureRails, LectureJson);
 
 
 const QuestionJson = {
-  byDetailId: detailId => requests.get('/json/FlassQuestion.json')
+  byLectureId: lectureId => requests.get('/json/FlassQuestion.json')
 };
 const QuestionRails = {
-  byDetailId: detailId => requests.get(`/questions?lecture_id=${detailId}`),
+  byLectureId: lectureId => requests.get(`/questions?lecture_id=${lectureId}`),
   uploadByLectureId: body => requests.post('/questions', body)
 };
 const Question = selectAPIRequest(QuestionRails, QuestionJson);
@@ -121,14 +121,14 @@ const Choice = {
 };
 
 const CommentJson = {
-  byDetailId: detailId => requests.get('/json/FlassComment.json'),
-  postComment: (detailId, content) => requests.get('/json/FlassPostComment.json', { detailId, content }),
+  byLectureId: lectureId => requests.get('/json/FlassComment.json'),
+  postComment: (lectureId, content) => requests.get('/json/FlassPostComment.json', { lectureId, content }),
   deleteById: commentId => requests.del('')
 };
 
 const CommentRails = {
-  byDetailId: detailId => requests.get(`/comments?lecture_id=${detailId}`),
-  postComment: (detailId, content) => requests.post('/comments', { lecture_id: detailId, content }),
+  byLectureId: lectureId => requests.get(`/comments?lecture_id=${lectureId}`),
+  postComment: (lectureId, content) => requests.post('/comments', { lecture_id: lectureId, content }),
   postReplyComment: (commentId, content) => requests.post('/comment_children', { comment_id: commentId, content }),
   deleteById: commentId => requests.del(`/comments?id=${commentId}`),
   deleteReplyById: id => requests.del('/comment_children', { id })
@@ -153,21 +153,16 @@ const Analysis = {
   fetch: lectureId => requests.get(`/lectures/statistics?id=${lectureId}`)
 };
 
-const Lecture = {
-  upload: body => requests.post('/lectures', body)
-};
-
 export default {
   Auth,
   Badge,
   User,
   Grid,
-  Detail,
+  Lecture,
   Question,
   Comment,
   Analysis,
   Choice,
   Answer,
-  Lecture,
   setToken: _token => { token = _token; }
 };

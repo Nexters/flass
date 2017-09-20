@@ -3,32 +3,32 @@ import { reduxForm } from 'redux-form';
 import {
   FETCH_COMMENT, fetchReplyComment, ADD_COMMENT,
   DELETE_COMMENT,
-} from '../../../../modules/Flass/Detail/Comment/actions';
+} from '../../../../modules/Flass/Lecture/Comment/actions';
 import Comment from './Comment';
 
 
 function mapStateToProps(state) {
   return {
-    comments: state.flass.detail.comment.comments,
-    commentchild: state.flass.detail.comment.commentchild,
+    comments: state.flass.lecture.comment.comments,
+    commentchild: state.flass.lecture.comment.commentchild,
     user: state.flass.user,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchComment: detailId => {
+    fetchComment: lectureId => {
       dispatch({
         type: FETCH_COMMENT,
-        detailId
+        lectureId
       });
     },
     fetchReplyComment,
-    addComment: (commentId, detailId, userId, userName, content) => {
+    addComment: (commentId, lectureId, userId, userName, content) => {
       dispatch({
         type: ADD_COMMENT,
         commentId,
-        detailId,
+        lectureId,
         userId,
         userName,
         content

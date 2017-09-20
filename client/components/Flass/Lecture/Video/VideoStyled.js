@@ -6,7 +6,7 @@ const $borderWidth = '0.1875rem';
 const $playerWindowWidthAtLarge = 72.1875;
 
 
-export const FlassDetailVideo = {
+export const FlassLectureVideo = {
   Container: styled.div`
     position: relative;
     height: ${$playerHeight}rem;
@@ -52,13 +52,13 @@ export const ReplayBtn = styled.img`
   cursor: pointer;
 `;
 
-export const StyledPlayerOnDetailPage = `
+export const StyledPlayerOnLecturePage = `
   width: 100%;
   border-radius: ${$borderWidth};
   height: 100%;
 `;
 
-export const EndedPageOnDetailPage = props => {
+export const EndedPageOnLecturePage = props => {
   const { isOpen } = props;
 
   return {

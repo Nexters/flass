@@ -4,11 +4,11 @@
 $playerHeight: 650px;
 $playerWidth: 100%;
 
-.flass-detail {
-  .flass-detail-contents {
+.flass-lecture {
+  .flass-lecture-contents {
     min-height: 21rem;
 
-    .flass-detail-media {
+    .flass-lecture-media {
       position: relative;
       height: $playerHeight;
       border-radius: 3px;
@@ -36,7 +36,7 @@ $playerWidth: 100%;
     }
   }
 
-  .flass-detail-tabs {
+  .flass-lecture-tabs {
     margin-top: 2rem;
     margin-bottom: 4rem;
     background-color: $white;

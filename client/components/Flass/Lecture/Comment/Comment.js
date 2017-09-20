@@ -8,7 +8,7 @@ import CommentItem from './CommentItem';
 import ReplyComment from './ReplyCommentItem';
 import ReplyPostComment from './ReplyPostComment';
 
-const DetailComment = styled.div`
+const LectureComment = styled.div`
   width: 100%;
   padding-top: 3rem;
   padding-bottom: 4rem;
@@ -20,7 +20,7 @@ const Divider = styled.hr`
 `;
 
 const propTypes = {
-  detailId: PropTypes.number.isRequired,
+  lectureId: PropTypes.number.isRequired,
   comments: PropTypes.array.isRequired,
   commentchild: PropTypes.object.isRequired,
   user: PropTypes.shape({
@@ -30,7 +30,7 @@ const propTypes = {
   }).isRequired,
   fetchComment: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
-  deleteComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired
 };
 const defaultProps = {};
 
@@ -44,7 +44,7 @@ class Comment extends Component {
 
   handleSelectedReply = index => {
     const { selectedReply } = this.state;
-    if(index === selectedReply) {
+    if (index === selectedReply) {
       this.setState({
         selectedReply: -1
       });
@@ -56,18 +56,18 @@ class Comment extends Component {
   };
 
   componentDidMount() {
-    const { detailId, fetchComment } = this.props;
-    if(detailId !== -1) {
-      fetchComment(detailId);
+    const { lectureId, fetchComment } = this.props;
+    if (lectureId !== -1) {
+      fetchComment(lectureId);
     }
   }
 
   renderPostComment = (form, name, commentId) => {
-    const { detailId, user, addComment } = this.props;
+    const { lectureId, user, addComment } = this.props;
 
     return (<PostComment
       form={ form }
-      detailId={ detailId }
+      lectureId={ lectureId }
       name={ name }
       user={ user }
       addComment={ _.partial(addComment, commentId) } />);
@@ -90,8 +90,7 @@ class Comment extends Component {
       replyCount={ replyCount.length }
       isSelectedReply={ selectedReply === index }
       onSelectedReply={ _.partial(this.handleSelectedReply, index) }
-      onDelete={ _.partial(deleteComment, parentId) }
-    />);
+      onDelete={ _.partial(deleteComment, parentId) } />);
   };
 
   renderReply = comment => {
@@ -101,6 +100,7 @@ class Comment extends Component {
       return [];
     }
     const replyPostComments = [<ReplyPostComment
+      key="reply-post"
       component={ this.renderPostComment('replyPostComment', '답글 등록', comment.id) } />];
     const parentId = comment.id;
     return _.map(commentchild[parentId],
@@ -123,11 +123,11 @@ class Comment extends Component {
 
   render() {
     return (
-      <DetailComment>
+      <LectureComment>
         {this.renderPostComment('postComment', '질문 등록')}
         <Divider />
         {this.renderChild()}
-      </DetailComment>
+      </LectureComment>
     );
   }
 }

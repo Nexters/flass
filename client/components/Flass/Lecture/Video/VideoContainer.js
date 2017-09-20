@@ -2,15 +2,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   FETCH_QUESTION
-} from '../../../../modules/Flass/Detail/Question/actions';
+} from '../../../../modules/Flass/Lecture/Question/actions';
 import {
   fetchVideo,
   SET_VIDEO_COMPLETE,
   RESET_VIDEO_COMPLETE,
-} from '../../../../modules/Flass/Detail/Video/actions';
+} from '../../../../modules/Flass/Lecture/Video/actions';
 import {
   UPDATE_STATE_AFTER_SOLVE_QUESTION
-} from '../../../../modules/Flass/Detail/actions';
+} from '../../../../modules/Flass/Lecture/actions';
 
 import Video from './Video';
 
@@ -18,7 +18,7 @@ import Video from './Video';
 function mapStateToProps(state) {
   const {
     flass: {
-      detail: {
+      lecture: {
         question: {
           questions,
           solvedQuestionsState
@@ -43,16 +43,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    flassDetailLoadVideo: fetchVideo,
+    flassLectureLoadVideo: fetchVideo,
     setCompleteVideoFlag: () => ({
       type: SET_VIDEO_COMPLETE
     }),
     resetCompleteVideoFlag: () => ({
       type: RESET_VIDEO_COMPLETE
     }),
-    fetchQuestion: detailId => ({
+    fetchQuestion: lectureId => ({
       type: FETCH_QUESTION,
-      detailId
+      lectureId
     }),
     updateStateAfterSolveQuestion: newState => ({
       type: UPDATE_STATE_AFTER_SOLVE_QUESTION,
