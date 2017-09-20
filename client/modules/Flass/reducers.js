@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 
 import badge from './Badge/reducers';
-import detail from './Detail/reducers';
+import lecture from './Lecture/reducers';
 import grid from './Grid/reducers';
 import user from './User/reducers';
 
 export default combineReducers({
   badge,
   grid,
-  detail,
+  lecture,
   user
 });

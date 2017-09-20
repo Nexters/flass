@@ -2,6 +2,9 @@ import _ from 'lodash';
 import { List } from 'immutable';
 import { createReducer } from '../../../reducerHelper';
 import {
+  API_ROOT
+} from '../../../agent';
+import {
   ADD_MULTIPLE_CHIOICE_QUESTION,
   CANCEL_ADDING_QUESTION,
   COMPLETE_ADDING_QUESTION,
@@ -198,7 +201,7 @@ const requestQuestionReducer = {
   [SUCCESS_UPLOAD_QUESTIONS]: (state, { payload }) => ({
     ...state,
     isUploadingQuestionRequestSuccess: true,
-    lectureUrl: `http://localhost:4000/v/${payload.lectureId}`
+    lectureUrl: `${API_ROOT}/v/${payload.lectureId}`
   }),
   [FAIL_UPLOAD_QUESTIONS]: state => ({
     ...state,

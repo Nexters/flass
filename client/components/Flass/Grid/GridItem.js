@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import color from '../common/colors.scss';
+import color from '../../../css/base/colors.scss';
 
 const Item = styled.div`
   position: relative;
@@ -115,7 +115,7 @@ const GridItem = props => {
     <Item src={ thumbnailUrl }>
       <Container>
         <Header>{ `수업범위: ${textbookRange}` }</Header>
-        <Link to={ `/detail/${id}` }>
+        <Link to={ `/lecture/${id}` }>
           <Title>
             { title }
           </Title>

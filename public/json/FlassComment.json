@@ -1,7 +1,7 @@
 [
   {
     "id" : 1,
-    "detailId": 1,
+    "lectureId": 1,
     "userId": "",
     "profileUrl": "http://via.placeholder.com/128x128",
     "userName": "질문자1",
@@ -9,7 +9,7 @@
     "replyComments": [
       {
         "id" : 3,
-        "detailId": 1,
+        "lectureId": 1,
         "userId": "",
         "profileUrl": "http://via.placeholder.com/128x128",
         "userName": "질문자3",
@@ -19,7 +19,7 @@
   },
   {
     "id" : 2,
-    "detailId": 1,
+    "lectureId": 1,
     "userId": "",
     "profileUrl": "http://via.placeholder.com/128x128",
     "userName": "질문자2",
@@ -27,7 +27,7 @@
   },
   {
     "id" : 3,
-    "detailId": 1,
+    "lectureId": 1,
     "userId": "",
     "profileUrl": "http://via.placeholder.com/128x128",
     "userName": "질문자3",
