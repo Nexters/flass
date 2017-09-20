@@ -64,7 +64,8 @@ class FlassViewComponent extends Component {
 
           <Content>
             <Lecture
-              lectureId={ id } />
+              lectureId={ id }
+              isForExternal />
           </Content>
         </div>
       </MuiThemeProvider>
