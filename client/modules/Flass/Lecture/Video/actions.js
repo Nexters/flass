@@ -1,4 +1,4 @@
-export const FETCH_VIDEO = 'flasslecture/fetch_video';
+export const FETCH_VIDEO = 'FLASS_LECTURE/FETCH_VIDEO';
 
 export function fetchdVideo() {
   return {
