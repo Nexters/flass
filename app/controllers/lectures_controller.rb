@@ -101,6 +101,10 @@ class LecturesController < ApplicationController
     render file: 'public/index.html'
   end
 
+  def l
+    render file: 'public/index.html'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_lecture

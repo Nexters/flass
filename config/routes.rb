@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   get 'v/:id' => "lectures#v"
 
+  get 'lecture/:id' => "lectures#l"
+
   apipie
   resource :users
   resource :comments
