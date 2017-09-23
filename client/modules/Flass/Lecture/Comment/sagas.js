@@ -11,11 +11,11 @@ import {
   FETCH_READY_COMMENT,
 } from './actions';
 
-export function* fetchComment({ detailId }) {
+export function* fetchComment({ lectureId }) {
   yield put({ type: FETCH_READY_COMMENT });
 
   try {
-    const response = yield call(agent.Comment.byDetailId, detailId);
+    const response = yield call(agent.Comment.byLectureId, lectureId);
     yield put({
       type: FETCH_COMMENT_SUCCESS,
       comments: response.comments,
@@ -29,21 +29,21 @@ export function* fetchComment({ detailId }) {
   }
 }
 
-export function* addComment({ tempId, commentId, detailId, userId, userName, content }) {
+export function* addComment({ tempId, commentId, lectureId, userId, userName, content }) {
   const tempCommentId = tempId || Date.now().toString();
   yield put({
     type: ADD_READY_COMMENT,
     parentId: commentId,
     comment: {
       id: tempCommentId,
-      detailId,
+      lectureId,
       userId,
       userName,
       content
     }
   });
   try {
-    const res = !commentId ? yield call(agent.Comment.postComment, detailId, content) :
+    const res = !commentId ? yield call(agent.Comment.postComment, lectureId, content) :
       yield call(agent.Comment.postReplyComment, commentId, content);
     yield put({
       type: ADD_COMMENT_SUCCESS,

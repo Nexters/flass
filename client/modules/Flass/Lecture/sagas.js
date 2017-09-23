@@ -1,32 +1,32 @@
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import agent from '../../agent';
 import {
-  FETCH_DETAIL,
-  FETCH_DETAIL_ERROR, FETCH_DETAIL_SUCCESS,
-  FETCH_READY_DETAIL, UPDATE_STATE_AFTER_SOLVE_QUESTION
+  FETCH_LECTURE,
+  FETCH_LECTURE_ERROR, FETCH_LECTURE_SUCCESS,
+  FETCH_READY_LECTURE, UPDATE_STATE_AFTER_SOLVE_QUESTION
 } from './actions';
 import { FETCH_QUESTION, UPDATE_SOLVED_QUESTION } from './Question/actions';
 import { FETCH_VIDEO, UPDATE_SEARCHABLE_SECS } from './Video/actions';
 
-export function* fetchDetailAll({ detailId }) {
-  yield put({ type: FETCH_READY_DETAIL });
+export function* fetchLectureAll({ lectureId }) {
+  yield put({ type: FETCH_READY_LECTURE });
   // yield call(delay, 2000);
   try {
-    const detail = yield call(agent.Detail.byId, detailId);
+    const lecture = yield call(agent.Lecture.byId, lectureId);
 
     yield [put({
       type: FETCH_QUESTION,
-      detailId
+      lectureId
     }), put({
-      type: FETCH_DETAIL_SUCCESS,
-      detail
+      type: FETCH_LECTURE_SUCCESS,
+      lecture
     }), put({
       type: FETCH_VIDEO,
-      url: detail && detail.url
+      url: lecture && lecture.url
     })];
   } catch (err) {
     yield put({
-      type: FETCH_DETAIL_ERROR,
+      type: FETCH_LECTURE_ERROR,
       message: err.message
     });
   }
@@ -52,6 +52,6 @@ export function* updateStateAfterSolveQuestion({ newState }) {
 }
 
 export default function* rootSaga() {
-  yield takeLatest(FETCH_DETAIL, fetchDetailAll);
+  yield takeLatest(FETCH_LECTURE, fetchLectureAll);
   yield takeLatest(UPDATE_STATE_AFTER_SOLVE_QUESTION, updateStateAfterSolveQuestion);
 }

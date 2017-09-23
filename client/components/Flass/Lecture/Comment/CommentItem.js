@@ -10,7 +10,7 @@ import Menu from './images/menu.png';
 import MenuActive from './images/menu-active.png';
 import CommentItemMenu from './CommentItemMenu';
 
-const DetailCommentItem = styled.div`
+const LectureCommentItem = styled.div`
   padding: 2rem 0;
   border-bottom: solid 1px #d0d0d0;
 `;
@@ -117,7 +117,7 @@ class CommentItem extends Component {
     const { toggleMenu, toggleHeart } = this.state;
 
     return (
-      <DetailCommentItem>
+      <LectureCommentItem>
         <Header>
           <UserName>{userName}</UserName>
           <CommentMenu className="flass-comment-item-float-box">
@@ -136,7 +136,7 @@ class CommentItem extends Component {
           ? `설명글 (${replyCount})`
           : `설명글 (${replyCount})`}</BtnReply>}
         </Bottom>
-      </DetailCommentItem>
+      </LectureCommentItem>
     );
   }
 }

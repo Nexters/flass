@@ -42,11 +42,12 @@ const TabTitle = styled.span`
 const { string, func, shape, array, object, bool, number } = PropTypes;
 
 const propTypes = {
-  fetchRequestDetailAll: func.isRequired,
+  fetchRequestLectureAll: func.isRequired,
+  saveQuestionsStateOnEnded: func.isRequired,
   match: object,
-  detail: shape({
+  lecture: shape({
     isLoading: bool,
-    detail: shape({
+    lecture: shape({
       id: number,
       userId: number,
       title: string,
@@ -58,7 +59,8 @@ const propTypes = {
       thumbnailUrl: string,
       createdAt: string,
       updatedAt: string
-    })
+    }),
+    isError: bool.isRequired
   }).isRequired,
   question: shape({
     questions: shape({
@@ -74,7 +76,7 @@ const propTypes = {
     videoUrl: string
   }).isRequired,
   lectureId: string,
-  isError: bool.isRequired
+  isForExternal: bool
 };
 
 const defaultProps = {
@@ -83,10 +85,11 @@ const defaultProps = {
       id: -1
     }
   },
-  lectureId: '-1'
+  lectureId: '-1',
+  isForExternal: false
 };
 
-class Detail extends Component {
+class Lecture extends Component {
   static contextTypes = {
     router: shape({
       history: object.isRequired
@@ -96,15 +99,15 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 3,
+      selected: 1,
       videoUrl: ''
     };
   }
 
   componentDidMount() {
-    if (!this.isDetailAlreadyFetch()) {
+    if (!this.isLectureAlreadyFetch()) {
       const id = this.selectLectureId();
-      this.props.fetchRequestDetailAll(id);
+      this.props.fetchRequestLectureAll(id);
     }
   }
 
@@ -112,7 +115,7 @@ class Detail extends Component {
     const {
       question: { questions },
       video: { videoUrl },
-      detail: { isError }
+      lecture: { isError }
     } = this.props;
 
     return isError ?
@@ -134,6 +137,7 @@ class Detail extends Component {
             VideoVolumeBtnClassName="video-btn"
             VideoVolumeBarClassName={ classNames('video-volume-bar') }
 
+            saveQuestionsStateOnEnded={ this.saveQuestionsStateOnEnded }
             videoUrl={ videoUrl }
             questions={ questions } />
 
@@ -149,12 +153,12 @@ class Detail extends Component {
     return id !== -1 ? id : parseInt(lectureId);
   }
 
-  isDetailAlreadyFetch() {
-    return this.props.detail.detail.id !== -1;
+  isLectureAlreadyFetch() {
+    return this.props.lecture.lecture.id !== -1;
   }
 
   renderTabs = () => {
-    const { detail: { detail }, comment } = this.props;
+    const { lecture: { lecture }, comment } = this.props;
     const { selected } = this.state;
 
     const tabTitle = (title, src) => (
@@ -163,23 +167,23 @@ class Detail extends Component {
         {title}
       </TabTitle>);
 
-    return (<Tabs id="detail-tabs" activeKey={ selected } onSelect={ this.handleSelect }>
+    return (<Tabs id="lecture-tabs" activeKey={ selected } onSelect={ this.handleSelect }>
       <Tab
         eventKey={ 1 }
         title={ tabTitle('강의 정보',
           selected === 1 ? contentImageActive : contentImage) }>
         <Content
-          title={ detail.title }
-          subject={ detail.subject }
-          content={ detail.content }
-          tetextbookRangextbookRange={ detail['textbook_range'] }
+          title={ lecture.title }
+          subject={ lecture.subject }
+          content={ lecture.content }
+          tetextbookRangextbookRange={ lecture['textbook_range'] }
         />
       </Tab>
       <Tab
         eventKey={ 2 }
         title={ tabTitle(`학생 질문 - ${comment.comments.length}`,
           selected === 2 ? commentImageActive : commentImage) }>
-        <Comment detailId={ detail.id } />
+        <Comment lectureId={ lecture.id } />
       </Tab>
       {
         this.isAnalysisTabExist() ? (
@@ -195,15 +199,20 @@ class Detail extends Component {
   }
 
   isAnalysisTabExist() {
-    return this.context.router.history.location.pathname.split('/')[1] === 'detail';
+    return this.context.router.history.location.pathname.split('/')[1] === 'lecture';
   }
 
   handleSelect = selected => {
     this.setState({ selected });
   }
+
+  saveQuestionsStateOnEnded = solvedQuestionsState => {
+    const { lecture: { lecture: { userId } }, isForExternal } = this.props;
+    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, userId, isForExternal);
+  }
 }
 
-Detail.propTypes = propTypes;
-Detail.defaultProps = defaultProps;
+Lecture.propTypes = propTypes;
+Lecture.defaultProps = defaultProps;
 
-export default Detail;
+export default Lecture;

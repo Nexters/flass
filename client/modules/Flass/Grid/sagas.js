@@ -16,7 +16,7 @@ function* fetchMyChannelItems() {
     const items = yield call(agent.Grid.all);
     console.log(items);
     const itemsWithQuestion = yield call(_.map, items, (item => {
-      const questions = agent.Question.byDetailId(item.id) || [];
+      const questions = agent.Question.byLectureId(item.id) || [];
       return { ...item, questionCount: questions.length };
     }));
     yield put({

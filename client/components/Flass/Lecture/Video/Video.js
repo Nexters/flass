@@ -28,9 +28,9 @@ import {
 } from '../../../FlassCommon/Video/VideoUtils';
 
 import {
-  FlassDetailVideo,
-  StyledPlayerOnDetailPage,
-  EndedPageOnDetailPage
+  FlassLectureVideo,
+  StyledPlayerOnLecturePage,
+  EndedPageOnLecturePage
 } from './VideoStyled';
 
 const { string, oneOfType, arrayOf, func, number, array, shape, bool } = PropTypes;
@@ -47,7 +47,7 @@ const propTypes = {
   updateStateAfterSolveQuestion: func.isRequired,
   setCompleteVideoFlag: func.isRequired,
   resetCompleteVideoFlag: func.isRequired,
-  requestOnEnded: func.isRequired,
+  saveQuestionsStateOnEnded: func.isRequired,
 
   videoUrl: string,
   questions: shape({
@@ -142,9 +142,9 @@ class Video extends Component {
     } = this.props;
 
     return (
-      <FlassDetailVideo.Container>
+      <FlassLectureVideo.Container>
         <VideoPlayerComponent
-          styledProps={ StyledPlayerOnDetailPage }
+          styledProps={ StyledPlayerOnLecturePage }
           url={ videoUrl }
           playing={ playing }
           volume={ volume }
@@ -163,7 +163,7 @@ class Video extends Component {
           this.renderQuestionModal(isQuizSecs)
         }
 
-        <FlassDetailVideo.ControllerBar>
+        <FlassLectureVideo.ControllerBar>
           <VideoControllerAndBarWrapperComponent>
             <div>
               <VideoCustomProgressBarComponent
@@ -215,8 +215,8 @@ class Video extends Component {
               </VideoControllerWrapperComponent>
             </div>
           </VideoControllerAndBarWrapperComponent>
-        </FlassDetailVideo.ControllerBar>
-      </FlassDetailVideo.Container>
+        </FlassLectureVideo.ControllerBar>
+      </FlassLectureVideo.Container>
     );
   }
 
@@ -246,7 +246,7 @@ class Video extends Component {
     return isEnded ?
       <VideoEndedPageComponent
         onReplayBtnClick={ this.onReplayBtnClick }
-        styledProps={ EndedPageOnDetailPage } /> :
+        styledProps={ EndedPageOnLecturePage } /> :
       null;
   }
 
@@ -296,7 +296,7 @@ class Video extends Component {
   onEnded() {
     const { solvedQuestionsState } = this.props;
     this.setState({ isEnded: true, playing: false });
-    this.props.requestOnEnded(solvedQuestionsState);
+    this.props.saveQuestionsStateOnEnded(solvedQuestionsState);
     this.props.setCompleteVideoFlag();
   }
 

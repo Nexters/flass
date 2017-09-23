@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import color from '../../../../css/base/colors.scss';
 
-const DetailContent = styled.div`
+const LectureContent = styled.div`
   width: 100%;
   padding-top: 3rem;
   padding-bottom: 4rem;
@@ -45,7 +45,7 @@ const defaultProps = {
 const Content = props => {
   const { title, subject, content, textbookRange } = props;
   return (
-    <DetailContent>
+    <LectureContent>
       <Row className="show-grid">
         <Col xs={ 6 } md={ 6 }>
           <Title>강의 제목</Title>
@@ -68,7 +68,7 @@ const Content = props => {
           </RightContent>
         </Col>
       </Row>
-    </DetailContent>
+    </LectureContent>
   );
 };
 
