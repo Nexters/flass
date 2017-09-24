@@ -63,7 +63,6 @@ const propTypes = {
     userName: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired
   }).isRequired,
-  content: PropTypes.string,
   addComment: PropTypes.func.isRequired,
   updateComment: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
@@ -72,17 +71,14 @@ const propTypes = {
 
 const defaultProps = {
   isUpdate: false,
-  content: ''
 };
 
 class PostComment extends Component {
-  componentDidMount() {
-    this.renderTextArea = this.renderTextArea.bind(this);
-  }
+  componentDidMount() {}
 
   render() {
-    const { name, user, content, handleSubmit } = this.props;
-    console.log(content);
+    const { name, user, handleSubmit } = this.props;
+
     return (
       <LectureForm onSubmit={ handleSubmit(this.submit) }>
         <LecturePostComment>
@@ -90,7 +86,6 @@ class PostComment extends Component {
             id="content"
             name="content"
             userName={ user.userName }
-            value={ content }
             type="text"
             placeholder="해당 강의 내용 또는 퀴즈에 대해 궁금한 점이 잇다면 댓글을 달아주세요."
             component={ this.renderTextArea }
@@ -103,17 +98,16 @@ class PostComment extends Component {
     );
   }
 
-  renderTextArea({ input, meta: { touched, error }, id, label, userName, value, ...props }) {
+  renderTextArea = ({ input, meta: { touched, error }, id, label, userName, ...props }) => {
     return (
       <FormGroup controlId={ id }>
         <TextArea
           { ...input }
-          value={ value }
           componentClass="textarea"
           { ...props } />
       </FormGroup>
     );
-  }
+  };
 
   submit = ({ content }) => {
     if (content) {
@@ -129,5 +123,5 @@ PostComment.propTypes = propTypes;
 PostComment.defaultProps = defaultProps;
 
 export default reduxForm({
-  form: 'postComment'
+  form: 'postComment',
 })(PostComment);

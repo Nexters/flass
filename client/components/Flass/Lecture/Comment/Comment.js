@@ -14,11 +14,6 @@ const LectureComment = styled.div`
   padding-bottom: 4rem;
 `;
 
-const Divider = styled.hr`
-  margin-bottom: 0;
-  border-top: solid 1px #d0d0d0;
-`;
-
 const propTypes = {
   lectureId: PropTypes.number.isRequired,
   comments: PropTypes.array.isRequired,
@@ -83,11 +78,12 @@ class Comment extends Component {
     const { lectureId, user, addComment } = this.props;
 
     return (<PostComment
+      key={ `${form}${commentId}` }
       isUpdate={ !!content }
       form={ form }
+      initialValues={{ content }}
       lectureId={ lectureId }
       name={ name }
-      content={ content }
       user={ user }
       addComment={ _.partial(addComment, commentId) }
       updateComment={ _.partial(this.handleUpdateComment, parentId, commentId) }
@@ -99,7 +95,6 @@ class Comment extends Component {
     const { selectedReply, selectedUpdateId } = this.state;
 
     if(selectedUpdateId === comment.id) {
-      console.log(parentId, comment.id);
       return this.renderPostComment('updateComment', '댓글 수정', comment.id, parentId, comment.content);
     }
     const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
