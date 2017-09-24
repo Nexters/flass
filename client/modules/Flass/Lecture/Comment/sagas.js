@@ -1,4 +1,4 @@
-import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
+import { all, call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
 import agent from '../../../agent';
 import {
@@ -11,6 +11,18 @@ import {
   FETCH_READY_COMMENT,
 } from './actions';
 
+export function* makeWithLike(comment) {
+  if(comment) {
+    return {};
+  }
+  try {
+    const res = yield call(agent.Like.postByCommentId(comment.id));
+    return { ...comment, like: res.like };
+  } catch(err) {
+    return { ...comment, like: 0 };
+  }
+}
+
 export function* fetchComment({ lectureId }) {
   yield put({ type: FETCH_READY_COMMENT });
 
@@ -19,7 +31,7 @@ export function* fetchComment({ lectureId }) {
     yield put({
       type: FETCH_COMMENT_SUCCESS,
       comments: response.comments,
-      commentchild: response.commentchild
+      commentchild: response.commentchild,
     });
   } catch (err) {
     yield put({

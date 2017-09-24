@@ -10,37 +10,48 @@ import {
   DELETE_COMMENT_ERROR
 } from './actions';
 import { createReducer } from '../../../reduxHelper';
+import { dateTimeFormat } from '../../../../util/time-util';
 
 const initialState = {
   comments: [],
   commentchild: {}
 };
 
+const mapToComment = comments => _.map(comments, comment => ({
+  ...comment,
+  createdAt: dateTimeFormat(comment['created_at']),
+  updatedAt: dateTimeFormat(comment['updated_at'])
+}));
+
 const fetchCommentReducer = {
   [FETCH_READY_COMMENT]: (state, action) => state,
   [FETCH_COMMENT_SUCCESS]: (state, action) => ({
     ...state,
-    comments: action.comments,
-    commentchild: action.commentchild
+    comments: mapToComment(action.comments),
+    commentchild: _.reduce(Object.keys(action.commentchild), (res, key) => {
+      res[key] = mapToComment(action.commentchild[key]);
+      return res;
+    }, {})
   }),
   [FETCH_COMMENT_ERROR]: (state, action) => state
 };
 
 const addCommentReducer = {
   [ADD_READY_COMMENT]: (state, { parentId, comment }) => {
+    const newComment = { ...comment, like: 0 };
     if (parentId) {
       const existCommentChild = state.commentchild[parentId] || [];
       return {
         ...state,
         commentchild: {
           ...state.commentchild,
-          [parentId]: [comment, ...existCommentChild]
+          [parentId]: [newComment, ...existCommentChild]
         }
       };
     }
     return ({
       ...state,
-      comments: [...state.comments, comment]
+      comments: [...state.comments, newComment]
     });
   },
   [ADD_COMMENT_SUCCESS]: (state, { parentId, id, newId }) => {
@@ -68,7 +79,7 @@ const addCommentReducer = {
 
 const removeCommentReducer = {
   [DELETE_COMMENT_SUCCESS]: (state, { parentId, id }) => {
-    if(parentId) {
+    if (parentId) {
       return ({
         ...state,
         commentchild: _.filter(state.commentchild[parentId], comment => (comment.id !== id))

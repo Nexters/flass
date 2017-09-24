@@ -1,4 +1,5 @@
 import { FETCH_READY_MY_CHANNEL, FETCH_MY_CHANNEL_SUCCESS, FETCH_MY_CHANNEL_ERROR } from './actions';
+import { dateTimeFormat } from '../../../util/time-util';
 
 const initialState = {
   items: []
@@ -18,8 +19,8 @@ const GridReducer = (state = initialState, action) => {
           url: item.url,
           thumbnailUrl: item['thumbnail_url'],
           duration: item.duration,
-          createdAt: item['created_at'],
-          updatedAt: item['updated_at'],
+          createdAt: dateTimeFormat(item['created_at']),
+          updatedAt: dateTimeFormat(item['updated_at']),
           questionCount: item.questionCount
         }))]
       };
