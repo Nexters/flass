@@ -2,13 +2,13 @@ class NotificationsController < ApplicationController
   before_action :login_check
   before_action :set_notification, only: [:update, :destroy]
 
-  api :GET, '/notifications', '유저 알림'
+  api :GET, 'api/notifications', '유저 알림'
   def show
     @notifications = Notification.where(user_id: session[:user_id]).order(created_at: :desc).limit(20)
     render json: @notifications
   end
 
-  api :POST, '/notifications', '유저 알림 생성'
+  api :POST, 'api/notifications', '유저 알림 생성'
   param :user_id, :number, :desc => "알림을 보낼 유저 ID"
   param :notification_type, :number, :desc => "알림 타입"
   param :content, String, :desc => "알림 내용"
@@ -23,7 +23,7 @@ class NotificationsController < ApplicationController
     end
   end
 
-  api :PUT, '/notifications', '유저 알림 업데이트'
+  api :PUT, 'api/notifications', '유저 알림 업데이트'
   param :id, :number, :desc => "notification ID"
   param :notification_type, :number, :desc => "알림 타입"
   param :content, String, :desc => "알림 내용"
@@ -36,7 +36,7 @@ class NotificationsController < ApplicationController
     end
   end
 
-  api :DELETE, '/notifications', '유저 알림 삭제'
+  api :DELETE, 'api/notifications', '유저 알림 삭제'
   param :id, :number, :desc => "notification ID"
   def destroy
     if @notification.user_id == session[:user_id]
@@ -47,7 +47,7 @@ class NotificationsController < ApplicationController
     end
   end
 
-  api :POST, '/notifications/check'
+  api :POST, 'api/notifications/check'
   def check
     if Notification.where(user_id: session[:user_id]).update_all(notification_type: 0)
       head :ok

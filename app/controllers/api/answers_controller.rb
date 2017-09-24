@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :login_check, only: [:index, :create, :destroy]
   before_action :set_answer, only: :destroy
 
-  api :GET, '/answers/question', '특정 question에 대한 학생들의 답'
+  api :GET, 'api/answers/question', '특정 question에 대한 학생들의 답'
   param :question_id, :number, :desc => "질문 ID", :required => true
   def index
     @answers = Answer.where(question_id: params[:question_id])
@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
   end
 
 
-  api :GET, '/answers', '특정 학생의 특정 강의에 대한 답 리스트'
+  api :GET, 'api/answers', '특정 학생의 특정 강의에 대한 답 리스트'
   param :lecture_id, :number, :desc => "강의 ID", :required => true
   def show
     @answers = Answer.where(user_id: 22)
@@ -26,7 +26,7 @@ class AnswersController < ApplicationController
     render json: @answers2
   end
 
-  api :POST, '/answers', '특정 question에 대한 학생의 답 생성'
+  api :POST, 'api/answers', '특정 question에 대한 학생의 답 생성'
   param :question_id, :number, :desc => "질문 ID", :required => true
   param :answer, String, :desc => "학생 답", :required => true
   def create
@@ -43,7 +43,7 @@ class AnswersController < ApplicationController
 
   # DELETE /answers/1
   # DELETE /answers/1.json
-  api :DELETE, '/answers', '특정 question에 대한 학생 답 삭제'
+  api :DELETE, 'api/answers', '특정 question에 대한 학생 답 삭제'
   param :id, :number, :desc => "학생 답 ID", :required => true
   def destroy
     @answer.destroy
