@@ -101,7 +101,7 @@ class LecturesController < ApplicationController
     render file: 'public/index.html'
   end
 
-  api :GET '/lecture/:id', '(게시자용) 특정 강의 링크'
+  api :GET, '/lecture/:id', '(게시자용) 특정 강의 링크'
   param :id, :number, :desc => "lecture ID"
   def l
     render file: 'public/index.html'
