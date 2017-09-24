@@ -7,7 +7,8 @@ import {
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_ERROR,
   DELETE_COMMENT_SUCCESS,
-  DELETE_COMMENT_ERROR
+  DELETE_COMMENT_ERROR, UPDATE_READY_COMMENT, UPDATE_COMMENT_SUCCESS,
+  UPDATE_COMMENT_ERROR
 } from './actions';
 import { createReducer } from '../../../reduxHelper';
 import { dateTimeFormat } from '../../../../util/time-util';
@@ -36,6 +37,24 @@ const fetchCommentReducer = {
   [FETCH_COMMENT_ERROR]: (state, action) => state
 };
 
+const updateComment = (func, state, parentId, id) => {
+  if (parentId) {
+    return {
+      ...state,
+      commentchild: {
+        ...state.commentchild,
+        [parentId]: _.map(state.commentchild[parentId],
+          comment => (comment.id === id ? func(comment) : comment))
+      }
+    };
+  }
+  return {
+    ...state,
+    comments: _.map(state.comments,
+      comment => (comment.id === id ? func(comment) : comment))
+  };
+};
+
 const addCommentReducer = {
   [ADD_READY_COMMENT]: (state, { parentId, comment }) => {
     const newComment = { ...comment, like: 0 };
@@ -54,24 +73,17 @@ const addCommentReducer = {
       comments: [...state.comments, newComment]
     });
   },
-  [ADD_COMMENT_SUCCESS]: (state, { parentId, id, newId }) => {
-    if (parentId) {
-      return {
-        ...state,
-        commentchild: {
-          ...state.commentchild,
-          [parentId]: _.map(state.commentchild[parentId],
-            comment => (comment.id === id ? { ...comment, id: newId } : comment))
-        }
-      };
-    }
-    return {
-      ...state,
-      comments: _.map(state.comments,
-        comment => (comment.id === id ? { ...comment, id: newId } : comment))
-    };
-  },
+  [ADD_COMMENT_SUCCESS]: (state, { parentId, id, newId }) => updateComment(comment => ({ ...comment, id: newId }), state, parentId, id),
   [ADD_COMMENT_ERROR]: (state, action) => ({
+    ...state,
+    comments: _.filter(state.comments, comment => (comment.id !== action.id))
+  })
+};
+
+const updateCommentReducer = {
+  [UPDATE_READY_COMMENT]: state => state,
+  [UPDATE_COMMENT_SUCCESS]: (state, { parentId, id, content }) => updateComment(comment => ({ ...comment, content }), state, parentId, id),
+  [UPDATE_COMMENT_ERROR]: (state, action) => ({
     ...state,
     comments: _.filter(state.comments, comment => (comment.id !== action.id))
   })
@@ -96,6 +108,7 @@ const removeCommentReducer = {
 const CommentReducer = createReducer(initialState, {
   ...fetchCommentReducer,
   ...addCommentReducer,
+  ...updateCommentReducer,
   ...removeCommentReducer
 });
 

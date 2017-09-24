@@ -5,7 +5,7 @@ const API_JSON = 'http://localhost:4000';
 const API_LOCAL = 'http://localhost:3000';
 const API_PRODUCTION = 'http://flass.me';
 export const API_ROOT = (function() {
-  switch (TYPE_OF_BACKEND) {
+  switch(TYPE_OF_BACKEND) {
     case 'json' :
       return API_JSON;
     case 'local':
@@ -139,6 +139,8 @@ const CommentRails = {
   byLectureId: lectureId => requestsForApi.get(`/comments?lecture_id=${lectureId}`),
   postComment: (lectureId, content) => requestsForApi.post('/comments', { lecture_id: lectureId, content }),
   postReplyComment: (commentId, content) => requestsForApi.post('/comment_children', { comment_id: commentId, content }),
+  putComment: (commentId, content) => requestsForApi.put('/comments', { id: commentId, content }),
+  putReplyComment: (commentId, content) => requestsForApi.put('/comment_children', { id: commentId, content }),
   deleteById: commentId => requestsForApi.del(`/comments?id=${commentId}`),
   deleteReplyById: id => requestsForApi.del('/comment_children', { id })
 };
@@ -146,7 +148,7 @@ const CommentRails = {
 const Comment = selectAPIRequest(CommentRails, CommentJson);
 
 const Like = {
-  postByCommentId: (commentId) => requestsForApi.put(`/comments/${commentId}/like`),
+  postByCommentId: commentId => requestsForApi.put(`/comments/${commentId}/like`)
 };
 
 const AnswerRails = {

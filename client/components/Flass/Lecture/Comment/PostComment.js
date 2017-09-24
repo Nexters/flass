@@ -11,7 +11,10 @@ import normalizePostComment from './normalizePostComment';
 import color from '../../../../css/base/colors.scss';
 import './PostComment.scss';
 
-const LectureForm = styled(Form)``;
+const LectureForm = styled(Form)`
+  padding: 20px 0;
+  border-bottom: 1px solid #d0d0d0;
+`;
 
 const LecturePostComment = styled.div`
   padding: 5px;
@@ -52,6 +55,7 @@ const BtnPostComment = styled.button`
 `;
 
 const propTypes = {
+  isUpdate: PropTypes.bool,
   lectureId: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   user: PropTypes.shape({
@@ -59,12 +63,17 @@ const propTypes = {
     userName: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired
   }).isRequired,
+  content: PropTypes.string,
   addComment: PropTypes.func.isRequired,
+  updateComment: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired
 };
 
-const defaultProps = {};
+const defaultProps = {
+  isUpdate: false,
+  content: ''
+};
 
 class PostComment extends Component {
   componentDidMount() {
@@ -72,7 +81,8 @@ class PostComment extends Component {
   }
 
   render() {
-    const { name, user, handleSubmit } = this.props;
+    const { name, user, content, handleSubmit } = this.props;
+    console.log(content);
     return (
       <LectureForm onSubmit={ handleSubmit(this.submit) }>
         <LecturePostComment>
@@ -80,11 +90,11 @@ class PostComment extends Component {
             id="content"
             name="content"
             userName={ user.userName }
+            value={ content }
             type="text"
             placeholder="해당 강의 내용 또는 퀴즈에 대해 궁금한 점이 잇다면 댓글을 달아주세요."
             component={ this.renderTextArea }
-            normalize={ normalizePostComment }
-          />
+            normalize={ normalizePostComment } />
         </LecturePostComment>
         <Bottom>
           <BtnPostComment type="submit">{ name }</BtnPostComment>
@@ -93,11 +103,12 @@ class PostComment extends Component {
     );
   }
 
-  renderTextArea({ input, meta: { touched, error }, id, label, userName, ...props }) {
+  renderTextArea({ input, meta: { touched, error }, id, label, userName, value, ...props }) {
     return (
       <FormGroup controlId={ id }>
         <TextArea
           { ...input }
+          value={ value }
           componentClass="textarea"
           { ...props } />
       </FormGroup>
@@ -106,8 +117,9 @@ class PostComment extends Component {
 
   submit = ({ content }) => {
     if (content) {
-      const { lectureId, user, addComment, reset } = this.props;
-      addComment(lectureId, user.id, user.userName, content);
+      const { isUpdate, lectureId, user, addComment, updateComment, reset } = this.props;
+      isUpdate ? updateComment(content) : addComment(lectureId, user.id,
+        user.userName, content);
       reset();
     }
   };

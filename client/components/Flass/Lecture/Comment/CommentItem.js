@@ -108,11 +108,13 @@ class CommentItem extends Component {
   componentDidMount() {}
 
   renderAdminMenu() {
-    const { id, onDelete } = this.props;
+    const { id, onUpdate, onDelete } = this.props;
     const { toggleMenu } = this.state;
 
     return toggleMenu && <CommentItemMenu
-      onDelete={ _.partial(onDelete, id) } />;
+      onDelete={ _.partial(onDelete, id) }
+      onUpdate={ onUpdate }
+    />;
   }
 
   render() {

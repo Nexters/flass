@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import {
   FETCH_COMMENT, fetchReplyComment, ADD_COMMENT,
-  DELETE_COMMENT,
+  DELETE_COMMENT, UPDATE_COMMENT
 } from '../../../../modules/Flass/Lecture/Comment/actions';
 import Comment from './Comment';
 
@@ -11,7 +11,7 @@ function mapStateToProps(state) {
   return {
     comments: state.flass.lecture.comment.comments,
     commentchild: state.flass.lecture.comment.commentchild,
-    user: state.flass.user,
+    user: state.flass.user
   };
 }
 
@@ -34,11 +34,19 @@ function mapDispatchToProps(dispatch) {
         content
       });
     },
+    updateComment: (parentId, commentId, content) => {
+      dispatch({
+        type: UPDATE_COMMENT,
+        parentId,
+        commentId,
+        content
+      });
+    },
     deleteComment: (parentId, commentId) => {
       dispatch({
         type: DELETE_COMMENT,
         parentId,
-        commentId,
+        commentId
       });
     }
   };

@@ -30,6 +30,7 @@ const propTypes = {
   }).isRequired,
   fetchComment: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
+  updateComment: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired
 };
 const defaultProps = {};
@@ -38,7 +39,8 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedReply: -1
+      selectedReply: -1,
+      selectedUpdateId: -1,
     };
   }
 
@@ -55,6 +57,21 @@ class Comment extends Component {
     });
   };
 
+  handleSelectedUpdateId = commentId => {
+    this.setState({
+      selectedUpdateId: commentId,
+    });
+  };
+
+  handleUpdateComment = (parentId, commentId, content) => {
+    const { updateComment } = this.props;
+
+    this.setState({
+      selectedUpdateId: -1,
+    });
+    updateComment(parentId, commentId, content);
+  };
+
   componentDidMount() {
     const { lectureId, fetchComment } = this.props;
     if (lectureId !== -1) {
@@ -62,21 +79,29 @@ class Comment extends Component {
     }
   }
 
-  renderPostComment = (form, name, commentId) => {
+  renderPostComment = (form, name, commentId, parentId, content) => {
     const { lectureId, user, addComment } = this.props;
 
     return (<PostComment
+      isUpdate={ !!content }
       form={ form }
       lectureId={ lectureId }
       name={ name }
+      content={ content }
       user={ user }
-      addComment={ _.partial(addComment, commentId) } />);
+      addComment={ _.partial(addComment, commentId) }
+      updateComment={ _.partial(this.handleUpdateComment, parentId, commentId) }
+    />);
   }
 
   renderComment = (comment, index, parentId) => {
     const { user, commentchild, deleteComment } = this.props;
-    const { selectedReply } = this.state;
+    const { selectedReply, selectedUpdateId } = this.state;
 
+    if(selectedUpdateId === comment.id) {
+      console.log(parentId, comment.id);
+      return this.renderPostComment('updateComment', '댓글 수정', comment.id, parentId, comment.content);
+    }
     const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
     const replyCount = commentchild[comment.id] || [];
     return (<CommentItem
@@ -91,6 +116,7 @@ class Comment extends Component {
       like={ comment.like }
       isSelectedReply={ selectedReply === index }
       onSelectedReply={ _.partial(this.handleSelectedReply, index) }
+      onUpdate={ _.partial(this.handleSelectedUpdateId, comment.id) }
       onDelete={ _.partial(deleteComment, parentId) } />);
   };
 
@@ -126,7 +152,6 @@ class Comment extends Component {
     return (
       <LectureComment>
         {this.renderPostComment('postComment', '질문 등록')}
-        <Divider />
         {this.renderChild()}
       </LectureComment>
     );
