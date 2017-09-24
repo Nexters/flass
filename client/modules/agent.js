@@ -136,6 +136,10 @@ const CommentRails = {
 
 const Comment = selectAPIRequest(CommentRails, CommentJson);
 
+const Like = {
+  postByCommentId: (commentId) => requests.put(`/comments/${commentId}/like`),
+};
+
 const AnswerRails = {
   byLectureId: lectureId => requests.get(`/answers?lecture_id=${lectureId}`),
   uploadByQuestionId: body => requests.post('/answers', body),
@@ -161,6 +165,7 @@ export default {
   Lecture,
   Question,
   Comment,
+  Like,
   Analysis,
   Choice,
   Answer,

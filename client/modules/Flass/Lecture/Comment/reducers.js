@@ -28,19 +28,20 @@ const fetchCommentReducer = {
 
 const addCommentReducer = {
   [ADD_READY_COMMENT]: (state, { parentId, comment }) => {
+    const newComment = { ...comment, like: 0 };
     if (parentId) {
       const existCommentChild = state.commentchild[parentId] || [];
       return {
         ...state,
         commentchild: {
           ...state.commentchild,
-          [parentId]: [comment, ...existCommentChild]
+          [parentId]: [newComment, ...existCommentChild],
         }
       };
     }
     return ({
       ...state,
-      comments: [...state.comments, comment]
+      comments: [...state.comments, newComment]
     });
   },
   [ADD_COMMENT_SUCCESS]: (state, { parentId, id, newId }) => {

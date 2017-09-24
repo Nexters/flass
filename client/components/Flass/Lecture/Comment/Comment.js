@@ -77,7 +77,6 @@ class Comment extends Component {
     const { user, commentchild, deleteComment } = this.props;
     const { selectedReply } = this.state;
 
-    console.log(comment['user_id'], user.id);
     const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
     const replyCount = commentchild[comment.id] || [];
     return (<CommentItem
@@ -88,6 +87,7 @@ class Comment extends Component {
       content={ content }
       isReply={ !!parentId }
       replyCount={ replyCount.length }
+      like={ comment.like }
       isSelectedReply={ selectedReply === index }
       onSelectedReply={ _.partial(this.handleSelectedReply, index) }
       onDelete={ _.partial(deleteComment, parentId) } />);
