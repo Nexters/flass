@@ -1,8 +1,8 @@
-class CommentsController < ApplicationController
+class Api::CommentsController < ApplicationController
   before_action :login_check
   before_action :set_comment, only: [:like, :edit, :update, :destroy]
 
-  api :GET, 'api/comments', '특정 lecture에 대한 댓글과 대댓글'
+  api :GET, '/comments', '특정 lecture에 대한 댓글과 대댓글'
   param :lecture_id, :number, :desc => "강의 ID"
   def show
     @ret = Hash.new
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
   end
 
 
-  api :POST, 'api/comments', '특정 lecture에 대한 댓글 생성'
+  api :POST, '/comments', '특정 lecture에 대한 댓글 생성'
   param :lecture_id, :number, :desc => "강의 ID"
   param :content, String, :desc => "댓글 내용"
   def create
@@ -39,7 +39,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  api :GET, 'api/comments/edit', '댓글 수정 페이지'
+  api :GET, '/comments/edit', '댓글 수정 페이지'
   param :id, :number, :desc => "Comment ID"
   def edit
     if @comment.user_id == session[:user_id]
@@ -50,7 +50,7 @@ class CommentsController < ApplicationController
   end
 
   # PATCH/PUT /comments.json
-  api :PUT, 'api/comments', '특정 lecture에 대한 댓글 수정'
+  api :PUT, '/comments', '특정 lecture에 대한 댓글 수정'
   param :id, :number, :desc => "Comment ID"
   param :content, String, :desc => "댓글 내용"
   def update
@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
   end
 
 
-  api :DELETE, 'api/comments', '특정 lecture에 대한 댓글 삭제'
+  api :DELETE, '/comments', '특정 lecture에 대한 댓글 삭제'
   param :id, :number, :desc => "Comment ID"
   def destroy
     if @comment.user_id == session[:user_id]
@@ -73,7 +73,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  api :PUT, 'api/comments/:id/like', '좋아요 누르고 좋아요 갯수까지 보여주기'
+  api :PUT, '/comments/:id/like', '좋아요 누르고 좋아요 갯수까지 보여주기'
   param :id, :number, :desc => "Comment ID"
   def like
     user = User.find(session[:user_id])

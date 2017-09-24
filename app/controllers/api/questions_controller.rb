@@ -1,4 +1,4 @@
-class QuestionsController < ApplicationController
+class Api::QuestionsController < ApplicationController
   before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
   before_action :set_question, only: [:edit, :update, :destroy]
 
@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
     render json: @questions
   end
 
-  api :GET, 'api/questions/edit', '강의 문제 수정 페이지'
+  api :GET, '/questions/edit', '강의 문제 수정 페이지'
   param :id, :number, :desc => "question ID"
   def edit
     if @question.lecture.user_id == session[:user_id]
@@ -20,7 +20,7 @@ class QuestionsController < ApplicationController
   end
 
   # POST /questions.json
-  api :POST, 'api/questions', '강의 질문 생성'
+  api :POST, '/questions', '강의 질문 생성'
   param :lecture_id, :number, :desc => "lecture ID"
   param :content, String, :desc => "질문 내용"
   param :correct_answer, String, :desc => "질문 정답"
@@ -37,7 +37,7 @@ class QuestionsController < ApplicationController
 
   # PATCH/PUT /questions
   # PATCH/PUT /questions.json
-  api :PUT, 'api/questions', '강의 질문 업데이트'
+  api :PUT, '/questions', '강의 질문 업데이트'
   param :id, :number, :desc => "question ID"
   param :content, String, :desc => "질문 내용"
   param :correct_answer, String, :desc => "질문 정답"
@@ -50,7 +50,7 @@ class QuestionsController < ApplicationController
     end
   end
 
-  api :DELETE, 'api/questions', '강의 질문 삭제'
+  api :DELETE, '/questions', '강의 질문 삭제'
   param :id, :number, :desc => "question ID"
   def destroy
     if @question.lecture.user_id == session[:user_id]

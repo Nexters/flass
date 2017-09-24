@@ -3,11 +3,11 @@ require 'json'
 require 'openssl'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
-class UsersController < ApplicationController
+class Api::UsersController < ApplicationController
   before_action :login_check, only: [:index, :show, :edit, :logout, :destroy]
   before_action :set_user, only: [:show, :edit, :destroy]
 
-  api :GET, 'api/users/:id', '(특정) 회원 정보 불러오기'
+  api :GET, '/users/:id', '(특정) 회원 정보 불러오기'
   def index
     @user = User.find(params[:id])
     render json: @user
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
-  api :GET, 'api/users', '(본인) 회원 정보 불러오기'
+  api :GET, '/users', '(본인) 회원 정보 불러오기'
   def show
     render json: @user
   end
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
   # POST /users
   # POST /users.json
-  api :POST, 'api/users', '회원 정보 생성 및 업데이트하기'
+  api :POST, '/users', '회원 정보 생성 및 업데이트하기'
   param :id_token, String, '구글 발급용 id_token 값'
   def create
     uri = URI("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=#{params[:id_token]}")
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
     end
   end
 
-  api :GET, 'api/logout', '회원 로그아웃'
+  api :GET, '/logout', '회원 로그아웃(앞에 api 붙이지 X)'
   def logout
     reset_session
     head :ok
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   # DELETE /users/1.json
-  api :DELETE, 'api/users', '회원 탈퇴'
+  api :DELETE, '/users', '회원 탈퇴'
   def destroy
     @user.destroy
     reset_session

@@ -1,9 +1,9 @@
-class ChoicesController < ApplicationController
+class Api::ChoicesController < ApplicationController
   before_action :login_check
   before_action :set_choice, only: [:edit, :update, :destroy]
 
 
-  api :GET, 'api/choices', '특정 Question에 대한 보기(선지)'
+  api :GET, '/choices', '특정 Question에 대한 보기(선지)'
   param :question_id, :number, :desc => "질문 ID"
   def show
     @choices = Choice.where(question_id: params[:question_id])
@@ -11,7 +11,7 @@ class ChoicesController < ApplicationController
   end
 
 
-  api :POST, 'api/choices', '특정 Question에 대한 선지 생성'
+  api :POST, '/choices', '특정 Question에 대한 선지 생성'
   param :question_id, :number, :desc => "Question ID"
   param :answer, String, :desc => "선지 내용"
   def create
@@ -25,7 +25,7 @@ class ChoicesController < ApplicationController
   end
 
 
-  api :GET, 'api/choices/edit', '특정 Question에 대한 선지 수정 페이지'
+  api :GET, '/choices/edit', '특정 Question에 대한 선지 수정 페이지'
   param :id, :number, :desc => "Choice ID"
     def edit
       if @question.user_id == session[:user_id]
@@ -35,7 +35,7 @@ class ChoicesController < ApplicationController
       end
     end
 
-  api :PUT, 'api/choices', '특정 Question에 대한 선지 엡데이트'
+  api :PUT, '/choices', '특정 Question에 대한 선지 엡데이트'
   param :id, :number, :desc => "Choice ID"
   param :answer, String, :desc => "선지 내용"
   def update
@@ -46,7 +46,7 @@ class ChoicesController < ApplicationController
     end
   end
 
-  api :DELETE, 'api/choices', '특정 Question에 대한 선지 삭제'
+  api :DELETE, '/choices', '특정 Question에 대한 선지 삭제'
   param :id, :number, :desc => "Choice ID"
   def destroy
     if @question.user_id == session[:user_id]
