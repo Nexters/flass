@@ -72,6 +72,7 @@ const propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   userName: PropTypes.string,
   content: PropTypes.object.isRequired,
+  createdAt: PropTypes.string.isRequired,
   isReply: PropTypes.bool.isRequired,
   replyCount: PropTypes.number.isRequired,
   like: PropTypes.number.isRequired,
@@ -107,15 +108,15 @@ class CommentItem extends Component {
   componentDidMount() {}
 
   renderAdminMenu() {
-    const { id, isAdmin, onDelete } = this.props;
+    const { id, onDelete } = this.props;
     const { toggleMenu } = this.state;
 
-    return isAdmin && toggleMenu && <CommentItemMenu
+    return toggleMenu && <CommentItemMenu
       onDelete={ _.partial(onDelete, id) } />;
   }
 
   render() {
-    const { userName, content, isReply, replyCount, like, isSelectedReply, onSelectedReply } = this.props;
+    const { isAdmin, userName, content, createdAt, isReply, replyCount, like, isSelectedReply, onSelectedReply } = this.props;
     const { toggleMenu, toggleHeart } = this.state;
 
     return (
@@ -125,7 +126,7 @@ class CommentItem extends Component {
           <CommentMenu className="flass-comment-item-float-box">
             <HeartIcon alt="like" src={ toggleHeart ? HeartActive : Heart } onClick={ this.handleToggleHeart } />
             { like }
-            <MenuIcon alt="menu" src={ toggleMenu ? MenuActive : Menu } onClick={ this.handleToggleMenu } />
+            { isAdmin && <MenuIcon alt="menu" src={ toggleMenu ? MenuActive : Menu } onClick={ this.handleToggleMenu } /> }
             {this.renderAdminMenu()}
           </CommentMenu>
         </Header>
@@ -133,7 +134,7 @@ class CommentItem extends Component {
           {content}
         </Content>
         <Bottom>
-          2017.07.23 {!isReply &&
+          { createdAt } {!isReply &&
           <BtnReply onClick={ onSelectedReply }>{isSelectedReply
           ? `설명글 (${replyCount})`
           : `설명글 (${replyCount})`}</BtnReply>}

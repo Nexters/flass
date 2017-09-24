@@ -85,6 +85,7 @@ class Comment extends Component {
       isAdmin={ comment['user_id'] == user.id }
       userName={ comment.userName }
       content={ content }
+      createdAt={ comment.createdAt }
       isReply={ !!parentId }
       replyCount={ replyCount.length }
       like={ comment.like }

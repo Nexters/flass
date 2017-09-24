@@ -28,13 +28,10 @@ export function* fetchComment({ lectureId }) {
 
   try {
     const response = yield call(agent.Comment.byLectureId, lectureId);
-    const comments = yield all(_.map(response.comments, comment => makeWithLike(comment)));
-    const commentchild = response.commentchild;
-    // yield all(_.map(response.comments, comment => makeWithLike(response.commentchild[comment.id])));
     yield put({
       type: FETCH_COMMENT_SUCCESS,
-      comments,
-      commentchild: commentchild,
+      comments: response.comments,
+      commentchild: response.commentchild,
     });
   } catch (err) {
     yield put({
