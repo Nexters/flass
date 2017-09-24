@@ -2,14 +2,14 @@ class ReplayAtsController < ApplicationController
   before_action :login_check
   before_action :set_replay_at, only: [:update, :destroy]
 
-  api :GET, '/replay_ats', '유저의 해당 강의 재생시간 정보'
+  api :GET, 'api/replay_ats', '유저의 해당 강의 재생시간 정보'
   param :lecture_id, :number, :desc => "강의 ID"
   def show
     @replay_at = ReplayAt.where(user_id: session[:user_id], lecture_id: params['lecture_id'])
     render json: @replay_at
   end
 
-  api :POST, '/replay_ats', '유저의 해당 강의 재생시간 정보 생성'
+  api :POST, 'api/replay_ats', '유저의 해당 강의 재생시간 정보 생성'
   param :lecture_id, :number, :desc => "강의 ID"
   param :playtime, :number, :desc => "영상 본 시간"
   def create
@@ -21,7 +21,7 @@ class ReplayAtsController < ApplicationController
     end
   end
 
-  api :PUT, '/replay_ats', '유저의 해당 강의 재생시간 정보 업데이트'
+  api :PUT, 'api/replay_ats', '유저의 해당 강의 재생시간 정보 업데이트'
   param :id, :number, :desc => "replay_at ID"
   param :playtime, :number, :desc => "영상 본 시간", :required => true
   def update
@@ -32,7 +32,7 @@ class ReplayAtsController < ApplicationController
     end
   end
 
-  api :DELETE, '/replay_ats', '유저의 해당 강의 재생시간 정보 삭제'
+  api :DELETE, 'api/replay_ats', '유저의 해당 강의 재생시간 정보 삭제'
   param :id, :number, :desc => "replay_at ID"
   def destroy
     if @lecture.user_id == session[:user_id]

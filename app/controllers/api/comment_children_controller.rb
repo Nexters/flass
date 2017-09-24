@@ -3,7 +3,7 @@ class CommentChildrenController < ApplicationController
   before_action :set_commentchild, only: [:edit, :update, :destroy]
 
 
-  api :POST, '/comment_children', '특정 comment에 대한 대댓글 생성'
+  api :POST, 'api/comment_children', '특정 comment에 대한 대댓글 생성'
   param :comment_id, :number, :desc => "Comment ID"
   param :content, String, :desc => "대댓글 내용"
   def create
@@ -16,7 +16,7 @@ class CommentChildrenController < ApplicationController
     end
   end
 
-  api :GET, '/comment_children/edit', '대댓글 수정 페이지'
+  api :GET, 'api/comment_children/edit', '대댓글 수정 페이지'
   param :id, :number, :desc => "CommentChild ID"
   def edit
     if @commentchild.user_id == session[:user_id]
@@ -27,7 +27,7 @@ class CommentChildrenController < ApplicationController
   end
 
 
-  api :PUT, '/comment_children', '대댓글 수정'
+  api :PUT, 'api/comment_children', '대댓글 수정'
   param :id, :number, :desc => "CommentChild ID"
   param :content, String, :desc => "대댓글 내용"
   def update
@@ -39,7 +39,7 @@ class CommentChildrenController < ApplicationController
   end
 
 
-  api :DELETE, '/comment_children', '특정 대댓글 삭제'
+  api :DELETE, 'api/comment_children', '특정 대댓글 삭제'
   param :id, :number, :desc => "CommentChild ID"
   def destroy
     if @commentchild.user_id == session[:user_id]

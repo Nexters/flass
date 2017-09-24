@@ -2,7 +2,7 @@ class LecturesController < ApplicationController
   before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
   before_action :set_lecture, only: [:show, :edit, :update, :destroy, :statistics]
 
-  api :GET, '/lectures', '(특정 유저가 업로드한) 강의들 불러오기'
+  api :GET, 'api/lectures', '(특정 유저가 업로드한) 강의들 불러오기'
   param :page, :number, :desc => "강의 페이지"
   def index
     @lectures = Lecture.where(user_id: session[:user_id]).order(created_at: :desc).paginate(page: params[:page], per_page: 12)
@@ -11,13 +11,13 @@ class LecturesController < ApplicationController
 
   # GET /lectures
   # GET /lectures.json
-  api :GET, '/lectures/:id', '특정 강의 불러오기'
+  api :GET, 'api/lectures/:id', '특정 강의 불러오기'
   param :id, :number, :desc => "lecture ID"
   def show
     render json: @lecture
   end
 
-  api :GET, '/lectures/:id/edit', '강의 수정 페이지'
+  api :GET, 'api/lectures/:id/edit', '강의 수정 페이지'
   param :id, :number, :desc => "lecture ID"
   def edit
     if @lecture.user_id == session[:user_id]
@@ -27,7 +27,7 @@ class LecturesController < ApplicationController
     end
   end
 
-  api :POST, '/lectures', '강의 생성'
+  api :POST, 'api/lectures', '강의 생성'
   param :title, String, :desc => "강의 제목"
   param :content, String, :desc => "강의 내용"
   param :subject, String, :desc => "강의 과목"
@@ -45,7 +45,7 @@ class LecturesController < ApplicationController
     end
   end
 
-  api :PUT, '/lectures/:id', '강의 업데이트'
+  api :PUT, 'api/lectures/:id', '강의 업데이트'
   param :id, :number, :desc => "lecture ID"
   param :title, String, :desc => "강의 제목"
   param :content, String, :desc => "강의 설명"
@@ -64,7 +64,7 @@ class LecturesController < ApplicationController
 
   # DELETE /lectures
   # DELETE /lectures.json
-  api :DELETE, '/lectures/:id', '강의 삭제'
+  api :DELETE, 'api/lectures/:id', '강의 삭제'
   param :id, :number, :desc => "lecture ID"
   def destroy
     if @lecture.user_id == session[:user_id]
@@ -75,7 +75,7 @@ class LecturesController < ApplicationController
     end
   end
 
-  api :GET, '/lectures/statistics', '강의의 질문 및 학생 답'
+  api :GET, 'api/lectures/statistics', '강의의 질문 및 학생 답'
   param :id, :number, :desc => "lecture ID"
   def statistics
     @ret = Hash.new
@@ -98,6 +98,12 @@ class LecturesController < ApplicationController
   api :GET, '/v/:id', '(학생용) 특정 강의 링크'
   param :id, :number, :desc => "lecture ID"
   def v
+    render file: 'public/index.html'
+  end
+
+  api :GET '/lecture/:id', '(게시자용) 특정 강의 링크'
+  param :id, :number, :desc => "lecture ID"
+  def l
     render file: 'public/index.html'
   end
 
