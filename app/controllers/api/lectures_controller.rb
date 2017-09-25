@@ -98,7 +98,7 @@ class Api::LecturesController < ApplicationController
   api :GET, '/v/:id', '(학생용) 특정 강의 링크(앞에 api 붙이지 X)'
   param :id, :number, :desc => "lecture ID"
   def v
-    render file: 'public/index.html'
+    render file: 'public/index.html', layout: false
   end
 
   api :GET, '/lecture/:id', '(게시자용) 특정 강의 링크(앞에 api 붙이지 X)'
