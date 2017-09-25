@@ -88,6 +88,7 @@ class Api::UsersController < ApplicationController
     head :ok
   end
 
+  api :GET, '/user/login', '로그인 화면(앞에 api 붙이지 x)'
   def v
     render file: 'public/index.html'
   end
