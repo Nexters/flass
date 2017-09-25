@@ -13,18 +13,13 @@ import color from '../../../css/base/colors.scss';
 import './Drawer.scss';
 
 const FlassMark = styled.div`
-  font-family: ArialRoundedMT;
-  font-size: 3rem;
-  font-weight: bold;
-  text-align: center;
-  color: ${color['light-navy']};
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  width: 1.625rem;
+  display: flex;
+  padding-top: 2.8125rem;
+  padding-bottom: 3rem;
 `;
 
 const FlassLogoImg = styled.img`
-  width: 100%;
+  margin: auto;
 `;
 
 const FlassMenu = styled(Link)`
