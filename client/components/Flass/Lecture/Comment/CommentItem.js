@@ -67,23 +67,26 @@ const BtnReply = styled.a`
   float: right;
 `;
 
+const { number, string, bool, object, func, oneOfType } = PropTypes;
+
 const propTypes = {
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  isAdmin: PropTypes.bool.isRequired,
-  userName: PropTypes.string,
-  content: PropTypes.object.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  isReply: PropTypes.bool.isRequired,
-  replyCount: PropTypes.number.isRequired,
-  like: PropTypes.number.isRequired,
-  isSelectedReply: PropTypes.bool.isRequired,
-  onSelectedReply: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+  id: oneOfType([number, string]).isRequired,
+  isAdmin: bool.isRequired,
+  userName: string,
+  content: object.isRequired,
+  createdAt: string.isRequired,
+  isReply: bool.isRequired,
+  replyCount: number.isRequired,
+  like: number.isRequired,
+  isSelectedReply: bool.isRequired,
+  onSelectedReply: func.isRequired,
+  onDelete: func.isRequired,
+  onUpdate: func.isRequired
 };
 const defaultProps = {
   userName: '',
   isReply: false,
-  like: 0,
+  like: 0
 };
 
 class CommentItem extends Component {
@@ -95,30 +98,9 @@ class CommentItem extends Component {
     };
   }
 
-  handleToggleHeart = () => {
-    const { toggleHeart } = this.state;
-    this.setState({ toggleHeart: !toggleHeart });
-  };
-
-  handleToggleMenu = () => {
-    const { toggleMenu } = this.state;
-    this.setState({ toggleMenu: !toggleMenu });
-  };
-
-  componentDidMount() {}
-
-  renderAdminMenu() {
-    const { id, onUpdate, onDelete } = this.props;
-    const { toggleMenu } = this.state;
-
-    return toggleMenu && <CommentItemMenu
-      onDelete={ _.partial(onDelete, id) }
-      onUpdate={ onUpdate }
-    />;
-  }
-
   render() {
-    const { isAdmin, userName, content, createdAt, isReply, replyCount, like, isSelectedReply, onSelectedReply } = this.props;
+    const { isAdmin, userName, content, createdAt,
+            isReply, replyCount, like, isSelectedReply, onSelectedReply } = this.props;
     const { toggleMenu, toggleHeart } = this.state;
 
     return (
@@ -126,9 +108,10 @@ class CommentItem extends Component {
         <Header>
           <UserName>{userName}</UserName>
           <CommentMenu className="flass-comment-item-float-box">
-            <HeartIcon alt="like" src={ toggleHeart ? HeartActive : Heart } onClick={ this.handleToggleHeart } />
-            { like }
-            { isAdmin && <MenuIcon alt="menu" src={ toggleMenu ? MenuActive : Menu } onClick={ this.handleToggleMenu } /> }
+            {
+              isAdmin &&
+              <MenuIcon alt="menu" src={ toggleMenu ? MenuActive : Menu } onClick={ this.handleToggleMenu } />
+            }
             {this.renderAdminMenu()}
           </CommentMenu>
         </Header>
@@ -143,6 +126,25 @@ class CommentItem extends Component {
         </Bottom>
       </LectureCommentItem>
     );
+  }
+
+  handleToggleHeart = () => {
+    const { toggleHeart } = this.state;
+    this.setState({ toggleHeart: !toggleHeart });
+  };
+
+  handleToggleMenu = () => {
+    const { toggleMenu } = this.state;
+    this.setState({ toggleMenu: !toggleMenu });
+  };
+
+  renderAdminMenu() {
+    const { id, onUpdate, onDelete } = this.props;
+    const { toggleMenu } = this.state;
+
+    return toggleMenu && <CommentItemMenu
+      onDelete={ _.partial(onDelete, id) }
+      onUpdate={ onUpdate } />;
   }
 }
 
