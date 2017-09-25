@@ -21,7 +21,7 @@ module.exports = {
     inline: true,
     host: 'localhost',
     port: 4000,
-    contentBase: path.resolve(__dirname, '/public')
+    contentBase: path.resolve(__dirname, 'public')
   },
   module: {
     // https://velopert.com/1492

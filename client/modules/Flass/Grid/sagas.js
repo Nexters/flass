@@ -1,11 +1,18 @@
-import { takeEvery } from 'redux-saga';
+import { takeEvery, takeLatest } from 'redux-saga';
 import { all, call, fork, take, select, put, cancel } from 'redux-saga/effects';
 import _ from 'lodash';
 import agent from '../../agent';
 import {
   FETCH_MY_CHANNEL,
-  FETCH_MY_CHANNEL_ERROR, FETCH_MY_CHANNEL_SUCCESS,
   FETCH_READY_MY_CHANNEL,
+  FETCH_MY_CHANNEL_SUCCESS,
+  FETCH_MY_CHANNEL_ERROR,
+
+  DELETE_MY_CHANNEL_ITEM,
+  DELETE_READY_MY_CHANNEL_ITEM,
+  DELETE_MY_CHANNEL_ITEM_SUCCESS,
+  DELETE_MY_CHANNEL_ITEM_ERROR,
+  DELETE_MY_CHANNEL_ITEM_FIN
 } from './actions';
 
 function* makeWithQuestionCount(item) {
@@ -25,7 +32,7 @@ function* fetchMyChannelItems() {
       items: itemsWithQuestion
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     yield put({
       type: FETCH_MY_CHANNEL_ERROR,
       message: err.message
@@ -33,6 +40,29 @@ function* fetchMyChannelItems() {
   }
 }
 
+function* deleteMyChannelItem({ id }) {
+  yield put({
+    type: DELETE_READY_MY_CHANNEL_ITEM
+  });
+
+  try {
+    yield call(agent.Lecture.delete, id);
+    yield put({
+      type: DELETE_MY_CHANNEL_ITEM_SUCCESS,
+      id
+    });
+    yield put({
+      type: DELETE_MY_CHANNEL_ITEM_FIN
+    });
+  } catch (e) {
+    yield put({
+      type: DELETE_MY_CHANNEL_ITEM_ERROR,
+      message: err.message
+    });
+  }
+}
+
 export default function* rootSaga() {
   yield takeEvery(FETCH_MY_CHANNEL, fetchMyChannelItems);
+  yield takeLatest(DELETE_MY_CHANNEL_ITEM, deleteMyChannelItem);
 }

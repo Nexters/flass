@@ -90,7 +90,8 @@ const Grid = {
 
 const Lecture = {
   byId: lectureId => requestsForApi.get(`/lectures/${lectureId}`),
-  upload: body => requestsForApi.post('/lectures', body)
+  upload: body => requestsForApi.post('/lectures', body),
+  delete: lectureId => requestsForApi.del(`/lectures/${lectureId}`)
 };
 
 const Question = {

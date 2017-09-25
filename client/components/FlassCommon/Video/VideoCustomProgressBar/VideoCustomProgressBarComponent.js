@@ -64,7 +64,8 @@ class VideoCustomProgressBarComponent extends Component {
       duration: 1,
       played: 0,
       loaded: 0,
-      isDragging: false
+      isDragging: false,
+      ismouseover: false
     };
   }
 
@@ -86,7 +87,7 @@ class VideoCustomProgressBarComponent extends Component {
   }
 
   render() {
-    const { played, loaded, duration } = this.state;
+    const { played, loaded, duration, ismouseover } = this.state;
     const {
       VideoBarClassName,
       VideoPlayedBarClassName,
@@ -108,14 +109,20 @@ class VideoCustomProgressBarComponent extends Component {
           VideoPlayedBarClassName={ VideoPlayedBarClassName }
           VideoLoadedBarClassName={ VideoLoadedBarClassName }
           played={ played }
-          loaded={ loaded } />
+          loaded={ loaded }
+          onMouseOverOnBar={ this.onMouseOverOnBar }
+          onMouseOutFromBar={ this.onMouseOutFromBar }
+          ismouseover={ ismouseover } />
         <VideoCustomQuizBarComponent
           VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
           VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
           onQuestionbarClick={ this.onQuestionbarClick }
+          onMouseOverOnBar={ this.onMouseOverOnBar }
+          onMouseOutFromBar={ this.onMouseOutFromBar }
           duration={ duration }
 
-          quizTimeArray={ quizTimeArray } />
+          quizTimeArray={ quizTimeArray }
+          ismouseover={ ismouseover } />
       </VideoProgressBar>
     );
   }
@@ -215,6 +222,14 @@ class VideoCustomProgressBarComponent extends Component {
     this.props.onQuestionbarClick({ label });
     e.stopPropagation();
     e.preventDefault;
+  }
+
+  onMouseOverOnBar = () => {
+    this.setState({ ismouseover: true });
+  }
+
+  onMouseOutFromBar = () => {
+    this.setState({ ismouseover: false });
   }
 }
 
