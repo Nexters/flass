@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   get 'api/users/:id' => "api/users#index"
 
   get 'v/:id' => "api/lectures#v"
-
-  get 'lecture/:id' => "api/lectures#l"
-
+  get 'lecture/:id' => "api/lectures#v"
+  get 'upload' => "api/lectures#v"
+  get 'home' => "api/lectures#v"
   get 'user/login' => "api/users#v"
 
   apipie
