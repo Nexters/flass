@@ -39,24 +39,36 @@ class Comment extends Component {
     };
   }
 
-  handleSelectedReply = index => {
-    const { selectedReply } = this.state;
-    if (index === selectedReply) {
-      this.setState({
-        selectedReply: -1
-      });
-      return;
+  componentDidMount() {
+    const { lectureId, fetchComment } = this.props;
+    if (lectureId !== -1) {
+      fetchComment(lectureId);
     }
-    this.setState({
-      selectedReply: index
-    });
-  };
+  }
 
-  handleSelectedUpdateId = commentId => {
-    this.setState({
-      selectedUpdateId: commentId,
-    });
-  };
+  render() {
+    return (
+      <LectureComment>
+        {this.renderPostComment('postComment', '질문 등록')}
+        {this.renderChild()}
+      </LectureComment>
+    );
+  }
+
+  renderPostComment = (form, name, commentId, parentId, content) => {
+    const { lectureId, user, addComment } = this.props;
+
+    return (<PostComment
+      key={ `${form}${commentId}` }
+      isUpdate={ !!content }
+      form={ form }
+      initialValues={ { content } }
+      lectureId={ lectureId }
+      name={ name }
+      user={ user }
+      addComment={ _.partial(addComment, commentId) }
+      updateComment={ _.partial(this.handleUpdateComment, parentId, commentId) } />);
+  }
 
   handleUpdateComment = (parentId, commentId, content) => {
     const { updateComment } = this.props;
@@ -67,34 +79,21 @@ class Comment extends Component {
     updateComment(parentId, commentId, content);
   };
 
-  componentDidMount() {
-    const { lectureId, fetchComment } = this.props;
-    if (lectureId !== -1) {
-      fetchComment(lectureId);
-    }
-  }
+  renderChild = () => {
+    const { comments } = this.props;
+    const { selectedReply } = this.state;
 
-  renderPostComment = (form, name, commentId, parentId, content) => {
-    const { lectureId, user, addComment } = this.props;
-
-    return (<PostComment
-      key={ `${form}${commentId}` }
-      isUpdate={ !!content }
-      form={ form }
-      initialValues={{ content }}
-      lectureId={ lectureId }
-      name={ name }
-      user={ user }
-      addComment={ _.partial(addComment, commentId) }
-      updateComment={ _.partial(this.handleUpdateComment, parentId, commentId) }
-    />);
+    const commentsView = _.map(comments, (comment, index) => this.renderComment(comment, index));
+    const replyCommentsView = this.renderReply(comments[selectedReply]);
+    commentsView.splice(selectedReply + 1, 0, ...replyCommentsView);
+    return commentsView;
   }
 
   renderComment = (comment, index, parentId) => {
     const { user, commentchild, deleteComment } = this.props;
     const { selectedReply, selectedUpdateId } = this.state;
 
-    if(selectedUpdateId === comment.id) {
+    if (selectedUpdateId === comment.id) {
       return this.renderPostComment('updateComment', '댓글 수정', comment.id, parentId, comment.content);
     }
     const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
@@ -115,6 +114,25 @@ class Comment extends Component {
       onDelete={ _.partial(deleteComment, parentId) } />);
   };
 
+  handleSelectedReply = index => {
+    const { selectedReply } = this.state;
+    if (index === selectedReply) {
+      this.setState({
+        selectedReply: -1
+      });
+      return;
+    }
+    this.setState({
+      selectedReply: index
+    });
+  };
+
+  handleSelectedUpdateId = commentId => {
+    this.setState({
+      selectedUpdateId: commentId,
+    });
+  };
+
   renderReply = comment => {
     const { commentchild } = this.props;
 
@@ -132,25 +150,6 @@ class Comment extends Component {
       }))
       .concat(replyPostComments);
   };
-
-  renderChild = () => {
-    const { comments } = this.props;
-    const { selectedReply } = this.state;
-
-    const commentsView = _.map(comments, (comment, index) => this.renderComment(comment, index));
-    const replyCommentsView = this.renderReply(comments[selectedReply]);
-    commentsView.splice(selectedReply + 1, 0, ...replyCommentsView);
-    return commentsView;
-  }
-
-  render() {
-    return (
-      <LectureComment>
-        {this.renderPostComment('postComment', '질문 등록')}
-        {this.renderChild()}
-      </LectureComment>
-    );
-  }
 }
 
 Comment.propTypes = propTypes;

@@ -28,14 +28,12 @@ const Item = styled.li`
 
 const propTypes = {
   onDelete: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
 
 class CommentItemMenu extends Component {
-  componentDidMount() {}
-
   render() {
     const { onUpdate, onDelete } = this.props;
 
