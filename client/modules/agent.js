@@ -4,16 +4,14 @@ const TYPE_OF_BACKEND = process.env.BACK_END;
 const API_JSON = 'http://localhost:4000';
 const API_LOCAL = 'http://localhost:3000';
 const API_PRODUCTION = 'http://flass.me';
-export const API_ROOT = (function() {
-  switch(TYPE_OF_BACKEND) {
-    case 'json' :
-      return API_JSON;
+export const API_ROOT = (function(type) {
+  switch(type) {
     case 'local':
       return API_LOCAL;
     default:
       return API_PRODUCTION;
   }
-})();
+})(TYPE_OF_BACKEND);
 
 const encode = encodeURIComponent;
 const responseBody = res => res.data;
@@ -33,7 +31,7 @@ const config = {
 };
 
 function selectAPIRequest(railsRequest = {}, jsonRequest = {}) {
-  return TYPE_OF_BACKEND === 'json' ?  jsonRequest : railsRequest;
+  return railsRequest;
 }
 
 const requestsForApi = {
@@ -60,15 +58,7 @@ const requests = {
 
 const Auth = {};
 
-const UserJson = {
-  me: () => requestsForApi.get('/json/FlassUser.json')
-        .then(response => {
-          console.log('response::UserJson');
-          console.log(response);
-          return response;
-        })
-};
-const UserRails = {
+const User = {
   me: token => requestsForApi.post('/users', { id_token: token })
     .then(response => {
       console.log('response::UserRails');
@@ -89,53 +79,31 @@ const UserRails = {
       return response;
     })
 };
-const User = selectAPIRequest(UserRails, UserJson);
-
 
 const Badge = {
   byType: type => requestsForApi.get('/json/FlassBadgeHistory.json')
 };
 
-const GridJson = {
-  all: () => requestsForApi.get('/json/FlassGrid.json')
-};
-const GridRails = {
+const Grid = {
   all: () => requestsForApi.get('/lectures')
 };
-const Grid = selectAPIRequest(GridRails, GridJson);
 
-
-const LectureJson = {
-  byId: lectureId => requestsForApi.get('/json/FlassLecture.json')
-};
-const LectureRails = {
+const Lecture = {
   byId: lectureId => requestsForApi.get(`/lectures/${lectureId}`),
   upload: body => requestsForApi.post('/lectures', body)
 };
-const Lecture = selectAPIRequest(LectureRails, LectureJson);
 
-
-const QuestionJson = {
-  byLectureId: lectureId => requestsForApi.get('/json/FlassQuestion.json')
-};
-const QuestionRails = {
+const Question = {
   byLectureId: lectureId => requestsForApi.get(`/questions?lecture_id=${lectureId}`),
   uploadByLectureId: body => requestsForApi.post('/questions', body)
 };
-const Question = selectAPIRequest(QuestionRails, QuestionJson);
 
 const Choice = {
   upload: body => requestsForApi.post('/choices', body),
   fetch: questionId => requestsForApi.get(`/choices?question_id=${questionId}`)
 };
 
-const CommentJson = {
-  byLectureId: lectureId => requestsForApi.get('/json/FlassComment.json'),
-  postComment: (lectureId, content) => requestsForApi.get('/json/FlassPostComment.json', { lectureId, content }),
-  deleteById: commentId => requestsForApi.del('')
-};
-
-const CommentRails = {
+const Comment = {
   byLectureId: lectureId => requestsForApi.get(`/comments?lecture_id=${lectureId}`),
   postComment: (lectureId, content) => requestsForApi.post('/comments', { lecture_id: lectureId, content }),
   postReplyComment: (commentId, content) => requestsForApi.post('/comment_children', { comment_id: commentId, content }),
@@ -145,24 +113,15 @@ const CommentRails = {
   deleteReplyById: id => requestsForApi.del('/comment_children', { id })
 };
 
-const Comment = selectAPIRequest(CommentRails, CommentJson);
-
 const Like = {
   postByCommentId: commentId => requestsForApi.put(`/comments/${commentId}/like`)
 };
 
-const AnswerRails = {
+const Answer = {
   byLectureId: lectureId => requestsForApi.get(`/answers?lecture_id=${lectureId}`),
   uploadByQuestionId: body => requestsForApi.post('/answers', body),
   getAnswerByQuestionId: questionId => requestsForApi.get(`/answers/question?question_id=${questionId}`)
 };
-const AnswerJson = {
-  byLectureId: () => {},
-  uploadByQuestionId: body => axios.post('http://localhost:3000/answers', body, config),
-  getAnswerByQuestionId: () => {}
-};
-const Answer = selectAPIRequest(AnswerRails, AnswerJson);
-
 
 const Analysis = {
   fetch: lectureId => requestsForApi.get(`/lectures/statistics?id=${lectureId}`)
