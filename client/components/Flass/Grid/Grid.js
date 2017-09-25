@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import autobind from 'autobind-decorator';
 import { Row, Grid as GridView } from 'react-bootstrap';
 import _ from 'lodash';
 import GridItem from './GridItem';
@@ -10,10 +11,13 @@ import {
 import './Grid.scss';
 import '../../../css/base/_row.scss';
 
+const { object, array, func } = PropTypes;
+
 const propTypes = {
-  user: PropTypes.object.isRequired,
-  items: PropTypes.array.isRequired,
-  fetchRequestMyChannelItems: PropTypes.func.isRequired
+  user: object.isRequired,
+  items: array.isRequired,
+  fetchRequestMyChannelItems: func.isRequired,
+  deleteMyChannelItem: func.isRequired
 };
 
 const defaultProps = {
@@ -22,6 +26,13 @@ const defaultProps = {
 const NUM_OF_ITEMS_PER_COLS = 4;
 
 class Grid extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      items: []
+    };
+  }
   componentDidMount() {
     const { user } = this.props;
 
@@ -31,9 +42,7 @@ class Grid extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { user } = this.props;
-    const nextUser = nextProps.user;
-    if (user.id !== nextUser.id) {
+    if (this.shouldFetchItems(nextProps)) {
       this.props.fetchRequestMyChannelItems();
     }
   }
@@ -53,6 +62,12 @@ class Grid extends Component {
     );
   }
 
+  shouldFetchItems(nextProps) {
+    const { user } = nextProps;
+
+    return this.props.user.id !== user.id;
+  }
+
   renderRowsAndCols(items) {
     let chunkIndex = 0;
     return _.chunk(items, NUM_OF_ITEMS_PER_COLS).map(splitItems => {
@@ -69,9 +84,19 @@ class Grid extends Component {
     const { user } = this.props;
     return items.map(item => (
       <div key={ item.id } className="Col__grid">
-        <GridItem { ...item } userName={ user.userName } />
+        <GridItem
+          { ...item }
+          userName={ user.userName }
+          onClickDeleteBtn={ this.deleteItem } />
       </div>
     ));
+  }
+
+  @autobind
+  deleteItem(itemId) {
+    if (confirm('정말로 삭제하시겠습니까?')) {
+      this.props.deleteMyChannelItem(itemId);
+    }
   }
 }
 
