@@ -88,6 +88,10 @@ class Api::UsersController < ApplicationController
     head :ok
   end
 
+  def v
+    render file: 'public/index.html'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

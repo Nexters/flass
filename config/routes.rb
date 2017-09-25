@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   get 'lecture/:id' => "api/lectures#l"
 
+  get 'user/login' => "api/users#v"
 
   apipie
   namespace :api do
