@@ -10,29 +10,26 @@ $borderWidth: 6.25rem;
   height: $progressbarHeight;
   background-color: rgba(255, 255, 255, .44);
   border-radius: $borderWidth;
-
-  &--thinner {
-    height: $progressbarHeightThinner;
-  }
+  transition: all .3s ease-out;
 
   &--thicker {
     height: $progressbarHeightThicker;
+    transition: all .3s ease-out;
   }
+
 }
 
-.played-bar {
+.played-bar {transition: all .3s ease-out;
   position: absolute;
   width: 1%;
   height: $progressbarHeight;
   background-color: $playedbarColor;
   border-radius: $borderWidth;
-
-  &--thinner {
-    height: $progressbarHeightThinner;
-  }
+  transition: all .3s ease-out;
 
   &--thicker {
     height: $progressbarHeightThicker;
+    transition: all .3s ease-out;
   }
 }
 
@@ -42,12 +39,10 @@ $borderWidth: 6.25rem;
   height: $progressbarHeight;
   background-color: $loadedbarColor;
   border-radius: $borderWidth;
-
-  &--thinner {
-    height: $progressbarHeightThinner;
-  }
+  transition: all .3s ease-out;
 
   &--thicker {
     height: $progressbarHeightThicker;
+    transition: all .3s ease-out;
   }
 }
