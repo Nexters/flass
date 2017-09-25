@@ -25,7 +25,8 @@ const initialState = {
     updated_at: '',
     url: ''
   },
-  isError: false
+  isError: false,
+  mounted: false
 };
 
 const fetchLectureReducer = {

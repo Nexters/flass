@@ -154,7 +154,8 @@ class Lecture extends Component {
   }
 
   isLectureAlreadyFetch() {
-    return this.props.lecture.lecture.id !== -1;
+    const { match, lecture: { lecture } } = this.props;
+    return parseInt(lecture.id) === parseInt(match.params.id);
   }
 
   renderTabs = () => {

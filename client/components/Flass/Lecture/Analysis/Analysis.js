@@ -73,7 +73,7 @@ class Analysis extends Component {
     const { questions, answers } = this.props;
 
     if (questions.length === 0) {
-      return null;
+      return <div>등록된 문제가 없습니다.</div>;
     }
     const question = questions[selectedIndex];
 
