@@ -8,11 +8,15 @@ const { func, bool, shape, object } = PropTypes;
 const propTypes = {
   component: func.isRequired,
   checkSession: func.isRequired,
-  sessionValid: bool.isRequired,
-  isSessionChecking: bool.isRequired
+  setEntryPoint: func.isRequired,
+  sessionValid: bool,
+  isSessionChecking: bool
 };
 
-const defaultProps = {};
+const defaultProps = {
+  sessionValid: false,
+  isSessionChecking: false
+};
 
 class SessionCheckBeforeRoute extends Component {
   static contextTypes = {
@@ -31,7 +35,12 @@ class SessionCheckBeforeRoute extends Component {
   }
 
   componentWillMount() {
+    const { sessionValid, ...rest } = this.props;
     this.props.checkSession();
+
+    if (!sessionValid) {
+      this.setEntryPoint(rest);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,14 +49,8 @@ class SessionCheckBeforeRoute extends Component {
   }
 
   render() {
-    const {
-      component,
-      ...rest
-    } = this.props;
-    const {
-      isSessionChecking,
-      sessionValid
-    } = this.state;
+    const { component, ...rest } = this.props;
+    const { isSessionChecking, sessionValid } = this.state;
 
     if (isSessionChecking) {
       return <LoadingComponent />;
@@ -58,6 +61,10 @@ class SessionCheckBeforeRoute extends Component {
     } else {
       return <Redirect to="/user/login" />;
     }
+  }
+
+  setEntryPoint(rest) {
+    this.props.setEntryPoint(rest.location.pathname);
   }
 }
 

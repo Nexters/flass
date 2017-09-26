@@ -75,8 +75,8 @@ function* checkSession() {
 
     yield put({ type: CHECK_SESSION_SUCCESS });
     yield put({ type: CHECK_SESSION_FIN });
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.error(e);
     yield put({ type: CHECK_SESSION_FAIL });
     yield put({ type: CHECK_SESSION_FIN });
   }

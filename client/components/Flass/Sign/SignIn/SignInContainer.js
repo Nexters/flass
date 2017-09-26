@@ -8,12 +8,13 @@ import {
 } from '../../../../modules/Sign/actions';
 
 function mapStateToProps(state) {
-  const { isUserSignedIn, needRedirect, sessionValid } = state.sign;
+  const { isUserSignedIn, needRedirect, sessionValid, prevPath } = state.sign;
 
   return {
     isUserSignedIn,
     needRedirect,
-    sessionValid
+    sessionValid,
+    prevPath
   };
 }
 

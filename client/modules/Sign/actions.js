@@ -26,3 +26,14 @@ export const SUCCESS_LOGIN_FLASS_SERVICE = 'SUCCESS_LOGIN_FLASS_SERVICE';
 export const FAIL_LOGIN_FLASS_SERVICE = 'FAIL_LOGIN_FLASS_SERVICE';
 
 export const LOGOUT = 'LOGOUT';
+
+export const SET_ENTRY_POINT = 'SET_ENTRY_POINT';
+export const setEntryPoint = location => ({
+  type: SET_ENTRY_POINT,
+  location
+});
+
+export const RESET_ENTRY_POINT = 'RESET_ENTRY_POINT';
+export const resetEntryPoint = () => ({
+  type: RESET_ENTRY_POINT
+});
