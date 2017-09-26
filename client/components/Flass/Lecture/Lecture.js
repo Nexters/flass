@@ -164,10 +164,8 @@ class Lecture extends Component {
     const paramsId = parseInt(match.params.id);
 
     if (this.isUserFromMain(paramsId)) {
-      console.log('user from main');
       return paramsId;
     } else {
-      console.log('user from link');
       return parseInt(lectureIdFromLink);
     }
   }
