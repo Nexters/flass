@@ -7,13 +7,22 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const Icon = styled.img`
+const LoadingIcon = styled.img`
   width: 25rem;
   margin-left: 50%;
   transform: translate(-50%, -50%);
 `;
 
+const LoadingText = styled.div`
+  margin-top: 1.375rem;
+  font-size: 1.5625rem;
+  font-weight: 500;
+  color: #b6bfc1;
+  text-align: center;
+`;
+
 export {
   Wrapper,
-  Icon
+  LoadingIcon,
+  LoadingText
 };
