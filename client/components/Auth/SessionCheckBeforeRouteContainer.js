@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SessionCheckBeforeRoute from './SessionCheckBeforeRoute';
 import {
-  CHECK_SESSION
+  CHECK_SESSION,
+  setEntryPoint
 } from '../../modules/Sign/actions';
 import {
   FETCH_USER
@@ -20,7 +21,8 @@ function mapDispatchToProps(dispatch) {
     }),
     fetchUser: () => ({
       type: FETCH_USER
-    })
+    }),
+    setEntryPoint
   }, dispatch);
 }
 

@@ -3,24 +3,21 @@ import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 
 import './signIn.scss';
-import SignInBackground from './img/signInBackground.png';
-import SignInBackground2x from './img/signInBackground@2x.png';
-import SignInBackground3x from './img/signInBackground@3x.png';
-import Logo from './img/logo.png';
-import Logo2x from './img/logo@2x.png';
-import Logo3x from './img/logo@3x.png';
 
-const { func, bool, shape, object } = PropTypes;
+const { func, bool, shape, object, string } = PropTypes;
 
 const propTypes = {
   initGoogleAuthService: func.isRequired,
   goToGoogleAuthPage: func.isRequired,
 
-  isUserSignedIn: bool.isRequired,
-  sessionValid: bool.isRequired
+  sessionValid: bool,
+  prevPath: string
 };
 
-const defaultProps = {};
+const defaultProps = {
+  sessionValid: false,
+  prevPath: '/'
+};
 
 class SignIn extends Component {
   static contextTypes = {
@@ -34,8 +31,9 @@ class SignIn extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.sessionValid) {
-      this.context.router.history.push('/');
+    const { sessionValid, prevPath } = nextProps;
+    if (sessionValid) {
+      this.context.router.history.push(prevPath);
     }
   }
 

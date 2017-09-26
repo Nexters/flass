@@ -17,21 +17,24 @@ import {
 
   SUCCESS_LOGIN_FLASS_SERVICE,
   FAIL_LOGIN_FLASS_SERVICE,
+
+  SET_ENTRY_POINT,
+  GET_ENTRY_POINT,
+  RESET_ENTRY_POINT
 } from './actions';
 
 const initialState = {
   isUserSignedIn: false,
-  needRedirect: false,
   id_token: '',
   sessionValid: false,
-  isSessionChecking: false
+  isSessionChecking: false,
+  prevPath: '/'
 };
 
 const userSignInReducer = {
   [SUCCESS_LOGIN_FLASS_SERVICE]: (state, { payload }) => ({
     ...state,
     isUserSignedIn: true,
-    needRedirect: true,
     id_token: payload.id_token,
     sessionValid: true
   })
@@ -65,10 +68,20 @@ const userIsSignedInReducer = {
   })
 };
 
+const entryPointReducer = {
+  [SET_ENTRY_POINT]: (state, action) => ({
+    prevPath: action.location
+  }),
+  [RESET_ENTRY_POINT]: (state, action) => ({
+    prevPath: '/'
+  })
+};
+
 const SignReducers = createReducer(initialState, {
   ...userSignInReducer,
   ...userSignOutReducer,
-  ...userIsSignedInReducer
+  ...userIsSignedInReducer,
+  ...entryPointReducer
 });
 
 export default SignReducers;

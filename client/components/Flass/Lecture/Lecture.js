@@ -39,16 +39,20 @@ const TabTitle = styled.span`
   color: ${color['slate-grey']};
 `;
 
-const { string, func, shape, array, object, bool, number } = PropTypes;
+const { string, func, shape, array, object, bool, number, oneOfType } = PropTypes;
 
 const propTypes = {
   fetchRequestLectureAll: func.isRequired,
   saveQuestionsStateOnEnded: func.isRequired,
-  match: object,
+  unmountLecture: func.isRequired,
+  match: shape({
+    params: shape({
+      id: oneOfType([number, string])
+    })
+  }).isRequired,
   lecture: shape({
     isLoading: bool,
     lecture: shape({
-      id: number,
       userId: number,
       title: string,
       content: string,
@@ -75,8 +79,10 @@ const propTypes = {
   video: shape({
     videoUrl: string
   }).isRequired,
-  lectureId: string,
-  isForExternal: bool
+  lectureIdFromLink: oneOfType([string, number]),
+  lectureIdFromReducer: number,
+  isForExternal: bool,
+  isFetched: bool
 };
 
 const defaultProps = {
@@ -85,8 +91,10 @@ const defaultProps = {
       id: -1
     }
   },
-  lectureId: '-1',
-  isForExternal: false
+  lectureIdFromLink: '-1',
+  lectureIdFromReducer: -1,
+  isForExternal: false,
+  isFetched: false
 };
 
 class Lecture extends Component {
@@ -111,6 +119,10 @@ class Lecture extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.unmountLecture();
+  }
+
   render() {
     const {
       question: { questions },
@@ -128,11 +140,6 @@ class Lecture extends Component {
 
         <FlassLectureStyled.Content>
           <Video
-            VideoBarClassName="bar--thinner"
-            VideoPlayedBarClassName="played-bar--thinner"
-            VideoLoadedBarClassName="loaded-bar--thinner"
-            VideoQuizIndicatorClassName="quiz-indicator--thinner"
-            VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
             VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
             VideoVolumeBtnClassName="video-btn"
             VideoVolumeBarClassName={ classNames('video-volume-bar') }
@@ -142,24 +149,33 @@ class Lecture extends Component {
             questions={ questions } />
 
           <FlassLectureStyled.Tab>
-            {this.renderTabs()}
+            { this.renderTabs() }
           </FlassLectureStyled.Tab>
         </FlassLectureStyled.Content>
       </FlassLectureStyled.Wrapper>;
   }
 
-  selectLectureId() {
-    const { match: { params: { id } }, lectureId } = this.props;
-    return id !== -1 ? id : parseInt(lectureId);
+  isLectureAlreadyFetch() {
+    return this.props.isFetched;
   }
 
-  isLectureAlreadyFetch() {
-    const { match, lecture: { lecture } } = this.props;
-    return parseInt(lecture.id) === parseInt(match.params.id);
+  selectLectureId() {
+    const { match, lectureIdFromLink } = this.props;
+    const paramsId = parseInt(match.params.id);
+
+    if (this.isUserFromMain(paramsId)) {
+      return paramsId;
+    } else {
+      return parseInt(lectureIdFromLink);
+    }
+  }
+
+  isUserFromMain(id) {
+    return id !== -1;
   }
 
   renderTabs = () => {
-    const { lecture: { lecture }, comment } = this.props;
+    const { lectureIdFromReducer, comment, lecture: { lecture } } = this.props;
     const { selected } = this.state;
 
     const tabTitle = (title, src) => (
@@ -171,26 +187,30 @@ class Lecture extends Component {
     return (<Tabs id="lecture-tabs" activeKey={ selected } onSelect={ this.handleSelect }>
       <Tab
         eventKey={ 1 }
-        title={ tabTitle('강의 정보',
-          selected === 1 ? contentImageActive : contentImage) }>
+        title={
+          tabTitle(
+            '강의 정보',
+            selected === 1 ? contentImageActive : contentImage) }>
         <Content
           title={ lecture.title }
           subject={ lecture.subject }
           content={ lecture.content }
-          tetextbookRangextbookRange={ lecture['textbook_range'] }
-        />
+          textbookRange={ lecture.textbookRange } />
       </Tab>
       <Tab
         eventKey={ 2 }
-        title={ tabTitle(`학생 질문 - ${comment.comments.length}`,
-          selected === 2 ? commentImageActive : commentImage) }>
-        <Comment lectureId={ lecture.id } />
+        title={
+          tabTitle(
+            `학생 질문 - ${comment.comments.length}`,
+            selected === 2 ? commentImageActive : commentImage) }>
+        <Comment lectureId={ lectureIdFromReducer } />
       </Tab>
       {
         this.isAnalysisTabExist() ? (
           <Tab
             eventKey={ 3 }
-            title={ tabTitle('분석',
+            title={
+              tabTitle('분석',
               selected === 3 ? analysisImageActive : analysisImage) }>
             <Analysis />
           </Tab>

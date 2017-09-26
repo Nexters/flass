@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import {
   FETCH_READY_LECTURE,
   FETCH_LECTURE_SUCCESS,
-  FETCH_LECTURE_ERROR
+  FETCH_LECTURE_ERROR,
+  UNMOUNT_LECTURE
 } from './actions';
 import question from './Question/reducers';
 import comment from './Comment/reducers';
@@ -26,14 +27,15 @@ const initialState = {
     url: ''
   },
   isError: false,
-  mounted: false
+  isFetched: false
 };
 
 const fetchLectureReducer = {
   [FETCH_READY_LECTURE]: (state, action) => ({
     ...state,
     isLoading: true,
-    isError: false
+    isError: false,
+    isFetched: false
   }),
   [FETCH_LECTURE_SUCCESS]: (state, action) => {
     const { lecture } = action;
@@ -52,13 +54,19 @@ const fetchLectureReducer = {
         createdAt: lecture['created_at'],
         updatedAt: lecture['updated_at']
       },
-      isError: false
+      isError: false,
+      isFetched: true
     };
   },
   [FETCH_LECTURE_ERROR]: (state, action) => ({
     ...state,
     isLoading: false,
-    isError: true
+    isError: true,
+    isFetched: false
+  }),
+  [UNMOUNT_LECTURE]: state => ({
+    ...state,
+    isFetched: false
   })
 };
 

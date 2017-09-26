@@ -59,25 +59,10 @@ const requests = {
 const Auth = {};
 
 const User = {
-  me: token => requestsForApi.post('/users', { id_token: token })
-    .then(response => {
-      console.log('response::UserRails');
-      console.log(response);
-      return response;
-    }),
+  me: token => requestsForApi.post('/users', { id_token: token }),
   byId: id => requestsForApi.get(`/users/${id}`),
-  whoami: () => requestsForApi.get('/users')
-    .then(response => {
-      console.log('response::UserRails::whoami');
-      console.log(response);
-      return response;
-    }),
+  whoami: () => requestsForApi.get('/users'),
   out: () => axios.get(`${API_ROOT}/logout`, config)
-    .then(response => {
-      console.log('response::out');
-      console.log(response);
-      return response;
-    })
 };
 
 const Badge = {

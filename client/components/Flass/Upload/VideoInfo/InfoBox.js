@@ -27,7 +27,7 @@ class InfoBox extends Component {
         </div>
 
         <div className="Row">
-          <div className={ classNames('Row__large-5', 'Row--r-padding') }>
+          <div className={ classNames('Row__large-5', 'Row__large-5--overflow-hidden', 'Row--r-padding') }>
             <h3 className="info-label">강의 과목</h3>
             <input
               name="subject"
@@ -35,7 +35,7 @@ class InfoBox extends Component {
               className={ classNames('full-width', 'info-input') }
               onChange={ onChange } />
           </div>
-          <div className="Row__large-5">
+          <div className={ classNames('Row__large-5', 'Row__large-5--overflow-hidden') }>
             <h3 className="info-label">교재 범위</h3>
             <input
               name="textbook"

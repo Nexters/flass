@@ -17,7 +17,7 @@ const propTypes = {
   user: object.isRequired,
   items: array.isRequired,
   fetchRequestMyChannelItems: func.isRequired,
-  deleteMyChannelItem: func.isRequired
+  deleteMyChannelItem: func.isRequired,
 };
 
 const defaultProps = {
@@ -34,15 +34,7 @@ class Grid extends Component {
     };
   }
   componentDidMount() {
-    const { user } = this.props;
-
-    if (user.id !== -1) {
-      this.props.fetchRequestMyChannelItems();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.shouldFetchItems(nextProps)) {
+    if (this.isUserIdFetched()) {
       this.props.fetchRequestMyChannelItems();
     }
   }
@@ -62,28 +54,24 @@ class Grid extends Component {
     );
   }
 
-  shouldFetchItems(nextProps) {
-    const { user } = nextProps;
+  isUserIdFetched() {
+    const { user } = this.props;
 
-    return this.props.user.id !== user.id;
+    return user.id !== -1;
   }
 
   renderRowsAndCols(items) {
-    let chunkIndex = 0;
-    return _.chunk(items, NUM_OF_ITEMS_PER_COLS).map(splitItems => {
-      chunkIndex += 1;
-      return (
-        <Row key={ `row${chunkIndex}` } bsClass="Row">
-          {this.renderChildren(splitItems)}
-        </Row>
-      );
-    });
+    return _.chunk(items, NUM_OF_ITEMS_PER_COLS).map((splitItems, index) => (
+      <Row key={ `row${index}` } bsClass="Row">
+        {this.renderChildren(splitItems)}
+      </Row>
+    ));
   }
 
   renderChildren(items) {
     const { user } = this.props;
-    return items.map(item => (
-      <div key={ item.id } className="Col__grid">
+    return items.map((item, index) => (
+      <div key={ `col${index}` } className="Col__grid">
         <GridItem
           { ...item }
           userName={ user.userName }

@@ -14,13 +14,14 @@ import { dateTimeFormat } from '../../../util/time-util';
 
 const initialState = {
   items: [],
-  isDeletedItem: false
+  isDeletedItem: false,
+  isFetched: false
 };
 
 const fetchItemReducer = {
   [FETCH_MY_CHANNEL_SUCCESS]: (state, action) => ({
     ...state,
-    items: [...state.items, ...action.items.map(item => ({
+    items: [...action.items.map(item => ({
       id: item.id,
       userId: item['user_id'],
       title: item.title,
@@ -33,7 +34,8 @@ const fetchItemReducer = {
       createdAt: dateTimeFormat(item['created_at']),
       updatedAt: dateTimeFormat(item['updated_at']),
       questionCount: item.questionCount
-    }))]
+    }))],
+    isFetched: true
   }),
   [FETCH_MY_CHANNEL_ERROR]: state => ({ ...state, initialState })
 };

@@ -3,16 +3,6 @@ import color from '../../../css/base/colors.scss';
 
 const $playerHeight = 650;
 const $playerWidth = 100;
-const $progressbarHeight = 80;
-const $progressbarHeightThinner = '10px';
-const $progressbarHeightThicker = '50px';
-
-const $quizIndicatorBarHeight = '30px';
-const $quizIndicatorBarHeightThinner = '10px';
-const $quizIndicatorBarHeightThicker = '50px';
-
-const $playerWindowWidthAtLarge = 860;
-const $playerWindowWidthAtMedium = '624px';
 
 export const FlassLectureStyled = {
   Wrapper: styled.div`

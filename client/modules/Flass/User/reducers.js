@@ -15,13 +15,7 @@ const initialState = {
 
 const setUserReducer = {
   [SET_USER]: (state, { user }) => {
-    console.log('User::reducer::user');
-    console.log(user);
-    const {
-      id,
-      email,
-      username
-    } = user;
+    const { id, email, username } = user;
 
     return {
       ...state,

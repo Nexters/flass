@@ -63,6 +63,6 @@ function* deleteMyChannelItem({ id }) {
 }
 
 export default function* rootSaga() {
-  yield takeEvery(FETCH_MY_CHANNEL, fetchMyChannelItems);
+  yield takeLatest(FETCH_MY_CHANNEL, fetchMyChannelItems);
   yield takeLatest(DELETE_MY_CHANNEL_ITEM, deleteMyChannelItem);
 }
