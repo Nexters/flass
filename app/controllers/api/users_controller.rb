@@ -41,22 +41,24 @@ class Api::UsersController < ApplicationController
   # POST /users
   # POST /users.json
   api :POST, '/users', '회원 정보 생성 및 업데이트하기'
-  param :id_token, String, '구글 발급용 id_token 값'
+  param :access_token, String, '클래스팅 발급용 access_token 값'
   def create
-    uri = URI("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=#{params[:id_token]}")
+    uri = URI("https://oauth.classting.com/v1/oauth2/me")
     Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
       request = Net::HTTP::Get.new uri
+      request['Authorization'] = "Bearer #{params[:access_token]}"
       response = http.request request # Net::HTTPResponse object
       about_user_list = JSON.parse(response.body)
-      if about_user_list["email"].nil?
+      if about_user_list["user_id"].nil?
         render json: {message: "유효하지 않은 토큰값입니다."}, status: :unauthorized
       end
-      @user = User.find_by(email: about_user_list["email"])
+      @user = User.find_by(email: about_user_list["user_id"])
       if @user.nil?
         @user = User.new
+        @user.email = about_user_list["user_id"]
         @user.username = about_user_list["name"]
-        @user.email = about_user_list["email"]
-        @user.myprofileurl = about_user_list["picture"]
+        @user.role = about_user_list["role"]
+        @user.myprofileurl = about_user_list["profile_image"]
         #user생성되었을 경우와 그렇지 않은 경우 추가해야함
         if @user.save
           session[:user_id] = @user.id
@@ -64,7 +66,8 @@ class Api::UsersController < ApplicationController
         end
       else
         @user.username = about_user_list["name"]
-        @user.myprofileurl = about_user_list["picture"]
+        @user.myprofileurl = about_user_list["profile_image"]
+        @user.role = about_user_list["role"]
           if @user.save
             session[:user_id] = @user.id
             render json: @user, status: :ok
