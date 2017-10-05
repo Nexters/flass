@@ -36,7 +36,6 @@ export default class Google {
       this.idToken = user.getAuthResponse().id_token;
       user.reloadAuthResponse().then(response => {
         that.accessToken = response.access_token;
-        Google.storeAccessToken();
       });
     }
     return hasGrantedScopes;

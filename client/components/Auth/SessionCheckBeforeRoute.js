@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import LoadingComponent from './Loading/LoadingComponent';
+import {withRouter} from 'react-router';
+import {hashToObjectKey, queryToObjectKey} from '../../util/UrlUtil';
 
 const { func, bool, shape, object } = PropTypes;
 
 const propTypes = {
   component: func.isRequired,
   checkSession: func.isRequired,
+  loginClasting: func.isRequired,
   setEntryPoint: func.isRequired,
   sessionValid: bool,
   isSessionChecking: bool
@@ -36,8 +39,15 @@ class SessionCheckBeforeRoute extends Component {
 
   componentWillMount() {
     const { sessionValid, ...rest } = this.props;
-    this.props.checkSession();
+    const { location } = rest;
+    const { checkSession, loginClasting } = this.props;
+    const accessToken = hashToObjectKey(location, 'access_token');
 
+    if(accessToken) {
+      loginClasting(accessToken);
+    } else {
+      checkSession();
+    }
     if (!sessionValid) {
       this.setEntryPoint(rest);
     }

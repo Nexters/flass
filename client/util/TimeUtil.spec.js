@@ -1,5 +1,5 @@
 import chai, { expect } from 'chai';
-import { dateTimeFormat } from './time-util';
+import { dateTimeFormat } from './TimeUtil';
 
 
 describe('time util', () => {

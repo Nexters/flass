@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 
 import './signIn.scss';
+import {CLASSTING_CLIENT_ID} from '../../../../../config/Constants';
 
 const { func, bool, shape, object, string } = PropTypes;
 
 const propTypes = {
   initGoogleAuthService: func.isRequired,
-  goToGoogleAuthPage: func.isRequired,
-
   sessionValid: bool,
   prevPath: string
 };
@@ -59,8 +58,8 @@ class SignIn extends Component {
               <img
                 className="googleIcon"
                 src="http://i.imgur.com/6TVkeNz.png"
-                alt="Google 아이콘" />
-              Log in with Google
+                alt="Classting 아이콘" />
+              Log in with Classting
             </div>
           </a>
         </div>
@@ -70,7 +69,10 @@ class SignIn extends Component {
 
   @autobind
   onClickLoginBtn() {
-    this.props.goToGoogleAuthPage();
+    const url = 'http://localhost:4000';
+    window.location = `https://oauth.classting.com/v1/oauth2/authorize?client_id=${CLASSTING_CLIENT_ID}&redirect_uri=${url}&response_type=token`;
+    // https://oauth.classting.com/v1/oauth2/authorize?client_id=4cb80de500c6cec9be15d59b5617085c&redirect_uri=http://localhost:4000&response_type=token
+    // this.props.goToAuthPage();
   }
 }
 

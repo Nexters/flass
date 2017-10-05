@@ -11,7 +11,7 @@ import {
   UPDATE_COMMENT_ERROR
 } from './actions';
 import { createReducer } from '../../../reduxHelper';
-import { dateTimeFormat } from '../../../../util/time-util';
+import { dateTimeFormat } from '../../../../util/TimeUtil';
 
 const initialState = {
   comments: [],

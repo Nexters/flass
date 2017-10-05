@@ -24,6 +24,7 @@ import {
 } from './actions';
 
 const initialState = {
+  isGoogleSignedIn: false,
   isUserSignedIn: false,
   id_token: '',
   sessionValid: false,
@@ -37,16 +38,15 @@ const userSignInReducer = {
     isUserSignedIn: true,
     id_token: payload.id_token,
     sessionValid: true
-  })
+  }),
+  [SUCCESS_LOGIN_GOOGLE_SERVICE]: (state, { payload }) => ({
+    ...state,
+    isGoogleSignedIn: true,
+  }),
 };
 
 const userSignOutReducer = {
-  [SUCCESS_LOGOUT_FLASS_SERVICE]: state => ({
-    ...state,
-    isUserSignedIn: false,
-    sessionValid: false,
-    id_token: '',
-  })
+  [SUCCESS_LOGOUT_FLASS_SERVICE]: state => (initialState)
 };
 
 const userIsSignedInReducer = {

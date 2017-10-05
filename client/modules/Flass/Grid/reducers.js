@@ -10,7 +10,7 @@ import {
 import {
   createReducer
 } from '../../reducerHelper';
-import { dateTimeFormat } from '../../../util/time-util';
+import { dateTimeFormat } from '../../../util/TimeUtil';
 
 const initialState = {
   items: [],

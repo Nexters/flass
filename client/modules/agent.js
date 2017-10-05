@@ -59,7 +59,7 @@ const requests = {
 const Auth = {};
 
 const User = {
-  me: token => requestsForApi.post('/users', { id_token: token }),
+  me: token => requestsForApi.post('/users', { access_token: token }),
   byId: id => requestsForApi.get(`/users/${id}`),
   whoami: () => requestsForApi.get('/users'),
   out: () => axios.get(`${API_ROOT}/logout`, config)

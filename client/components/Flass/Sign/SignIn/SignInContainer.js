@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import SignInComponent from './SignInComponent';
 import {
   INIT_GOOGLE_SERVICE,
-  LOGIN_FLASS_SERVICE,
   LOGOUT
 } from '../../../../modules/Sign/actions';
 
@@ -20,9 +19,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    goToGoogleAuthPage: () => ({
-      type: LOGIN_FLASS_SERVICE
-    }),
     initGoogleAuthService: () => ({
       type: INIT_GOOGLE_SERVICE
     }),

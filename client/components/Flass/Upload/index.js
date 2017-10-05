@@ -19,6 +19,7 @@ import {
   Title,
   Header
 } from '../../FlassCommon';
+import WithGoogleSignComponent from '../Sign/SignIn/WithGoogleSignComponent';
 
 const propTypes = {
   step: PropTypes.number.isRequired,
@@ -41,10 +42,13 @@ const propTypes = {
   subject: PropTypes.string.isRequired,
   textbook: PropTypes.string.isRequired,
   videoURL: PropTypes.string.isRequired,
-  uploadLectureAndQuestions: PropTypes.func.isRequired
+  uploadLectureAndQuestions: PropTypes.func.isRequired,
 };
 
 class Upload extends Component {
+
+  componentDidMount() {}
+
   render() {
     const {
       step,
@@ -180,4 +184,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Upload);
+)(WithGoogleSignComponent({})(Upload));
