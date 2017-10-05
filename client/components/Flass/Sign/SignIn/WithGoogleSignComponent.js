@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {
-  LOGIN_FLASS_SERVICE,
   LOGIN_GOOGLE_SERVICE,
 } from '../../../../modules/Sign/actions';
 import Google from '../../../../modules/Google';
@@ -22,7 +21,7 @@ class WithGoogleSignComponent extends Component {
 
   render() {
     const WrappedComponent = this.props.component;
-    console.log(this.props, Google.isAuthorized());
+
     if(Google.isAuthorized()) {
       return <WrappedComponent {...this.props} />;
     }
@@ -47,7 +46,7 @@ class WithGoogleSignComponent extends Component {
 WithGoogleSignComponent.propTypes = propTypes;
 WithGoogleSignComponent.defaultProps = defaultProps;
 
-const WithConnect = connect((state) => {}, {
+const WithConnect = connect(state => ({}), {
   goToAuthPage: () => ({
     type: LOGIN_GOOGLE_SERVICE
   }),

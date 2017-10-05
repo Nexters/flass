@@ -20,7 +20,7 @@ import {
   SUCCESS_LOGIN_FLASS_SERVICE,
   FAIL_LOGIN_FLASS_SERVICE,
   LOGOUT, LOGIN_CLASSTING_SERVICE, SUCCESS_LOGIN_GOOGLE_SERVICE,
-  LOGIN_GOOGLE_SERVICE,
+  LOGIN_GOOGLE_SERVICE, SUCCESS_INIT_GOOGLE_SERVICE,
 } from './actions';
 
 import {
@@ -29,6 +29,7 @@ import {
 
 function* initGoogleService() {
   yield call(Google.initGoogleAuthService);
+  yield put({ type: SUCCESS_INIT_GOOGLE_SERVICE });
 }
 
 function* loginGoogleService() {

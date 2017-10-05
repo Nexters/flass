@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-
+import BtnLoginWithClassting from './img/btn.login_with_classting_e_600.png';
+import { CLASSTING_CLIENT_ID } from '../../../../../config/Constants';
 import './signIn.scss';
-import {CLASSTING_CLIENT_ID} from '../../../../../config/Constants';
 
 const { func, bool, shape, object, string } = PropTypes;
 
 const propTypes = {
-  initGoogleAuthService: func.isRequired,
   sessionValid: bool,
   prevPath: string
 };
@@ -26,7 +25,6 @@ class SignIn extends Component {
   };
 
   componentDidMount() {
-    this.props.initGoogleAuthService();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,20 +45,17 @@ class SignIn extends Component {
             alt="Flass 로고" />
           <span className="signInMessage">Better interaction, Better learning</span>
           <span className="signInMessage2">
-            복잡한 절차없이 구글 계정으로
+            복잡한 절차없이 클래스팅 계정으로
             <br />
             지금 바로 시작해보세요.
           </span>
           <a
-            className="signInButton"
             onClick={ this.onClickLoginBtn }>
-            <div className="signInButtonContent">
-              <img
-                className="googleIcon"
-                src="http://i.imgur.com/6TVkeNz.png"
-                alt="Classting 아이콘" />
-              Log in with Classting
-            </div>
+            <img
+              className="classtingIcon"
+              width="200"
+              src={ BtnLoginWithClassting }
+              alt="Classting 아이콘" />
           </a>
         </div>
       </div>
