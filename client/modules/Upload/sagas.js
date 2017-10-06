@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import agent from '../agent';
+import agent, {API_ROOT} from '../agent';
 import {
   LectureBodyAdapter,
   QuestionBodyAdapter,
@@ -34,6 +34,8 @@ function* uploadLectureAndQuestions({
     });
 
     const lectureResponse = yield call(agent.Lecture.upload, lectureBody);
+    const lectureUrl = `${API_ROOT}/v/${lectureResponse.id}`;
+    const urlResponse = yield call(agent.Google.getShortUrl, lectureUrl);
 
     for (let qIndex = 0; qIndex < questionState.length; qIndex += 1) {
       const questionstate = questionState[qIndex];
@@ -60,7 +62,7 @@ function* uploadLectureAndQuestions({
     yield put({
       type: SUCCESS_UPLOAD_QUESTIONS,
       payload: {
-        lectureId: lectureResponse.id
+        lectureUrl: urlResponse.id,
       }
     });
   } catch (error) {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as Constants from '../../config/Constants';
 
 const TYPE_OF_BACKEND = process.env.BACK_END;
 const API_JSON = 'http://localhost:4000';
@@ -113,6 +114,11 @@ const Analysis = {
   fetch: lectureId => requestsForApi.get(`/lectures/statistics?id=${lectureId}`)
 };
 
+const Google = {
+  getShortUrl: url => axios.post(`https://www.googleapis.com/urlshortener/v1/url?key=${Constants.GOOGLE_API_KEY}`, { longUrl: url }, {})
+    .then(responseBody)
+};
+
 export default {
   Auth,
   Badge,
@@ -125,5 +131,6 @@ export default {
   Analysis,
   Choice,
   Answer,
+  Google,
   setToken: _token => { token = _token; }
 };

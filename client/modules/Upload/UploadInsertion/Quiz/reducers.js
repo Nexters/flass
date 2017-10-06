@@ -197,7 +197,7 @@ const requestQuestionReducer = {
   [SUCCESS_UPLOAD_QUESTIONS]: (state, { payload }) => ({
     ...state,
     isUploadingQuestionRequestSuccess: true,
-    lectureUrl: `${API_ROOT}/v/${payload.lectureId}`
+    lectureUrl: payload.lectureUrl
   }),
   [FAIL_UPLOAD_QUESTIONS]: state => ({
     ...state,
