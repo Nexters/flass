@@ -128,6 +128,6 @@ class Api::LecturesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def lecture_params
       params[:user_id] = session[:user_id]
-      params.permit(:user_id, :title, :content, :url, :thumbnail_url, :duration, :subject, :textbook_range)
+      params.permit(:user_id, :title, :content, :url, :thumbnail_url, :duration, :subject, :textbook_range, :shorten_url)
     end
 end
