@@ -18,19 +18,21 @@ const initialState = {
   commentchild: {}
 };
 
-const mapToComment = comments => _.map(comments, comment => ({
+const mapToComments = comments => _.map(comments, mapToComment);
+
+const mapToComment = comment => ({
   ...comment,
   createdAt: dateTimeFormat(comment['created_at']),
   updatedAt: dateTimeFormat(comment['updated_at'])
-}));
+});
 
 const fetchCommentReducer = {
   [FETCH_READY_COMMENT]: (state, action) => state,
   [FETCH_COMMENT_SUCCESS]: (state, action) => ({
     ...state,
-    comments: mapToComment(action.comments),
+    comments: mapToComments(action.comments),
     commentchild: _.reduce(Object.keys(action.commentchild), (res, key) => {
-      res[key] = mapToComment(action.commentchild[key]);
+      res[key] = mapToComments(action.commentchild[key]);
       return res;
     }, {})
   }),
@@ -73,7 +75,8 @@ const addCommentReducer = {
       comments: [...state.comments, newComment]
     });
   },
-  [ADD_COMMENT_SUCCESS]: (state, { parentId, id, newId }) => updateComment(comment => ({ ...comment, id: newId }), state, parentId, id),
+  [ADD_COMMENT_SUCCESS]: (state, { parentId, id, comment }) =>
+    updateComment(comment => ({ ...comment, ...mapToComment(comment) }), state, parentId, id),
   [ADD_COMMENT_ERROR]: (state, action) => ({
     ...state,
     comments: _.filter(state.comments, comment => (comment.id !== action.id))
