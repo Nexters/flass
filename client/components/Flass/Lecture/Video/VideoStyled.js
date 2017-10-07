@@ -16,8 +16,8 @@ export const FlassLectureVideo = {
     position: absolute;
     width: 100%;
     bottom: 0;
-    background-color: transparent;
-    opacity: 0;
+    background-color: #000;
+    opacity: 0.1;
     transition: opacity 1s ease-out;
     transition-delay: 1s;
 

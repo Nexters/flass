@@ -74,6 +74,8 @@ const UploadReducer = (state = initialState, action) => {
       };
     case actions.INIT_UPLOAD:
       return initialState;
+    case actions.INIT_UPLOAD_STATES:
+      return initialState;
     default:
       return state;
   }

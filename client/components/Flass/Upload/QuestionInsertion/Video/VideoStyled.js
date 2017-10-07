@@ -17,13 +17,13 @@ export const VideoStyled = {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: transparent;
+    background-color: #000;
     opacity: 0;
     transition: opacity 1s ease-out;
     transition-delay: 1s;
 
     &:hover {
-      opacity: 1;
+      opacity: 0.1;
       transition: opacity 1s ease-out;
     }
 

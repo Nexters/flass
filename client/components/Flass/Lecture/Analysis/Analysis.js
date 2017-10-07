@@ -92,7 +92,7 @@ class Analysis extends Component {
               {this.renderChart()}
             </Col5>
             <Col5>
-              {this.renderSingleChoices()}
+              {this.renderSingleChoices(question)}
             </Col5>
           </Row>
         </Body>
@@ -149,10 +149,11 @@ class Analysis extends Component {
       data={ data } />);
   };
 
-  renderSingleChoices = () => {
+  renderSingleChoices = (question) => {
     const usersOfAnswers = this.getUsersOfAnswers();
     return usersOfAnswers.map(usersOfAnswer => (<SingleChoiceComponent
       key={ usersOfAnswer.id }
+      question={ question }
       { ...usersOfAnswer } />));
   }
 

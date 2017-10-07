@@ -50,6 +50,9 @@ const propTypes = {
       id: oneOfType([number, string])
     })
   }).isRequired,
+  user: shape({
+    id: number,
+  }).isRequired,
   lecture: shape({
     isLoading: bool,
     lecture: shape({
@@ -61,6 +64,7 @@ const propTypes = {
       textbookRange: string,
       url: string,
       thumbnailUrl: string,
+      shortenUrl: string,
       createdAt: string,
       updatedAt: string
     }),
@@ -127,7 +131,12 @@ class Lecture extends Component {
     const {
       question: { questions },
       video: { videoUrl },
-      lecture: { isError }
+      lecture: {
+        isError,
+        lecture: {
+          shortenUrl
+        }
+      }
     } = this.props;
 
     return isError ?
@@ -146,6 +155,7 @@ class Lecture extends Component {
 
             saveQuestionsStateOnEnded={ this.saveQuestionsStateOnEnded }
             videoUrl={ videoUrl }
+            shortenUrl={ shortenUrl }
             questions={ questions } />
 
           <FlassLectureStyled.Tab>
@@ -228,8 +238,8 @@ class Lecture extends Component {
   }
 
   saveQuestionsStateOnEnded = solvedQuestionsState => {
-    const { lecture: { lecture: { userId } }, isForExternal } = this.props;
-    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, userId, isForExternal);
+    const { user: { id }, isForExternal } = this.props;
+    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, id, isForExternal);
   }
 }
 

@@ -1,13 +1,13 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
-import agent, {API_ROOT} from '../agent';
+import agent, { API_ROOT } from '../agent';
 import {
   INIT_LECTURE_AND_QUESTIONS, initUpload,
-  UPLOAD_LECTURE_AND_QUESTIONS,
+  UPLOAD_LECTURE_AND_QUESTIONS
 } from './actions';
 import {
   SUCCESS_UPLOAD_QUESTIONS,
-  FAIL_UPLOAD_QUESTIONS, INIT_UPLOAD_QUESTIONS, initUploadQuestions,
+  FAIL_UPLOAD_QUESTIONS, INIT_UPLOAD_QUESTIONS, initUploadQuestions
 } from './UploadInsertion/Quiz/actions';
 
 function* uploadLectureAndQuestions({
@@ -40,7 +40,7 @@ function* uploadLectureAndQuestions({
     yield put({
       type: SUCCESS_UPLOAD_QUESTIONS,
       payload: {
-        lectureUrl: urlResponse.id,
+        lectureUrl: urlResponse.id
       }
     });
   } catch (error) {

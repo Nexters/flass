@@ -12,6 +12,7 @@ function mapStateToProps(state) {
   const { lecture: { id }, isFetched } = state.flass.lecture.lecture;
 
   return {
+    user: { ...state.flass.user },
     ...state.flass.lecture,
     ...state.flass.video,
     lectureIdFromReducer: id,

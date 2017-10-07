@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import autobind from 'autobind-decorator';
 import { Row, Grid as GridView } from 'react-bootstrap';
 import _ from 'lodash';
 import GridItem from './GridItem';
+import color from '../../../css/base/colors.scss';
 import {
   Title,
   Header
 } from '../../FlassCommon';
 import './Grid.scss';
 import '../../../css/base/_row.scss';
+
+const CustomerService = styled.div`
+  font-family: NotoSansCJKkr;
+  font-size: 15px;
+  margin-right: 40px;
+  color: #a7acad;
+  text-align: right;
+  padding-bottom: 10px;
+  color: ${color['cool-grey']};
+`;
 
 const { object, array, func } = PropTypes;
 
@@ -23,7 +35,7 @@ const propTypes = {
 const defaultProps = {
 };
 
-const NUM_OF_ITEMS_PER_COLS = 4;
+const NUM_OF_ITEMS_PER_COLS = 3;
 
 class Grid extends Component {
   constructor(props) {
@@ -50,6 +62,9 @@ class Grid extends Component {
         <GridView>
           { renderAllItems }
         </GridView>
+        <CustomerService>
+          우주컴퍼니팀 | 문의  flassadm@gmail.com
+        </CustomerService>
       </div>
     );
   }

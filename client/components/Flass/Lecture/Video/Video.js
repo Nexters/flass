@@ -15,6 +15,7 @@ import {
   VideoModalComponent,
   VideoControllerAndBarWrapperComponent,
   VideoEndedPageComponent,
+  URLCopyButtonComponent,
 
   PlayBtnIcon,
   PauseBtnIcon,
@@ -50,6 +51,7 @@ const propTypes = {
   saveQuestionsStateOnEnded: func.isRequired,
 
   videoUrl: string,
+  shortenUrl: string,
   questions: shape({
     secsStateOfQuestions: array,
     textStateOfQuestions: array
@@ -77,7 +79,8 @@ const defaultProps = {
   VideoVolumeBtnClassName: '',
   VideoVolumeBarClassName: '',
 
-  videoUrl: ''
+  videoUrl: '',
+  shortenUrl: ''
 };
 
 class Video extends Component {
@@ -136,6 +139,7 @@ class Video extends Component {
       VideoVolumeBarClassName,
 
       videoUrl,
+      shortenUrl,
       questions: {
         secsStateOfQuestions
       }
@@ -198,7 +202,11 @@ class Video extends Component {
                   duration={ duration }
                   elapsed={ played * duration } />
 
+
                 <VideoVolumeWrapperComponent>
+                  <URLCopyButtonComponent
+                    shortenUrl={ shortenUrl } />
+
                   <VideoButtonComponent
                     buttonClass={ VideoVolumeBtnClassName }
                     srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }
