@@ -1,16 +1,15 @@
 const QuestionBodyAdapter = {
   uploadByQuestionId: (lectureId, questionState) => {
     const {
-      SingleChoiceValues,
       TitleInputValue,
       checkedQuizIndex,
       secsOfQuiz
     } = questionState;
-    console.log(questionState);
+
     return Promise.resolve({
       lecture_id: lectureId,
       content: TitleInputValue,
-      correct_answer: SingleChoiceValues[checkedQuizIndex].choiceTextValue,
+      correct_answer: checkedQuizIndex.toString(),
       question_at: parseInt(secsOfQuiz)
     });
   }
