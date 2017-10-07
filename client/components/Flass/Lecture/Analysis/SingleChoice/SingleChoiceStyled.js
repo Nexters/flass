@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import color from '../../../../../css/base/colors.scss';
 
 export const SingleChoice = {
   Wrapper: styled.div`
@@ -13,15 +14,16 @@ export const SingleChoice = {
     height: 1.5rem;
     width: 1.5rem;
     margin-right: 1.5rem;
-    background-color: #b6bfc1;
+    background-color: ${({ isCorrect }) => (isCorrect ? color['sick-green'] : '#616a6b')};
     border-radius: 50%;
+    
   `,
   Title: styled.div`
     display: inline-block;
     font-size: 1.5714rem;
     font-weight: 500;
     text-align: left;
-    color: #616a6b;
+    color: ${({ isCorrect }) => (isCorrect ? color['sick-green'] : '#616a6b')};
   `,
   Body: styled.div`
     padding-left: 3rem;

@@ -50,6 +50,9 @@ const propTypes = {
       id: oneOfType([number, string])
     })
   }).isRequired,
+  user: shape({
+    id: number,
+  }).isRequired,
   lecture: shape({
     isLoading: bool,
     lecture: shape({
@@ -235,8 +238,8 @@ class Lecture extends Component {
   }
 
   saveQuestionsStateOnEnded = solvedQuestionsState => {
-    const { lecture: { lecture: { userId } }, isForExternal } = this.props;
-    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, userId, isForExternal);
+    const { user: { id }, isForExternal } = this.props;
+    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, id, isForExternal);
   }
 }
 

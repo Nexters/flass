@@ -12,6 +12,7 @@ const UserView = styled.span`
 `;
 
 const propTypes = {
+  question: PropTypes.object.isRequired,
   answer: PropTypes.string.isRequired,
   userAnswers: PropTypes.array.isRequired
 };
@@ -20,19 +21,21 @@ const defaultProps = {};
 
 class SingleChoiceComponent extends Component {
   render() {
-    const { answer, userAnswers } = this.props;
+    const { question, answer, userAnswers } = this.props;
+    const isCorrect = question['correct_answer'] == answer;
     return (
       <SingleChoice.Wrapper>
         <SingleChoice.Header>
-          <SingleChoice.Dot>{''}</SingleChoice.Dot>
-          <SingleChoice.Title>
+          <SingleChoice.Dot isCorrect={ isCorrect }>{''}</SingleChoice.Dot>
+          <SingleChoice.Title isCorrect={ isCorrect }>
             { answer }
           </SingleChoice.Title>
         </SingleChoice.Header>
         <SingleChoice.Body>
           {
             userAnswers.map((userAnswer, index) => (
-              <UserView key={ `user${index}` }>
+              <UserView
+                key={ `user${index}` }>
                 { userAnswer.userName }
               </UserView>
             ))
