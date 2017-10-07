@@ -4,5 +4,5 @@ class Lecture < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :questions
 
-  validates :title, :url, presence: true
+  validates :title, :url, :shorten_url, presence: true
 end
