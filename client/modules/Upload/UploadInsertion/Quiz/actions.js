@@ -88,3 +88,5 @@ export function initUploadQuestions() {
 
 export const SUCCESS_UPLOAD_QUESTIONS = 'SUCCESS_UPLOAD_QUESTIONS';
 export const FAIL_UPLOAD_QUESTIONS = 'FAIL_UPLOAD_QUESTIONS';
+
+export const INIT_QUESTION_STATES = 'INIT_QUESTION_STATES';

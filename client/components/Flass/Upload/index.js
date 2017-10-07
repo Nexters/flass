@@ -5,6 +5,9 @@ import autobind from 'autobind-decorator';
 import { connect } from 'react-redux';
 import { STEP_1, STEP_2 } from '../../../modules/constants';
 import * as actions from '../../../modules/Upload/actions';
+import {
+  INIT_QUESTION_STATES
+} from '../../../modules/Upload/UploadInsertion/Quiz/actions';
 
 import VideoInfo from './VideoInfo';
 import QuestionInsertionContainer from './QuestionInsertion/QuestionInsertionContainer';
@@ -21,33 +24,39 @@ import {
 } from '../../FlassCommon';
 import WithGoogleSignComponent from '../Sign/SignIn/WithGoogleSignComponent';
 
+const { number, string, func } = PropTypes;
 const propTypes = {
-  step: PropTypes.number.isRequired,
-  setStep: PropTypes.func.isRequired,
-  method: PropTypes.number.isRequired,
-  handleSetUploadMethod: PropTypes.func.isRequired,
-  setVideoInfo: PropTypes.func.isRequired,
-  urlStatus: PropTypes.number.isRequired,
-  handleURLCheck: PropTypes.func.isRequired,
-  thumbURL: PropTypes.string.isRequired,
-  resetVideo: PropTypes.func.isRequired,
-  isGoogleAuth: PropTypes.number.isRequired,
-  goToGoogleAuthPage: PropTypes.func.isRequired,
-  uploadYoutubeVideo: PropTypes.func.isRequired,
-  uploadStatus: PropTypes.number.isRequired,
-  uploadProgress: PropTypes.number.isRequired,
-  processProgress: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  subject: PropTypes.string.isRequired,
-  textbook: PropTypes.string.isRequired,
-  videoURL: PropTypes.string.isRequired,
-  uploadLectureAndQuestions: PropTypes.func.isRequired,
+  step: number.isRequired,
+  setStep: func.isRequired,
+  method: number.isRequired,
+  handleSetUploadMethod: func.isRequired,
+  setVideoInfo: func.isRequired,
+  urlStatus: number.isRequired,
+  handleURLCheck: func.isRequired,
+  thumbURL: string.isRequired,
+  resetVideo: func.isRequired,
+  isGoogleAuth: number.isRequired,
+  goToGoogleAuthPage: func.isRequired,
+  uploadYoutubeVideo: func.isRequired,
+  uploadStatus: number.isRequired,
+  uploadProgress: number.isRequired,
+  processProgress: number.isRequired,
+  title: string.isRequired,
+  description: string.isRequired,
+  subject: string.isRequired,
+  textbook: string.isRequired,
+  videoURL: string.isRequired,
+  uploadLectureAndQuestions: func.isRequired,
+  initUploadStates: func.isRequired,
+  initQuestionStates: func.isRequired
 };
 
 class Upload extends Component {
-
-  componentDidMount() {}
+  componentWillUnmount() {
+    console.log('Upload Component will unmount');
+    this.props.initUploadStates();
+    this.props.initQuestionStates();
+  }
 
   render() {
     const {
@@ -159,6 +168,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  initUploadStates: () => dispatch({
+    type: actions.INIT_UPLOAD_STATES
+  }),
+  initQuestionStates: () => dispatch({
+    type: INIT_QUESTION_STATES
+  }),
   setStep: step => dispatch(actions.setStep(step)),
   handleSetUploadMethod: method => dispatch(actions.handleSetUploadMethod(method)),
   setVideoInfo: videoInfo => dispatch(actions.setVideoInfo(videoInfo)),

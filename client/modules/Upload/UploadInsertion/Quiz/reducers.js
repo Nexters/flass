@@ -14,7 +14,8 @@ import {
   COMPLETE_EDIT_QUESTION,
   DELETE_COMPLETE_QUESTION,
   SUCCESS_UPLOAD_QUESTIONS,
-  FAIL_UPLOAD_QUESTIONS
+  FAIL_UPLOAD_QUESTIONS,
+  INIT_QUESTION_STATES
 } from './actions';
 
 const INITIAL_STATE = {
@@ -205,6 +206,12 @@ const requestQuestionReducer = {
   })
 };
 
+const initQuestionStatesReducer = {
+  [INIT_QUESTION_STATES]: () => ({
+    ...INITIAL_STATE
+  })
+};
+
 const QuestionReducers = createReducer(INITIAL_STATE, {
   ...addQuestionReducer,
   ...saveQuestionReducer,
@@ -213,7 +220,8 @@ const QuestionReducers = createReducer(INITIAL_STATE, {
   ...focusQuestionReducer,
   ...editQuestionReducer,
   ...deleteQuestionReducer,
-  ...requestQuestionReducer
+  ...requestQuestionReducer,
+  ...initQuestionStatesReducer
 });
 
 export default QuestionReducers;

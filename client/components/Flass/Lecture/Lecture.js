@@ -130,6 +130,9 @@ class Lecture extends Component {
       lecture: { isError }
     } = this.props;
 
+    console.log('Lecture::props');
+    console.log(this.props);
+
     return isError ?
       <Redirect to="/error" /> :
 
