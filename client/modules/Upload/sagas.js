@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import agent, {API_ROOT} from '../agent';
+import agent, { API_ROOT } from '../agent';
 import {
   LectureBodyAdapter,
   QuestionBodyAdapter,

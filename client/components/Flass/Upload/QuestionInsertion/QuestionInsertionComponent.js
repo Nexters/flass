@@ -35,7 +35,7 @@ const propTypes = {
       isAnswer: bool,
       choiceTextValue: string
     })),
-    secsOfQuiz: number,
+    secsOfQuiz: string,
     indexOfQuestion: number
   })).isRequired,
   stateOfFocusedQuestion: shape({

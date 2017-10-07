@@ -9,3 +9,4 @@ export * from './VideoControllerWrapper/VideoControllerWrapperComponent';
 export * from './VideoModal/VideoModalComponent';
 export * from './VideoEndedPage/VideoEndedPageComponent';
 export * from './VideoVolumeWrapper/VideoVolumeWrapperComponent';
+export * from './URLCopyButton/URLCopyButtonComponent';

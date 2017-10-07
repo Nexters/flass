@@ -163,3 +163,5 @@ export const uploadYoutubeVideo = file => (dispatch => {
 });
 
 export const UPLOAD_LECTURE_AND_QUESTIONS = 'UPLOAD_LECTURE_AND_QUESTIONS';
+
+export const INIT_UPLOAD_STATES = 'INIT_UPLOAD_STATES';
