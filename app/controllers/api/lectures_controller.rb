@@ -49,9 +49,10 @@ class Api::LecturesController < ApplicationController
   param :id, :number, :desc => "lecture ID"
   param :shorten_url, String, :desc => "강의 shorten_url"
   def shortenurl
-    @lecture.shorten_url = params[:shorten_url]
-    if @lecture.save
-      render json: @lecture, status: :ok
+    @l = Lecture.find(params[:id])
+    @l.shorten_url = params[:shorten_url]
+    if @l.save
+      render json: @l, status: :ok
     else
       render json: {message: "shorten_url을 반드시 입력하셔야 합니다."}, status: :bad_request
     end
