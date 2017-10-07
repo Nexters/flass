@@ -13,4 +13,5 @@ export const Wrapper = styled.div`
 export const Icon = styled.img`
   width: ${iconSize};
   height: ${iconSize};
+  cursor: pointer;
 `;

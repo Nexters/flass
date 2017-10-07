@@ -21,7 +21,7 @@ const initialState = {
     content: '',
     textbook_range: '',
     duration: -1,
-    thumbnail_url: '',
+    thumbnailUrl: '',
     shortenUrl: '',
     created_at: '',
     updated_at: '',
