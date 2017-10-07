@@ -4,23 +4,17 @@ import {
   SUCCESS_LOGIN_GOOGLE_SERVICE,
   SUCCESS_LOGOUT_GOOGLE_SERVICE,
 
-  USER_IS_SIGNEDIN,
-  USER_ISNOT_SIGNEDIN,
-
   CHECK_SESSION_START,
   CHECK_SESSION_FIN,
   CHECK_SESSION_SUCCESS,
   CHECK_SESSION_FAIL,
 
   SUCCESS_LOGOUT_FLASS_SERVICE,
-  FAIL_LOGOUT_FLASS_SERVICE,
-
   SUCCESS_LOGIN_FLASS_SERVICE,
-  FAIL_LOGIN_FLASS_SERVICE,
 
   SET_ENTRY_POINT,
-  GET_ENTRY_POINT,
   RESET_ENTRY_POINT, INIT_GOOGLE_SERVICE, SUCCESS_INIT_GOOGLE_SERVICE,
+  LOGIN_GOOGLE_SERVICE,
 } from './actions';
 
 const initialState = {
@@ -41,6 +35,14 @@ const initGoogleReducer = {
     ...state,
     isGoogleChecking: false,
   }),
+  [LOGIN_GOOGLE_SERVICE]: (state) => ({
+    ...state,
+    isGoogleChecking: true,
+  }),
+  [SUCCESS_LOGIN_GOOGLE_SERVICE]: (state, { payload }) => ({
+    ...state,
+    isGoogleChecking: false,
+  })
 };
 
 const userSignInReducer = {
@@ -49,10 +51,6 @@ const userSignInReducer = {
     isUserSignedIn: true,
     id_token: payload.id_token,
     sessionValid: true
-  }),
-  [SUCCESS_LOGIN_GOOGLE_SERVICE]: (state, { payload }) => ({
-    ...state,
-    isGoogleChecking: false,
   }),
 };
 
