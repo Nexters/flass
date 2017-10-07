@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
-  LOGIN_GOOGLE_SERVICE,
+  LOGIN_GOOGLE_SERVICE
 } from '../../../../modules/Sign/actions';
 import Google from '../../../../modules/Google';
 
 const propTypes = {
-  goToAuthPage: PropTypes.func.isRequired,
+  goToAuthPage: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
@@ -21,9 +21,8 @@ class WithGoogleSignComponent extends Component {
 
   render() {
     const WrappedComponent = this.props.component;
-
-    if(Google.isAuthorized()) {
-      return <WrappedComponent {...this.props} />;
+    if (Google.isAuthorized()) {
+      return <WrappedComponent { ...this.props } />;
     }
     return (
       <div>
@@ -46,10 +45,11 @@ class WithGoogleSignComponent extends Component {
 WithGoogleSignComponent.propTypes = propTypes;
 WithGoogleSignComponent.defaultProps = defaultProps;
 
-const WithConnect = connect(state => ({}), {
+const WithConnect = connect(state => ({
+}), {
   goToAuthPage: () => ({
     type: LOGIN_GOOGLE_SERVICE
-  }),
+  })
 })(WithGoogleSignComponent);
 
 export default options =>
