@@ -75,8 +75,8 @@ const addCommentReducer = {
       comments: [...state.comments, newComment]
     });
   },
-  [ADD_COMMENT_SUCCESS]: (state, { parentId, id, comment }) =>
-    updateComment(comment => ({ ...comment, ...mapToComment(comment) }), state, parentId, id),
+  [ADD_COMMENT_SUCCESS]: (state, { parentId, id, newComment }) =>
+    updateComment(comment => ({ ...comment, ...mapToComment(newComment) }), state, parentId, id),
   [ADD_COMMENT_ERROR]: (state, action) => ({
     ...state,
     comments: _.filter(state.comments, comment => (comment.id !== action.id))
