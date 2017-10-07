@@ -49,7 +49,7 @@ export function* addComment({ tempId, commentId, lectureId, userId, userName, co
       type: ADD_COMMENT_SUCCESS,
       parentId: commentId,
       id: tempCommentId,
-      newId: res.id
+      comment: res,
     });
   } catch (err) {
     yield put({
