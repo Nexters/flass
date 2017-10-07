@@ -21,11 +21,13 @@ const LeftContent = styled.p`
   padding: 1rem 0;
   border: 0;
   border-bottom: 1px solid ${color['silver']};
+  word-break: break-all;
 `;
 
 const RightContent = styled.p`
   padding: 1rem;
   background-color: rgba(237, 238, 238, 0.65);
+  word-break: break-all;
 `;
 
 const propTypes = {
@@ -61,7 +63,7 @@ const Content = props => {
             { textbookRange }
           </LeftContent>
         </Col>
-        <Col xs={ 4 } md={ 4 }>
+        <Col xs={ 6 } md={ 6 }>
           <Title>강의 설명</Title>
           <RightContent>
             { content }

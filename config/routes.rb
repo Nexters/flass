@@ -40,5 +40,6 @@ Rails.application.routes.draw do
   get '/logout' => "api/users#logout"
   get 'api/answers/question' => "api/answers#index"
   post 'api/notifications/check'
+  put 'api/lectures/shortenurl' => "api/lectures#shortenurl"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
