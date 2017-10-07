@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import SideHome from './images/side-home.png';
-import SideHomeActive from './images/side-home-active.png';
-import SideUpload from './images/side-upload.png';
-import SideUploadActive from './images/side-upload-active.png';
+import {
+  SideHome,
+  SideHomeActive,
+  SideUpload,
+  SideUploadActive,
+  FlassLogo
+} from './images';
 import color from '../../../css/base/colors.scss';
 import './Drawer.scss';
 
 const FlassMark = styled.div`
-  font-family: ArialRoundedMT;
-  font-size: 3rem;
-  font-weight: bold;
-  text-align: center;
-  color: ${color['light-navy']};
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  display: flex;
+  padding-top: 2.8125rem;
+  padding-bottom: 3rem;
+`;
+
+const FlassLogoImg = styled.img`
+  margin: auto;
 `;
 
 const FlassMenu = styled(Link)`
@@ -57,14 +60,13 @@ const defaultProps = {
 };
 
 class Drawer extends Component {
-  componentDidMount() {
-  }
-
   render() {
     return (
       <div className="flass-drawer">
         <Link to="/">
-          <FlassMark>F</FlassMark>
+          <FlassMark>
+            <FlassLogoImg srcSet={ FlassLogo } alt="Flass logo" />
+          </FlassMark>
         </Link>
         <Route
           path="/home"

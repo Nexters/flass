@@ -1,5 +1,4 @@
-import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
-import _ from 'lodash';
+import { all, call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import agent from '../../../agent';
 import {
   ADD_COMMENT,
@@ -8,7 +7,8 @@ import {
   ADD_READY_COMMENT, DELETE_COMMENT, DELETE_COMMENT_ERROR,
   DELETE_COMMENT_SUCCESS, FETCH_COMMENT,
   FETCH_COMMENT_ERROR, FETCH_COMMENT_SUCCESS,
-  FETCH_READY_COMMENT,
+  FETCH_READY_COMMENT, UPDATE_COMMENT, UPDATE_COMMENT_ERROR,
+  UPDATE_COMMENT_SUCCESS,
 } from './actions';
 
 export function* fetchComment({ lectureId }) {
@@ -19,7 +19,7 @@ export function* fetchComment({ lectureId }) {
     yield put({
       type: FETCH_COMMENT_SUCCESS,
       comments: response.comments,
-      commentchild: response.commentchild
+      commentchild: response.commentchild,
     });
   } catch (err) {
     yield put({
@@ -60,6 +60,24 @@ export function* addComment({ tempId, commentId, lectureId, userId, userName, co
   }
 }
 
+function* updateComment({ parentId, commentId, content }) {
+  try {
+    const res = !parentId ? yield call(agent.Comment.putComment, commentId, content) :
+      yield call(agent.Comment.putReplyComment, commentId, content);
+    yield put({
+      type: UPDATE_COMMENT_SUCCESS,
+      parentId,
+      id: commentId,
+      content
+    });
+  } catch (err) {
+    yield put({
+      type: UPDATE_COMMENT_ERROR,
+      message: err.message,
+    });
+  }
+}
+
 function* deleteComment({ parentId, commentId }) {
   try {
     parentId ? yield call(agent.Comment.deleteReplyById, commentId) : yield call(agent.Comment.deleteById, commentId);
@@ -78,6 +96,7 @@ function* deleteComment({ parentId, commentId }) {
 
 export default function* rootSaga() {
   yield takeLatest(FETCH_COMMENT, fetchComment);
+  yield takeLatest(UPDATE_COMMENT, updateComment);
   yield takeLatest(ADD_COMMENT, addComment);
   yield takeLatest(DELETE_COMMENT, deleteComment);
 }

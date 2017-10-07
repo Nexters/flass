@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class Api::CommentsController < ApplicationController
   before_action :login_check
   before_action :set_comment, only: [:like, :edit, :update, :destroy]
 

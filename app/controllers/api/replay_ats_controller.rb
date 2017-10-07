@@ -1,4 +1,4 @@
-class ReplayAtsController < ApplicationController
+class Api::ReplayAtsController < ApplicationController
   before_action :login_check
   before_action :set_replay_at, only: [:update, :destroy]
 

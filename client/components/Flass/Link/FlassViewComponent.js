@@ -26,7 +26,6 @@ const propTypes = {
       id: string
     })
   }).isRequired,
-  id: number.isRequired,
   signOutFlassService: func.isRequired
 };
 const defaultProps = {};
@@ -45,7 +44,6 @@ class FlassViewComponent extends Component {
         }
       }
     } = this.props;
-
     if (!id) {
       return (
         <div>
@@ -64,7 +62,7 @@ class FlassViewComponent extends Component {
 
           <Content>
             <Lecture
-              lectureId={ id }
+              lectureIdFromLink={ parseInt(id) }
               isForExternal />
           </Content>
         </div>

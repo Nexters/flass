@@ -1,5 +1,5 @@
-class AnswersController < ApplicationController
-  before_action :login_check, only: [:index, :create, :destroy]
+class Api::AnswersController < ApplicationController
+  before_action :login_check, only: [:index, :show, :create, :destroy]
   before_action :set_answer, only: :destroy
 
   api :GET, '/answers/question', '특정 question에 대한 학생들의 답'

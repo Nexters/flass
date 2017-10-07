@@ -1,4 +1,4 @@
-class QuestionsController < ApplicationController
+class Api::QuestionsController < ApplicationController
   before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
   before_action :set_question, only: [:edit, :update, :destroy]
 

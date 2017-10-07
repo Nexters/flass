@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import autobind from 'autobind-decorator';
 import { Row, Grid as GridView } from 'react-bootstrap';
 import _ from 'lodash';
 import GridItem from './GridItem';
@@ -10,10 +11,13 @@ import {
 import './Grid.scss';
 import '../../../css/base/_row.scss';
 
+const { object, array, func } = PropTypes;
+
 const propTypes = {
-  user: PropTypes.object.isRequired,
-  items: PropTypes.array.isRequired,
-  fetchRequestMyChannelItems: PropTypes.func.isRequired
+  user: object.isRequired,
+  items: array.isRequired,
+  fetchRequestMyChannelItems: func.isRequired,
+  deleteMyChannelItem: func.isRequired,
 };
 
 const defaultProps = {
@@ -22,18 +26,15 @@ const defaultProps = {
 const NUM_OF_ITEMS_PER_COLS = 4;
 
 class Grid extends Component {
-  componentDidMount() {
-    const { user } = this.props;
+  constructor(props) {
+    super(props);
 
-    if (user.id !== -1) {
-      this.props.fetchRequestMyChannelItems();
-    }
+    this.state = {
+      items: []
+    };
   }
-
-  componentWillReceiveProps(nextProps) {
-    const { user } = this.props;
-    const nextUser = nextProps.user;
-    if (user.id !== nextUser.id) {
+  componentDidMount() {
+    if (this.isUserIdFetched()) {
       this.props.fetchRequestMyChannelItems();
     }
   }
@@ -53,25 +54,37 @@ class Grid extends Component {
     );
   }
 
+  isUserIdFetched() {
+    const { user } = this.props;
+
+    return user.id !== -1;
+  }
+
   renderRowsAndCols(items) {
-    let chunkIndex = 0;
-    return _.chunk(items, NUM_OF_ITEMS_PER_COLS).map(splitItems => {
-      chunkIndex += 1;
-      return (
-        <Row key={ `row${chunkIndex}` } bsClass="Row">
-          {this.renderChildren(splitItems)}
-        </Row>
-      );
-    });
+    return _.chunk(items, NUM_OF_ITEMS_PER_COLS).map((splitItems, index) => (
+      <Row key={ `row${index}` } bsClass="Row">
+        {this.renderChildren(splitItems)}
+      </Row>
+    ));
   }
 
   renderChildren(items) {
     const { user } = this.props;
-    return items.map(item => (
-      <div key={ item.id } className="Col__grid">
-        <GridItem { ...item } userName={ user.userName } />
+    return items.map((item, index) => (
+      <div key={ `col${index}` } className="Col__grid">
+        <GridItem
+          { ...item }
+          userName={ user.userName }
+          onClickDeleteBtn={ this.deleteItem } />
       </div>
     ));
+  }
+
+  @autobind
+  deleteItem(itemId) {
+    if (confirm('정말로 삭제하시겠습니까?')) {
+      this.props.deleteMyChannelItem(itemId);
+    }
   }
 }
 

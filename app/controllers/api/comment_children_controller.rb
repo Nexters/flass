@@ -1,4 +1,4 @@
-class CommentChildrenController < ApplicationController
+class Api::CommentChildrenController < ApplicationController
   before_action :login_check
   before_action :set_commentchild, only: [:edit, :update, :destroy]
 

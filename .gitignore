@@ -246,6 +246,9 @@ fabric.properties
 .ruby-gemset
 node_modules
 
+public/*.js
+public/*.js.map
+
 public/dist/*.json
 
 public/js/*.js

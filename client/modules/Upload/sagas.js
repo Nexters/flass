@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
-import agent from '../agent';
+import agent, {API_ROOT} from '../agent';
 import {
   INIT_LECTURE_AND_QUESTIONS, initUpload,
   UPLOAD_LECTURE_AND_QUESTIONS,
@@ -29,12 +29,18 @@ function* uploadLectureAndQuestions({
       thumbnail_url: thumbURL,
       duration: questionStates.duration
     });
+    const lectureResponse = yield call(agent.Lecture.upload, lectureBody);
+    const lectureUrl = `${API_ROOT}/v/${lectureResponse.id}`;
+    const urlResponse = yield call(agent.Google.getShortUrl, lectureUrl);
+    yield call(agent.Lecture.putShortenUrl, lectureResponse.id, urlResponse.id);
+
     yield all(_.map(questionStates,
       questionState => uploadQuestion(lectureResponse, questionState)));
+
     yield put({
       type: SUCCESS_UPLOAD_QUESTIONS,
       payload: {
-        lectureId: lectureResponse.id
+        lectureUrl: urlResponse.id,
       }
     });
   } catch (error) {

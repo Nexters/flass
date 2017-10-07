@@ -58,7 +58,7 @@ const propTypes = {
   }),
   isUploadingQuestionRequestSuccess: bool.isRequired,
   videoUrl: string.isRequired,
-  lectureUrl: string.isRequired
+  lectureUrl: string
 };
 const defaultProps = {
   isAdding: false,

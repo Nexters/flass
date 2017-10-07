@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170920080225) do
+ActiveRecord::Schema.define(version: 20171007043927) do
 
   create_table "answers", force: :cascade do |t|
     t.integer "user_id"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20170920080225) do
     t.datetime "updated_at", null: false
     t.string "subject"
     t.string "textbook_range"
+    t.string "shorten_url"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -89,6 +90,7 @@ ActiveRecord::Schema.define(version: 20170920080225) do
     t.string "myprofileurl"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "role"
   end
 
   create_table "votes", force: :cascade do |t|

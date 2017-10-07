@@ -1,19 +1,18 @@
 import axios from 'axios';
+import * as Constants from '../../config/Constants';
 
 const TYPE_OF_BACKEND = process.env.BACK_END;
 const API_JSON = 'http://localhost:4000';
 const API_LOCAL = 'http://localhost:3000';
 const API_PRODUCTION = 'http://flass.me';
-export const API_ROOT = (function() {
-  switch (TYPE_OF_BACKEND) {
-    case 'json' :
-      return API_JSON;
+export const API_ROOT = (function(type) {
+  switch(type) {
     case 'local':
       return API_LOCAL;
     default:
       return API_PRODUCTION;
   }
-})();
+})(TYPE_OF_BACKEND);
 
 const encode = encodeURIComponent;
 const responseBody = res => res.data;
@@ -33,8 +32,19 @@ const config = {
 };
 
 function selectAPIRequest(railsRequest = {}, jsonRequest = {}) {
-  return TYPE_OF_BACKEND === 'json' ?  jsonRequest : railsRequest;
+  return railsRequest;
 }
+
+const requestsForApi = {
+  del: url =>
+    axios.delete(`${API_ROOT}/api${url}`, config).then(responseBody),
+  get: url =>
+    axios.get(`${API_ROOT}/api${url}`, config).then(responseBody),
+  put: (url, body) =>
+    axios.put(`${API_ROOT}/api${url}`, body, config).then(responseBody),
+  post: (url, body) =>
+    axios.post(`${API_ROOT}/api${url}`, body, config).then(responseBody)
+};
 
 const requests = {
   del: url =>
@@ -47,110 +57,67 @@ const requests = {
     axios.post(`${API_ROOT}${url}`, body, config).then(responseBody)
 };
 
-const Auth = {
+const Auth = {};
 
-};
-
-const UserJson = {
-  me: () => requests.get('/json/FlassUser.json')
-        .then(response => {
-          console.log('response::UserJson');
-          console.log(response);
-          return response;
-        })
-};
-const UserRails = {
-  me: token => requests.post('/users', { id_token: token })
-    .then(response => {
-      console.log('response::UserRails');
-      console.log(response);
-      return response;
-    }),
-  byId: id => requests.get(`/users/${id}`),
-  whoami: () => requests.get('/users')
-    .then(response => {
-      console.log('response::UserRails::whoami');
-      console.log(response);
-      return response;
-    }),
+const User = {
+  me: token => requestsForApi.post('/users', { access_token: token }),
+  byId: id => requestsForApi.get(`/users/${id}`),
+  whoami: () => requestsForApi.get('/users'),
   out: () => axios.get(`${API_ROOT}/logout`, config)
-    .then(response => {
-      console.log('response::out');
-      console.log(response);
-      return response;
-    })
 };
-const User = selectAPIRequest(UserRails, UserJson);
-
 
 const Badge = {
-  byType: type => requests.get('/json/FlassBadgeHistory.json')
+  byType: type => requestsForApi.get('/json/FlassBadgeHistory.json')
 };
 
-const GridJson = {
-  all: () => requests.get('/json/FlassGrid.json')
+const Grid = {
+  all: () => requestsForApi.get('/lectures')
 };
-const GridRails = {
-  all: () => requests.get('/lectures')
-};
-const Grid = selectAPIRequest(GridRails, GridJson);
 
+const Lecture = {
+  byId: lectureId => requestsForApi.get(`/lectures/${lectureId}`),
+  upload: body => requestsForApi.post('/lectures', body),
+  putShortenUrl: (id, url) => requestsForApi.put(`/lectures/shortenurl/${id}`, { shorten_url: url }),
+  delete: lectureId => requestsForApi.del(`/lectures/${lectureId}`)
+};
 
-const LectureJson = {
-  byId: lectureId => requests.get('/json/FlassLecture.json')
+const Question = {
+  byLectureId: lectureId => requestsForApi.get(`/questions?lecture_id=${lectureId}`),
+  uploadByLectureId: body => requestsForApi.post('/questions', body)
 };
-const LectureRails = {
-  byId: lectureId => requests.get(`/lectures/${lectureId}`),
-  upload: body => requests.post('/lectures', body)
-};
-const Lecture = selectAPIRequest(LectureRails, LectureJson);
-
-
-const QuestionJson = {
-  byLectureId: lectureId => requests.get('/json/FlassQuestion.json')
-};
-const QuestionRails = {
-  byLectureId: lectureId => requests.get(`/questions?lecture_id=${lectureId}`),
-  uploadByLectureId: body => requests.post('/questions', body)
-};
-const Question = selectAPIRequest(QuestionRails, QuestionJson);
 
 const Choice = {
-  upload: body => requests.post('/choices', body),
-  fetch: questionId => requests.get(`/choices?question_id=${questionId}`)
+  upload: body => requestsForApi.post('/choices', body),
+  fetch: questionId => requestsForApi.get(`/choices?question_id=${questionId}`)
 };
 
-const CommentJson = {
-  byLectureId: lectureId => requests.get('/json/FlassComment.json'),
-  postComment: (lectureId, content) => requests.get('/json/FlassPostComment.json', { lectureId, content }),
-  deleteById: commentId => requests.del('')
+const Comment = {
+  byLectureId: lectureId => requestsForApi.get(`/comments?lecture_id=${lectureId}`),
+  postComment: (lectureId, content) => requestsForApi.post('/comments', { lecture_id: lectureId, content }),
+  postReplyComment: (commentId, content) => requestsForApi.post('/comment_children', { comment_id: commentId, content }),
+  putComment: (commentId, content) => requestsForApi.put('/comments', { id: commentId, content }),
+  putReplyComment: (commentId, content) => requestsForApi.put('/comment_children', { id: commentId, content }),
+  deleteById: commentId => requestsForApi.del(`/comments?id=${commentId}`),
+  deleteReplyById: id => requestsForApi.del('/comment_children', { id })
 };
 
-const CommentRails = {
-  byLectureId: lectureId => requests.get(`/comments?lecture_id=${lectureId}`),
-  postComment: (lectureId, content) => requests.post('/comments', { lecture_id: lectureId, content }),
-  postReplyComment: (commentId, content) => requests.post('/comment_children', { comment_id: commentId, content }),
-  deleteById: commentId => requests.del(`/comments?id=${commentId}`),
-  deleteReplyById: id => requests.del('/comment_children', { id })
+const Like = {
+  postByCommentId: commentId => requestsForApi.put(`/comments/${commentId}/like`)
 };
 
-const Comment = selectAPIRequest(CommentRails, CommentJson);
-
-const AnswerRails = {
-  byLectureId: lectureId => requests.get(`/answers?lecture_id=${lectureId}`),
-  uploadByQuestionId: body => requests.post('/answers', body),
-  getAnswerByQuestionId: questionId => requests.get(`/answers/question?question_id=${questionId}`)
+const Answer = {
+  byLectureId: lectureId => requestsForApi.get(`/answers?lecture_id=${lectureId}`),
+  uploadByQuestionId: body => requestsForApi.post('/answers', body),
+  getAnswerByQuestionId: questionId => requestsForApi.get(`/answers/question?question_id=${questionId}`)
 };
-const AnswerJson = {
-  byLectureId: () => {},
-  uploadByQuestionId: body => axios.post('http://localhost:3000/answers', body, config),
-  getAnswerByQuestionId: () => {}
-};
-const Answer = selectAPIRequest(AnswerRails, AnswerJson);
-
 
 const Analysis = {
-  fetch: lectureId => requests.get(`/lectures/statistics?id=${lectureId}`)
+  fetch: lectureId => requestsForApi.get(`/lectures/statistics?id=${lectureId}`)
+};
+
+const Google = {
+  getShortUrl: url => axios.post(`https://www.googleapis.com/urlshortener/v1/url?key=${Constants.GOOGLE_API_KEY}`, { longUrl: url }, {})
+    .then(responseBody)
 };
 
 export default {
@@ -161,8 +128,10 @@ export default {
   Lecture,
   Question,
   Comment,
+  Like,
   Analysis,
   Choice,
   Answer,
+  Google,
   setToken: _token => { token = _token; }
 };

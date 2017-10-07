@@ -220,26 +220,16 @@ class Video extends Component {
     );
   }
 
-  updateSearchableSecsState({ searchableSecs, questions }) {
-    if (!this.state.isSearchableSecsInit) {
-      return this.initalizeSearchableSecs({ questions });
-    }
-    if (this.state.searchableSecs !== searchableSecs) {
+  updateSearchableSecsState({ searchableSecs }) {
+    if (this.shouldUpdateSearchableSecs(searchableSecs)) {
       this.setState({ searchableSecs });
     }
   }
 
-  initalizeSearchableSecs({ questions }) {
-    const { secsStateOfQuestions } = questions;
-    if (_.isEmpty(secsStateOfQuestions)) {
-      return;
-    }
-    const searchableSecs = secsStateOfQuestions[0].playedSeconds;
-    if (searchableSecs) {
-      this.setState({ searchableSecs, isSearchableSecsInit: true });
-    }
+  shouldUpdateSearchableSecs(secs) {
+    const { isSearchableSecsInit, searchableSecs } = this.state;
+    return isSearchableSecsInit && searchableSecs !== secs;
   }
-
 
   @autobind
   renderEndedPage(isEnded) {
@@ -283,6 +273,25 @@ class Video extends Component {
   @autobind
   onDuration(duration) {
     this.setState({ duration });
+    this.initializeSearchableSecs();
+  }
+
+  initializeSearchableSecs() {
+    const { secsStateOfQuestions } = this.props.questions;
+
+    if (this.isVideoHasQuestions(secsStateOfQuestions)) {
+      const { duration } = this.state;
+      return this.setState({ searchableSecs: duration, isSearchableSecsInit: true });
+    }
+
+    const searchableSecs = secsStateOfQuestions[0].playedSeconds;
+    if (searchableSecs) {
+      this.setState({ searchableSecs, isSearchableSecsInit: true });
+    }
+  }
+
+  isVideoHasQuestions(questions) {
+    return _.isEmpty(questions);
   }
 
   @autobind
@@ -338,9 +347,7 @@ class Video extends Component {
 
   @autobind
   onCustomSeekBarChange(changedPlayed) {
-    console.log('changed::');
     const changedPlayedPercentage = changedPlayed / 100;
-    console.log(changedPlayedPercentage);
     this.setState({ played: changedPlayedPercentage });
   }
 
@@ -354,8 +361,6 @@ class Video extends Component {
   @autobind
   onCustomSeekBarClick(changedPlayed) {
     const changedPlayedPercentage = changedPlayed / 100;
-    console.log('clicked::');
-    console.log(changedPlayedPercentage);
     this.setState({ played: changedPlayedPercentage });
     this.player.seekTo(changedPlayedPercentage);
   }

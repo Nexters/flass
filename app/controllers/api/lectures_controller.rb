@@ -1,4 +1,4 @@
-class LecturesController < ApplicationController
+class Api::LecturesController < ApplicationController
   before_action :login_check, only: [:show, :edit, :create, :update, :destroy]
   before_action :set_lecture, only: [:show, :edit, :update, :destroy, :statistics]
 
@@ -45,6 +45,18 @@ class LecturesController < ApplicationController
     end
   end
 
+  api :PUT, '/shortenurl/:id', 'shortenurl 저장'
+  param :id, :number, :desc => "lecture ID"
+  param :shorten_url, String, :desc => "강의 shorten_url"
+  def shortenurl
+    @lecture.shorten_url = params[:shorten_url]
+    if @lecture.save
+      render json: @lecture, status: :ok
+    else
+      render json: {message: "shorten_url을 반드시 입력하셔야 합니다."}, status: :bad_request
+    end
+  end
+
   api :PUT, '/lectures/:id', '강의 업데이트'
   param :id, :number, :desc => "lecture ID"
   param :title, String, :desc => "강의 제목"
@@ -54,6 +66,7 @@ class LecturesController < ApplicationController
   param :url, String, :desc => "강의 url"
   param :thumbnail_url, String, :desc => "강의 thumbnail_url"
   param :duration, :number, :desc => "강의 시간"
+  param :shorten_url, String, :desc => "강의 shorten_url"
   def update
     if @lecture.update(lecture_params)
       render json: @lecture, status: :ok
@@ -95,11 +108,16 @@ class LecturesController < ApplicationController
     render json: @ret
   end
 
-  api :GET, '/v/:id', '(학생용) 특정 강의 링크'
+  api :GET, '/v/:id', '(학생용) 특정 강의 링크(앞에 api 붙이지 X)'
   param :id, :number, :desc => "lecture ID"
   def v
-    render file: 'public/index.html'
+    render file: 'public/index.html', layout: false
   end
+
+  api :GET, '/lecture/:id', '(게시자용) 특정 강의 링크(앞에 api 붙이지 X)'
+  param :id, :number, :desc => "lecture ID"
+  api :GET, '/upload', '앞에 api 붙이지 X'
+  api :GET, '/home', '앞에 api 붙이지 X'
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -110,6 +128,6 @@ class LecturesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def lecture_params
       params[:user_id] = session[:user_id]
-      params.permit(:user_id, :title, :content, :url, :thumbnail_url, :duration, :subject, :textbook_range)
+      params.permit(:user_id, :title, :content, :url, :thumbnail_url, :duration, :subject, :textbook_range, :shorten_url)
     end
 end

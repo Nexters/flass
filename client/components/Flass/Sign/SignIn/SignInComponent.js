@@ -1,26 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-
+import BtnLoginWithClassting from './img/btn.login_with_classting_e_600.png';
+import { CLASSTING_CLIENT_ID } from '../../../../../config/Constants';
 import './signIn.scss';
-import SignInBackground from './img/signInBackground.png';
-import SignInBackground2x from './img/signInBackground@2x.png';
-import SignInBackground3x from './img/signInBackground@3x.png';
-import Logo from './img/logo.png';
-import Logo2x from './img/logo@2x.png';
-import Logo3x from './img/logo@3x.png';
 
-const { func, bool, shape, object } = PropTypes;
+const { func, bool, shape, object, string } = PropTypes;
 
 const propTypes = {
-  initGoogleAuthService: func.isRequired,
-  goToGoogleAuthPage: func.isRequired,
-
-  isUserSignedIn: bool.isRequired,
-  sessionValid: bool.isRequired
+  sessionValid: bool,
+  prevPath: string
 };
 
-const defaultProps = {};
+const defaultProps = {
+  sessionValid: false,
+  prevPath: '/'
+};
 
 class SignIn extends Component {
   static contextTypes = {
@@ -30,12 +25,12 @@ class SignIn extends Component {
   };
 
   componentDidMount() {
-    this.props.initGoogleAuthService();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.sessionValid) {
-      this.context.router.history.push('/');
+    const { sessionValid, prevPath } = nextProps;
+    if (sessionValid) {
+      this.context.router.history.push(prevPath);
     }
   }
 
@@ -50,20 +45,17 @@ class SignIn extends Component {
             alt="Flass 로고" />
           <span className="signInMessage">Better interaction, Better learning</span>
           <span className="signInMessage2">
-            복잡한 절차없이 구글 계정으로
+            복잡한 절차없이 클래스팅 계정으로
             <br />
             지금 바로 시작해보세요.
           </span>
           <a
-            className="signInButton"
             onClick={ this.onClickLoginBtn }>
-            <div className="signInButtonContent">
-              <img
-                className="googleIcon"
-                src="http://i.imgur.com/6TVkeNz.png"
-                alt="Google 아이콘" />
-              Log in with Google
-            </div>
+            <img
+              className="classtingIcon"
+              width="200"
+              src={ BtnLoginWithClassting }
+              alt="Classting 아이콘" />
           </a>
         </div>
       </div>
@@ -72,7 +64,10 @@ class SignIn extends Component {
 
   @autobind
   onClickLoginBtn() {
-    this.props.goToGoogleAuthPage();
+    const url = 'http://localhost:4000';
+    window.location = `https://oauth.classting.com/v1/oauth2/authorize?client_id=${CLASSTING_CLIENT_ID}&redirect_uri=${url}&response_type=token`;
+    // https://oauth.classting.com/v1/oauth2/authorize?client_id=4cb80de500c6cec9be15d59b5617085c&redirect_uri=http://localhost:4000&response_type=token
+    // this.props.goToAuthPage();
   }
 }
 

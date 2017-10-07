@@ -1,4 +1,4 @@
-class ChoicesController < ApplicationController
+class Api::ChoicesController < ApplicationController
   before_action :login_check
   before_action :set_choice, only: [:edit, :update, :destroy]
 

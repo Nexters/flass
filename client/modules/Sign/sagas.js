@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { take, call, put, takeLatest } from 'redux-saga/effects';
 import Google from '../Google';
 import agent from '../agent';
 import {
@@ -17,10 +17,10 @@ import {
   SUCCESS_LOGOUT_FLASS_SERVICE,
   FAIL_LOGOUT_FLASS_SERVICE,
 
-  LOGIN_FLASS_SERVICE,
   SUCCESS_LOGIN_FLASS_SERVICE,
   FAIL_LOGIN_FLASS_SERVICE,
-  LOGOUT
+  LOGOUT, LOGIN_CLASSTING_SERVICE, SUCCESS_LOGIN_GOOGLE_SERVICE,
+  LOGIN_GOOGLE_SERVICE, SUCCESS_INIT_GOOGLE_SERVICE,
 } from './actions';
 
 import {
@@ -29,22 +29,17 @@ import {
 
 function* initGoogleService() {
   yield call(Google.initGoogleAuthService);
+  yield put({ type: SUCCESS_INIT_GOOGLE_SERVICE });
 }
 
-function* loginFlassService() {
+function* loginGoogleService() {
   try {
     const authResponse = yield call(Google.authorizeForSignIn);
     const isGoogleAuthValid = yield call(isAuthResponseValid, authResponse);
 
     if (isGoogleAuthValid) {
-      const meResponse = yield call(agent.User.me, authResponse.id_token);
-      yield call(setItemToLocalStorage, 'flass_user_id', meResponse.id.toString());
       yield put({
-        type: SET_USER,
-        user: meResponse
-      });
-      yield put({
-        type: SUCCESS_LOGIN_FLASS_SERVICE,
+        type: SUCCESS_LOGIN_GOOGLE_SERVICE,
         payload: authResponse
       });
     }
@@ -52,6 +47,29 @@ function* loginFlassService() {
     yield put({
       type: FAIL_LOGIN_FLASS_SERVICE,
       error
+    });
+  }
+}
+
+function* loginClasstingService({ accessToken }) {
+  try {
+    const meResponse = yield call(agent.User.me, accessToken);
+    yield call(setItemToLocalStorage, 'flass_user_id', meResponse.id.toString());
+    yield put({
+      type: SET_USER,
+      user: meResponse
+    });
+    yield put({
+      type: SUCCESS_LOGIN_FLASS_SERVICE,
+      payload: {
+        id_token: accessToken
+      }
+    });
+    yield put({ type: CHECK_SESSION });
+  } catch (err) {
+    yield put({
+      type: FAIL_LOGIN_FLASS_SERVICE,
+      err
     });
   }
 }
@@ -75,8 +93,8 @@ function* checkSession() {
 
     yield put({ type: CHECK_SESSION_SUCCESS });
     yield put({ type: CHECK_SESSION_FIN });
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.error(e);
     yield put({ type: CHECK_SESSION_FAIL });
     yield put({ type: CHECK_SESSION_FIN });
   }
@@ -95,7 +113,8 @@ function* logoutFlassService() {
 
 export default function* rootSaga() {
   yield takeLatest(INIT_GOOGLE_SERVICE, initGoogleService);
-  yield takeLatest(LOGIN_FLASS_SERVICE, loginFlassService);
+  yield takeLatest(LOGIN_GOOGLE_SERVICE, loginGoogleService);
+  yield takeLatest(LOGIN_CLASSTING_SERVICE, loginClasstingService);
   yield takeLatest(CHECK_SESSION, checkSession);
   yield takeLatest(LOGOUT, logoutFlassService);
 }

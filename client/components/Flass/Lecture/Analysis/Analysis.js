@@ -5,7 +5,8 @@ import autobind from 'autobind-decorator';
 import ChartComponent from './Chart/ChartComponent';
 import SingleChoiceComponent from './SingleChoice/SingleChoiceComponent';
 import {
-  AnalysisStyled
+  AnalysisStyled,
+  NoQuestions
 } from './AnalysisStyled';
 
 const { Tab, TabWrapper, TabItem, Wrapper, Header, Body, Row, Title, Col5, ChartTextWrapper, ChartTextTitle, ChartTextNumber } = AnalysisStyled;
@@ -48,32 +49,22 @@ class Analysis extends Component {
     };
   }
 
-  handleSelect = index => {
-    this.setState({
-      selectedIndex: index
-    });
-    this.updateLectureAnalysis();
-  }
-
   componentDidMount() {
     this.updateLectureAnalysis();
   }
-
-  updateLectureAnalysis = () => {
-    const { selectedIndex } = this.state;
-    const { lectureId } = this.props;
-
-    if (lectureId !== -1) {
-      this.props.requestLectureAnalysis(lectureId, selectedIndex);
-    }
-  };
 
   render() {
     const { selectedIndex } = this.state;
     const { questions, answers } = this.props;
 
     if (questions.length === 0) {
-      return null;
+      return (
+        <NoQuestions.Wrapper>
+          <NoQuestions.Text>
+            등록된 문제가 없습니다.
+          </NoQuestions.Text>
+        </NoQuestions.Wrapper>
+      );
     }
     const question = questions[selectedIndex];
 
@@ -109,6 +100,15 @@ class Analysis extends Component {
     );
   }
 
+  updateLectureAnalysis = () => {
+    const { selectedIndex } = this.state;
+    const { lectureId } = this.props;
+
+    if (lectureId !== -1) {
+      this.props.requestLectureAnalysis(lectureId, selectedIndex);
+    }
+  };
+
   renderQuestions = () => {
     const { selectedIndex } = this.state;
     const { questions } = this.props;
@@ -130,6 +130,13 @@ class Analysis extends Component {
       );
     });
     return <Tab> { questionTabs } </Tab>;
+  }
+
+  handleSelect = index => {
+    this.setState({
+      selectedIndex: index
+    });
+    this.updateLectureAnalysis();
   }
 
   renderChart = () => {

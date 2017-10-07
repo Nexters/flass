@@ -105,6 +105,10 @@
     }
 
     overflow: auto;
+
+    &--overflow-hidden {
+      overflow: hidden;
+    }
   }
 
   @include atPlayerLarge {

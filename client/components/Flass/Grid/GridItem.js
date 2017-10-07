@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import color from '../../../css/base/colors.scss';
+import {
+  DeleteIcon
+} from './icons';
 
 const Item = styled.div`
   position: relative;
@@ -35,12 +38,31 @@ const Container = styled.div`
   }
 `;
 
+const HeaderWrapper = styled.div`
+  position: relative;
+`;
+
 const Header = styled.span`
   font-family: NotoSansCJKkr;
   font-size: 0.81rem;
   font-weight: 100;
   padding-bottom: .19rem;
   border-bottom: 1px solid ${color['white']};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
+  max-width: 150px;
+  float: left;
+`;
+
+const DeleteBtn = styled.img`
+  display: table;
+  vertical-align: middle;
+  float: right;
+  width: 1.3125rem;
+  height: 1.375rem;
+  cursor: pointer;
 `;
 
 const Title = styled.div`
@@ -48,6 +70,11 @@ const Title = styled.div`
   font-family: NotoSansCJKkr;
   font-size: 1.56rem;
   font-weight: 100;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
+  max-width: 200px;
   color: ${color['white']};
 `;
 
@@ -92,7 +119,7 @@ const Text = styled.span`
   z-index: 50;
 `;
 
-const { number, string } = PropTypes;
+const { number, string, func } = PropTypes;
 
 const propTypes = {
   id: number.isRequired,
@@ -100,7 +127,8 @@ const propTypes = {
   thumbnailUrl: string.isRequired,
   createdAt: string.isRequired,
   questionCount: number,
-  textbookRange: string
+  textbookRange: string,
+  onClickDeleteBtn: func.isRequired
 };
 
 const defaultProps = {
@@ -109,12 +137,19 @@ const defaultProps = {
 };
 
 const GridItem = props => {
-  const { id, title, thumbnailUrl, createdAt, questionCount, textbookRange } = props;
+  const { id, title, thumbnailUrl, createdAt,
+    questionCount, textbookRange, onClickDeleteBtn } = props;
 
   return (
     <Item src={ thumbnailUrl }>
       <Container>
-        <Header>{ `수업범위: ${textbookRange}` }</Header>
+        <HeaderWrapper>
+          <Header>{ `수업범위: ${textbookRange}` }</Header>
+          <DeleteBtn
+            srcSet={ DeleteIcon }
+            onClick={ () => onClickDeleteBtn(id) }
+          />
+        </HeaderWrapper>
         <Link to={ `/lecture/${id}` }>
           <Title>
             { title }

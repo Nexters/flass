@@ -11,8 +11,9 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve(__dirname, './public'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, 'public'),
+    filename: '[name].js',
+    publicPath: '/'
   },
 
   devServer: {
@@ -20,10 +21,7 @@ module.exports = {
     inline: true,
     host: 'localhost',
     port: 4000,
-    historyApiFallback: {
-      index: '/sign.html'
-    },
-    contentBase: __dirname + '/public/'
+    contentBase: path.resolve(__dirname, 'public')
   },
   module: {
     // https://velopert.com/1492
