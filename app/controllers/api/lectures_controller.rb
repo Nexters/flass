@@ -35,7 +35,6 @@ class Api::LecturesController < ApplicationController
   param :url, String, :desc => "강의 url 정보"
   param :thumbnail_url, String, :desc => "강의 thumbnail_url 정보"
   param :duration, :number, :desc => "강의 시간"
-  param :shorten_url, String, :desc => "강의 shorten_url 정보"
   def create
     @lecture = Lecture.new(lecture_params)
 
@@ -46,7 +45,7 @@ class Api::LecturesController < ApplicationController
     end
   end
 
-  api :PUT, '/shortenurl', 'shortenurl 저장'
+  api :PUT, '/shortenurl/:id', 'shortenurl 저장'
   param :id, :number, :desc => "lecture ID"
   param :shorten_url, String, :desc => "강의 shorten_url"
   def shortenurl
