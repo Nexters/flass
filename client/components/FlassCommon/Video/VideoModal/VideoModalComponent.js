@@ -1,11 +1,23 @@
 import { List } from 'immutable';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import autobind from 'autobind-decorator';
+import color from '../../../../css/base/colors.scss';
 
 import { VideoModal } from './VideoModalStyled';
 import VideoModalSingleChoiceComponent from './VideoModalSingleChoice/VideoModalSingleChoiceComponent';
 import VideoModalCompletedSingleChoiceComponent from './VideoModalCompletedSingleChoice/VideoModalCompletedSingleChoiceComponent';
+
+const InvalidName = styled.div`
+  display: inline-block;
+  width: 385px;
+  height: 29px;
+  font-family: NotoSansCJKkr;
+  font-size: 15px;
+  font-weight: 500;
+  color: ${color['cool-grey']};
+`;
 
 const { func, arrayOf, shape, number, bool, string } = PropTypes;
 
@@ -91,9 +103,8 @@ class VideoModalComponent extends Component {
             </VideoModal.Body>
 
             <VideoModal.Footer>
-              {
-                this.renderModalBtn()
-              }
+              <InvalidName>※ 강의를 끝까지 시청해야 답안이 제출됩니다.</InvalidName>
+              { this.renderModalBtn() }
             </VideoModal.Footer>
           </VideoModal.ContentWrapper>
         </VideoModal.Inner>

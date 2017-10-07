@@ -66,7 +66,6 @@ export const VideoModal = {
   Footer: styled.div`
     position: absolute;
     bottom: 2.1875rem;
-    right: 2.9375rem;
   `,
   Button: styled.div`
     display: table;
