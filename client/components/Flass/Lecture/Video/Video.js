@@ -15,6 +15,7 @@ import {
   VideoModalComponent,
   VideoControllerAndBarWrapperComponent,
   VideoEndedPageComponent,
+  URLCopyButtonComponent,
 
   PlayBtnIcon,
   PauseBtnIcon,
@@ -198,7 +199,10 @@ class Video extends Component {
                   duration={ duration }
                   elapsed={ played * duration } />
 
+
                 <VideoVolumeWrapperComponent>
+                  <URLCopyButtonComponent />
+                  
                   <VideoButtonComponent
                     buttonClass={ VideoVolumeBtnClassName }
                     srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }
