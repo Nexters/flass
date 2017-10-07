@@ -150,19 +150,20 @@ class Analysis extends Component {
   };
 
   renderSingleChoices = (question) => {
-    const usersOfAnswers = this.getUsersOfAnswers();
+    const usersOfAnswers = this.getUsersOfAnswers(question['correct_answer']);
     return usersOfAnswers.map(usersOfAnswer => (<SingleChoiceComponent
       key={ usersOfAnswer.id }
       question={ question }
       { ...usersOfAnswer } />));
   }
 
-  getUsersOfAnswers = () => {
+  getUsersOfAnswers = (correctAnswer) => {
     const { question_answers, answers } = this.props;
 
     return question_answers.map((questionAnswer, index) => ({
       id: questionAnswer.id,
       answer: questionAnswer.answer,
+      isCorrect: index == correctAnswer,
       userAnswers: answers.filter(answer => index == parseInt(answer.answer))
     }));
   }

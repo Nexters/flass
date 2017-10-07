@@ -12,17 +12,16 @@ const UserView = styled.span`
 `;
 
 const propTypes = {
-  question: PropTypes.object.isRequired,
   answer: PropTypes.string.isRequired,
-  userAnswers: PropTypes.array.isRequired
+  userAnswers: PropTypes.array.isRequired,
+  isCorrect: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {};
 
 class SingleChoiceComponent extends Component {
   render() {
-    const { question, answer, userAnswers } = this.props;
-    const isCorrect = question['correct_answer'] == answer;
+    const { isCorrect, answer, userAnswers } = this.props;
     return (
       <SingleChoice.Wrapper>
         <SingleChoice.Header>
