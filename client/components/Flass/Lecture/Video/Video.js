@@ -79,7 +79,8 @@ const defaultProps = {
   VideoVolumeBtnClassName: '',
   VideoVolumeBarClassName: '',
 
-  videoUrl: ''
+  videoUrl: '',
+  shortenUrl: ''
 };
 
 class Video extends Component {
