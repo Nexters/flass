@@ -77,6 +77,7 @@ const Grid = {
 const Lecture = {
   byId: lectureId => requestsForApi.get(`/lectures/${lectureId}`),
   upload: body => requestsForApi.post('/lectures', body),
+  putShortenUrl: (id, url) => requestsForApi.put(`/shortenurl/${id}`, { shorten_url: url }),
   delete: lectureId => requestsForApi.del(`/lectures/${lectureId}`)
 };
 

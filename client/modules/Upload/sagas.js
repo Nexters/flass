@@ -36,6 +36,7 @@ function* uploadLectureAndQuestions({
     const lectureResponse = yield call(agent.Lecture.upload, lectureBody);
     const lectureUrl = `${API_ROOT}/v/${lectureResponse.id}`;
     const urlResponse = yield call(agent.Google.getShortUrl, lectureUrl);
+    yield call(agent.Lecture.putShortenUrl, lectureResponse.id, urlResponse.id);
 
     for (let qIndex = 0; qIndex < questionState.length; qIndex += 1) {
       const questionstate = questionState[qIndex];

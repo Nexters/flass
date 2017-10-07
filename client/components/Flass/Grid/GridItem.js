@@ -48,6 +48,11 @@ const Header = styled.span`
   font-weight: 100;
   padding-bottom: .19rem;
   border-bottom: 1px solid ${color['white']};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
+  max-width: 150px;
   float: left;
 `;
 
@@ -65,6 +70,11 @@ const Title = styled.div`
   font-family: NotoSansCJKkr;
   font-size: 1.56rem;
   font-weight: 100;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
+  max-width: 200px;
   color: ${color['white']};
 `;
 
