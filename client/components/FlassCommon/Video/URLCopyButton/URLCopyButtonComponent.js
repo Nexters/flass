@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import autobind from 'autobind-decorator';
 import PropTypes from 'prop-types';
+import Copy from 'copy-to-clipboard';
 import {
   IconImg
 } from './icons';
@@ -9,7 +10,11 @@ import {
   Icon
 } from './URLCopyButtonStyled';
 
-const propTypes = {};
+const { string } = PropTypes;
+
+const propTypes = {
+  shortenUrl: string.isRequired
+};
 const defaultProps = {};
 
 class URLCopyButtonComponent extends Component {
@@ -25,7 +30,8 @@ class URLCopyButtonComponent extends Component {
 
   @autobind
   onButtonClick() {
-    console.log('button clicked!');
+    Copy(this.props.shortenUrl);
+    alert('주소가 복사되었습니다.');
   }
 }
 

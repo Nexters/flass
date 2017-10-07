@@ -51,6 +51,7 @@ const propTypes = {
   saveQuestionsStateOnEnded: func.isRequired,
 
   videoUrl: string,
+  shortenUrl: string,
   questions: shape({
     secsStateOfQuestions: array,
     textStateOfQuestions: array
@@ -137,6 +138,7 @@ class Video extends Component {
       VideoVolumeBarClassName,
 
       videoUrl,
+      shortenUrl,
       questions: {
         secsStateOfQuestions
       }
@@ -201,8 +203,9 @@ class Video extends Component {
 
 
                 <VideoVolumeWrapperComponent>
-                  <URLCopyButtonComponent />
-                  
+                  <URLCopyButtonComponent
+                    shortenUrl={ shortenUrl } />
+
                   <VideoButtonComponent
                     buttonClass={ VideoVolumeBtnClassName }
                     srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }

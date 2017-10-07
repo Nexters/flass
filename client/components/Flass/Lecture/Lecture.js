@@ -61,6 +61,7 @@ const propTypes = {
       textbookRange: string,
       url: string,
       thumbnailUrl: string,
+      shortenUrl: string,
       createdAt: string,
       updatedAt: string
     }),
@@ -127,11 +128,13 @@ class Lecture extends Component {
     const {
       question: { questions },
       video: { videoUrl },
-      lecture: { isError }
+      lecture: {
+        isError,
+        lecture: {
+          shortenUrl
+        }
+      }
     } = this.props;
-
-    console.log('Lecture::props');
-    console.log(this.props);
 
     return isError ?
       <Redirect to="/error" /> :
@@ -149,6 +152,7 @@ class Lecture extends Component {
 
             saveQuestionsStateOnEnded={ this.saveQuestionsStateOnEnded }
             videoUrl={ videoUrl }
+            shortenUrl={ shortenUrl }
             questions={ questions } />
 
           <FlassLectureStyled.Tab>

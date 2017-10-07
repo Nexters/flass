@@ -21,7 +21,8 @@ const initialState = {
     content: '',
     textbook_range: '',
     duration: -1,
-    thumbnail_url: '',
+    thumbnailUrl: '',
+    shortenUrl: '',
     created_at: '',
     updated_at: '',
     url: ''
@@ -50,6 +51,7 @@ const fetchLectureReducer = {
         textbookRange: lecture['textbook_range'],
         url: lecture.url,
         thumbnailUrl: lecture['thumbnail_url'],
+        shortenUrl: lecture['shorten_url'],
         duration: lecture.duration,
         createdAt: lecture['created_at'],
         updatedAt: lecture['updated_at']
