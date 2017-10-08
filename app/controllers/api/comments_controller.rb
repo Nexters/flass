@@ -20,7 +20,7 @@ class Api::CommentsController < ApplicationController
       @commentchildren = CommentChild.where(comment_id: comment.id)
       @commentchildren.each do |commentchild|
         cl = commentchild.as_json
-        cl['userName'] = commentchild.comment.user.username
+        cl['userName'] = commentchild.user.username
         @ret['commentchild'][comment.id].push(cl)
       end
     end
