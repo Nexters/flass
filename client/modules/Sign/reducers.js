@@ -14,7 +14,7 @@ import {
 
   SET_ENTRY_POINT,
   RESET_ENTRY_POINT, INIT_GOOGLE_SERVICE, SUCCESS_INIT_GOOGLE_SERVICE,
-  LOGIN_GOOGLE_SERVICE,
+  LOGIN_GOOGLE_SERVICE, FAIL_LOGIN_FLASS_SERVICE,
 } from './actions';
 
 const initialState = {
@@ -42,7 +42,11 @@ const initGoogleReducer = {
   [SUCCESS_LOGIN_GOOGLE_SERVICE]: (state, { payload }) => ({
     ...state,
     isGoogleChecking: false,
-  })
+  }),
+  [FAIL_LOGIN_FLASS_SERVICE]: (state) => ({
+    ...state,
+    isGoogleChecking: false,
+  }),
 };
 
 const userSignInReducer = {

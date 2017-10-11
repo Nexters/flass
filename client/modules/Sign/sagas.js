@@ -36,7 +36,6 @@ function* loginGoogleService() {
   try {
     const authResponse = yield call(Google.authorizeForSignIn);
     const isGoogleAuthValid = yield call(isAuthResponseValid, authResponse);
-
     if (isGoogleAuthValid) {
       yield put({
         type: SUCCESS_LOGIN_GOOGLE_SERVICE,
