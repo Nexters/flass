@@ -16,10 +16,14 @@ class Api::CommentsController < ApplicationController
 
     @ret['commentchild'] = Hash.new
     @comments.each do |comment|
-      @ret['commentchild'][comment.id] = CommentChild.where(comment_id: comment.id)
+      @ret['commentchild'][comment.id] = Array.new
+      @commentchildren = CommentChild.where(comment_id: comment.id)
+      @commentchildren.each do |commentchild|
+        cl = commentchild.as_json
+        cl['userName'] = commentchild.user.username
+        @ret['commentchild'][comment.id].push(cl)
+      end
     end
-
-    puts @ret
 
     render json: @ret
   end
