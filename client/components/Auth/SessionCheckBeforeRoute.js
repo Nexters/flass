@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import LoadingComponent from './Loading/LoadingComponent';
-import {withRouter} from 'react-router';
-import {hashToObjectKey, queryToObjectKey} from '../../util/UrlUtil';
+import { withRouter } from 'react-router';
+import { hashToObjectKey, queryToObjectKey } from '../../util/UrlUtil';
 
 const { func, bool, shape, object } = PropTypes;
 
@@ -43,7 +43,7 @@ class SessionCheckBeforeRoute extends Component {
     const { checkSession, loginClasting } = this.props;
     const accessToken = hashToObjectKey(location, 'access_token');
 
-    if(accessToken) {
+    if (accessToken) {
       loginClasting(accessToken);
     } else {
       checkSession();
@@ -59,17 +59,26 @@ class SessionCheckBeforeRoute extends Component {
   }
 
   render() {
-    const { component, ...rest } = this.props;
+    const { component, location, ...rest } = this.props;
     const { isSessionChecking, sessionValid } = this.state;
 
     if (isSessionChecking) {
       return <LoadingComponent />;
     }
 
+    const redirectUrl = queryToObjectKey(location, 'redirect_url');
+    if(redirectUrl) {
+      return (<Redirect to={ {
+        pathname: redirectUrl
+      } } />);
+    }
     if (sessionValid) {
       return <Route { ...rest } component={ component } />;
     } else {
-      return <Redirect to="/user/login" />;
+      return (<Redirect to={ {
+        pathname: '/user/login',
+        state: { referrer: location.pathname }
+      } } />);
     }
   }
 
