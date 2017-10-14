@@ -14,6 +14,17 @@ export const API_ROOT = (function(type) {
   }
 })(TYPE_OF_BACKEND);
 
+export const API_ROOT_FRONT = (function(type) {
+  switch(type) {
+    case 'local':
+      return API_JSON;
+    default:
+      return API_PRODUCTION;
+  }
+})(TYPE_OF_BACKEND);
+
+
+
 const encode = encodeURIComponent;
 const responseBody = res => res.data;
 

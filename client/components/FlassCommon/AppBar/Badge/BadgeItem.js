@@ -25,7 +25,6 @@ const propTypes = {
 const defaultProps = {};
 
 const BadgeItem = ({ name, content }) => {
-  console.log(name, content);
   return (
     <BadgeItemView>
       <Name>{name}</Name>

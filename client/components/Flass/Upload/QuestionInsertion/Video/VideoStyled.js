@@ -23,7 +23,7 @@ export const VideoStyled = {
     transition-delay: 1s;
 
     &:hover {
-      opacity: 0.1;
+      opacity: 1;
       transition: opacity 1s ease-out;
     }
 

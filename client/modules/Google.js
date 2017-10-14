@@ -218,10 +218,10 @@ export default class Google {
 
     axios.post(`${BASE_URL}/users.json`, form)
     .then(response => {
-      console.log(response);
+      // console.log(response);
     })
     .catch(error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 }

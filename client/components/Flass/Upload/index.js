@@ -53,7 +53,7 @@ const propTypes = {
 
 class Upload extends Component {
   componentWillUnmount() {
-    console.log('Upload Component will unmount');
+    // console.log('Upload Component will unmount');
     this.props.initUploadStates();
     this.props.initQuestionStates();
   }
