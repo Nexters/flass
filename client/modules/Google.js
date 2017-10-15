@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
 import MediaUploader from './MediaUploader';
-import { API_ROOT } from './agent';
+import { API_ROOT } from '../config/EnvironmentConfig';
 
 const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube';
 const LOGIN_SCOPE = 'https://www.googleapis.com/auth/youtube';
@@ -101,11 +101,11 @@ export default class Google {
   static authorizeForSignIn() {
     const auth = gapi.auth2.getAuthInstance();
     return auth.signIn().then(() => {
-        const user = auth.currentUser.get();
+      const user = auth.currentUser.get();
 
-        user.reloadAuthResponse()
+      user.reloadAuthResponse()
           .then(response => resolve(response));
-      });
+    });
   }
 
   static isUserSignedIn() {

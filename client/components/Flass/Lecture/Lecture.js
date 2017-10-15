@@ -230,7 +230,9 @@ class Lecture extends Component {
   }
 
   isAnalysisTabExist() {
-    return this.context.router.history.location.pathname.split('/')[1] === 'lecture';
+    const { user, lecture: { lecture: { userId } } } = this.props;
+    console.log(user, userId);
+    return user.id == userId;
   }
 
   handleSelect = selected => {

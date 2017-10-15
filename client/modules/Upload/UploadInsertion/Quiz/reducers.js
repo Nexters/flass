@@ -2,9 +2,6 @@ import _ from 'lodash';
 import { List } from 'immutable';
 import { createReducer } from '../../../reducerHelper';
 import {
-  API_ROOT
-} from '../../../agent';
-import {
   ADD_MULTIPLE_CHIOICE_QUESTION,
   CANCEL_ADDING_QUESTION,
   COMPLETE_ADDING_QUESTION,

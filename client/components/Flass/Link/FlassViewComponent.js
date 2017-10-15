@@ -63,7 +63,7 @@ class FlassViewComponent extends Component {
           <Content>
             <Lecture
               lectureIdFromLink={ parseInt(id) }
-              isForExternal />
+            />
           </Content>
         </div>
       </MuiThemeProvider>

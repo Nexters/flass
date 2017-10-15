@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import agent, { API_ROOT } from '../agent';
+import agent from '../agent';
 import {
   LectureBodyAdapter,
   QuestionBodyAdapter,
@@ -12,6 +12,7 @@ import {
   SUCCESS_UPLOAD_QUESTIONS,
   FAIL_UPLOAD_QUESTIONS
 } from './UploadInsertion/Quiz/actions';
+import {API_ROOT} from '../../config/EnvironmentConfig';
 
 function* uploadLectureAndQuestions({
   questionState,

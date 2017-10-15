@@ -19,7 +19,7 @@ const propTypes = {
   questions: arrayOf(shape({
     id: number,
     content: string,
-    correct_answer: number,
+    correct_answer: string,
     question_at: number
   })).isRequired,
   question_answers: arrayOf(shape({
