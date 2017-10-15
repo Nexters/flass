@@ -13,8 +13,15 @@ import {
 import './Grid.scss';
 import '../../../css/base/_row.scss';
 
+const GridBox = styled.div`
+  position: relative;
+  min-height: 100%;
+`;
+
 const CustomerService = styled.div`
-  font-family: NotoSansCJKkr;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   font-size: 15px;
   margin-right: 40px;
   color: #a7acad;
@@ -55,7 +62,7 @@ class Grid extends Component {
     const { items } = this.props;
     const renderAllItems = this.renderRowsAndCols(items);
     return (
-      <div>
+      <GridBox>
         <Header
           Title={ () => <Title title="Home Channel" /> }
           SubTitle={ () => null } />
@@ -65,7 +72,7 @@ class Grid extends Component {
         <CustomerService>
           우주컴퍼니팀 | 문의  flassadm@gmail.com
         </CustomerService>
-      </div>
+      </GridBox>
     );
   }
 

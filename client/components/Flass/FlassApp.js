@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import autobind from 'autobind-decorator';
 import { Route, Switch, Redirect } from 'react-router-dom';
-
 import {
   MuiThemeProvider,
   getMuiTheme,
   baseTheme,
   flassTheme
 } from '../FlassCommon/MaterialUI';
-
 import Grid from './Grid/GridContainer';
 import Lecture from './Lecture/LectureContainer';
 import Upload from './Upload';
 import Drawer from '../FlassCommon/Drawer/Drawer';
 import Content from '../FlassCommon/Content';
 import AppBar from '../FlassCommon/AppBar/AppBar';
-
 import './FlassApp.scss';
+
+const FlassAppBox = styled.div`
+  height: 100%;
+`;
 
 const { func, number, object } = PropTypes;
 
@@ -40,16 +42,15 @@ class FlassApp extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={ flassTheme }>
-        <div>
+        <FlassAppBox>
           <Drawer />
           <AppBar
             isLogin={ this.isUserLogin() }
             onClickLogoutBtn={ this.signOutFlassService } />
-
           <Content>
             {this.renderContent()}
           </Content>
-        </div>
+        </FlassAppBox>
       </MuiThemeProvider>
     );
   }

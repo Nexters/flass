@@ -26,7 +26,7 @@ const UserName = styled.span`
 `;
 
 const CommentMenu = styled.span`
-  width: 55px;
+  width: 30px;
   position: absolute;
   right: 0px;
   top: 0px;

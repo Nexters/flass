@@ -2,6 +2,10 @@ $paddingTop: 87.75px;
 $paddingLeft: 9.9vw;
 $paddingLeftMin: 114px;
 
+.content {
+  height: 100%;
+}
+
 @media only screen and (min-width: 1161px) {
   /* For large screens: */
   .content {
