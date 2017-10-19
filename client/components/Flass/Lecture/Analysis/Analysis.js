@@ -15,6 +15,7 @@ const { string, func, arrayOf, shape, array, number, objectOf } = PropTypes;
 
 const propTypes = {
   requestLectureAnalysis: func.isRequired,
+  unmountAnalysis: func.isRequired,
   lectureId: number.isRequired,
   questions: arrayOf(shape({
     id: number,
@@ -51,6 +52,10 @@ class Analysis extends Component {
 
   componentDidMount() {
     this.updateLectureAnalysis();
+  }
+
+  componentWillUnmount() {
+    this.props.unmountAnalysis();
   }
 
   render() {

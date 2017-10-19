@@ -10,20 +10,15 @@ import { FETCH_VIDEO, UPDATE_SEARCHABLE_SECS } from './Video/actions';
 
 export function* fetchLectureAll({ lectureId }) {
   yield put({ type: FETCH_READY_LECTURE });
-  // yield call(delay, 2000);
+
   try {
     const lecture = yield call(agent.Lecture.byId, lectureId);
 
-    yield [put({
-      type: FETCH_QUESTION,
-      lectureId
-    }), put({
-      type: FETCH_LECTURE_SUCCESS,
-      lecture
-    }), put({
-      type: FETCH_VIDEO,
-      url: lecture && lecture.url
-    })];
+    yield [
+      put({ type: FETCH_QUESTION, lectureId }),
+      put({ type: FETCH_VIDEO, url: lecture && lecture.url }),
+    ];
+    yield put({ type: FETCH_LECTURE_SUCCESS,  lecture });
   } catch (err) {
     yield put({
       type: FETCH_LECTURE_ERROR,
