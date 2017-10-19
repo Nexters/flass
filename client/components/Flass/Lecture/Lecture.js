@@ -112,8 +112,15 @@ class Lecture extends Component {
     super(props);
     this.state = {
       selected: 1,
-      videoUrl: ''
+      videoUrl: '',
+      isAnalysisTabExist: false
     };
+  }
+
+  componentWillMount() {
+    if (this.isLectureOwner()) {
+      this.setState({ selected: 3, isAnalysisTabExist: true });
+    }
   }
 
   componentDidMount() {
@@ -165,6 +172,11 @@ class Lecture extends Component {
       </FlassLectureStyled.Wrapper>;
   }
 
+  isLectureOwner() {
+    const { user, lecture: { lecture: { userId } } } = this.props;
+    return user.id === userId;
+  }
+
   isLectureAlreadyFetch() {
     return this.props.isFetched;
   }
@@ -186,7 +198,7 @@ class Lecture extends Component {
 
   renderTabs = () => {
     const { lectureIdFromReducer, comment, lecture: { lecture } } = this.props;
-    const { selected } = this.state;
+    const { selected, isAnalysisTabExist } = this.state;
 
     const tabTitle = (title, src) => (
       <TabTitle>
@@ -216,7 +228,7 @@ class Lecture extends Component {
         <Comment lectureId={ lectureIdFromReducer } />
       </Tab>
       {
-        this.isAnalysisTabExist() ? (
+        isAnalysisTabExist ? (
           <Tab
             eventKey={ 3 }
             title={
@@ -227,12 +239,6 @@ class Lecture extends Component {
         ) : null
       }
     </Tabs>);
-  }
-
-  isAnalysisTabExist() {
-    const { user, lecture: { lecture: { userId } } } = this.props;
-    console.log(user, userId);
-    return user.id == userId;
   }
 
   handleSelect = selected => {
