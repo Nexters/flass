@@ -12,7 +12,7 @@ import {
   SUCCESS_UPLOAD_QUESTIONS,
   FAIL_UPLOAD_QUESTIONS
 } from './UploadInsertion/Quiz/actions';
-import {API_ROOT} from '../../config/EnvironmentConfig';
+import { API_ROOT, API_ROOT_FRONT } from '../../config/EnvironmentConfig';
 
 function* uploadLectureAndQuestions({
   questionState,
@@ -35,7 +35,7 @@ function* uploadLectureAndQuestions({
     });
 
     const lectureResponse = yield call(agent.Lecture.upload, lectureBody);
-    const lectureUrl = `${API_ROOT}/v/${lectureResponse.id}`;
+    const lectureUrl = `${API_ROOT_FRONT}/v/${lectureResponse.id}`;
     const urlResponse = yield call(agent.Google.getShortUrl, lectureUrl);
     yield call(agent.Lecture.putShortenUrl, lectureResponse.id, urlResponse.id);
 

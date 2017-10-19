@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import LoadingComponent from './Loading/LoadingComponent';
-import { withRouter } from 'react-router';
 import { hashToObjectKey, queryToObjectKey } from '../../util/UrlUtil';
 
 const { func, bool, shape, object } = PropTypes;
@@ -67,7 +66,9 @@ class SessionCheckBeforeRoute extends Component {
     }
 
     const redirectUrl = queryToObjectKey(location, 'redirect_url');
-    if(redirectUrl) {
+    console.log('location', location);
+    console.log('redirectUrl', redirectUrl);
+    if (redirectUrl) {
       return (<Redirect to={ {
         pathname: redirectUrl
       } } />);

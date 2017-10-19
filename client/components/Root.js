@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import SessionCheckBeforeRoute from './Auth/SessionCheckBeforeRouteContainer';
@@ -42,13 +43,22 @@ class Root extends Component {
 
 Root.propTypes = propTypes;
 
-export default connect(
-  ({ sign }) => ({
-    isGoogleChecking: sign.isGoogleChecking,
-  }),
-  {
+function mapStateToProps(state) {
+  const { sign } = state;
+  return {
+    isGoogleChecking: sign.isGoogleChecking
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
     initGoogleAuthService: () => ({
       type: INIT_GOOGLE_SERVICE
     })
-  }
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(Root);

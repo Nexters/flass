@@ -4,8 +4,8 @@ import autobind from 'autobind-decorator';
 import BtnLoginWithClassting from './img/btn.login_with_classting_e_600.png';
 import { CLASSTING_CLIENT_ID } from '../../../../../config/Constants';
 import './signIn.scss';
-import {callValue} from '../../../../util/ObjectUtil';
-import {API_ROOT_FRONT} from '../../../../config/EnvironmentConfig';
+import { callValue } from '../../../../util/ObjectUtil';
+import { API_ROOT_FRONT } from '../../../../config/EnvironmentConfig';
 
 const { func, bool, shape, object, string } = PropTypes;
 
@@ -67,6 +67,8 @@ class SignIn extends Component {
   @autobind
   onClickLoginBtn() {
     const redirectUrl = callValue(() => this.props.location.state.referrer, '/');
+    console.log('API_ROOT_FRONT', API_ROOT_FRONT);
+    console.log('redirectUrl', redirectUrl);
     window.location = `https://oauth.classting.com/v1/oauth2/authorize?client_id=${CLASSTING_CLIENT_ID}&redirect_uri=${API_ROOT_FRONT}?redirect_url=${redirectUrl}&response_type=token`;
     // https://oauth.classting.com/v1/oauth2/authorize?client_id=4cb80de500c6cec9be15d59b5617085c&redirect_uri=http://localhost:4000&response_type=token
     // this.props.goToAuthPage();
