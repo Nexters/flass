@@ -13,7 +13,6 @@ const defaultProps = {
 
 const withLoadingComponent = (props, options, WrappedComponent) => {
   const { isLoading } = props.lecture;
-
   if (isLoading) {
     return (<div style={ { textAlign: 'center' } }>
       <CircularProgress size={ 80 } thickness={ 5 } />

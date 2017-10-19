@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Analysis from './Analysis';
 import {
-  REQUEST_LECTURE_ANALYSIS
+  REQUEST_LECTURE_ANALYSIS,
+  UNMOUNT_ANALYSIS
 } from '../../../../modules/Flass/Lecture/Analysis/actions';
 
 function mapStateToProps(state) {
@@ -32,6 +33,9 @@ function mapDispatchToProps(dispatch) {
       type: REQUEST_LECTURE_ANALYSIS,
       lectureId,
       questionIndex
+    }),
+    unmountAnalysis: () => ({
+      type: UNMOUNT_ANALYSIS
     })
   }, dispatch);
 }
