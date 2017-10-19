@@ -9,6 +9,7 @@ import configureStore from './store';
 import Root from './components/Root';
 
 import FireBaseConfig from './config/FirebaseConfig';
+import logger from './util/LogUtil';
 
 function initWhyDidYouUpdate() {
   let createClass = React.createClass;
@@ -23,7 +24,7 @@ function initWhyDidYouUpdate() {
 // initWhyDidYouUpdate();
 
 const render = Component => {
-  console.log('init() :: App starts booting...');
+  logger.log('init() :: App starts booting...');
   injectTapEventPlugin();
   FireBaseConfig.init();
 
