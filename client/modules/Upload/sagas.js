@@ -38,28 +38,7 @@ function* uploadLectureAndQuestions({
     const lectureUrl = `${API_ROOT_FRONT}/v/${lectureResponse.id}`;
     const urlResponse = yield call(agent.Google.getShortUrl, lectureUrl);
     yield call(agent.Lecture.putShortenUrl, lectureResponse.id, urlResponse.id);
-
-    for (let qIndex = 0; qIndex < questionState.length; qIndex += 1) {
-      const questionstate = questionState[qIndex];
-      const questionBody = yield call(
-        QuestionBodyAdapter.uploadByQuestionId,
-        lectureResponse.id,
-        questionstate
-      );
-      const questionResponse = yield call(agent.Question.uploadByLectureId, questionBody);
-
-      const { SingleChoiceValues } = questionstate;
-
-      for (let cIndex = 0; cIndex < SingleChoiceValues.length; cIndex += 1) {
-        const singleChoiceValues = SingleChoiceValues[cIndex];
-        const choiceBody = yield call(
-          ChoiceBodyAdapter.upload,
-          questionResponse.id,
-          singleChoiceValues
-        );
-        yield call(agent.Choice.upload, choiceBody);
-      }
-    }
+    yield call(uploadQuestionApi, lectureResponse, questionState);
 
     yield put({
       type: SUCCESS_UPLOAD_QUESTIONS,
@@ -69,6 +48,30 @@ function* uploadLectureAndQuestions({
     });
   } catch (error) {
     yield put({ type: FAIL_UPLOAD_QUESTIONS, error });
+  }
+}
+
+function* uploadQuestionApi(lectureResponse, questionState) {
+  for (let qIndex = 0; qIndex < questionState.length; qIndex += 1) {
+    const questionstate = questionState[qIndex];
+    const questionBody = yield call(
+      QuestionBodyAdapter.uploadByQuestionId,
+      lectureResponse.id,
+      questionstate
+    );
+    const questionResponse = yield call(agent.Question.uploadByLectureId, questionBody);
+
+    const { SingleChoiceValues } = questionstate;
+
+    for (let cIndex = 0; cIndex < SingleChoiceValues.length; cIndex += 1) {
+      const singleChoiceValues = SingleChoiceValues[cIndex];
+      const choiceBody = yield call(
+        ChoiceBodyAdapter.upload,
+        questionResponse.id,
+        singleChoiceValues
+      );
+      yield call(agent.Choice.upload, choiceBody);
+    }
   }
 }
 

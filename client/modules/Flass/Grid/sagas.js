@@ -1,6 +1,7 @@
-import { takeEvery, takeLatest } from 'redux-saga';
-import { all, call, fork, take, select, put, cancel } from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga';
+import { all, call, put } from 'redux-saga/effects';
 import _ from 'lodash';
+import logger from '../../../util/LogUtil';
 import agent from '../../agent';
 import {
   FETCH_MY_CHANNEL,
@@ -32,7 +33,7 @@ function* fetchMyChannelItems() {
       items: itemsWithQuestion
     });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     yield put({
       type: FETCH_MY_CHANNEL_ERROR,
       message: err.message

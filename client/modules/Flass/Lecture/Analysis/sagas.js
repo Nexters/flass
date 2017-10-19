@@ -1,5 +1,5 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import _ from 'lodash';
+import logger from '../../../../util/LogUtil';
 import {
   REQUEST_LECTURE_ANALYSIS,
   SUCCESS_REQUEST_LECTURE_ANALYSIS,
@@ -45,7 +45,7 @@ export function* requestLectureAnalysis({ lectureId, questionIndex }) {
       });
     }
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     yield put({
       type: FAIL_REQUEST_LECTURE_ANALYSIS
     });

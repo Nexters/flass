@@ -11,17 +11,9 @@ function* requestOnEnded({ solvedQuestionsState, userId, isForExternal }) {
     if (isSolvedQuestionsExist(solvedQuestionsState)) {
       const id = getQuestionId(solvedQuestionsState);
       const response = yield call(agent.Answer.getAnswerByQuestionId, id);
-      if (!isUserIdExist(response, userId) && isForExternal) {
-        for (let i = 0; i < solvedQuestionsState.length; i += 1) {
-          const { id, indexOfSelectedChoice } = solvedQuestionsState[i];
-          const requestBody = yield call(
-            AnswerBodyAdapter.uploadByQuestionId,
-            id,
-            indexOfSelectedChoice.toString()
-          );
 
-          yield call(agent.Answer.uploadByQuestionId, requestBody);
-        }
+      if (!isUserIdExist(response, userId) && isForExternal) {
+        yield call(solvedQuestionsUploadApi, solvedQuestionsState);
       } else {
         !isForExternal ?
           logger.log('This is not external access') :
@@ -30,6 +22,19 @@ function* requestOnEnded({ solvedQuestionsState, userId, isForExternal }) {
     }
   } catch (e) {
     logger.error(e);
+  }
+}
+
+function* solvedQuestionsUploadApi(solvedQuestionsState) {
+  for (let i = 0; i < solvedQuestionsState.length; i += 1) {
+    const { id, indexOfSelectedChoice } = solvedQuestionsState[i];
+    const requestBody = yield call(
+      AnswerBodyAdapter.uploadByQuestionId,
+      id,
+      indexOfSelectedChoice.toString()
+    );
+
+    yield call(agent.Answer.uploadByQuestionId, requestBody);
   }
 }
 
