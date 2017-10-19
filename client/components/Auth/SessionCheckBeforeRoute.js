@@ -66,8 +66,6 @@ class SessionCheckBeforeRoute extends Component {
     }
 
     const redirectUrl = queryToObjectKey(location, 'redirect_url');
-    console.log('location', location);
-    console.log('redirectUrl', redirectUrl);
     if (redirectUrl) {
       return (<Redirect to={ {
         pathname: redirectUrl

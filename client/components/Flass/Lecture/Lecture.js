@@ -85,7 +85,6 @@ const propTypes = {
   }).isRequired,
   lectureIdFromLink: oneOfType([string, number]),
   lectureIdFromReducer: number,
-  isForExternal: bool,
   isFetched: bool
 };
 
@@ -97,7 +96,6 @@ const defaultProps = {
   },
   lectureIdFromLink: '-1',
   lectureIdFromReducer: -1,
-  isForExternal: false,
   isFetched: false
 };
 
@@ -112,14 +110,13 @@ class Lecture extends Component {
     super(props);
     this.state = {
       selected: 1,
-      videoUrl: '',
-      isAnalysisTabExist: false
+      videoUrl: ''
     };
   }
 
   componentWillMount() {
     if (this.isLectureOwner()) {
-      this.setState({ selected: 3, isAnalysisTabExist: true });
+      this.setState({ selected: 3 });
     }
   }
 
@@ -185,20 +182,16 @@ class Lecture extends Component {
     const { match, lectureIdFromLink } = this.props;
     const paramsId = parseInt(match.params.id);
 
-    if (this.isUserFromMain(paramsId)) {
+    if (this.isUserFromMainPage(paramsId)) {
       return paramsId;
     } else {
       return parseInt(lectureIdFromLink);
     }
   }
 
-  isUserFromMain(id) {
-    return id !== -1;
-  }
-
   renderTabs = () => {
     const { lectureIdFromReducer, comment, lecture: { lecture } } = this.props;
-    const { selected, isAnalysisTabExist } = this.state;
+    const { selected } = this.state;
 
     const tabTitle = (title, src) => (
       <TabTitle>
@@ -228,7 +221,7 @@ class Lecture extends Component {
         <Comment lectureId={ lectureIdFromReducer } />
       </Tab>
       {
-        isAnalysisTabExist ? (
+        this.isLectureOwner() ? (
           <Tab
             eventKey={ 3 }
             title={
@@ -246,8 +239,18 @@ class Lecture extends Component {
   }
 
   saveQuestionsStateOnEnded = solvedQuestionsState => {
-    const { user: { id }, isForExternal } = this.props;
-    this.props.saveQuestionsStateOnEnded(solvedQuestionsState, id, isForExternal);
+    const { user: { id }, match } = this.props;
+    const paramsId = parseInt(match.params.id);
+
+    this.props.saveQuestionsStateOnEnded({
+      solvedQuestionsState,
+      id,
+      isForExternal: !this.isUserFromMainPage(paramsId)
+    });
+  }
+
+  isUserFromMainPage(id) {
+    return id !== -1;
   }
 }
 

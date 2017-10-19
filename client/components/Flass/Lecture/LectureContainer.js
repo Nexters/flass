@@ -26,10 +26,10 @@ function mapDispatchToProps(dispatch) {
       type: FETCH_LECTURE,
       lectureId
     }),
-    saveQuestionsStateOnEnded: (solvedQuestionsState, userId, isForExternal) => ({
+    saveQuestionsStateOnEnded: ({ solvedQuestionsState, id, isForExternal }) => ({
       type: REQUEST_ON_ENDED,
+      userId: id,
       solvedQuestionsState,
-      userId,
       isForExternal
     }),
     unmountLecture

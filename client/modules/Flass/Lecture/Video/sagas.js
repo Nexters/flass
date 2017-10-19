@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import logger from '../../../../util/LogUtil';
 import agent from '../../../agent';
 import { AnswerBodyAdapter } from '../../../../RequestBodyAdapter';
 import {
@@ -10,7 +11,6 @@ function* requestOnEnded({ solvedQuestionsState, userId, isForExternal }) {
     if (isSolvedQuestionsExist(solvedQuestionsState)) {
       const id = getQuestionId(solvedQuestionsState);
       const response = yield call(agent.Answer.getAnswerByQuestionId, id);
-
       if (!isUserIdExist(response, userId) && isForExternal) {
         for (let i = 0; i < solvedQuestionsState.length; i += 1) {
           const { id, indexOfSelectedChoice } = solvedQuestionsState[i];
@@ -24,12 +24,12 @@ function* requestOnEnded({ solvedQuestionsState, userId, isForExternal }) {
         }
       } else {
         !isForExternal ?
-          console.log('This is not external access') :
-          console.log('User already solved questions');
+          logger.log('This is not external access') :
+          logger.log('User already solved questions');
       }
     }
   } catch (e) {
-    console.error(e);
+    logger.error(e);
   }
 }
 

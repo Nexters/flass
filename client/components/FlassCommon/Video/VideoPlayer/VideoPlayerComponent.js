@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
 import { VideoPlayer } from './VideoPlayerStyled';
+import logger from '../../../../util/LogUtil';
 import './VideoPlayerStyles.scss';
 
 const { func, string, number, bool } = PropTypes;
@@ -54,7 +55,7 @@ class VideoPlayerComponent extends Component {
           playing={ playing }
           volume={ volume }
           onEnded={ this.onEnded }
-          onError={ e => console.log('onError', e) }
+          onError={ e => logger.error(e) }
           onProgress={ onProgress }
           onDuration={ onDuration } />
       </VideoPlayer.Wrapper>
