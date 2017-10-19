@@ -38,7 +38,7 @@ export const VideoModalSingleChoice = {
     font-weight: ${props => selectFontWeight(props)};
     height: 1.875rem;
     color: ${props => selectTextColor(props)};;
-    width: 15.625rem;
+    width: 100%;
   `
 };
 
