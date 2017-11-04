@@ -33,12 +33,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    requestLectureAnalysis: (lectureId, questionIndex) => ({
+    requestLectureAnalysisAction: (lectureId, questionIndex) => ({
       type: REQUEST_LECTURE_ANALYSIS,
       lectureId,
       questionIndex
     }),
-    unmountAnalysis: () => ({
+    unmountAnalysisAction: () => ({
       type: UNMOUNT_ANALYSIS
     })
   }, dispatch);

@@ -24,13 +24,9 @@ const requestStatisticsReducer = {
 };
 
 function returnAnswersAndQuestions(state, payload) {
-  const { answers, questions, question_answers, loadingQuestions_ } = payload;
   return {
     ...state,
-    answers,
-    questions,
-    question_answers,
-    loadingQuestions_
+    ...payload
   };
 }
 

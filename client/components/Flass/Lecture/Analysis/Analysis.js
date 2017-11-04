@@ -3,19 +3,32 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import ChartComponent from './Chart/ChartComponent';
 import SingleChoiceComponent from './SingleChoice/SingleChoiceComponent';
+import { AnalysisLoadingHOC } from './AnalysisLoadingHOC';
+import { AnalysisFetchHOC } from './AnalysisFetchHOC';
 import {
-  AnalysisStyled,
-  NoQuestions
+  AnalysisStyled
 } from './AnalysisStyled';
 
-const { Tab, TabWrapper, TabItem, Wrapper, Header, Body, Row, Title, Col5, ChartTextWrapper, ChartTextTitle, ChartTextNumber } = AnalysisStyled;
-const { string, func, arrayOf, shape, array, number, objectOf } = PropTypes;
+const {
+  Tab,
+  TabWrapper,
+  TabItem,
+  ActiveTabItemStyle,
+  Wrapper,
+  Header,
+  Body,
+  Row,
+  Title,
+  Col5,
+  ChartTextWrapper,
+  ChartTextTitle,
+  ChartTextNumber
+} = AnalysisStyled;
+const { string, func, arrayOf, shape, number } = PropTypes;
 
 
 const propTypes = {
-  requestLectureAnalysis: func.isRequired,
-  unmountAnalysis: func.isRequired,
-  lectureId: number.isRequired,
+  updateLectureAnalysis: func.isRequired,
   questionIndex: number.isRequired,
   questions: arrayOf(shape({
     id: number,
@@ -23,6 +36,12 @@ const propTypes = {
     correct_answer: string,
     question_at: number
   })).isRequired,
+  question: shape({
+    id: number,
+    content: string,
+    correct_answer: string,
+    question_at: number
+  }).isRequired,
   question_answers: arrayOf(shape({
     id: number,
     question_id: number,
@@ -43,34 +62,12 @@ const propTypes = {
 const defaultProps = {};
 
 class Analysis extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedIndex: 0
-    };
-  }
-
-  componentDidMount() {
-    this.updateLectureAnalysis();
-  }
-
-  componentWillUnmount() {
-    this.props.unmountAnalysis();
-  }
+  state = {
+    selectedIndex: 0
+  };
 
   render() {
-    const { questions, answers, questionIndex } = this.props;
-
-    if (questions.length === 0) {
-      return (
-        <NoQuestions.Wrapper>
-          <NoQuestions.Text>
-            등록된 문제가 없습니다.
-          </NoQuestions.Text>
-        </NoQuestions.Wrapper>
-      );
-    }
-    const question = questions[questionIndex];
+    const { answers, questionIndex, question } = this.props;
 
     return (
       <Wrapper>
@@ -104,25 +101,11 @@ class Analysis extends Component {
     );
   }
 
-  updateLectureAnalysis = async (selectedIndex = 0) => {
-    const { lectureId } = this.props;
-
-    if (lectureId !== -1) {
-      await this.props.requestLectureAnalysis(lectureId, selectedIndex);
-      this._setStateSelectedIndex(selectedIndex);
-    }
-  };
-
   renderQuestions = () => {
-    const { selectedIndex } = this.state;
-    const { questions } = this.props;
+    const { questions, questionIndex } = this.props;
 
     const questionTabs = _.map(questions, (question, index) => {
-      const activeStyle = (index === selectedIndex) ? {
-        backgroundColor: '#87ac1e',
-        border: '1px #87ac1e solid',
-        color: 'white'
-      } : {};
+      const activeStyle = (index === questionIndex) ? ActiveTabItemStyle : {};
       return (
         <TabWrapper key={ question.id }>
           <TabItem
@@ -137,7 +120,7 @@ class Analysis extends Component {
   }
 
   handleSelect = index => {
-    this.updateLectureAnalysis(index);
+    this.props.updateLectureAnalysis(index);
   }
 
   renderChart = () => {
@@ -177,4 +160,4 @@ class Analysis extends Component {
 Analysis.propTypes = propTypes;
 Analysis.defaultProps = defaultProps;
 
-export default Analysis;
+export default AnalysisFetchHOC(AnalysisLoadingHOC(Analysis));

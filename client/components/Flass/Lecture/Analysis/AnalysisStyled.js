@@ -69,6 +69,11 @@ const AnalysisStyled = {
       border: solid 1px #92b729;
     }
   `,
+  ActiveTabItemStyle: {
+    backgroundColor: '#87ac1e',
+    border: '1px #87ac1e solid',
+    color: 'white'
+  },
   ChartWrapper: styled.div`
     position: relative;
     padding: 0 2.625rem;
