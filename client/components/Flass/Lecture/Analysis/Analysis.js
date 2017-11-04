@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import autobind from 'autobind-decorator';
 import ChartComponent from './Chart/ChartComponent';
 import SingleChoiceComponent from './SingleChoice/SingleChoiceComponent';
 import {
@@ -17,6 +16,7 @@ const propTypes = {
   requestLectureAnalysis: func.isRequired,
   unmountAnalysis: func.isRequired,
   lectureId: number.isRequired,
+  questionIndex: number.isRequired,
   questions: arrayOf(shape({
     id: number,
     content: string,
@@ -59,8 +59,7 @@ class Analysis extends Component {
   }
 
   render() {
-    const { selectedIndex } = this.state;
-    const { questions, answers } = this.props;
+    const { questions, answers, questionIndex } = this.props;
 
     if (questions.length === 0) {
       return (
@@ -71,7 +70,7 @@ class Analysis extends Component {
         </NoQuestions.Wrapper>
       );
     }
-    const question = questions[selectedIndex];
+    const question = questions[questionIndex];
 
     return (
       <Wrapper>
@@ -81,7 +80,7 @@ class Analysis extends Component {
         <Body>
           <Row>
             <Title>
-              { `Q${selectedIndex + 1}. ${question.content}` }
+              { `Q${questionIndex + 1}. ${question.content}` }
             </Title>
           </Row>
           <Row marginTop>
@@ -105,12 +104,12 @@ class Analysis extends Component {
     );
   }
 
-  updateLectureAnalysis = () => {
-    const { selectedIndex } = this.state;
+  updateLectureAnalysis = async (selectedIndex = 0) => {
     const { lectureId } = this.props;
 
     if (lectureId !== -1) {
-      this.props.requestLectureAnalysis(lectureId, selectedIndex);
+      await this.props.requestLectureAnalysis(lectureId, selectedIndex);
+      this._setStateSelectedIndex(selectedIndex);
     }
   };
 
@@ -138,10 +137,7 @@ class Analysis extends Component {
   }
 
   handleSelect = index => {
-    this.setState({
-      selectedIndex: index
-    });
-    this.updateLectureAnalysis();
+    this.updateLectureAnalysis(index);
   }
 
   renderChart = () => {
@@ -154,7 +150,7 @@ class Analysis extends Component {
       data={ data } />);
   };
 
-  renderSingleChoices = (question) => {
+  renderSingleChoices = question => {
     const usersOfAnswers = this.getUsersOfAnswers(question['correct_answer']);
     return usersOfAnswers.map(usersOfAnswer => (<SingleChoiceComponent
       key={ usersOfAnswer.id }
@@ -162,7 +158,7 @@ class Analysis extends Component {
       { ...usersOfAnswer } />));
   }
 
-  getUsersOfAnswers = (correctAnswer) => {
+  getUsersOfAnswers = correctAnswer => {
     const { question_answers, answers } = this.props;
 
     return question_answers.map((questionAnswer, index) => ({
@@ -173,6 +169,9 @@ class Analysis extends Component {
     }));
   }
 
+  _setStateSelectedIndex = selectedIndex => {
+    this.setState({ selectedIndex });
+  }
 }
 
 Analysis.propTypes = propTypes;

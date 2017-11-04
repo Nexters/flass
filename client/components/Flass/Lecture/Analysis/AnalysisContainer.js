@@ -15,15 +15,19 @@ function mapStateToProps(state) {
     },
     analysis: {
       questions,
+      questionIndex,
       question_answers,
-      answers
+      answers,
+      loadingQuestions_
     }
   } = state.flass.lecture;
   return {
     lectureId: id,
     questions,
+    questionIndex,
     question_answers,
-    answers
+    answers,
+    loadingQuestions_
   };
 }
 

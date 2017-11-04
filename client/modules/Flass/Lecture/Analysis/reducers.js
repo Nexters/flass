@@ -10,8 +10,10 @@ import {
 
 const initialState = {
   questions: [],
+  questionIndex: 0,
   answers: [],
-  question_answers: []
+  question_answers: [],
+  loadingQuestions_: false
 };
 
 const requestStatisticsReducer = {
@@ -22,12 +24,13 @@ const requestStatisticsReducer = {
 };
 
 function returnAnswersAndQuestions(state, payload) {
-  const { answers, questions, question_answers } = payload;
+  const { answers, questions, question_answers, loadingQuestions_ } = payload;
   return {
     ...state,
     answers,
     questions,
-    question_answers
+    question_answers,
+    loadingQuestions_
   };
 }
 
