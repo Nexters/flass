@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NoQuestions } from './AnalysisStyled';
+
+import AnalysisLoadingComponent from './AnalysisLoading/AnalysisLoadingComponent';
 
 const { number, shape, arrayOf, string } = PropTypes;
 
@@ -9,7 +10,7 @@ export const AnalysisLoadingHOC = WrappedComponent => {
     render() {
       const { questions, questionIndex } = this.props;
       if (questions.length === 0) {
-        return this._renderLoadingComponent();
+        return <AnalysisLoadingComponent />;
       }
 
       return (
@@ -17,16 +18,6 @@ export const AnalysisLoadingHOC = WrappedComponent => {
           question={ questions[questionIndex] }
           questionIndex={ questionIndex }
           { ...this.props } />
-      );
-    }
-
-    _renderLoadingComponent = () => {
-      return (
-        <NoQuestions.Wrapper>
-          <NoQuestions.Text>
-            등록된 문제가 없습니다.
-          </NoQuestions.Text>
-        </NoQuestions.Wrapper>
       );
     }
   }
