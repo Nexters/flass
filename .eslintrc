@@ -100,6 +100,7 @@
     "global-require": 0,
     "prefer-const": ["error", {"ignoreReadBeforeAssign": true}],
     "no-param-reassign": ["error", { "props": false }],
+    "no-underscore-dangle": 0,
     ////////// React //////////
     "react/jsx-curly-spacing": [1, "always"],
     "react/sort-comp": [1, {

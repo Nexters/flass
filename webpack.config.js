@@ -8,16 +8,12 @@ module.exports = {
       'babel-polyfill',
       'react-hot-loader/patch',
       './client/index'
-    ],
-    sign: [
-      'babel-polyfill',
-      'react-hot-loader/patch',
-      './client/sign'
     ]
   },
   output: {
-    path: path.resolve(__dirname, './public'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, 'public'),
+    filename: '[name].js',
+    publicPath: '/'
   },
 
   devServer: {
@@ -25,10 +21,7 @@ module.exports = {
     inline: true,
     host: 'localhost',
     port: 4000,
-    historyApiFallback: {
-      index: '/sign.html'
-    },
-    contentBase: __dirname + '/public/'
+    contentBase: path.resolve(__dirname, 'public')
   },
   module: {
     // https://velopert.com/1492
@@ -59,8 +52,16 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
-        test: /\.(png|jpg|gif|eot|ttf|woff|woff2)$/,
+        test: /\.(png|jpg|gif)$/,
         loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: '[name].[ext]'
+        }
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2|otf)$/,
+        loader: 'file-loader',
         options: {
           limit: 10000,
           name: '[name].[ext]'

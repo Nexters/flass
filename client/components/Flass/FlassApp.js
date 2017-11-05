@@ -1,40 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import autobind from 'autobind-decorator';
-import { cyan500 } from 'material-ui/styles/colors';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import { Route, Switch } from 'react-router-dom';
-
+import { Route, Switch, Redirect } from 'react-router-dom';
+import {
+  MuiThemeProvider,
+  getMuiTheme,
+  baseTheme,
+  flassTheme
+} from '../FlassCommon/MaterialUI';
 import Grid from './Grid/GridContainer';
-import Detail from './Detail/DetailContainer';
-import Upload from '../Upload';
-import Drawer from './Drawer/Drawer';
-import Content from './Content';
+import Lecture from './Lecture/LectureContainer';
+import Upload from './Upload';
+import Drawer from '../FlassCommon/Drawer/Drawer';
+import Content from '../FlassCommon/Content';
+import AppBar from '../FlassCommon/AppBar/AppBar';
 import './FlassApp.scss';
-import AppBar from './AppBar/AppBar';
 
-const { func, number, object, bool } = PropTypes;
+const FlassAppBox = styled.div`
+  height: 100%;
+`;
+
+const { func, number, object } = PropTypes;
 
 const childContextTypes = {
   muiTheme: object.isRequired
 };
 const propTypes = {
   signOutFlassService: func.isRequired,
-  id: number.isRequired,
+  id: number.isRequired
 };
 
 const defaultProps = {};
 
-const flassTheme = getMuiTheme({
-  palette: {
-    textColor: cyan500
-  },
-  appBar: {
-    height: 40
-  }
-});
 
 class FlassApp extends Component {
   getChildContext() {
@@ -42,20 +40,17 @@ class FlassApp extends Component {
   }
 
   render() {
-    const { id } = this.props;
-
     return (
       <MuiThemeProvider muiTheme={ flassTheme }>
-        <div>
+        <FlassAppBox>
           <Drawer />
           <AppBar
-            isLogin={id !== -1}
+            isLogin={ this.isUserLogin() }
             onClickLogoutBtn={ this.signOutFlassService } />
-
           <Content>
             {this.renderContent()}
           </Content>
-        </div>
+        </FlassAppBox>
       </MuiThemeProvider>
     );
   }
@@ -64,11 +59,18 @@ class FlassApp extends Component {
     return (
       <Switch>
         <Route exact path="/" component={ Grid } />
-        <Route path="/home" component={ Grid } />
-        <Route path="/detail/:id" component={ Detail } />
-        <Route path="/upload" component={ Upload } />
+        <Route exact path="/home" component={ Grid } />
+        <Route exact path="/lecture/:id" component={ Lecture } />
+        <Route exact path="/upload" component={ Upload } />
+        <Route path="/*" render={ () => <Redirect to="/error" /> } />
       </Switch>
     );
+  }
+
+  @autobind
+  isUserLogin() {
+    const { id } = this.props;
+    return id !== -1;
   }
 
   @autobind

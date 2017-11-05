@@ -1,73 +1,112 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Grid as GridView, Row } from 'react-bootstrap';
-import _ from 'lodash';
 import styled from 'styled-components';
-import color from '../common/colors.scss';
+import autobind from 'autobind-decorator';
+import { Row, Grid as GridView } from 'react-bootstrap';
+import _ from 'lodash';
 import GridItem from './GridItem';
-import Header from '../Header';
+import color from '../../../css/base/colors.scss';
+import {
+  Title,
+  Header
+} from '../../FlassCommon';
 import './Grid.scss';
+import '../../../css/base/_row.scss';
+
+const GridBox = styled.div`
+  position: relative;
+  min-height: 100%;
+`;
+
+const CustomerService = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 15px;
+  margin-right: 40px;
+  color: #a7acad;
+  text-align: right;
+  padding-bottom: 10px;
+  color: ${color['cool-grey']};
+`;
+
+const { object, array, func } = PropTypes;
 
 const propTypes = {
-  user: PropTypes.object.isRequired,
-  items: PropTypes.array.isRequired,
-  fetchRequestMyChannelItems: PropTypes.func.isRequired
+  user: object.isRequired,
+  items: array.isRequired,
+  fetchRequestMyChannelItems: func.isRequired,
+  deleteMyChannelItem: func.isRequired,
 };
 
 const defaultProps = {
 };
 
+const NUM_OF_ITEMS_PER_COLS = 3;
+
 class Grid extends Component {
-  componentDidMount() {
-    this.props.fetchRequestMyChannelItems();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      items: []
+    };
   }
-  componentWillReceiveProps(nextProps) {
-    const { user } = this.props;
-    const nextUser = nextProps.user;
-    if (user.id !== nextUser.id) {
+  componentDidMount() {
+    if (this.isUserIdFetched()) {
       this.props.fetchRequestMyChannelItems();
     }
-  }
-
-  componentDidMount() {
-    const { user } = this.props;
-
-    if (user.id !== -1) {
-      this.props.fetchRequestMyChannelItems();
-    }
-  }
-  // 1. receive TODO
-  // 2. HOC
-  // 3. react router 기능.
-
-  renderChildren(items) {
-    const { user } = this.props;
-    return items.map(item => (
-      <Col key={ item.id } md={ 3 }>
-        <GridItem { ...item } userName={ user.userName } />
-      </Col>
-    ));
   }
 
   render() {
     const { items } = this.props;
-    let chunkIndex = 0;
-    const renderAllItems = _.chunk(items, 4).map(splitItems => {
-      chunkIndex += 1;
-      return (
-        <Row key={ `row${chunkIndex}` }>
-          {this.renderChildren(splitItems)}
-        </Row>
-      );
-    });
+    const renderAllItems = this.renderRowsAndCols(items);
     return (
-      <div>
-        <Header title="Home Channel" />
+      <GridBox>
+        <Header
+          Title={ () => <Title title="Home Channel" /> }
+          SubTitle={ () => null } />
         <GridView>
-          {renderAllItems}
+          { renderAllItems }
         </GridView>
-      </div>
+        <CustomerService>
+          우주컴퍼니팀 | 문의  flassadm@gmail.com
+        </CustomerService>
+      </GridBox>
     );
+  }
+
+  isUserIdFetched() {
+    const { user } = this.props;
+
+    return user.id !== -1;
+  }
+
+  renderRowsAndCols(items) {
+    return _.chunk(items, NUM_OF_ITEMS_PER_COLS).map((splitItems, index) => (
+      <Row key={ `row${index}` } bsClass="Row">
+        {this.renderChildren(splitItems)}
+      </Row>
+    ));
+  }
+
+  renderChildren(items) {
+    const { user } = this.props;
+    return items.map((item, index) => (
+      <div key={ `col${index}` } className="Col__grid">
+        <GridItem
+          { ...item }
+          userName={ user.userName }
+          onClickDeleteBtn={ this.deleteItem } />
+      </div>
+    ));
+  }
+
+  @autobind
+  deleteItem(itemId) {
+    if (confirm('정말로 삭제하시겠습니까?')) {
+      this.props.deleteMyChannelItem(itemId);
+    }
   }
 }
 

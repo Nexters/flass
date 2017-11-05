@@ -70,7 +70,11 @@ rake db:create
 # generate assets for development
 npm run webpack
 
-# start server
+# web server
+npm install
+bundle install
+rake db:create or rake db:migration
+npm run webpack
 rails s
 ```
 

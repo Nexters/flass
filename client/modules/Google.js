@@ -2,10 +2,11 @@ import axios from 'axios';
 
 import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
 import MediaUploader from './MediaUploader';
+import { API_ROOT } from '../config/EnvironmentConfig';
 
 const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube';
 const LOGIN_SCOPE = 'https://www.googleapis.com/auth/youtube';
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = API_ROOT;
 const GET_UPLOAD_STATUS_INTERVAL_MILLIS = 60 * 1000;
 
 let instance = null;
@@ -35,7 +36,6 @@ export default class Google {
       this.idToken = user.getAuthResponse().id_token;
       user.reloadAuthResponse().then(response => {
         that.accessToken = response.access_token;
-        Google.storeAccessToken();
       });
     }
     return hasGrantedScopes;
@@ -100,15 +100,12 @@ export default class Google {
 
   static authorizeForSignIn() {
     const auth = gapi.auth2.getAuthInstance();
+    return auth.signIn().then(() => {
+      const user = auth.currentUser.get();
 
-    return new Promise(resolve => (
-      auth.signIn().then(() => {
-        const user = auth.currentUser.get();
-
-        user.reloadAuthResponse()
+      user.reloadAuthResponse()
           .then(response => resolve(response));
-      })
-    ));
+    });
   }
 
   static isUserSignedIn() {
@@ -221,10 +218,10 @@ export default class Google {
 
     axios.post(`${BASE_URL}/users.json`, form)
     .then(response => {
-      console.log(response);
+      // console.log(response);
     })
     .catch(error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 }

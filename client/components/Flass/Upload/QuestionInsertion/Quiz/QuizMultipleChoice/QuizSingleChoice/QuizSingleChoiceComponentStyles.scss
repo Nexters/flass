@@ -1,0 +1,77 @@
+$spaceBetweenInputAndDeleteBtn: 1.5rem;
+.quiz-single-choice {
+  margin-top: 2.1875rem;
+  /* div끼리 같은 높이 맞추기 위해서 */
+  display: flex;
+
+  & > div {
+    display: flex;
+    float: none;
+  }
+  /***/
+
+  &__checkbox {
+    width: 1.875rem;
+    height: 1.875rem;
+    justify-content: center;
+    align-items: center;
+    border: solid 1.5px #3f4a4b;
+    border-radius: 50%;
+    user-select: none;
+  }
+
+  &__check {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: solid 1.5px #9abf32;
+    border-radius: 50%;
+    background-color: #9abf32;
+  }
+
+  &__q-text-wrapper {
+    position: relative;
+    flex: 1;
+  }
+
+  &__q-text {
+    margin-left: 1.4285rem;
+    padding-right: $spaceBetweenInputAndDeleteBtn;
+    font-size: 1.4285rem;
+    border: none;
+    outline: none;
+    height: 1.875rem;
+    color: #cacdcd;
+    width: 100%;
+
+    &--font-black {
+      color: #3f4a4b;
+    }
+
+    &:focus ~ span {
+      width: auto;
+      opacity: 1;
+    }
+  }
+
+  &__underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: $spaceBetweenInputAndDeleteBtn;
+    margin-left: 1.25rem;
+    width: 0;
+    opacity: 0;
+    border: .5px solid #d3d9d9;
+    transition: all 0.5s linear;
+  }
+
+  &__delete-btn {
+    margin-right: 2rem;
+
+    & > img {
+      width: 1rem;
+      height: 1rem;
+      margin: auto;
+    }
+  }
+}

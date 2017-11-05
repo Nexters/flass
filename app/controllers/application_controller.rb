@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404
-    render json: {message: "레코드를 찾을 수 없습니다."}, status: :not_found
+    render json: {message: "페이지가 존재하지 않습니다."}, status: :not_found
   end
 
   def login_check

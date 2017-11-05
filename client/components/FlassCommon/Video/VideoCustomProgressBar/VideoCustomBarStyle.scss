@@ -1,0 +1,48 @@
+@import "../VideoVariables";
+
+$playedbarColor: rgba(23, 109, 153, 1);
+$loadedbarColor: rgba(23, 109, 153, .5);
+$borderWidth: 6.25rem;
+
+.bar {
+  position: absolute;
+  width: 100%;
+  height: $progressbarHeight;
+  background-color: rgba(255, 255, 255, .44);
+  border-radius: $borderWidth;
+  transition: all .3s ease-out;
+
+  &--thicker {
+    height: $progressbarHeightThicker;
+    transition: all .3s ease-out;
+  }
+
+}
+
+.played-bar {transition: all .3s ease-out;
+  position: absolute;
+  width: 1%;
+  height: $progressbarHeight;
+  background-color: $playedbarColor;
+  border-radius: $borderWidth;
+  transition: all .3s ease-out;
+
+  &--thicker {
+    height: $progressbarHeightThicker;
+    transition: all .3s ease-out;
+  }
+}
+
+.loaded-bar {
+  position: absolute;
+  width: 1%;
+  height: $progressbarHeight;
+  background-color: $loadedbarColor;
+  border-radius: $borderWidth;
+  transition: all .3s ease-out;
+
+  &--thicker {
+    height: $progressbarHeightThicker;
+    transition: all .3s ease-out;
+  }
+}

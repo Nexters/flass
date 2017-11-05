@@ -14,7 +14,18 @@ Lecture.delete_all
 end
 
 User.create({id: 22, username: "Yay Shin", email: "yehoonshin@gmail.com", myprofileurl: "https://lh3.googleusercontent.com/-e4hhNfadS9k/AAAAAAAAAAI/AAAAAAAAAAA/AMp5VUrPYFMwNhGK-SBkFmohwTR4RtJ99g/s96-c/photo.jpg"})
+
 1.upto(10) do |i|
 	user = User.where(username: 'user_' + i.to_s).first
 	Lecture.create({user_id: user.id, title: 'lecture_' + i.to_s, content: 'lecture_' + i.to_s, url: 'lecture_' + i.to_s, thumbnail_url: 'lecture_' + i.to_s, duration: rand(10).to_s + ':' + rand(60).to_s})
+end
+
+1.upto(10) do |i|
+  lecture = Lecture.where(title: 'lecture_' + i.to_s).first
+  Question.create({lecture_id: lecture.id, content: 'question_' + i.to_s, correct_answer: 'question_' + i.to_s, question_at: i})
+end
+
+1.upto(10) do |i|
+  question = Question.where(content: 'question_' + i.to_s).first
+  Answer.create({user_id: 22, question_id: question.id, answer: 'answer_' + i.to_s})
 end

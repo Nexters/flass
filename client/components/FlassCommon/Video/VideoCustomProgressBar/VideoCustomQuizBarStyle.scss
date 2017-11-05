@@ -1,0 +1,74 @@
+@import "../../../../css/base/mixins";
+@import "../VideoVariables";
+
+$tooltipWidth: 1.5rem;
+$tooltipHeight: 1.5rem;
+$tooltipTextColor: #9abf32;
+$quizbarColor: #9abf32;
+
+.quiz-indicator {
+  position: absolute;
+  width: 100%;
+  height: $progressbarHeight;
+  transition: all .3s ease-out;
+
+  &--thicker {
+    height: $progressbarHeightThicker;
+    transition: all .3s ease-out;
+  }
+}
+
+.quiz-indicator-bar {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  background-color: $quizbarColor;
+  border: 0.1875rem solid $quizbarColor;
+  border-radius: 50%;
+  z-index: 5;
+  transform: scale(1.5, 1.5) translateY(-50%);
+  transition: all .3s ease-out;
+
+  &--thicker {
+    width:1.5rem;
+    height: 1.5rem;
+    transform: scale(2, 2) translateY(-50%);
+    transition: all .3s ease-out;
+  }
+
+  .tooltiptext {
+    opacity: 0;
+    position: absolute;
+    width: $tooltipWidth;
+    height: $tooltipHeight;
+    margin-left: -($tooltipWidth / 2);
+    padding: 0.1875rem 0;
+    bottom: 150%;
+    left: 50%;
+    background-color: white;
+    color: $tooltipTextColor;
+    text-align: center;
+    font-size: 0.7142rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    z-index: -999;
+    box-shadow: 0.1875rem 0.25rem 1.25rem 0 rgba(79, 79, 79, 0.05), 0.1875rem 0.25rem 1.25rem 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .tooltiptext::after {
+    content: "";
+    margin-left: -0.3125rem;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    border-width: 0.3125rem;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+  }
+
+  &:hover .tooltiptext {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity .3s;
+  }
+}

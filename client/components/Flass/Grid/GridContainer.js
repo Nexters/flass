@@ -1,6 +1,10 @@
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Grid from './Grid';
-import { FETCH_MY_CHANNEL } from '../../../modules/Flass/Grid/GridActions';
+import {
+  FETCH_MY_CHANNEL,
+  DELETE_MY_CHANNEL_ITEM
+} from '../../../modules/Flass/Grid/actions';
 
 function mapStateToProps(state) {
   return {
@@ -10,13 +14,15 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    fetchRequestMyChannelItems: () => {
-      dispatch({
-        type: FETCH_MY_CHANNEL
-      });
-    }
-  };
+  return bindActionCreators({
+    fetchRequestMyChannelItems: () => ({
+      type: FETCH_MY_CHANNEL
+    }),
+    deleteMyChannelItem: id => ({
+      type: DELETE_MY_CHANNEL_ITEM,
+      id
+    })
+  }, dispatch);
 }
 
 export default connect(

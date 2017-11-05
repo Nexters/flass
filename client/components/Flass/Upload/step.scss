@@ -1,0 +1,44 @@
+@import './variables.scss';
+// @media only screen and (min-width: 1132.125px) {
+//   /* For large screens: */
+//   .container {
+//     width: 100%;
+//   }
+// }
+//
+// @media only screen and (max-width: 1132.125px) {
+//   /* For small screens: */
+//   .container {
+//     width: 650.625px;
+//   }
+//
+//   .box {
+//     margin-bottom: 10px;
+//   }
+// }
+
+.container {
+  width: 100%;
+}
+
+.box {
+  width: 100%;
+  min-height: $boxMinHeight;
+  border-radius: 0.1875rem;
+  background-color: #fff;
+  box-shadow: 0.1406rem 0.1875rem 0.9375rem 0 rgba(0, 0, 0, 0.05);
+  border: solid 0.75px rgba(0, 0, 0, 0.04);
+  float: left;
+}
+
+.info-box {
+  padding-top: 1.75rem;
+  padding-left: 2.34375rem;
+  padding-right: 2.34375rem;
+}
+
+.nextButton {
+  display: flex;
+  float: right;
+  margin-right: 1.525rem;
+}

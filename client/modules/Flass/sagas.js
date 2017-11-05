@@ -1,19 +1,19 @@
 import { fork } from 'redux-saga/effects';
-import flassUser from './User/UserActions';
-import flassBadge from './Badge/BadgeActions';
-import flassGrid from './Grid/GridActions';
-import flassDetail from './Detail/DetailActions';
-import flassComment from './Detail/Comment/CommentActions';
-import flassQuestion from './Detail/Question/QuestionActions';
-import flassVideo from './Detail/Video/sagas';
-import flassAnalysis from './Detail/Analysis/sagas';
+import flassUser from './User/sagas';
+import flassBadge from './Badge/sagas';
+import flassGrid from './Grid/sagas';
+import flassLecture from './Lecture/sagas';
+import flassComment from './Lecture/Comment/sagas';
+import flassQuestion from './Lecture/Question/sagas';
+import flassVideo from './Lecture/Video/sagas';
+import flassAnalysis from './Lecture/Analysis/sagas';
 
 export default function* rootSaga() {
   yield [
     fork(flassUser),
     fork(flassBadge),
     fork(flassGrid),
-    fork(flassDetail),
+    fork(flassLecture),
     fork(flassComment),
     fork(flassQuestion),
     fork(flassVideo),
