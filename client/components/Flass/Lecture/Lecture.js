@@ -115,13 +115,13 @@ class Lecture extends Component {
   }
 
   componentWillMount() {
-    if (this.isLectureOwner()) {
+    if (this._isLectureOwner()) {
       this.setState({ selected: 3 });
     }
   }
 
   componentDidMount() {
-    if (!this.isLectureAlreadyFetch()) {
+    if (!this._isLectureAlreadyFetch()) {
       const id = this.selectLectureId();
       this.props.fetchRequestLectureAll(id);
     }
@@ -169,12 +169,12 @@ class Lecture extends Component {
       </FlassLectureStyled.Wrapper>;
   }
 
-  isLectureOwner() {
+  _isLectureOwner() {
     const { user, lecture: { lecture: { userId } } } = this.props;
     return user.id === userId;
   }
 
-  isLectureAlreadyFetch() {
+  _isLectureAlreadyFetch() {
     return this.props.isFetched;
   }
 
@@ -221,7 +221,7 @@ class Lecture extends Component {
         <Comment lectureId={ lectureIdFromReducer } />
       </Tab>
       {
-        this.isLectureOwner() ? (
+        this._isLectureOwner() ? (
           <Tab
             eventKey={ 3 }
             title={

@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { SingleChoice } from './SingleChoiceStyled';
-import colors from '../../../../../css/base/colors.scss';
-
-const UserView = styled.span`
-  padding: 0.3rem;
-  margin-right: 0.8rem;
-  border-radius: 3px;
-  border: solid 1.5px ${colors['cool-grey-two']};
-`;
 
 const propTypes = {
   answer: PropTypes.string.isRequired,
@@ -33,10 +24,12 @@ class SingleChoiceComponent extends Component {
         <SingleChoice.Body>
           {
             userAnswers.map((userAnswer, index) => (
-              <UserView
+              <SingleChoice.UserView
                 key={ `user${index}` }>
-                { userAnswer.userName }
-              </UserView>
+                <SingleChoice.TextView>
+                  { userAnswer.userName }
+                </SingleChoice.TextView>
+              </SingleChoice.UserView>
             ))
           }
         </SingleChoice.Body>
