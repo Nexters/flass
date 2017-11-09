@@ -18,8 +18,7 @@ export const AnalysisMapAnswersHOC = WrappedComponent => {
         return [];
       }
       const question = questions[questionIndex];
-      const correctAnswer = question['correct_answer'];
-
+      const correctAnswer = parseInt(question['correct_answer']);
       return question_answers.map((questionAnswer, index) => ({
         id: questionAnswer.id,
         answer: questionAnswer.answer,
