@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import autobind from 'autobind-decorator';
 import ChartComponent from './Chart/ChartComponent';
 import SingleChoiceComponent from './SingleChoice/SingleChoiceComponent';
 import {
   AnalysisStyled,
   NoQuestions
 } from './AnalysisStyled';
+import {
+  REQUEST_LECTURE_ANALYSIS,
+  UNMOUNT_ANALYSIS
+} from '../../../../modules/Flass/Lecture/Analysis/analysises';
 
 const { Tab, TabWrapper, TabItem, Wrapper, Header, Body, Row, Title, Col5, ChartTextWrapper, ChartTextTitle, ChartTextNumber } = AnalysisStyled;
 const { string, func, arrayOf, shape, array, number, objectOf } = PropTypes;
-
 
 const propTypes = {
   requestLectureAnalysis: func.isRequired,
@@ -172,10 +176,46 @@ class Analysis extends Component {
       userAnswers: answers.filter(answer => index == parseInt(answer.answer))
     }));
   }
-
 }
 
 Analysis.propTypes = propTypes;
 Analysis.defaultProps = defaultProps;
 
-export default Analysis;
+function mapStateToProps(state) {
+  const {
+    lecture: {
+      lecture: {
+        id
+      }
+    },
+    analysis: {
+      questions,
+      question_answers,
+      answers
+    }
+  } = state.flass.lecture;
+  return {
+    lectureId: id,
+    questions,
+    question_answers,
+    answers
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    requestLectureAnalysis: (lectureId, questionIndex) => ({
+      type: REQUEST_LECTURE_ANALYSIS,
+      lectureId,
+      questionIndex
+    }),
+    unmountAnalysis: () => ({
+      type: UNMOUNT_ANALYSIS
+    })
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Analysis);

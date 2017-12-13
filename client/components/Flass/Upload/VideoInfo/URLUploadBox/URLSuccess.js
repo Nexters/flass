@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-
 import './urlUpload.scss';
 import WhiteExit from '../img/whiteExit.png';
 import WhiteExit2x from '../img/whiteExit@2x.png';

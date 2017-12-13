@@ -40,18 +40,14 @@ class AppBar extends Component {
             First Flip Learning Platform
           </NavTitle>
         </NavComponent>
-
         {
           isLogin ?
-          (
-            <NavComponent isRight>
-              <UserAppBar
-                onClickLogoutBtn={ this.onClickLogoutBtn } />
-            </NavComponent>
-          ) :
+          (<NavComponent isRight>
+            <UserAppBar
+              onClickLogoutBtn={ this.onClickLogoutBtn } />
+          </NavComponent>) :
           null
         }
-
       </NavbarComponent>
     );
   }

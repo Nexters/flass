@@ -1,12 +1,44 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import logger from '../../../../util/LogUtil';
 import {
-  REQUEST_LECTURE_ANALYSIS,
-  SUCCESS_REQUEST_LECTURE_ANALYSIS,
-  EMPTY_QUESTION_ANALYSIS,
-  FAIL_REQUEST_LECTURE_ANALYSIS
-} from './actions';
+  createReducer
+} from '../../../reducerHelper';
+import logger from '../../../../util/LogUtil';
 import agent from '../../../agent';
+
+export const REQUEST_LECTURE_ANALYSIS = 'REQUEST_LECTURE_ANALYSIS';
+export const SUCCESS_REQUEST_LECTURE_ANALYSIS = 'SUCCESS_REQUEST_LECTURE_ANALYSIS';
+export const EMPTY_QUESTION_ANALYSIS = 'EMPTY_QUESTION_ANALYSIS';
+export const FAIL_REQUEST_LECTURE_ANALYSIS = 'FAIL_REQUEST_LECTURE_ANALYSIS';
+export const UNMOUNT_ANALYSIS = 'UNMOUNT_ANALYSIS';
+
+const initialState = {
+  questions: [],
+  answers: [],
+  question_answers: []
+};
+
+const requestStatisticsReducer = {
+  [SUCCESS_REQUEST_LECTURE_ANALYSIS]: (state, { payload }) => returnAnswersAndQuestions(state, payload),
+  [EMPTY_QUESTION_ANALYSIS]: (state, { payload }) => returnAnswersAndQuestions(state, payload),
+  [FAIL_REQUEST_LECTURE_ANALYSIS]: state => state,
+  [UNMOUNT_ANALYSIS]: () => initialState
+};
+
+function returnAnswersAndQuestions(state, payload) {
+  const { answers, questions, question_answers } = payload;
+  return {
+    ...state,
+    answers,
+    questions,
+    question_answers
+  };
+}
+
+const AnalysisReducer = createReducer(initialState, {
+  ...requestStatisticsReducer
+});
+
+export default AnalysisReducer;
 
 export function* makeSelectedAnswer(answer) {
   const user = yield call(agent.User.byId, answer['user_id']);
@@ -56,6 +88,6 @@ export function isLectureHasQuestions(questions) {
   return questions.length !== 0;
 }
 
-export default function* rootSaga() {
+export function* rootSaga() {
   yield takeEvery(REQUEST_LECTURE_ANALYSIS, requestLectureAnalysis);
 }

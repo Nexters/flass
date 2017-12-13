@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as Constants from '../../config/Constants';
-import {API_ROOT} from '../config/EnvironmentConfig';
+import { API_ROOT } from '../config/EnvironmentConfig';
 
 
 const encode = encodeURIComponent;

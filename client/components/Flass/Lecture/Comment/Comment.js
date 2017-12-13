@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 import { List } from 'immutable';
 import _ from 'lodash';
 import styled from 'styled-components';
@@ -7,6 +9,10 @@ import PostComment from './PostComment';
 import CommentItem from './CommentItem';
 import ReplyComment from './ReplyCommentItem';
 import ReplyPostComment from './ReplyPostComment';
+import {
+  FETCH_COMMENT, ADD_COMMENT,
+  DELETE_COMMENT, UPDATE_COMMENT
+} from '../../../../modules/Flass/Lecture/Comment/comments';
 
 const LectureComment = styled.div`
   width: 100%;
@@ -155,4 +161,51 @@ class Comment extends Component {
 Comment.propTypes = propTypes;
 Comment.defaultProps = defaultProps;
 
-export default Comment;
+function mapStateToProps(state) {
+  return {
+    comments: state.flass.lecture.comment.comments,
+    commentchild: state.flass.lecture.comment.commentchild,
+    user: state.flass.user
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchComment: lectureId => {
+      dispatch({
+        type: FETCH_COMMENT,
+        lectureId
+      });
+    },
+    addComment: (commentId, lectureId, userId, userName, content) => {
+      dispatch({
+        type: ADD_COMMENT,
+        commentId,
+        lectureId,
+        userId,
+        userName,
+        content
+      });
+    },
+    updateComment: (parentId, commentId, content) => {
+      dispatch({
+        type: UPDATE_COMMENT,
+        parentId,
+        commentId,
+        content
+      });
+    },
+    deleteComment: (parentId, commentId) => {
+      dispatch({
+        type: DELETE_COMMENT,
+        parentId,
+        commentId
+      });
+    }
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Comment);

@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { List } from 'immutable';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
 import QuizSingleChoiceComponent from './QuizSingleChoice/QuizSingleChoiceComponent';

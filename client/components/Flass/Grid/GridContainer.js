@@ -4,7 +4,7 @@ import Grid from './Grid';
 import {
   FETCH_MY_CHANNEL,
   DELETE_MY_CHANNEL_ITEM
-} from '../../../modules/Flass/Grid/actions';
+} from '../../../modules/Flass/Grid/grids';
 
 function mapStateToProps(state) {
   return {

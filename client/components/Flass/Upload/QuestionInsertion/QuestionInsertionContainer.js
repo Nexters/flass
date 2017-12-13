@@ -12,7 +12,7 @@ import {
   focusOnQuestion,
   completeEditQuestion,
   deleteCompleteQuestion
-} from '../../../../modules/Upload/UploadInsertion/Quiz/actions';
+} from '../../../../modules/Upload/UploadInsertion/Quiz/quizzes';
 import QuestionInsertionComponent from './QuestionInsertionComponent';
 
 function mapStateToProps({ quizInsertion, upload }) {

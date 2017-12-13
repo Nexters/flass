@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-
 import { NOT_STARTED, UPLOADING, PROCESSING, COMPLETED } from '../../../../../modules/constants';
 import Exit from '../img/exit.png';
 import Exit2x from '../img/exit@2x.png';

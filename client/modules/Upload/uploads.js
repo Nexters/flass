@@ -1,10 +1,24 @@
+import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD,
   NO_URL, FAIL_URL, SUCC_URL,
   FAIL_AUTH, SUCC_AUTH,
-  NOT_STARTED, UPLOADING, PROCESSING, COMPLETED
+  NOT_STARTED, UPLOADING, PROCESSING, COMPLETED,
+  STEP_1, INIT
 } from '../constants';
 import Google from '../Google';
+import agent from '../agent';
+import {
+  LectureBodyAdapter,
+  QuestionBodyAdapter,
+  ChoiceBodyAdapter
+} from '../../RequestBodyAdapter';
+import {
+  SUCCESS_UPLOAD_QUESTIONS,
+  FAIL_UPLOAD_QUESTIONS
+} from './UploadInsertion/Quiz/quizzes';
+import { API_ROOT, API_ROOT_FRONT } from '../../config/EnvironmentConfig';
+import {createReducer} from '../reducerHelper';
 
 export const SET_STEP = 'SET_STEP';
 export const SET_UPLOAD_METHOD = 'SET_UPLOAD_METHOD';
@@ -74,7 +88,7 @@ export const handleURLCheck = videoURL => (dispatch => {
 
 const getBestResolutionThumbnail = thumbnails => {
   const thumb = thumbnails.maxres || thumbnails.standard || thumbnails.high
-                || thumbnails.medium || thumbnails.default;
+    || thumbnails.medium || thumbnails.default;
   return thumb.url;
 };
 
@@ -165,3 +179,138 @@ export const uploadYoutubeVideo = file => (dispatch => {
 export const UPLOAD_LECTURE_AND_QUESTIONS = 'UPLOAD_LECTURE_AND_QUESTIONS';
 
 export const INIT_UPLOAD_STATES = 'INIT_UPLOAD_STATES';
+
+const initialState = {
+  step: STEP_1,
+  title: '',
+  subject: '',
+  textbook: '',
+  description: '',
+  videoURL: '',
+  urlStatus: NO_URL,
+  thumbURL: '',
+  method: METHOD_NOT_SELECTED,
+  isGoogleAuth: INIT,
+  uploadStatus: NOT_STARTED,
+  uploadProgress: 0,
+  processProgress: 0
+};
+
+
+const UploadReducer = {
+  [SET_STEP]: (state, action) => ({
+    ...state,
+    step: action.step
+  }),
+  [SET_UPLOAD_METHOD]: (state, action) => ({
+    ...state,
+    method: action.method
+  }),
+  [SET_VIDEO_INFO]: (state, action) => ({
+    ...state,
+    title: action.title,
+    subject: action.subject,
+    textbook: action.textbook,
+    description: action.description
+  }),
+  [SET_URL_STATUS]: (state, action) => ({
+    ...state,
+    urlStatus: action.urlStatus
+  }),
+  [SET_VIDEO_URL]: (state, action) => ({
+    ...state,
+    videoURL: action.videoURL
+  }),
+  [SET_THUMB_URL]: (state, action) => ({
+    ...state,
+    thumbURL: action.thumbURL
+  }),
+  [SET_GOOGLE_AUTH_STATUS]: (state, action) => ({
+    ...state,
+    isGoogleAuth: action.isGoogleAuth
+  }),
+  [SET_UPLOAD_STATUS]: (state, action) => ({
+    ...state,
+    uploadStatus: action.uploadStatus
+  }),
+  [SET_UPLOAD_PROGRESS]: (state, action) => ({
+    ...state,
+    uploadProgress: action.uploadProgress
+  }),
+  [SET_PROCESS_PROGRESS]: (state, action) => ({
+    ...state,
+    processProgress: action.processProgress
+  }),
+  [INIT_UPLOAD_STATES]: (state, action) => ({
+    ...initialState
+  }),
+};
+
+export default createReducer(initialState, {
+  ...UploadReducer,
+});
+
+function* uploadLectureAndQuestions({
+                                      questionState,
+                                      title,
+                                      description,
+                                      subject,
+                                      textbook,
+                                      videoURL,
+                                      thumbURL
+                                    }) {
+  try {
+    const lectureBody = yield call(LectureBodyAdapter.upload, {
+      questionState,
+      title,
+      description,
+      subject,
+      textbook,
+      videoURL,
+      thumbURL
+    });
+
+    const lectureResponse = yield call(agent.Lecture.upload, lectureBody);
+    const lectureUrl = `${API_ROOT_FRONT}/v/${lectureResponse.id}`;
+    const urlResponse = yield call(agent.Google.getShortUrl, lectureUrl);
+    yield call(agent.Lecture.putShortenUrl, lectureResponse.id, urlResponse.id);
+    yield call(uploadQuestionApi, lectureResponse, questionState);
+
+    yield put({
+      type: SUCCESS_UPLOAD_QUESTIONS,
+      payload: {
+        lectureUrl: urlResponse.id,
+      }
+    });
+  } catch (error) {
+    yield put({ type: FAIL_UPLOAD_QUESTIONS, error });
+  }
+}
+
+function* uploadQuestionApi(lectureResponse, questionState) {
+  for (let qIndex = 0; qIndex < questionState.length; qIndex += 1) {
+    const questionstate = questionState[qIndex];
+    const questionBody = yield call(
+      QuestionBodyAdapter.uploadByQuestionId,
+      lectureResponse.id,
+      questionstate
+    );
+    const questionResponse = yield call(agent.Question.uploadByLectureId, questionBody);
+
+    const { SingleChoiceValues } = questionstate;
+
+    for (let cIndex = 0; cIndex < SingleChoiceValues.length; cIndex += 1) {
+      const singleChoiceValues = SingleChoiceValues[cIndex];
+      const choiceBody = yield call(
+        ChoiceBodyAdapter.upload,
+        questionResponse.id,
+        singleChoiceValues
+      );
+      yield call(agent.Choice.upload, choiceBody);
+    }
+  }
+}
+
+export function* rootSaga() {
+  yield takeLatest(UPLOAD_LECTURE_AND_QUESTIONS, uploadLectureAndQuestions);
+}

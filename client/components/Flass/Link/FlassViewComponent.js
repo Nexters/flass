@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-
 import {
   MuiThemeProvider,
   getMuiTheme,
   baseTheme,
   flassTheme
 } from '../../FlassCommon/MaterialUI';
-
 import Drawer from '../../FlassCommon/Drawer/Drawer';
 import Content from '../../FlassCommon/Content';
 import AppBar from '../../FlassCommon/AppBar/AppBar';
-import Lecture from '../Lecture/LectureContainer';
+import Lecture from '../Lecture/Lecture';
+import { LOGOUT } from '../../../modules/Sign/signs';
 
 const { shape, string, object, number, func } = PropTypes;
 
@@ -29,7 +30,6 @@ const propTypes = {
   signOutFlassService: func.isRequired
 };
 const defaultProps = {};
-
 
 class FlassViewComponent extends Component {
   getChildContext() {
@@ -86,4 +86,19 @@ FlassViewComponent.childContextTypes = childContextTypes;
 FlassViewComponent.propTypes = propTypes;
 FlassViewComponent.defaultProps = defaultProps;
 
-export default FlassViewComponent;
+function mapStateToProps(state) {
+  return state;
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    signOutFlassService: () => ({
+      type: LOGOUT
+    })
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FlassViewComponent);

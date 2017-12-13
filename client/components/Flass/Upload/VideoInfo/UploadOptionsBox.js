@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-
 import './uploadOptionsBox.scss';
 import Options from './img/options.png';
 import Options2x from './img/options@2x.png';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   LOGIN_GOOGLE_SERVICE
-} from '../../../../modules/Sign/actions';
+} from '../../../../modules/Sign/signs';
 import Google from '../../../../modules/Google';
 
 const propTypes = {

@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-
-import SessionCheckBeforeRoute from './Auth/SessionCheckBeforeRouteContainer';
-import FlassApp from './Flass/FlassAppContainer';
-import SignInContainer from './Flass/Sign/SignIn/SignInContainer';
-import FlassViewContainer from './Flass/Link/FlassViewContainer';
+import SessionCheckBeforeRoute from './Auth/SessionCheckBeforeRoute';
+import FlassApp from './Flass/FlassApp';
+import SignInContainer from './Flass/Sign/SignIn/SignInComponent';
+import FlassViewContainer from './Flass/Link/FlassViewComponent';
 import ErrorComponent from './Error/ErrorComponent';
 import LoadingComponent from './Auth/Loading/LoadingComponent';
-import { INIT_GOOGLE_SERVICE } from '../modules/Sign/actions';
+import { INIT_GOOGLE_SERVICE } from '../modules/Sign/signs';
 import '../css/base/global.scss';
 
 const propTypes = {

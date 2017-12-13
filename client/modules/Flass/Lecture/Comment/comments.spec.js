@@ -10,16 +10,16 @@ import {
   cancel,
   takeLatest
 } from 'redux-saga/effects';
+import agent from '../../../agent';
 import {
   ADD_COMMENT_ERROR,
   ADD_COMMENT_SUCCESS,
   ADD_READY_COMMENT,
+  addComment,
   FETCH_COMMENT_ERROR,
-  FETCH_COMMENT_SUCCESS,
-  FETCH_READY_COMMENT
-} from './actions';
-import { addComment, fetchComment } from './sagas';
-import agent from '../../../agent';
+  FETCH_COMMENT_SUCCESS, FETCH_READY_COMMENT,
+  fetchComment,
+} from './comments';
 
 describe('CommentSagas ', () => {
   it('댓글 요청하기 by 강의 ID', () => {

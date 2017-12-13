@@ -3,7 +3,18 @@ import { List } from 'immutable';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  FETCH_QUESTION
+} from '../../../../modules/Flass/Lecture/Question/questions';
+import {
+  SET_VIDEO_COMPLETE,
+  RESET_VIDEO_COMPLETE,
+} from '../../../../modules/Flass/Lecture/Video/videos';
+import {
+  UPDATE_STATE_AFTER_SOLVE_QUESTION
+} from '../../../../modules/Flass/Lecture/lectures';
 import {
   VideoPlayerComponent,
   VideoButtonComponent,
@@ -16,18 +27,15 @@ import {
   VideoControllerAndBarWrapperComponent,
   VideoEndedPageComponent,
   URLCopyButtonComponent,
-
   PlayBtnIcon,
   PauseBtnIcon,
   VolumeOnBtnIcon,
   VolumeOffBtnIcon
 } from '../../../FlassCommon/Video';
-
 import {
   convertSecsToPercentage,
   updatePlayedPercentage
 } from '../../../FlassCommon/Video/VideoUtils';
-
 import {
   FlassLectureVideo,
   StyledPlayerOnLecturePage,
@@ -498,4 +506,52 @@ class Video extends Component {
 Video.propTypes = propTypes;
 Video.defaultProps = defaultProps;
 
-export default Video;
+function mapStateToProps(state) {
+  const {
+    flass: {
+      lecture: {
+        question: {
+          questions,
+          solvedQuestionsState
+        },
+        video: {
+          videoUrl,
+          searchableSecs,
+          isVideoComplete
+        }
+      }
+    }
+  } = state;
+
+  return {
+    questions,
+    solvedQuestionsState,
+    videoUrl,
+    searchableSecs,
+    isVideoComplete
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setCompleteVideoFlag: () => ({
+      type: SET_VIDEO_COMPLETE
+    }),
+    resetCompleteVideoFlag: () => ({
+      type: RESET_VIDEO_COMPLETE
+    }),
+    fetchQuestion: lectureId => ({
+      type: FETCH_QUESTION,
+      lectureId
+    }),
+    updateStateAfterSolveQuestion: newState => ({
+      type: UPDATE_STATE_AFTER_SOLVE_QUESTION,
+      newState
+    })
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Video);

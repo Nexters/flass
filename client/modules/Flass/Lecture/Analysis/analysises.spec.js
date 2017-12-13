@@ -3,9 +3,8 @@ import { shallow } from 'enzyme';
 import chai, { expect } from 'chai';
 import { all, call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import { fetchLectureAll } from '../sagas';
-import { makeSelectedAnswer, requestLectureAnalysis } from './sagas';
+import { makeSelectedAnswer, requestLectureAnalysis, SUCCESS_REQUEST_LECTURE_ANALYSIS } from './analysises';
 import agent from '../../../agent';
-import { SUCCESS_REQUEST_LECTURE_ANALYSIS } from './actions';
 
 describe('Analysis ', () => {
   it('분석 요청하기 - 성공', () => {
