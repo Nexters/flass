@@ -6,6 +6,7 @@ import logger from '../../../../util/LogUtil';
 import agent from '../../../agent';
 
 export const REQUEST_LECTURE_ANALYSIS = 'REQUEST_LECTURE_ANALYSIS';
+export const LOADING_QUESTIONS = 'LOADING_QUESTIONS';
 export const SUCCESS_REQUEST_LECTURE_ANALYSIS = 'SUCCESS_REQUEST_LECTURE_ANALYSIS';
 export const EMPTY_QUESTION_ANALYSIS = 'EMPTY_QUESTION_ANALYSIS';
 export const FAIL_REQUEST_LECTURE_ANALYSIS = 'FAIL_REQUEST_LECTURE_ANALYSIS';
@@ -14,7 +15,8 @@ export const UNMOUNT_ANALYSIS = 'UNMOUNT_ANALYSIS';
 const initialState = {
   questions: [],
   answers: [],
-  question_answers: []
+  question_answers: [],
+  loadingQuestions_: false
 };
 
 const requestStatisticsReducer = {
@@ -25,12 +27,9 @@ const requestStatisticsReducer = {
 };
 
 function returnAnswersAndQuestions(state, payload) {
-  const { answers, questions, question_answers } = payload;
   return {
     ...state,
-    answers,
-    questions,
-    question_answers
+    ...payload
   };
 }
 
@@ -50,6 +49,12 @@ export function* makeSelectedAnswer(answer) {
 
 export function* requestLectureAnalysis({ lectureId, questionIndex }) {
   try {
+    yield put({
+      type: LOADING_QUESTIONS,
+      payload: {
+        loadingQuestions_: true
+      }
+    });
     const { questions, answers } = yield call(agent.Analysis.fetch, lectureId);
 
     if (isLectureHasQuestions(questions)) {
@@ -62,8 +67,10 @@ export function* requestLectureAnalysis({ lectureId, questionIndex }) {
         type: SUCCESS_REQUEST_LECTURE_ANALYSIS,
         payload: {
           questions,
+          questionIndex,
           answers: selectedAnswers,
-          question_answers: questionAnswers
+          question_answers: questionAnswers,
+          loadingQuestions_: false
         }
       });
     } else {
@@ -71,8 +78,10 @@ export function* requestLectureAnalysis({ lectureId, questionIndex }) {
         type: EMPTY_QUESTION_ANALYSIS,
         payload: {
           questions: [],
+          questionIndex: 0,
           answers: [],
-          question_answers: []
+          question_answers: [],
+          loadingQuestions_: false
         }
       });
     }

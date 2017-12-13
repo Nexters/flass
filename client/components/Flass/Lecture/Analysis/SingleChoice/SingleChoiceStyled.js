@@ -16,7 +16,7 @@ export const SingleChoice = {
     margin-right: 1.5rem;
     background-color: ${({ isCorrect }) => (isCorrect ? color['sick-green'] : '#616a6b')};
     border-radius: 50%;
-    
+
   `,
   Title: styled.div`
     display: inline-block;
@@ -27,5 +27,18 @@ export const SingleChoice = {
   `,
   Body: styled.div`
     padding-left: 3rem;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  `,
+  UserView: styled.span`
+    display: flex;
+    margin-bottom: 1rem;
+  `,
+  TextView: styled.div`
+    padding: 0.3rem;
+    margin-right: 0.8rem;
+    border-radius: 3px;
+    border: solid 1.5px ${color['cool-grey-two']};
   `
 };
