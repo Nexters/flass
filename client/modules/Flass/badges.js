@@ -1,5 +1,6 @@
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import agent from '../agent';
+import {createReducer} from '../reducerHelper';
 
 export const FETCH_BADGE_HISTORY = 'FETCH_BADGE_HISTORY';
 export const FETCH_READY_BADGE_HISTORY = 'FETCH_READY_BADGE_HISTORY';
@@ -13,32 +14,29 @@ const initialState = {
   toggleBadge: false,
 };
 
-const BadgeReducer = (state = initialState, action) => {
-  switch(action.type) {
-    case FETCH_BADGE_HISTORY_SUCCESS:
-      return {
-        ...state,
-        badgeType: action.badgeType || state.badgeType,
-        badgeItems: action.badgeItems,
-      };
-    case FETCH_BADGE_HISTORY_ERROR:
-    case FETCH_READY_BADGE_HISTORY:
-      return {
-        ...state,
-        badgeItems: [],
-      };
-    case TOGGLE_BADGE_HISTORY:
-      return {
-        ...state,
-        toggleBadge: !state.toggleBadge,
-      };
-    default:
-      return state;
-  }
+const badgeReducer = {
+  [FETCH_READY_BADGE_HISTORY]: (state, action) => ({
+    ...state,
+    badgeItems: [],
+  }),
+  [FETCH_BADGE_HISTORY_SUCCESS]: (state, action) => ({
+    ...state,
+    badgeType: action.badgeType || state.badgeType,
+    badgeItems: action.badgeItems,
+  }),
+  [FETCH_BADGE_HISTORY_ERROR]: (state, action) => ({
+    ...state,
+    badgeItems: [],
+  }),
+  [TOGGLE_BADGE_HISTORY]: (state, action) => ({
+    ...state,
+    toggleBadge: !state.toggleBadge,
+  }),
 };
 
-export default BadgeReducer;
-
+export default createReducer(initialState, {
+  ...badgeReducer,
+});
 
 export function* fetchBadgeHistory({ badgeType }) {
   yield put({ type: FETCH_READY_BADGE_HISTORY });
