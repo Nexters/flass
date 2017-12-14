@@ -5,13 +5,8 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import LoadingComponent from './Loading/LoadingComponent';
 import { hashToObjectKey, queryToObjectKey } from '../../util/UrlUtil';
-import {
-  checkSession, loginClassting,
-  setEntryPoint,
-} from '../../ducks/Sign/signs';
-import {
-  fetchUser,
-} from '../../ducks/Flass/users';
+import { actions as signActions } from '../../ducks/Sign/signs';
+import { actions as userActions } from '../../ducks/Flass/users';
 
 const { func, bool, shape, object } = PropTypes;
 
@@ -105,10 +100,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    checkSession,
-    loginClasting: loginClassting,
-    fetchUser,
-    setEntryPoint
+    checkSession: signActions.checkSession,
+    loginClasting: signActions.loginClassting,
+    fetchUser: userActions.fetchUser,
+    setEntryPoint: signActions.setEntryPoint
   }, dispatch);
 }
 

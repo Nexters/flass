@@ -48,19 +48,19 @@ export const types = {
   RESET_ENTRY_POINT: 'RESET_ENTRY_POINT',
 };
 
-export const initGoogleService = () => action(types.INIT_GOOGLE_SERVICE);
+export const actions = {
+  initGoogleService: () => action(types.INIT_GOOGLE_SERVICE),
 
-export const loginGoogleService = () => action(types.LOGIN_GOOGLE_SERVICE);
+  loginGoogleService: () => action(types.LOGIN_GOOGLE_SERVICE),
 
-export const checkSession = () => action(types.CHECK_SESSION);
+  checkSession: () => action(types.CHECK_SESSION),
 
-export const loginClassting = (accessToken) => action(types.LOGIN_CLASSTING_SERVICE, accessToken);
-export const setEntryPoint = location => action(types.SET_ENTRY_POINT, location);
+  loginClassting: (accessToken) => action(types.LOGIN_CLASSTING_SERVICE, accessToken),
+  setEntryPoint: location => action(types.SET_ENTRY_POINT, location),
 
-export const resetEntryPoint = () => action(types.RESET_ENTRY_POINT);
-
-export const logout = () => action(types.LOGOUT);
-
+  resetEntryPoint: () => action(types.RESET_ENTRY_POINT),
+  logout: () => action(types.LOGOUT),
+};
 
 const initialState = {
   isGoogleChecking: false,

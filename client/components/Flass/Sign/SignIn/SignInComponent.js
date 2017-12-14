@@ -8,7 +8,7 @@ import { CLASSTING_CLIENT_ID } from '../../../../../config/Constants';
 import './signIn.scss';
 import { callValue } from '../../../../util/ObjectUtil';
 import { API_ROOT_FRONT } from '../../../../config/EnvironmentConfig';
-import { logout } from '../../../../ducks/Sign/signs';
+import { actions as signActions } from '../../../../ducks/Sign/signs';
 
 const { func, bool, shape, object, string } = PropTypes;
 
@@ -92,7 +92,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    signOutFlassService: logout
+    signOutFlassService: signActions.logout
   }, dispatch);
 }
 

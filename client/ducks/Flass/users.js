@@ -14,7 +14,9 @@ export const FETCH_USER_ERROR = 'FETCH_USER_ERROR';
 
 export const SET_USER = 'SET_USER';
 
-export const fetchUser = () => action(FETCH_USER);
+export const actions = {
+  fetchUser: () => action(FETCH_USER),
+};
 
 const initialState = {
   id: -1,

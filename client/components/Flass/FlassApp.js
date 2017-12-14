@@ -18,8 +18,8 @@ import Drawer from '../FlassCommon/Drawer/Drawer';
 import Content from '../FlassCommon/Content';
 import AppBar from '../FlassCommon/AppBar/AppBar';
 import './FlassApp.scss';
-import { fetchUser } from '../../ducks/Flass/users';
-import { logout } from '../../ducks/Sign/signs';
+import { actions as userActions } from '../../ducks/Flass/users';
+import { actions as signActions } from '../../ducks/Sign/signs';
 
 const FlassAppBox = styled.div`
   height: 100%;
@@ -97,8 +97,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchUser,
-    signOutFlassService: logout
+    fetchUser: userActions.fetchUser,
+    signOutFlassService: signActions.logout
   }, dispatch);
 }
 

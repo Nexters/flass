@@ -13,7 +13,7 @@ import Drawer from '../../FlassCommon/Drawer/Drawer';
 import Content from '../../FlassCommon/Content';
 import AppBar from '../../FlassCommon/AppBar/AppBar';
 import Lecture from '../Lecture/Lecture';
-import { logout } from '../../../ducks/Sign/signs';
+import { actions as signActions } from '../../../ducks/Sign/signs';
 
 const { shape, string, object, number, func } = PropTypes;
 
@@ -92,7 +92,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    signOutFlassService: logout
+    signOutFlassService: signActions.logout
   }, dispatch);
 }
 

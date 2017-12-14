@@ -9,7 +9,7 @@ import SignInContainer from './Flass/Sign/SignIn/SignInComponent';
 import FlassViewContainer from './Flass/Link/FlassViewComponent';
 import ErrorComponent from './Error/ErrorComponent';
 import LoadingComponent from './Auth/Loading/LoadingComponent';
-import { initGoogleService } from '../ducks/Sign/signs';
+import { actions as signActions } from '../ducks/Sign/signs';
 import '../css/base/global.scss';
 
 const propTypes = {
@@ -51,7 +51,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    initGoogleAuthService: initGoogleService
+    initGoogleAuthService: signActions.initGoogleService
   }, dispatch);
 }
 

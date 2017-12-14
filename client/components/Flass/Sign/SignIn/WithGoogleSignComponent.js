@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginGoogleService } from '../../../../ducks/Sign/signs';
+import { actions as signActions } from '../../../../ducks/Sign/signs';
 import Google from '../../../../ducks/Google';
 
 const propTypes = {
@@ -45,7 +45,7 @@ WithGoogleSignComponent.defaultProps = defaultProps;
 
 const WithConnect = connect(state => ({
 }), {
-  goToAuthPage: loginGoogleService
+  goToAuthPage: signActions.loginGoogleService
 })(WithGoogleSignComponent);
 
 export default options =>
