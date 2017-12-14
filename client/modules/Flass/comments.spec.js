@@ -10,7 +10,7 @@ import {
   cancel,
   takeLatest
 } from 'redux-saga/effects';
-import agent from '../../../agent';
+import agent from '../agent';
 import {
   ADD_COMMENT_ERROR,
   ADD_COMMENT_SUCCESS,

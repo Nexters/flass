@@ -18,7 +18,7 @@ import {
   focusOnQuestion,
   completeEditQuestion,
   deleteCompleteQuestion
-} from '../../../../modules/Upload/UploadInsertion/Quiz/quizzes';
+} from '../../../../modules/Upload/uploadInsertionQuizzes';
 import './QuestionInsertionComponentStyles.scss';
 
 const { func, string, bool, arrayOf, number, shape, oneOfType } = PropTypes;

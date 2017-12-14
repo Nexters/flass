@@ -6,9 +6,9 @@ import { STEP_1, STEP_2 } from '../../../modules/constants';
 import * as actions from '../../../modules/Upload/uploads';
 import {
   INIT_QUESTION_STATES
-} from '../../../modules/Upload/UploadInsertion/Quiz/quizzes';
+} from '../../../modules/Upload/uploadInsertionQuizzes';
 import VideoInfo from './VideoInfo';
-import QuestionInsertionContainer from './QuestionInsertion/QuestionInsertionContainer';
+import QuestionInsertionContainer from './QuestionInsertion/QuestionInsertionComponent';
 import SubHeader from './SubHeader/SubHeaderComponent';
 import './index.scss';
 import {

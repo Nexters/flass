@@ -16,7 +16,7 @@ import '../../../css/base/_row.scss';
 import {
   FETCH_MY_CHANNEL,
   DELETE_MY_CHANNEL_ITEM
-} from '../../../modules/Flass/Grid/grids';
+} from '../../../modules/Flass/grids';
 
 const GridBox = styled.div`
   position: relative;

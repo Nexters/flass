@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import badge from './Badge/badges';
-import lecture from './Lecture/lectures';
-import grid from './Grid/grids';
-import user from './User/users';
+import badge from './badges';
+import lecture from './lectures';
+import grid from './grids';
+import user from './users';
 
 export default combineReducers({
   badge,

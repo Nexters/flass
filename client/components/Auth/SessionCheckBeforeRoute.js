@@ -11,7 +11,7 @@ import {
 } from '../../modules/Sign/signs';
 import {
   FETCH_USER
-} from '../../modules/Flass/User/users';
+} from '../../modules/Flass/users';
 
 const { func, bool, shape, object } = PropTypes;
 

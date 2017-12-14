@@ -1,11 +1,11 @@
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
-import question, { FETCH_QUESTION, UPDATE_SOLVED_QUESTION } from './Question/questions';
-import comment from './Comment/comments';
-import video, { FETCH_VIDEO, UPDATE_SEARCHABLE_SECS } from './Video/videos';
-import analysis from './Analysis/analysises';
-import { createReducer } from '../../reducerHelper';
-import agent from '../../agent';
+import question, { FETCH_QUESTION, UPDATE_SOLVED_QUESTION } from './questions';
+import comment from './comments';
+import video, { FETCH_VIDEO, UPDATE_SEARCHABLE_SECS } from './videos';
+import analysis from './analysises';
+import { createReducer } from '../reducerHelper';
+import agent from '../agent';
 
 export const FETCH_LECTURE = 'FETCH_LECTURE';
 export const FETCH_READY_LECTURE = 'FETCH_READY_LECTURE';

@@ -1,9 +1,9 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import {
   createReducer
-} from '../../../reducerHelper';
-import logger from '../../../../util/LogUtil';
-import agent from '../../../agent';
+} from '../reducerHelper';
+import logger from '../../util/LogUtil';
+import agent from '../agent';
 
 export const REQUEST_LECTURE_ANALYSIS = 'REQUEST_LECTURE_ANALYSIS';
 export const LOADING_QUESTIONS = 'LOADING_QUESTIONS';

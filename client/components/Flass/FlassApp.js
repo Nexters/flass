@@ -11,14 +11,14 @@ import {
   baseTheme,
   flassTheme
 } from '../FlassCommon/MaterialUI';
-import Grid from './Grid/GridContainer';
+import Grid from './Grid/Grid';
 import Lecture from './Lecture/Lecture';
 import Upload from './Upload';
 import Drawer from '../FlassCommon/Drawer/Drawer';
 import Content from '../FlassCommon/Content';
 import AppBar from '../FlassCommon/AppBar/AppBar';
 import './FlassApp.scss';
-import { FETCH_USER }  from '../../modules/Flass/User/users';
+import { FETCH_USER }  from '../../modules/Flass/users';
 import { LOGOUT } from '../../modules/Sign/signs';
 
 const FlassAppBox = styled.div`

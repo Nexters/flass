@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import styled from 'styled-components';
@@ -75,4 +76,18 @@ class UserAppBar extends Component {
 UserAppBar.propTypes = propTypes;
 UserAppBar.defaultProps = defaultProps;
 
-export default UserAppBar;
+
+function mapStateToProps(state) {
+  return {
+    user: { ...state.flass.user }
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserAppBar);

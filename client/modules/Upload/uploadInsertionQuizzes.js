@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { List } from 'immutable';
 import { call, put, takeLatest, take } from 'redux-saga/effects';
-import agent from '../../../agent';
+import agent from '../agent';
 import {
   QuestionBodyAdapter,
   ChoiceBodyAdapter
-} from '../../../../RequestBodyAdapter';
-import { createReducer } from '../../../reducerHelper';
+} from '../../RequestBodyAdapter';
+import { createReducer } from '../reducerHelper';
 
 export const ADD_MULTIPLE_CHIOICE_QUESTION = 'ADD_MULTIPLE_CHIOICE_QUESTION';
 export function addMultipleChoiceQuestion() {

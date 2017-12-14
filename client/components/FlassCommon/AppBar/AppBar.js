@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 import styled from 'styled-components';
 import NavbarComponent from './Navbar/NavbarComponent';
 import NavComponent from './Nav/NavComponent';
-import UserAppBar from './UserAppBar/UserAppBarContainer';
+import UserAppBar from './UserAppBar/UserAppBar';
 import color from '../../../css/base/colors.scss';
 import './AppBar.scss';
 

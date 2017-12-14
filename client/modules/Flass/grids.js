@@ -2,10 +2,10 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
 import {
   createReducer
-} from '../../reducerHelper';
-import { dateTimeFormat } from '../../../util/TimeUtil';
-import logger from '../../../util/LogUtil';
-import agent from '../../agent';
+} from '../reducerHelper';
+import { dateTimeFormat } from '../../util/TimeUtil';
+import logger from '../../util/LogUtil';
+import agent from '../agent';
 
 export const FETCH_MY_CHANNEL = 'FETCH_MY_CHANNEL';
 export const FETCH_READY_MY_CHANNEL = 'FETCH_READY_MY_CHANNEL';

@@ -7,14 +7,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   FETCH_QUESTION
-} from '../../../../modules/Flass/Lecture/Question/questions';
+} from '../../../../modules/Flass/questions';
 import {
   SET_VIDEO_COMPLETE,
   RESET_VIDEO_COMPLETE,
-} from '../../../../modules/Flass/Lecture/Video/videos';
+} from '../../../../modules/Flass/videos';
 import {
   UPDATE_STATE_AFTER_SOLVE_QUESTION
-} from '../../../../modules/Flass/Lecture/lectures';
+} from '../../../../modules/Flass/lectures';
 import {
   VideoPlayerComponent,
   VideoButtonComponent,

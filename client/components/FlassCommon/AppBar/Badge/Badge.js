@@ -8,7 +8,7 @@ import BadgeHistory from './BadgeHistory';
 import {
   FETCH_BADGE_HISTORY,
   TOGGLE_BADGE_HISTORY,
-} from '../../../../modules/Flass/Badge/badges';
+} from '../../../../modules/Flass/badges';
 import './Badge.scss';
 
 const BadgeView = styled.div`

@@ -4,7 +4,7 @@ import chai, { expect } from 'chai';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import { FETCH_READY_LECTURE, FETCH_LECTURE_SUCCESS } from './actions';
 import { FETCH_QUESTION } from './Question/actions';
-import agent from '../../agent';
+import agent from '../agent';
 import { FETCH_VIDEO } from './Video/actions';
 import { fetchLectureAll } from './sagas';
 

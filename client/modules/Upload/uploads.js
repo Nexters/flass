@@ -16,7 +16,7 @@ import {
 import {
   SUCCESS_UPLOAD_QUESTIONS,
   FAIL_UPLOAD_QUESTIONS
-} from './UploadInsertion/Quiz/quizzes';
+} from './uploadInsertionQuizzes';
 import { API_ROOT, API_ROOT_FRONT } from '../../config/EnvironmentConfig';
 import {createReducer} from '../reducerHelper';
 

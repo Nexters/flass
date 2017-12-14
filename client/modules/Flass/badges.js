@@ -1,5 +1,5 @@
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
-import agent from '../../agent';
+import agent from '../agent';
 
 export const FETCH_BADGE_HISTORY = 'FETCH_BADGE_HISTORY';
 export const FETCH_READY_BADGE_HISTORY = 'FETCH_READY_BADGE_HISTORY';

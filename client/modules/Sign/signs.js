@@ -9,7 +9,7 @@ import {
 } from '../sagasHelper';
 import {
   SET_USER
-} from '../Flass/User/users';
+} from '../Flass/users';
 
 export const INIT_GOOGLE_SERVICE = 'INIT_GOOGLE_SERVICE';
 export const SUCCESS_INIT_GOOGLE_SERVICE = 'SUCCESS_INIT_GOOGLE_SERVICE';

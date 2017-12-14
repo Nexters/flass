@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import chai, { expect } from 'chai';
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
-import agent from '../../agent';
+import agent from '../agent';
 import {
   FETCH_BADGE_HISTORY_SUCCESS, FETCH_READY_BADGE_HISTORY,
   fetchBadgeHistory,
