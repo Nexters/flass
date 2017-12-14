@@ -20,7 +20,6 @@ const Item = styled.div`
   background-position: center;
   background-size: contain;
   background-color: #000;
-
 `;
 
 const Container = styled.div`

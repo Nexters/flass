@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import autobind from 'autobind-decorator';
@@ -10,8 +12,11 @@ import {
   Title,
   Header
 } from '../../FlassCommon';
-import './Grid.scss';
 import '../../../css/base/_row.scss';
+import {
+  FETCH_MY_CHANNEL,
+  DELETE_MY_CHANNEL_ITEM
+} from '../../../ducks/Flass/grids';
 
 const GridBox = styled.div`
   position: relative;
@@ -116,4 +121,26 @@ Grid.childContextTypes = {
 Grid.propTypes = propTypes;
 Grid.defaultProps = defaultProps;
 
-export default Grid;
+function mapStateToProps(state) {
+  return {
+    ...state.flass.grid,
+    user: { ...state.flass.user }
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    fetchRequestMyChannelItems: () => ({
+      type: FETCH_MY_CHANNEL
+    }),
+    deleteMyChannelItem: id => ({
+      type: DELETE_MY_CHANNEL_ITEM,
+      id
+    })
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Grid);

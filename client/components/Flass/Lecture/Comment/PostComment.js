@@ -9,7 +9,6 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import normalizePostComment from './normalizePostComment';
 import color from '../../../../css/base/colors.scss';
-import './PostComment.scss';
 
 const LectureForm = styled(Form)`
   padding: 20px 0;

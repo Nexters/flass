@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import autobind from 'autobind-decorator';
@@ -9,13 +11,15 @@ import {
   baseTheme,
   flassTheme
 } from '../FlassCommon/MaterialUI';
-import Grid from './Grid/GridContainer';
-import Lecture from './Lecture/LectureContainer';
+import Grid from './Grid/Grid';
+import Lecture from './Lecture/Lecture';
 import Upload from './Upload';
 import Drawer from '../FlassCommon/Drawer/Drawer';
 import Content from '../FlassCommon/Content';
 import AppBar from '../FlassCommon/AppBar/AppBar';
 import './FlassApp.scss';
+import { FETCH_USER }  from '../../ducks/Flass/users';
+import { LOGOUT } from '../../ducks/Sign/signs';
 
 const FlassAppBox = styled.div`
   height: 100%;
@@ -83,4 +87,26 @@ FlassApp.childContextTypes = childContextTypes;
 FlassApp.propTypes = propTypes;
 FlassApp.defaultProps = defaultProps;
 
-export default FlassApp;
+
+function mapStateToProps(state) {
+  return {
+    ...state.flass.user,
+    ...state.sign
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    fetchUser: () => ({
+      type: FETCH_USER
+    }),
+    signOutFlassService: () => ({
+      type: LOGOUT
+    })
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FlassApp);

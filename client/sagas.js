@@ -1,8 +1,8 @@
 import { fork } from 'redux-saga/effects';
-import flassSaga from './modules/Flass/sagas';
-import signSaga from './modules/Sign/sagas';
-import uploadQuestionSaga from './modules/Upload/UploadInsertion/Quiz/sagas';
-import uploadSaga from './modules/Upload/sagas';
+import flassSaga from './ducks/Flass/sagas';
+import { rootSaga as signSaga } from './ducks/Sign/signs';
+import { rootSaga as uploadQuestionSaga } from './ducks/Upload/uploadInsertionQuizzes';
+import { rootSaga as uploadSaga } from './ducks/Upload/uploads';
 
 export default function* rootSaga() {
   yield [

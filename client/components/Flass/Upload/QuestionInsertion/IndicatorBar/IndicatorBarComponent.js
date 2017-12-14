@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import autobind from 'autobind-decorator';
-
 import {
   VideoCustomProgressBarComponent
-} from '../../../Video';
+} from '../../../../FlassCommon/Video';
 import RulerComponent from './Ruler/RulerComponent';
 
 import './IndicatorBarComponentStyles.scss';
