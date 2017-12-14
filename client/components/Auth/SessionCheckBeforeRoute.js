@@ -6,11 +6,11 @@ import { Route, Redirect } from 'react-router-dom';
 import LoadingComponent from './Loading/LoadingComponent';
 import { hashToObjectKey, queryToObjectKey } from '../../util/UrlUtil';
 import {
-  CHECK_SESSION, LOGIN_CLASSTING_SERVICE,
+  checkSession, loginClassting,
   setEntryPoint,
 } from '../../ducks/Sign/signs';
 import {
-  FETCH_USER
+  fetchUser,
 } from '../../ducks/Flass/users';
 
 const { func, bool, shape, object } = PropTypes;
@@ -105,16 +105,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    checkSession: () => ({
-      type: CHECK_SESSION
-    }),
-    loginClasting: (accessToken) => ({
-      type: LOGIN_CLASSTING_SERVICE,
-      accessToken,
-    }),
-    fetchUser: () => ({
-      type: FETCH_USER
-    }),
+    checkSession,
+    loginClasting: loginClassting,
+    fetchUser,
     setEntryPoint
   }, dispatch);
 }

@@ -10,48 +10,57 @@ import {
 import {
   SET_USER
 } from '../Flass/users';
+import { action } from '../actionHelper';
 
-export const INIT_GOOGLE_SERVICE = 'INIT_GOOGLE_SERVICE';
-export const SUCCESS_INIT_GOOGLE_SERVICE = 'SUCCESS_INIT_GOOGLE_SERVICE';
+export const types = {
+  INIT_GOOGLE_SERVICE: 'INIT_GOOGLE_SERVICE',
+  SUCCESS_INIT_GOOGLE_SERVICE: 'SUCCESS_INIT_GOOGLE_SERVICE',
 
-export const LOGIN_GOOGLE_SERVICE = 'LOGIN_GOOGLE_SERVICE';
-export const SUCCESS_LOGIN_GOOGLE_SERVICE = 'SUCCESS_LOGIN_GOOGLE_SERVICE';
-export const FAIL_LOGIN_GOOGLE_SERVICE = 'FAIL_LOGIN_GOOGLE_SERVICE';
+  LOGIN_GOOGLE_SERVICE: 'LOGIN_GOOGLE_SERVICE',
+  SUCCESS_LOGIN_GOOGLE_SERVICE: 'SUCCESS_LOGIN_GOOGLE_SERVICE',
+  FAIL_LOGIN_GOOGLE_SERVICE: 'FAIL_LOGIN_GOOGLE_SERVICE',
 
-export const LOGOUT_FLASS_SERVICE = 'LOGOUT_FLASS_SERVICE';
-export const SUCCESS_LOGOUT_FLASS_SERVICE = 'LOGOUT_FLASS_SERVICE';
-export const FAIL_LOGOUT_FLASS_SERVICE = 'LOGOUT_FLASS_SERVICE';
+  LOGOUT_FLASS_SERVICE: 'LOGOUT_FLASS_SERVICE',
+  SUCCESS_LOGOUT_FLASS_SERVICE: 'SUCCESS_LOGOUT_FLASS_SERVICE',
+  FAIL_LOGOUT_FLASS_SERVICE: 'FAIL_LOGOUT_FLASS_SERVICE',
 
-export const LOGOUT_GOOGLE_SERVICE = 'LOGOUT_GOOGLE_SERVICE';
-export const SUCCESS_LOGOUT_GOOGLE_SERVICE = 'SUCCESS_LOGOUT_GOOGLE_SERVICE';
-export const FAIL_LOGOUT_GOOGLE_SERVICE = 'FAIL_LOGOUT_GOOGLE_SERVICE';
+  LOGOUT_GOOGLE_SERVICE: 'LOGOUT_GOOGLE_SERVICE',
+  SUCCESS_LOGOUT_GOOGLE_SERVICE: 'SUCCESS_LOGOUT_GOOGLE_SERVICE',
+  FAIL_LOGOUT_GOOGLE_SERVICE: 'FAIL_LOGOUT_GOOGLE_SERVICE',
 
-export const USER_IS_SIGNEDIN = 'USER_IS_SIGNEDIN';
-export const USER_ISNOT_SIGNEDIN = 'USER_ISNOT_SIGNEDIN';
+  USER_IS_SIGNEDIN: 'USER_IS_SIGNEDIN',
+  USER_ISNOT_SIGNEDIN: 'USER_ISNOT_SIGNEDIN',
 
-export const CHECK_SESSION = 'CHECK_SESSION';
-export const CHECK_SESSION_START = 'CHECK_SESSION_START';
-export const CHECK_SESSION_FIN = 'CHECK_SESSION_FIN';
-export const CHECK_SESSION_SUCCESS = 'CHECK_SESSION_SUCCESS';
-export const CHECK_SESSION_FAIL = 'CHECK_SESSION_FAIL';
+  CHECK_SESSION: 'CHECK_SESSION',
+  CHECK_SESSION_START: 'CHECK_SESSION_START',
+  CHECK_SESSION_FIN: 'CHECK_SESSION_FIN',
+  CHECK_SESSION_SUCCESS: 'CHECK_SESSION_SUCCESS',
+  CHECK_SESSION_FAIL: 'CHECK_SESSION_FAIL',
 
-export const LOGIN_CLASSTING_SERVICE = 'LOGIN_CLASSTING_SERVICE';
-export const LOGIN_FLASS_SERVICE = 'LOGIN_FLASS_SERVICE';
-export const SUCCESS_LOGIN_FLASS_SERVICE = 'SUCCESS_LOGIN_FLASS_SERVICE';
-export const FAIL_LOGIN_FLASS_SERVICE = 'FAIL_LOGIN_FLASS_SERVICE';
+  LOGIN_CLASSTING_SERVICE: 'LOGIN_CLASSTING_SERVICE',
+  LOGIN_FLASS_SERVICE: 'LOGIN_FLASS_SERVICE',
+  SUCCESS_LOGIN_FLASS_SERVICE: 'SUCCESS_LOGIN_FLASS_SERVICE',
+  FAIL_LOGIN_FLASS_SERVICE: 'FAIL_LOGIN_FLASS_SERVICE',
 
-export const LOGOUT = 'LOGOUT';
+  LOGOUT: 'LOGOUT',
 
-export const SET_ENTRY_POINT = 'SET_ENTRY_POINT';
-export const setEntryPoint = location => ({
-  type: SET_ENTRY_POINT,
-  location
-});
+  SET_ENTRY_POINT: 'SET_ENTRY_POINT',
+  RESET_ENTRY_POINT: 'RESET_ENTRY_POINT',
+};
 
-export const RESET_ENTRY_POINT = 'RESET_ENTRY_POINT';
-export const resetEntryPoint = () => ({
-  type: RESET_ENTRY_POINT
-});
+export const initGoogleService = () => action(types.INIT_GOOGLE_SERVICE);
+
+export const loginGoogleService = () => action(types.LOGIN_GOOGLE_SERVICE);
+
+export const checkSession = () => action(types.CHECK_SESSION);
+
+export const loginClassting = (accessToken) => action(types.LOGIN_CLASSTING_SERVICE, accessToken);
+export const setEntryPoint = location => action(types.SET_ENTRY_POINT, location);
+
+export const resetEntryPoint = () => action(types.RESET_ENTRY_POINT);
+
+export const logout = () => action(types.LOGOUT);
+
 
 const initialState = {
   isGoogleChecking: false,
@@ -63,30 +72,30 @@ const initialState = {
 };
 
 const initGoogleReducer = {
-  [INIT_GOOGLE_SERVICE]: (state) => ({
+  [types.INIT_GOOGLE_SERVICE]: (state) => ({
     ...state,
     isGoogleChecking: true,
   }),
-  [SUCCESS_INIT_GOOGLE_SERVICE]: (state) => ({
+  [types.SUCCESS_INIT_GOOGLE_SERVICE]: (state) => ({
     ...state,
     isGoogleChecking: false,
   }),
-  [LOGIN_GOOGLE_SERVICE]: (state) => ({
+  [types.LOGIN_GOOGLE_SERVICE]: (state) => ({
     ...state,
     isGoogleChecking: true,
   }),
-  [SUCCESS_LOGIN_GOOGLE_SERVICE]: (state, { payload }) => ({
+  [types.SUCCESS_LOGIN_GOOGLE_SERVICE]: (state, { payload }) => ({
     ...state,
     isGoogleChecking: false,
   }),
-  [FAIL_LOGIN_FLASS_SERVICE]: (state) => ({
+  [types.FAIL_LOGIN_FLASS_SERVICE]: (state) => ({
     ...state,
     isGoogleChecking: false,
   }),
 };
 
 const userSignInReducer = {
-  [SUCCESS_LOGIN_FLASS_SERVICE]: (state, { payload }) => ({
+  [types.SUCCESS_LOGIN_FLASS_SERVICE]: (state, { payload }) => ({
     ...state,
     isUserSignedIn: true,
     id_token: payload.id_token,
@@ -95,34 +104,34 @@ const userSignInReducer = {
 };
 
 const userSignOutReducer = {
-  [SUCCESS_LOGOUT_FLASS_SERVICE]: state => (initialState)
+  [types.SUCCESS_LOGOUT_FLASS_SERVICE]: state => (initialState)
 };
 
 const userIsSignedInReducer = {
-  [CHECK_SESSION_START]: state => ({
+  [types.CHECK_SESSION_START]: state => ({
     ...state,
     isSessionChecking: true
   }),
-  [CHECK_SESSION_FIN]: state => ({
+  [types.CHECK_SESSION_FIN]: state => ({
     ...state,
     isSessionChecking: false
   }),
-  [CHECK_SESSION_SUCCESS]: state => ({
+  [types.CHECK_SESSION_SUCCESS]: state => ({
     ...state,
     sessionValid: true
   }),
-  [CHECK_SESSION_FAIL]: state => ({
+  [types.CHECK_SESSION_FAIL]: state => ({
     ...state,
     sessionValid: false
   })
 };
 
 const entryPointReducer = {
-  [SET_ENTRY_POINT]: (state, action) => ({
+  [types.SET_ENTRY_POINT]: (state, action) => ({
     ...state,
     prevPath: action.location
   }),
-  [RESET_ENTRY_POINT]: (state, action) => ({
+  [types.RESET_ENTRY_POINT]: (state, action) => ({
     ...state,
     prevPath: '/'
   })
@@ -139,7 +148,7 @@ export default createReducer(initialState, {
 function* initGoogleService() {
   console.log('initGoogleService');
   yield call(Google.initGoogleAuthService);
-  yield put({ type: SUCCESS_INIT_GOOGLE_SERVICE });
+  yield put({ type: types.SUCCESS_INIT_GOOGLE_SERVICE });
 }
 
 function* loginGoogleService() {
@@ -148,13 +157,13 @@ function* loginGoogleService() {
     const isGoogleAuthValid = isAuthResponseValid(authResponse);
     if (isGoogleAuthValid) {
       yield put({
-        type: SUCCESS_LOGIN_GOOGLE_SERVICE,
+        type: types.SUCCESS_LOGIN_GOOGLE_SERVICE,
         payload: authResponse
       });
     }
   } catch (error) {
     yield put({
-      type: FAIL_LOGIN_FLASS_SERVICE,
+      type: types.FAIL_LOGIN_FLASS_SERVICE,
       error
     });
   }
@@ -169,7 +178,7 @@ function* loginClasstingService({ accessToken }) {
       user: meResponse
     });
     yield put({
-      type: SUCCESS_LOGIN_FLASS_SERVICE,
+      type: types.SUCCESS_LOGIN_FLASS_SERVICE,
       payload: {
         id_token: accessToken
       }
@@ -177,7 +186,7 @@ function* loginClasstingService({ accessToken }) {
     yield put({ type: CHECK_SESSION });
   } catch (err) {
     yield put({
-      type: FAIL_LOGIN_FLASS_SERVICE,
+      type: types.FAIL_LOGIN_FLASS_SERVICE,
       err
     });
   }
@@ -190,7 +199,7 @@ function isAuthResponseValid(authResponse) {
 
 function* checkSession() {
   try {
-    yield put({ type: CHECK_SESSION_START });
+    yield put({ type: types.CHECK_SESSION_START });
     const responseData = yield call(agent.User.whoami);
     const flassUserId = yield call(getItemFromLocalStorage, 'flass_user_id');
 
@@ -200,12 +209,12 @@ function* checkSession() {
 
     yield put({ type: SET_USER, user: responseData });
 
-    yield put({ type: CHECK_SESSION_SUCCESS });
-    yield put({ type: CHECK_SESSION_FIN });
+    yield put({ type: types.CHECK_SESSION_SUCCESS });
+    yield put({ type: types.CHECK_SESSION_FIN });
   } catch (e) {
     console.error(e);
-    yield put({ type: CHECK_SESSION_FAIL });
-    yield put({ type: CHECK_SESSION_FIN });
+    yield put({ type: types.CHECK_SESSION_FAIL });
+    yield put({ type: types.CHECK_SESSION_FIN });
   }
 }
 
@@ -214,16 +223,16 @@ function* logoutFlassService() {
     yield call(Google.signOutUser);
     yield call(agent.User.out);
     yield call(setItemToLocalStorage, 'flass_user_id', '');
-    yield put({ type: SUCCESS_LOGOUT_FLASS_SERVICE });
+    yield put({ type: types.SUCCESS_LOGOUT_FLASS_SERVICE });
   } catch (e) {
-    yield put({ type: FAIL_LOGOUT_FLASS_SERVICE });
+    yield put({ type: types.FAIL_LOGOUT_FLASS_SERVICE });
   }
 }
 
 export function* rootSaga() {
-  yield takeLatest(INIT_GOOGLE_SERVICE, initGoogleService);
-  yield takeLatest(LOGIN_GOOGLE_SERVICE, loginGoogleService);
-  yield takeLatest(LOGIN_CLASSTING_SERVICE, loginClasstingService);
-  yield takeLatest(CHECK_SESSION, checkSession);
-  yield takeLatest(LOGOUT, logoutFlassService);
+  yield takeLatest(types.INIT_GOOGLE_SERVICE, initGoogleService);
+  yield takeLatest(types.LOGIN_GOOGLE_SERVICE, loginGoogleService);
+  yield takeLatest(types.LOGIN_CLASSTING_SERVICE, loginClasstingService);
+  yield takeLatest(types.CHECK_SESSION, checkSession);
+  yield takeLatest(types.LOGOUT, logoutFlassService);
 }

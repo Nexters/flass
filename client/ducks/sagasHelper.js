@@ -24,8 +24,19 @@ function createLazily(msec = 1000) {
   };
 }
 
+function* fetchEntity(entity, apiFn, ...args) {
+  yield put(entity.fetch());
+  try {
+    const result = yield call(apiFn, ...args);
+    yield put(entity.success(result));
+  } catch (err) {
+    yield put(entity.failure(err));
+  }
+}
+
 export {
   setItemToLocalStorage,
   getItemFromLocalStorage,
-  createLazily
+  createLazily,
+  fetchEntity,
 };
