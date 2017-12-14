@@ -8,10 +8,10 @@ import { hashToObjectKey, queryToObjectKey } from '../../util/UrlUtil';
 import {
   CHECK_SESSION, LOGIN_CLASSTING_SERVICE,
   setEntryPoint,
-} from '../../modules/Sign/signs';
+} from '../../ducks/Sign/signs';
 import {
   FETCH_USER
-} from '../../modules/Flass/users';
+} from '../../ducks/Flass/users';
 
 const { func, bool, shape, object } = PropTypes;
 

@@ -28,8 +28,8 @@ import './Lecture.scss';
 import {
   FETCH_LECTURE,
   unmountLecture
-} from '../../../modules/Flass/lectures';
-import { REQUEST_ON_ENDED } from '../../../modules/Flass/videos';
+} from '../../../ducks/Flass/lectures';
+import { REQUEST_ON_ENDED } from '../../../ducks/Flass/videos';
 import withLoading from './withLoading';
 
 

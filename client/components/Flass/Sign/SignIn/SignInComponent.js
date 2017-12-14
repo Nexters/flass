@@ -10,7 +10,7 @@ import { callValue } from '../../../../util/ObjectUtil';
 import { API_ROOT_FRONT } from '../../../../config/EnvironmentConfig';
 import {
   LOGOUT
-} from '../../../../modules/Sign/signs';
+} from '../../../../ducks/Sign/signs';
 
 const { func, bool, shape, object, string } = PropTypes;
 

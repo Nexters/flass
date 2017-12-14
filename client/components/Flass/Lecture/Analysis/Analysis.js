@@ -15,7 +15,7 @@ import {
 import {
   REQUEST_LECTURE_ANALYSIS,
   UNMOUNT_ANALYSIS
-} from '../../../../modules/Flass/analysises';
+} from '../../../../ducks/Flass/analysises';
 
 const {
   Tab,

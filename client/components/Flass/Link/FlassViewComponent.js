@@ -13,7 +13,7 @@ import Drawer from '../../FlassCommon/Drawer/Drawer';
 import Content from '../../FlassCommon/Content';
 import AppBar from '../../FlassCommon/AppBar/AppBar';
 import Lecture from '../Lecture/Lecture';
-import { LOGOUT } from '../../../modules/Sign/signs';
+import { LOGOUT } from '../../../ducks/Sign/signs';
 
 const { shape, string, object, number, func } = PropTypes;
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NOT_STARTED, UPLOADING, PROCESSING, COMPLETED } from '../../../../../modules/constants';
+import { NOT_STARTED, UPLOADING, PROCESSING, COMPLETED } from '../../../../../ducks/constants';
 import Exit from '../img/exit.png';
 import Exit2x from '../img/exit@2x.png';
 import Exit3x from '../img/exit@3x.png';

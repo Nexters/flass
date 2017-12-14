@@ -9,7 +9,7 @@ import SignInContainer from './Flass/Sign/SignIn/SignInComponent';
 import FlassViewContainer from './Flass/Link/FlassViewComponent';
 import ErrorComponent from './Error/ErrorComponent';
 import LoadingComponent from './Auth/Loading/LoadingComponent';
-import { INIT_GOOGLE_SERVICE } from '../modules/Sign/signs';
+import { INIT_GOOGLE_SERVICE } from '../ducks/Sign/signs';
 import '../css/base/global.scss';
 
 const propTypes = {

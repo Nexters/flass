@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   LOGIN_GOOGLE_SERVICE
-} from '../../../../modules/Sign/signs';
-import Google from '../../../../modules/Google';
+} from '../../../../ducks/Sign/signs';
+import Google from '../../../../ducks/Google';
 
 const propTypes = {
   goToAuthPage: PropTypes.func.isRequired

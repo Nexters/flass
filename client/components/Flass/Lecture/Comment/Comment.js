@@ -12,7 +12,7 @@ import ReplyPostComment from './ReplyPostComment';
 import {
   FETCH_COMMENT, ADD_COMMENT,
   DELETE_COMMENT, UPDATE_COMMENT
-} from '../../../../modules/Flass/comments';
+} from '../../../../ducks/Flass/comments';
 
 const LectureComment = styled.div`
   width: 100%;
