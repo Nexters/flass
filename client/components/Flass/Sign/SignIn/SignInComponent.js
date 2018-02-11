@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import BtnLoginWithClassting from './img/btn.login_with_classting_e_600.png';
@@ -6,6 +8,9 @@ import { CLASSTING_CLIENT_ID } from '../../../../../config/Constants';
 import './signIn.scss';
 import { callValue } from '../../../../util/ObjectUtil';
 import { API_ROOT_FRONT } from '../../../../config/EnvironmentConfig';
+import {
+  LOGOUT
+} from '../../../../ducks/Sign/signs';
 
 const { func, bool, shape, object, string } = PropTypes;
 
@@ -76,4 +81,25 @@ class SignIn extends Component {
 SignIn.propTypes = propTypes;
 SignIn.defaultProps = defaultProps;
 
-export default SignIn;
+function mapStateToProps(state) {
+  const { isUserSignedIn, needRedirect, sessionValid, prevPath } = state.sign;
+
+  return {
+    isUserSignedIn,
+    needRedirect,
+    sessionValid,
+    prevPath
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    signOutFlassService: () => ({
+      type: LOGOUT
+    })
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)(SignIn);

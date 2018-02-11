@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import styled from 'styled-components';
 import color from '../../../../css/base/colors.scss';
-
 import {
   LogoutIcon
 } from './icons';
@@ -76,4 +76,18 @@ class UserAppBar extends Component {
 UserAppBar.propTypes = propTypes;
 UserAppBar.defaultProps = defaultProps;
 
-export default UserAppBar;
+
+function mapStateToProps(state) {
+  return {
+    user: { ...state.flass.user }
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserAppBar);

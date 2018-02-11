@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
-
 import VideoComponent from './Video/VideoComponent';
 import QuizComponent from './Quiz/QuizComponent';
 import ModalComponent from '../Modal/ModalComponent';
-
+import {
+  REQUEST_UPLOAD_QUESTIONS,
+  addMultipleChoiceQuestion,
+  addAnswerQuestion,
+  cancelAddingQuestion,
+  completeAddingQuestion,
+  saveMultipleChoiceQuestion,
+  addQuestionSecs,
+  focusOnQuestion,
+  completeEditQuestion,
+  deleteCompleteQuestion
+} from '../../../../ducks/Upload/uploadInsertionQuizzes';
 import './QuestionInsertionComponentStyles.scss';
 
 const { func, string, bool, arrayOf, number, shape, oneOfType } = PropTypes;
@@ -316,4 +328,52 @@ class QuestionInsertionComponent extends Component {
 QuestionInsertionComponent.propTypes = propTypes;
 QuestionInsertionComponent.defaultProps = defaultProps;
 
-export default QuestionInsertionComponent;
+function mapStateToProps({ quizInsertion, upload }) {
+  const {
+    isAdding,
+    type,
+    questionSecsStateArray,
+    stateOfFocusedQuestion,
+    quizState,
+    isUploadingQuestionRequestSuccess,
+    lectureUrl
+  } = quizInsertion;
+
+  const {
+    videoURL
+  } = upload;
+
+  return {
+    isAdding,
+    type,
+    questionSecsStateArray,
+    stateOfFocusedQuestion,
+    isUploadingQuestionRequestSuccess,
+    lectureUrl,
+    videoUrl: videoURL,
+    questionStateArray: quizState
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    addMultipleChoiceQuestion,
+    addAnswerQuestion,
+    cancelAddingQuestion,
+    completeAddingQuestion,
+    saveMultipleChoiceQuestion,
+    addQuestionSecs,
+    focusOnQuestion,
+    completeEditQuestion,
+    deleteCompleteQuestion,
+    requestUploadQuestions: ({ questionState }) => ({
+      type: REQUEST_UPLOAD_QUESTIONS,
+      questionState
+    })
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuestionInsertionComponent);

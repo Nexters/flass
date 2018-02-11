@@ -12,7 +12,6 @@ import {
   VideoControllerWrapperComponent,
   VideoControllerAndBarWrapperComponent,
   VideoEndedPageComponent,
-
   PlayBtnIcon,
   PauseBtnIcon,
   VolumeOnBtnIcon,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 // import './infoBox.scss';
-import { INIT, FAIL_AUTH, SUCC_AUTH } from '../../../../../modules/constants';
+import { INIT, FAIL_AUTH, SUCC_AUTH } from '../../../../../ducks/constants';
 import GoogleLogin from './GoogleLogin';
 import Uploader from './Uploader';
 

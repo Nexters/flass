@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-
 import { connect } from 'react-redux';
-import { STEP_1, STEP_2 } from '../../../modules/constants';
-import * as actions from '../../../modules/Upload/actions';
+import { STEP_1, STEP_2 } from '../../../ducks/constants';
+import * as actions from '../../../ducks/Upload/uploads';
 import {
   INIT_QUESTION_STATES
-} from '../../../modules/Upload/UploadInsertion/Quiz/actions';
-
+} from '../../../ducks/Upload/uploadInsertionQuizzes';
 import VideoInfo from './VideoInfo';
-import QuestionInsertionContainer from './QuestionInsertion/QuestionInsertionContainer';
+import QuestionInsertionContainer from './QuestionInsertion/QuestionInsertionComponent';
 import SubHeader from './SubHeader/SubHeaderComponent';
 import './index.scss';
 import {

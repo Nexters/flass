@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import classNames from 'classnames';
 import { Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
-
 import Content from './Content/Content';
-import Comment from './Comment/CommentContainer';
-import Analysis from './Analysis/AnalysisContainer';
-import Video from './Video/VideoContainer';
+import Comment from './Comment/Comment';
+import Analysis from './Analysis/Analysis';
+import Video from './Video/Video';
 import {
   Title,
   Header
 } from '../../FlassCommon';
 import { FlassLectureStyled } from './LectureStyled';
-
 import {
   contentImageActive,
   contentImage,
@@ -23,9 +23,15 @@ import {
   analysisImageActive,
   analysisImage
 } from './icons';
-
 import color from '../../../css/base/colors.scss';
 import './Lecture.scss';
+import {
+  FETCH_LECTURE,
+  unmountLecture
+} from '../../../ducks/Flass/lectures';
+import { REQUEST_ON_ENDED } from '../../../ducks/Flass/videos';
+import withLoading from './withLoading';
+
 
 const TabIcon = styled.img`
   width: 15px;
@@ -115,13 +121,13 @@ class Lecture extends Component {
   }
 
   componentWillMount() {
-    if (this.isLectureOwner()) {
+    if (this._isLectureOwner()) {
       this.setState({ selected: 3 });
     }
   }
 
   componentDidMount() {
-    if (!this.isLectureAlreadyFetch()) {
+    if (!this._isLectureAlreadyFetch()) {
       const id = this.selectLectureId();
       this.props.fetchRequestLectureAll(id);
     }
@@ -169,12 +175,12 @@ class Lecture extends Component {
       </FlassLectureStyled.Wrapper>;
   }
 
-  isLectureOwner() {
+  _isLectureOwner() {
     const { user, lecture: { lecture: { userId } } } = this.props;
     return user.id === userId;
   }
 
-  isLectureAlreadyFetch() {
+  _isLectureAlreadyFetch() {
     return this.props.isFetched;
   }
 
@@ -221,7 +227,7 @@ class Lecture extends Component {
         <Comment lectureId={ lectureIdFromReducer } />
       </Tab>
       {
-        this.isLectureOwner() ? (
+        this._isLectureOwner() ? (
           <Tab
             eventKey={ 3 }
             title={
@@ -257,4 +263,35 @@ class Lecture extends Component {
 Lecture.propTypes = propTypes;
 Lecture.defaultProps = defaultProps;
 
-export default Lecture;
+function mapStateToProps(state) {
+  const { lecture: { id }, isFetched } = state.flass.lecture.lecture;
+
+  return {
+    user: { ...state.flass.user },
+    ...state.flass.lecture,
+    ...state.flass.video,
+    lectureIdFromReducer: id,
+    isFetched
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    fetchRequestLectureAll: lectureId => ({
+      type: FETCH_LECTURE,
+      lectureId
+    }),
+    saveQuestionsStateOnEnded: ({ solvedQuestionsState, id, isForExternal }) => ({
+      type: REQUEST_ON_ENDED,
+      userId: id,
+      solvedQuestionsState,
+      isForExternal
+    }),
+    unmountLecture
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLoading()(Lecture));

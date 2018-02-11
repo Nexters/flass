@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
-import { NO_URL, SUCC_URL, FAIL_URL } from '../../../../../modules/constants';
+import { NO_URL, SUCC_URL, FAIL_URL } from '../../../../../ducks/constants';
 import Exit from '../img/exit.png';
 import Exit2x from '../img/exit@2x.png';
 import Exit3x from '../img/exit@3x.png';

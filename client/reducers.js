@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import flass from './modules/Flass/reducers';
-import UploadReducer from './modules/Upload/reducers';
-import quizInsertionReducer from './modules/Upload/UploadInsertion/Quiz/reducers';
-import signReducer from './modules/Sign/reducers';
+import flass from './ducks/Flass/reducers';
+import UploadReducer from './ducks/Upload/uploads';
+import quizInsertionReducer from './ducks/Upload/uploadInsertionQuizzes';
+import signReducer from './ducks/Sign/signs';
 
 export default combineReducers({
   flass,

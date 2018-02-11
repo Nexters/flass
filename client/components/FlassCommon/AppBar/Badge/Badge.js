@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
-import color from '../../../../css/base/colors.scss';
 import BadgeIcon from './images/appbar-badge.png';
-import './Badge.scss';
 import BadgeHistory from './BadgeHistory';
+import {
+  FETCH_BADGE_HISTORY,
+  TOGGLE_BADGE_HISTORY,
+} from '../../../../ducks/Flass/badges';
+import './Badge.scss';
 
 const BadgeView = styled.div`
   display: inline-block;
@@ -54,4 +58,30 @@ class Badge extends Component {
 Badge.propTypes = propTypes;
 Badge.defaultProps = defaultProps;
 
-export default Badge;
+function mapStateToProps(state) {
+  return {
+    ...state.flass.badge
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchBadgeHistory: (userId, badgeType) => {
+      dispatch({
+        type: FETCH_BADGE_HISTORY,
+        badgeType,
+        userId
+      });
+    },
+    toggleBadgeHistory: () => {
+      dispatch({
+        type: TOGGLE_BADGE_HISTORY
+      });
+    }
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Badge);

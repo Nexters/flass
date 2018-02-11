@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
-import { METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD, SUCC_URL } from '../../../../modules/constants';
-
+import { METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD, SUCC_URL } from '../../../../ducks/constants';
 import InfoBox from './InfoBox';
 import UploadOptionsBox from './UploadOptionsBox';
 import FileUploadBox from './FileUploadBox';

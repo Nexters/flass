@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import ChartComponent from './Chart/ChartComponent';
@@ -10,6 +12,10 @@ import { AnalysisMapAnswersHOC } from './AnalysisMapAnswersHOC';
 import {
   AnalysisStyled
 } from './AnalysisStyled';
+import {
+  REQUEST_LECTURE_ANALYSIS,
+  UNMOUNT_ANALYSIS
+} from '../../../../ducks/Flass/analysises';
 
 const {
   Tab,
@@ -24,7 +30,6 @@ const {
   ChartTextNumber
 } = AnalysisStyled;
 const { string, func, arrayOf, shape, number } = PropTypes;
-
 
 const propTypes = {
   updateLectureAnalysis: func.isRequired,
@@ -132,10 +137,51 @@ class Analysis extends Component {
       key={ usersOfAnswer.id }
       question={ question }
       { ...usersOfAnswer } />));
-  }
+  };
 }
 
 Analysis.propTypes = propTypes;
 Analysis.defaultProps = defaultProps;
 
-export default AnalysisFetchHOC(AnalysisMapAnswersHOC(AnalysisLoadingHOC(Analysis)));
+function mapStateToProps(state) {
+  const {
+    lecture: {
+      lecture: {
+        id
+      }
+    },
+    analysis: {
+      questions,
+      questionIndex,
+      question_answers,
+      answers,
+      loadingQuestions_
+    }
+  } = state.flass.lecture;
+  return {
+    lectureId: id,
+    questions,
+    questionIndex,
+    question_answers,
+    answers,
+    loadingQuestions_
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    requestLectureAnalysisAction: (lectureId, questionIndex) => ({
+      type: REQUEST_LECTURE_ANALYSIS,
+      lectureId,
+      questionIndex
+    }),
+    unmountAnalysisAction: () => ({
+      type: UNMOUNT_ANALYSIS
+    })
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnalysisFetchHOC(AnalysisMapAnswersHOC(AnalysisLoadingHOC(Analysis))));
