@@ -11,10 +11,8 @@
     "test":
       "mocha --compilers js:./client/spec/compiler.js --require babel-polyfill ./client/spec/helper.js ./client/**/*.spec.js",
     "test:watch": "npm run test -- --watch",
-    "dev":
-      "cross-env BACK_END='local' webpack-dev-server --history-api-fallback --hot --open --host 0.0.0.0",
-    "dev:rails":
-      "cross-env BACK_END='local' webpack --progress --colors && rails s",
+    "dev": "cross-env BACK_END='local' webpack-dev-server --history-api-fallback --hot --open --host 0.0.0.0",
+    "dev:rails": "cross-env BACK_END='local' webpack --progress --colors && rails s",
     "webpack": "webpack --progress --colors",
     "webpack-watch": "webpack --progress --colors --watch"
   },
@@ -34,7 +32,6 @@
     "history": "^4.7.2",
     "immutable": "^3.8.2",
     "lodash": "^4.17.5",
-    "material-ui": "^0.18.6",
     "moment": "^2.20.1",
     "normalize.css": "^8.0.0",
     "prop-types": "15.6.1",

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
-import { CircularProgress } from 'material-ui';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -12,7 +11,7 @@ const Wrapper = styled.div`
   bottom: 0;
   z-index: 999;
   transform: translateY();
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
 `;
 
 const ProgressStyle = {
@@ -27,20 +26,12 @@ const propTypes = {
     isLoading: PropTypes.bool
   }).isRequired
 };
-const defaultProps = {
-};
+const defaultProps = {};
 
 const withLoadingComponent = (props, options, WrappedComponent) => {
   const { isLoading } = props.lecture;
   if (isLoading) {
-    return (
-      <Wrapper>
-        <CircularProgress
-          size={ 40 }
-          thickness={ 7 }
-          style={ ProgressStyle } />
-      </Wrapper>
-    );
+    return <Wrapper>Loading...</Wrapper>;
   }
   return <WrappedComponent { ...props } />;
 };

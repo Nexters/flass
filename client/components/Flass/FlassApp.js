@@ -5,12 +5,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import autobind from 'autobind-decorator';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import {
-  MuiThemeProvider,
-  getMuiTheme,
-  baseTheme,
-  flassTheme
-} from '../FlassCommon/MaterialUI';
 import Grid from './Grid/Grid';
 import Lecture from './Lecture/Lecture';
 import Upload from './Upload';
@@ -18,7 +12,7 @@ import Drawer from '../FlassCommon/Drawer/Drawer';
 import Content from '../FlassCommon/Content';
 import AppBar from '../FlassCommon/AppBar/AppBar';
 import './FlassApp.scss';
-import { FETCH_USER }  from '../../ducks/Flass/users';
+import { FETCH_USER } from '../../ducks/Flass/users';
 import { LOGOUT } from '../../ducks/Sign/signs';
 
 const FlassAppBox = styled.div`
@@ -27,9 +21,6 @@ const FlassAppBox = styled.div`
 
 const { func, number, object } = PropTypes;
 
-const childContextTypes = {
-  muiTheme: object.isRequired
-};
 const propTypes = {
   signOutFlassService: func.isRequired,
   id: number.isRequired
@@ -37,25 +28,14 @@ const propTypes = {
 
 const defaultProps = {};
 
-
 class FlassApp extends Component {
-  getChildContext() {
-    return { muiTheme: getMuiTheme(baseTheme) };
-  }
-
   render() {
     return (
-      <MuiThemeProvider muiTheme={ flassTheme }>
-        <FlassAppBox>
-          <Drawer />
-          <AppBar
-            isLogin={ this.isUserLogin() }
-            onClickLogoutBtn={ this.signOutFlassService } />
-          <Content>
-            {this.renderContent()}
-          </Content>
-        </FlassAppBox>
-      </MuiThemeProvider>
+      <FlassAppBox>
+        <Drawer />
+        <AppBar isLogin={ this.isUserLogin() } onClickLogoutBtn={ this.signOutFlassService } />
+        <Content>{this.renderContent()}</Content>
+      </FlassAppBox>
     );
   }
 
@@ -83,10 +63,8 @@ class FlassApp extends Component {
   }
 }
 
-FlassApp.childContextTypes = childContextTypes;
 FlassApp.propTypes = propTypes;
 FlassApp.defaultProps = defaultProps;
-
 
 function mapStateToProps(state) {
   return {
@@ -96,17 +74,17 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchUser: () => ({
-      type: FETCH_USER
-    }),
-    signOutFlassService: () => ({
-      type: LOGOUT
-    })
-  }, dispatch);
+  return bindActionCreators(
+    {
+      fetchUser: () => ({
+        type: FETCH_USER
+      }),
+      signOutFlassService: () => ({
+        type: LOGOUT
+      })
+    },
+    dispatch
+  );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FlassApp);
+export default connect(mapStateToProps, mapDispatchToProps)(FlassApp);
