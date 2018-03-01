@@ -8,7 +8,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import configureStore from './store';
 import Root from './components/Root';
 
-import FireBaseConfig from './config/FirebaseConfig';
 import logger from './util/LogUtil';
 
 function initWhyDidYouUpdate() {
@@ -26,7 +25,6 @@ function initWhyDidYouUpdate() {
 const render = Component => {
   logger.log('init() :: App starts booting...');
   injectTapEventPlugin();
-  FireBaseConfig.init();
 
   ReactDOM.render(
     <AppContainer>

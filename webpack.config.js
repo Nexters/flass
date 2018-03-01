@@ -26,15 +26,6 @@ module.exports = {
   module: {
     // https://velopert.com/1492
     rules: [
-      /*  {
-       test: /\.js$/,
-       exclude: /node_modules/,
-       loader: 'eslint-loader',
-       enforce: 'pre',
-       query: {
-       confile: './.eslintrc-tmp',
-       },
-       }, */
       {
         test: /\.js$/,
         exclude: /node_modules/,

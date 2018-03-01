@@ -255,6 +255,7 @@ public/js/*.js
 public/js/*.map
 public/css/*.css
 public/css/*.map
+public
 
 *.lock
 *-lock.json
