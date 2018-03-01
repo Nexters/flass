@@ -8,11 +8,11 @@ import { CLASSTING_CLIENT_ID } from '../../../../../config/Constants';
 import './signIn.scss';
 import { callValue } from '../../../../util/ObjectUtil';
 import { API_ROOT_FRONT } from '../../../../config/EnvironmentConfig';
-import {
-  LOGOUT
-} from '../../../../ducks/Sign/signs';
+import { LOGOUT } from '../../../../ducks/Sign/signs';
 
-const { func, bool, shape, object, string } = PropTypes;
+const {
+  func, bool, shape, object, string
+} = PropTypes;
 
 const propTypes = {
   sessionValid: bool,
@@ -31,8 +31,7 @@ class SignIn extends Component {
     })
   };
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   componentWillReceiveProps(nextProps) {
     const { sessionValid, prevPath } = nextProps;
@@ -47,7 +46,7 @@ class SignIn extends Component {
         <div className="signInContainer">
           <img
             src="http://i.imgur.com/MU2Hfwn.png"
-            srcSet={ 'http://i.imgur.com/z8nzuak.png 2x,http://i.imgur.com/HZ49y59.png 3x' }
+            srcSet="http://i.imgur.com/z8nzuak.png 2x,http://i.imgur.com/HZ49y59.png 3x"
             className="flassLogo"
             alt="Flass 로고" />
           <span className="signInMessage">Better interaction, Better learning</span>
@@ -56,13 +55,8 @@ class SignIn extends Component {
             <br />
             지금 바로 시작해보세요.
           </span>
-          <a
-            onClick={ this.onClickLoginBtn }>
-            <img
-              className="classtingIcon"
-              width="200"
-              src={ BtnLoginWithClassting }
-              alt="Classting 아이콘" />
+          <a onClick={ this.onClickLoginBtn }>
+            <img className="classtingIcon" width="200" src={ BtnLoginWithClassting } alt="Classting 아이콘" />
           </a>
         </div>
       </div>
@@ -82,7 +76,9 @@ SignIn.propTypes = propTypes;
 SignIn.defaultProps = defaultProps;
 
 function mapStateToProps(state) {
-  const { isUserSignedIn, needRedirect, sessionValid, prevPath } = state.sign;
+  const {
+    isUserSignedIn, needRedirect, sessionValid, prevPath
+  } = state.sign;
 
   return {
     isUserSignedIn,
@@ -93,13 +89,14 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    signOutFlassService: () => ({
-      type: LOGOUT
-    })
-  }, dispatch);
+  return bindActionCreators(
+    {
+      signOutFlassService: () => ({
+        type: LOGOUT
+      })
+    },
+    dispatch
+  );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

@@ -1,19 +1,19 @@
 {
   "presets": [
+    "@babel/preset-react",
     [
-      "latest",
+      "@babel/preset-env",
       {
-        "es2015": {
-          "modules": false
-        }
+        "useBuiltIns": "entry",
+        "modules": false
       }
-    ],
-    "react",
-    "es2015"
+    ]
   ],
   "plugins": [
     "react-hot-loader/babel",
-    "transform-object-rest-spread",
-    "transform-class-properties"
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-decorators",
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    "@babel/plugin-transform-runtime"
   ]
 }
