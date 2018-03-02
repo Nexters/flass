@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
-import { CircularProgress } from 'material-ui';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -35,14 +34,11 @@ const withLoadingComponent = (props, options, WrappedComponent) => {
   if (isLoading) {
     return (
       <Wrapper>
-        <CircularProgress
-          size={ 40 }
-          thickness={ 7 }
-          style={ ProgressStyle } />
+        Loading...
       </Wrapper>
     );
   }
-  return <WrappedComponent { ...props } />;
+  return <WrappedComponent {...props} />;
 };
 
 withLoadingComponent.propTypes = propTypes;

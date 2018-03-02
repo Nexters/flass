@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   entry: {
     app: ['babel-polyfill', 'react-hot-loader/patch', './client/index']
   },
@@ -14,25 +14,16 @@ module.exports = {
 
   devServer: {
     hot: true,
-    inline: true,
     host: 'localhost',
     port: 4000,
     contentBase: path.resolve(__dirname, 'public')
   },
   module: {
-    // https://velopert.com/1492
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          plugins: [
-            'transform-decorators-legacy',
-            'transform-class-properties',
-            'transform-async-functions'
-          ]
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,

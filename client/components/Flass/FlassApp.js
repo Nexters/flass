@@ -5,21 +5,34 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import autobind from 'autobind-decorator';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import {
-  MuiThemeProvider,
-  getMuiTheme,
-  baseTheme,
-  flassTheme
-} from '../FlassCommon/MaterialUI';
-import Grid from './Grid/Grid';
-import Lecture from './Lecture/Lecture';
-import Upload from './Upload';
+import Loadable from 'react-loadable';
 import Drawer from '../FlassCommon/Drawer/Drawer';
 import Content from '../FlassCommon/Content';
 import AppBar from '../FlassCommon/AppBar/AppBar';
 import './FlassApp.scss';
-import { FETCH_USER }  from '../../ducks/Flass/users';
+import { FETCH_USER } from '../../ducks/Flass/users';
 import { LOGOUT } from '../../ducks/Sign/signs';
+
+const Grid = Loadable({
+  loader: () => import('./Grid/Grid'),
+  loading() {
+    return <div>Loading...</div>;
+  }
+});
+
+const Lecture = Loadable({
+  loader: () => import('./Lecture/Lecture'),
+  loading() {
+    return <div>Loading...</div>;
+  }
+});
+
+const Upload = Loadable({
+  loader: () => import('./Upload'),
+  loading() {
+    return <div>Loading...</div>;
+  }
+});
 
 const FlassAppBox = styled.div`
   height: 100%;
@@ -27,9 +40,6 @@ const FlassAppBox = styled.div`
 
 const { func, number, object } = PropTypes;
 
-const childContextTypes = {
-  muiTheme: object.isRequired
-};
 const propTypes = {
   signOutFlassService: func.isRequired,
   id: number.isRequired
@@ -39,13 +49,8 @@ const defaultProps = {};
 
 
 class FlassApp extends Component {
-  getChildContext() {
-    return { muiTheme: getMuiTheme(baseTheme) };
-  }
-
   render() {
     return (
-      <MuiThemeProvider muiTheme={ flassTheme }>
         <FlassAppBox>
           <Drawer />
           <AppBar
@@ -55,7 +60,6 @@ class FlassApp extends Component {
             {this.renderContent()}
           </Content>
         </FlassAppBox>
-      </MuiThemeProvider>
     );
   }
 
@@ -83,7 +87,6 @@ class FlassApp extends Component {
   }
 }
 
-FlassApp.childContextTypes = childContextTypes;
 FlassApp.propTypes = propTypes;
 FlassApp.defaultProps = defaultProps;
 
