@@ -8,9 +8,15 @@ import { Row, Grid as GridView } from 'react-bootstrap';
 import _ from 'lodash';
 import GridItem from './GridItem';
 import color from '../../../css/base/colors.scss';
-import { Title, Header } from '../../FlassCommon';
+import {
+  Title,
+  Header
+} from '../../FlassCommon';
 import '../../../css/base/_row.scss';
-import { FETCH_MY_CHANNEL, DELETE_MY_CHANNEL_ITEM } from '../../../ducks/Flass/grids';
+import {
+  FETCH_MY_CHANNEL,
+  DELETE_MY_CHANNEL_ITEM
+} from '../../../ducks/Flass/grids';
 
 const GridBox = styled.div`
   position: relative;
@@ -35,10 +41,11 @@ const propTypes = {
   user: object.isRequired,
   items: array.isRequired,
   fetchRequestMyChannelItems: func.isRequired,
-  deleteMyChannelItem: func.isRequired
+  deleteMyChannelItem: func.isRequired,
 };
 
-const defaultProps = {};
+const defaultProps = {
+};
 
 const NUM_OF_ITEMS_PER_COLS = 3;
 
@@ -61,9 +68,15 @@ class Grid extends Component {
     const renderAllItems = this.renderRowsAndCols(items);
     return (
       <GridBox>
-        <Header Title={ () => <Title title="Home Channel" /> } SubTitle={ () => null } />
-        <GridView>{renderAllItems}</GridView>
-        <CustomerService>우주컴퍼니팀 | 문의 flassadm@gmail.com</CustomerService>
+        <Header
+          Title={ () => <Title title="Home Channel" /> }
+          SubTitle={ () => null } />
+        <GridView>
+          { renderAllItems }
+        </GridView>
+        <CustomerService>
+          우주컴퍼니팀 | 문의  flassadm@gmail.com
+        </CustomerService>
       </GridBox>
     );
   }
@@ -86,7 +99,10 @@ class Grid extends Component {
     const { user } = this.props;
     return items.map((item, index) => (
       <div key={ `col${index}` } className="Col__grid">
-        <GridItem { ...item } userName={ user.userName } onClickDeleteBtn={ this.deleteItem } />
+        <GridItem
+          { ...item }
+          userName={ user.userName }
+          onClickDeleteBtn={ this.deleteItem } />
       </div>
     ));
   }
@@ -99,6 +115,9 @@ class Grid extends Component {
   }
 }
 
+Grid.childContextTypes = {
+  muiTheme: PropTypes.object.isRequired
+};
 Grid.propTypes = propTypes;
 Grid.defaultProps = defaultProps;
 
@@ -110,18 +129,18 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      fetchRequestMyChannelItems: () => ({
-        type: FETCH_MY_CHANNEL
-      }),
-      deleteMyChannelItem: id => ({
-        type: DELETE_MY_CHANNEL_ITEM,
-        id
-      })
-    },
-    dispatch
-  );
+  return bindActionCreators({
+    fetchRequestMyChannelItems: () => ({
+      type: FETCH_MY_CHANNEL
+    }),
+    deleteMyChannelItem: id => ({
+      type: DELETE_MY_CHANNEL_ITEM,
+      id
+    })
+  }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Grid);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Grid);
