@@ -1,23 +1,23 @@
-const webpack = require("webpack");
-const path = require("path");
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
-  devtool: "source-map",
+  devtool: 'source-map',
   entry: {
-    app: ["babel-polyfill", "react-hot-loader/patch", "./client/index"]
+    app: ['babel-polyfill', 'react-hot-loader/patch', './client/index']
   },
   output: {
-    path: path.resolve(__dirname, "public"),
-    filename: "[name].js",
-    publicPath: "/"
+    path: path.resolve(__dirname, 'public'),
+    filename: '[name].js',
+    publicPath: '/'
   },
 
   devServer: {
     hot: true,
     inline: true,
-    host: "localhost",
+    host: 'localhost',
     port: 4000,
-    contentBase: path.resolve(__dirname, "public")
+    contentBase: path.resolve(__dirname, 'public')
   },
   module: {
     // https://velopert.com/1492
@@ -25,47 +25,48 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         options: {
           plugins: [
-            "transform-decorators-legacy",
-            "transform-class-properties",
-            "transform-async-functions"
+            'transform-decorators-legacy',
+            'transform-class-properties',
+            'transform-async-functions'
           ]
         }
       },
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
-        loader: "url-loader",
+        loader: 'url-loader',
         options: {
           limit: 10000,
-          name: "[name].[ext]"
+          name: '[name].[ext]'
         }
       },
       {
         test: /\.(eot|ttf|woff|woff2|otf)$/,
-        loader: "file-loader",
+        loader: 'file-loader',
         options: {
           limit: 10000,
-          name: "[name].[ext]"
+          name: '[name].[ext]'
         }
       }
     ]
   },
   optimization: {
     splitChunks: {
-      chunks: "all"
+      chunks: 'all'
     }
   },
   plugins: [
+    new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en|ko|ja|zh-cn)$/),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      "process.env": {
+      'process.env': {
         BACK_END: JSON.stringify(process.env.BACK_END)
       }
     })

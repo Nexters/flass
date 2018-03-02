@@ -8,15 +8,14 @@
   },
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test":
-      "mocha --compilers js:./client/spec/compiler.js --require babel-polyfill ./client/spec/helper.js ./client/**/*.spec.js",
+    "test": "mocha --compilers js:./client/spec/compiler.js --require babel-polyfill ./client/spec/helper.js ./client/**/*.spec.js",
     "test:watch": "npm run test -- --watch",
-    "dev":
-      "cross-env BACK_END='local' webpack-dev-server --history-api-fallback --hot --open --host 0.0.0.0",
-    "dev:rails":
-      "cross-env BACK_END='local' webpack --progress --colors && rails s",
+    "dev": "cross-env BACK_END='local' webpack-dev-server --history-api-fallback --hot --open --host 0.0.0.0",
+    "dev:rails": "cross-env BACK_END='local' webpack --progress --colors && rails s",
     "webpack": "webpack --progress --colors",
-    "webpack-watch": "webpack --progress --colors --watch"
+    "webpack-watch": "webpack --progress --colors --watch",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "author": "IP",
   "license": "MIT",
@@ -100,6 +99,10 @@
     "webpack": "4.0.1",
     "webpack-cli": "^2.0.9",
     "webpack-dev-server": "^3.1.0",
-    "webpack-manifest-plugin": "2.0.0-rc.2"
+    "webpack-manifest-plugin": "2.0.0-rc.2",
+    "@storybook/react": "^3.3.14",
+    "@storybook/addon-actions": "^3.3.14",
+    "@storybook/addon-links": "^3.3.14",
+    "@storybook/addons": "^3.3.14"
   }
 }
