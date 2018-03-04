@@ -1,4 +1,4 @@
-import LogoutIcon from '../../../../../public/icons/logout@2x.png';
+import LogoutIcon from './images/logout@2x.png';
 
 export {
   LogoutIcon
