@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "description": "flass",
   "main": "index.js",
+  "bundlesize": [
+    {
+      "path": "./build/dist/public/app.js",
+      "maxSize": "800 kB"
+    }
+  ],
   "directories": {
     "test": "test"
   },
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test": "mocha --compilers js:./client/spec/compiler.js --require babel-polyfill ./client/spec/helper.js ./client/**/*.spec.js",
+    "mocha-test": "mocha --compilers js:./client/spec/compiler.js --require babel-polyfill ./client/css/styled/helper.js ./client/**/*.spec.js",
+    "test": "bundlesize",
     "test:watch": "npm run test -- --watch",
     "dev": "cross-env BACK_END='local' webpack-dev-server --mode=development --history-api-fallback --open --host 0.0.0.0",
     "dev:rails": "cross-env BACK_END='local' webpack --progress --colors && rails s",
@@ -79,8 +86,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "6.24.1",
-    "chai": "^4.1.2",
-    "chai-jquery": "^2.0.0",
+    "bundlesize": "^0.16.0",
     "css-loader": "^0.28.10",
     "enzyme": "^3.3.0",
     "eslint": "^4.18.1",
@@ -92,7 +98,6 @@
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "^1.1.11",
     "font-loader": "^0.1.2",
-    "mocha": "^5.0.1",
     "node-sass": "4.7.2",
     "react-addons-test-utils": "^15.6.2",
     "react-hot-loader": "^4.0.0",
