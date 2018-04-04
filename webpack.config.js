@@ -18,6 +18,12 @@ module.exports = {
     port: 4000,
     contentBase: path.resolve(__dirname, 'public')
   },
+  resolve: {
+    modules: [
+      path.join(__dirname, "client"),
+      "node_modules"
+    ]
+  },
   module: {
     rules: [
       {

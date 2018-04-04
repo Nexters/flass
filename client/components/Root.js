@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { INIT_GOOGLE_SERVICE } from 'ducks/Sign/signs';
 import SessionCheckBeforeRoute from './Auth/SessionCheckBeforeRoute';
 import FlassApp from './Flass/FlassApp';
 import SignInContainer from './Flass/Sign/SignIn/SignInComponent';
 import FlassViewContainer from './Flass/Link/FlassViewComponent';
 import ErrorComponent from './Error/ErrorComponent';
 import LoadingComponent from './Auth/Loading/LoadingComponent';
-import { INIT_GOOGLE_SERVICE } from '../ducks/Sign/signs';
 import '../css/base/global.scss';
 
 const propTypes = {
@@ -29,11 +29,11 @@ class Root extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/loading" component={ LoadingComponent } />
-          <Route path="/error" component={ ErrorComponent } />
-          <Route path="/user/login" exact component={ SignInContainer } />
-          <SessionCheckBeforeRoute path="/v/:id" component={ FlassViewContainer } />
-          <SessionCheckBeforeRoute path="/*" component={ FlassApp } />
+          <Route path="/loading" component={LoadingComponent} />
+          <Route path="/error" component={ErrorComponent} />
+          <Route path="/user/login" exact component={SignInContainer} />
+          <SessionCheckBeforeRoute path="/v/:id" component={FlassViewContainer} />
+          <SessionCheckBeforeRoute path="/*" component={FlassApp} />
         </Switch>
       </BrowserRouter>
     );
