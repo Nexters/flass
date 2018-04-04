@@ -51,15 +51,15 @@ const defaultProps = {};
 class FlassApp extends Component {
   render() {
     return (
-        <FlassAppBox>
-          <Drawer />
-          <AppBar
-            isLogin={ this.isUserLogin() }
-            onClickLogoutBtn={ this.signOutFlassService } />
-          <Content>
-            {this.renderContent()}
-          </Content>
-        </FlassAppBox>
+      <FlassAppBox>
+        <Drawer />
+        <AppBar
+          isLogin={ this.isUserLogin() }
+          onClickLogoutBtn={ this.signOutFlassService } />
+        <Content>
+          {this.renderContent()}
+        </Content>
+      </FlassAppBox>
     );
   }
 

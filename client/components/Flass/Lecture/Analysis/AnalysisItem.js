@@ -7,7 +7,6 @@ const propTypes = {};
 const defaultProps = {};
 
 class AnalysisItem extends Component {
-
   componentDidMount() {
     const myChart = new Chart(this.myChart, {
       type: 'bar',
@@ -50,7 +49,7 @@ class AnalysisItem extends Component {
   render() {
     return (
       <div>
-        <canvas id="myChart" width="300" height="200" ref={chart => this.myChart = chart} />
+        <canvas id="myChart" width="300" height="200" ref={ chart => this.myChart = chart } />
       </div>
     );
   }

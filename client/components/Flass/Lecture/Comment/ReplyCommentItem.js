@@ -21,20 +21,18 @@ const ReplyContent = styled.div`
 `;
 
 const propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.element.isRequired
 };
 
 const defaultProps = {};
 
-const ReplyComment = ({ component }) => {
-  return (
-    <ReplayCommentView>
-      <ReplyContent>
-        { component }
-      </ReplyContent>
-    </ReplayCommentView>
-  );
-};
+const ReplyComment = ({ component }) => (
+  <ReplayCommentView>
+    <ReplyContent>
+      { component }
+    </ReplyContent>
+  </ReplayCommentView>
+);
 
 ReplyComment.propTypes = propTypes;
 ReplyComment.defaultProps = defaultProps;

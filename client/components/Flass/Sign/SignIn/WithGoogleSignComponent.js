@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  LOGIN_GOOGLE_SERVICE
-} from '../../../../ducks/Sign/signs';
+import { LOGIN_GOOGLE_SERVICE } from '../../../../ducks/Sign/signs';
 import Google from '../../../../ducks/Google';
 
 const propTypes = {

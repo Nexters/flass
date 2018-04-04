@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import styled from 'styled-components';
 import color from '../../../../css/base/colors.scss';
-import {
-  LogoutIcon
-} from './icons';
+import { LogoutIcon } from './icons';
 
-const { func, shape, number, string } = PropTypes;
+const {
+  func, shape, number, string
+} = PropTypes;
 
 const FlassUserAppBarView = styled.div`
   overflow: auto;
@@ -41,7 +41,7 @@ const propTypes = {
   user: shape({
     id: number.isRequired,
     userName: string.isRequired,
-    email: string.isRequired,
+    email: string.isRequired
   }).isRequired,
   onClickLogoutBtn: func.isRequired
 };

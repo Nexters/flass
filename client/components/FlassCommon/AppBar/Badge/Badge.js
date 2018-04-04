@@ -7,7 +7,7 @@ import BadgeIcon from './images/appbar-badge.png';
 import BadgeHistory from './BadgeHistory';
 import {
   FETCH_BADGE_HISTORY,
-  TOGGLE_BADGE_HISTORY,
+  TOGGLE_BADGE_HISTORY
 } from '../../../../ducks/Flass/badges';
 import './Badge.scss';
 

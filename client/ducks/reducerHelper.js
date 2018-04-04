@@ -9,6 +9,4 @@ function createReducer(initialState, handlers) {
   };
 }
 
-export {
-  createReducer
-};
+export { createReducer };

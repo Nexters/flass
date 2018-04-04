@@ -13,7 +13,7 @@ import { INIT_GOOGLE_SERVICE } from '../ducks/Sign/signs';
 import '../css/base/global.scss';
 
 const propTypes = {
-  initGoogleAuthService: PropTypes.func.isRequired,
+  initGoogleAuthService: PropTypes.func.isRequired
 };
 
 class Root extends Component {

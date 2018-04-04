@@ -12,10 +12,10 @@ describe('<ReplyCommentItem />', () => {
       userName: 'leebobin',
       content: 'hello',
       isSelectedReply: false,
-      onSelectedReply,
+      onSelectedReply
     };
-    const component = <CommentItem {...props} />
-    const wrapper = shallow(<ReplyCommentItem component={component} />);
+    const component = <CommentItem { ...props } />;
+    const wrapper = shallow(<ReplyCommentItem component={ component } />);
     const actual = wrapper.find('img');
   });
 });

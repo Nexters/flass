@@ -64,5 +64,5 @@ export const FlassLectureStyled = {
       .tab-content {
         padding: 0 3rem;
       }
-  `,
+  `
 };

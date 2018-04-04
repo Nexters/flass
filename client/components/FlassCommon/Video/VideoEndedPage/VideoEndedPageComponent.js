@@ -34,21 +34,21 @@ class VideoEndedPageComponent extends Component {
 
     return (
       <StyledVideoEndedPage.Container
-        isOpen={isOpen}
-        styledProps={styledProps}>
+        isOpen={ isOpen }
+        styledProps={ styledProps }>
 
         <StyledVideoEndedPage.Title
-          styledProps={styledProps}>
+          styledProps={ styledProps }>
           강의를 모두 시청하였습니다.
         </StyledVideoEndedPage.Title>
 
         <StyledVideoEndedPage.ReplayBtn
-          styledProps={styledProps}
-          srcSet={ReplayBtnIcon}
-          onClick={this.onReplayBtnClick} />
+          styledProps={ styledProps }
+          srcSet={ ReplayBtnIcon }
+          onClick={ this.onReplayBtnClick } />
 
         <StyledVideoEndedPage.BtnLabel
-          styledProps={styledProps}>
+          styledProps={ styledProps }>
           다시 시청하기
         </StyledVideoEndedPage.BtnLabel>
 

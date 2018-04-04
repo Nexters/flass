@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Container
-} from './HeaderStyled';
+import { Container } from './HeaderStyled';
 
 const { func } = PropTypes;
 

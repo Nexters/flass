@@ -6,7 +6,9 @@ import autobind from 'autobind-decorator';
 import VideoTooltipComponent from './VideoTooltip/VideoTooltipComponent';
 import './VideoCustomQuizBarStyle.scss';
 
-const { number, string, oneOfType, arrayOf, shape, func, bool } = PropTypes;
+const {
+  number, string, oneOfType, arrayOf, shape, func, bool
+} = PropTypes;
 
 const propTypes = {
   onQuestionbarClick: func,

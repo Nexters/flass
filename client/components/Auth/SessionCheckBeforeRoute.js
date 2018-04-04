@@ -7,13 +7,13 @@ import LoadingComponent from './Loading/LoadingComponent';
 import { hashToObjectKey, queryToObjectKey } from '../../util/UrlUtil';
 import {
   CHECK_SESSION, LOGIN_CLASSTING_SERVICE,
-  setEntryPoint,
+  setEntryPoint
 } from '../../ducks/Sign/signs';
-import {
-  FETCH_USER
-} from '../../ducks/Flass/users';
+import { FETCH_USER } from '../../ducks/Flass/users';
 
-const { func, bool, shape, object } = PropTypes;
+const {
+  func, bool, shape, object
+} = PropTypes;
 
 const propTypes = {
   component: func.isRequired,
@@ -108,9 +108,9 @@ function mapDispatchToProps(dispatch) {
     checkSession: () => ({
       type: CHECK_SESSION
     }),
-    loginClasting: (accessToken) => ({
+    loginClasting: accessToken => ({
       type: LOGIN_CLASSTING_SERVICE,
-      accessToken,
+      accessToken
     }),
     fetchUser: () => ({
       type: FETCH_USER

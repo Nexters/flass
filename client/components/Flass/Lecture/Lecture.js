@@ -45,7 +45,9 @@ const TabTitle = styled.span`
   color: ${color['slate-grey']};
 `;
 
-const { string, func, shape, array, object, bool, number, oneOfType } = PropTypes;
+const {
+  string, func, shape, array, object, bool, number, oneOfType
+} = PropTypes;
 
 const propTypes = {
   fetchRequestLectureAll: func.isRequired,
@@ -57,7 +59,7 @@ const propTypes = {
     })
   }).isRequired,
   user: shape({
-    id: number,
+    id: number
   }).isRequired,
   lecture: shape({
     isLoading: bool,
@@ -154,7 +156,7 @@ class Lecture extends Component {
 
       <FlassLectureStyled.Wrapper>
         <Header
-          Title={ () => <Title title="Watching Video" />}
+          Title={ () => <Title title="Watching Video" /> }
           SubTitle={ () => null } />
 
         <FlassLectureStyled.Content>
@@ -211,7 +213,8 @@ class Lecture extends Component {
         title={
           tabTitle(
             '강의 정보',
-            selected === 1 ? contentImageActive : contentImage) }>
+            selected === 1 ? contentImageActive : contentImage
+) }>
         <Content
           title={ lecture.title }
           subject={ lecture.subject }
@@ -223,7 +226,8 @@ class Lecture extends Component {
         title={
           tabTitle(
             `학생 질문 - ${comment.comments.length}`,
-            selected === 2 ? commentImageActive : commentImage) }>
+            selected === 2 ? commentImageActive : commentImage
+) }>
         <Comment lectureId={ lectureIdFromReducer } />
       </Tab>
       {
@@ -231,8 +235,10 @@ class Lecture extends Component {
           <Tab
             eventKey={ 3 }
             title={
-              tabTitle('분석',
-              selected === 3 ? analysisImageActive : analysisImage) }>
+              tabTitle(
+'분석',
+              selected === 3 ? analysisImageActive : analysisImage
+) }>
             <Analysis />
           </Tab>
         ) : null

@@ -5,7 +5,9 @@ import autobind from 'autobind-decorator';
 import { QuizEditMultipleChoice } from './QuizEditMultipleChoiceStyled';
 import QuizEditSingleChoiceComponent from './QuizEditSingleChoice/QuizEditSingleChoiceComponent';
 
-const { func, shape, arrayOf, string, bool, number, oneOfType } = PropTypes;
+const {
+  func, shape, arrayOf, string, bool, number, oneOfType
+} = PropTypes;
 
 const propTypes = {
   decreaseNumOfQuestion: func.isRequired,
@@ -133,16 +135,14 @@ class QuizEditMultipleChoiceComponent extends Component {
     for (let i = 0; i < numOfChoice; i += 1) {
       const { isAnswer, choiceTextValue } = SingleChoiceValues[i];
 
-      choices.push(
-        <QuizEditSingleChoiceComponent
-          key={ i }
-          isChecked={ isAnswer }
-          isEdit={ isEdit }
-          quizIndex={ i }
-          choiceTextValue={ choiceTextValue }
-          onCheckboxClick={ this.onCheckboxClick }
-          onChoiceInputChange={ this.onChoiceInputChange } />
-      );
+      choices.push(<QuizEditSingleChoiceComponent
+        key={ i }
+        isChecked={ isAnswer }
+        isEdit={ isEdit }
+        quizIndex={ i }
+        choiceTextValue={ choiceTextValue }
+        onCheckboxClick={ this.onCheckboxClick }
+        onChoiceInputChange={ this.onChoiceInputChange } />);
     }
 
     return choices;

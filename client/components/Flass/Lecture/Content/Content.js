@@ -34,18 +34,20 @@ const propTypes = {
   title: PropTypes.string,
   subject: PropTypes.string,
   content: PropTypes.string,
-  textbookRange: PropTypes.string,
+  textbookRange: PropTypes.string
 };
 
 const defaultProps = {
   title: '',
   subject: '',
   content: '',
-  textbookRange: '',
+  textbookRange: ''
 };
 
 const Content = props => {
-  const { title, subject, content, textbookRange } = props;
+  const {
+    title, subject, content, textbookRange
+  } = props;
   return (
     <LectureContent>
       <Row className="show-grid">

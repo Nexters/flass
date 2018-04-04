@@ -42,7 +42,8 @@ class GoogleLogin extends Component {
           <span className="googleLoginMessage">유튜브 업로드를 위해 구글 로그인하세요.</span>
           <Button
             color="#9abf32"
-            onClick={ goToGoogleAuthPage }>로그인</Button>
+            onClick={ goToGoogleAuthPage }>로그인
+          </Button>
         </div>
       </div>
     );

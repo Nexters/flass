@@ -18,7 +18,7 @@ import {
   FAIL_UPLOAD_QUESTIONS
 } from './uploadInsertionQuizzes';
 import { API_ROOT, API_ROOT_FRONT } from '../../config/EnvironmentConfig';
-import {createReducer} from '../reducerHelper';
+import { createReducer } from '../reducerHelper';
 
 export const SET_STEP = 'SET_STEP';
 export const SET_UPLOAD_METHOD = 'SET_UPLOAD_METHOD';
@@ -73,17 +73,17 @@ export const handleURLCheck = videoURL => (dispatch => {
   let urlStatus = FAIL_URL;
   let thumbURL = '';
   Google.getYoutubeThumbnail(youtubeVideoId)
-  .then(({ result }) => {
-    if (result.pageInfo.totalResults == 1) {
-      urlStatus = SUCC_URL;
+    .then(({ result }) => {
+      if (result.pageInfo.totalResults == 1) {
+        urlStatus = SUCC_URL;
 
-      const thumbnails = result.items[0].snippet.thumbnails;
-      thumbURL = getBestResolutionThumbnail(thumbnails);
-      dispatch(setVideoURL(videoURL));
-      dispatch(setThumbURL(thumbURL));
-    }
-    dispatch(setURLStatus(urlStatus));
-  });
+        const thumbnails = result.items[0].snippet.thumbnails;
+        thumbURL = getBestResolutionThumbnail(thumbnails);
+        dispatch(setVideoURL(videoURL));
+        dispatch(setThumbURL(thumbURL));
+      }
+      dispatch(setURLStatus(urlStatus));
+    });
 });
 
 const getBestResolutionThumbnail = thumbnails => {
@@ -172,8 +172,10 @@ export const uploadYoutubeVideo = file => (dispatch => {
     dispatch(setUploadStatus(COMPLETED));
     dispatch(setURLStatus(SUCC_URL));
   };
-  Google.uploadVideo(file, handleUploading, handleUploadingFinished,
-    handleProcessing, handleProcessingFinished);
+  Google.uploadVideo(
+    file, handleUploading, handleUploadingFinished,
+    handleProcessing, handleProcessingFinished
+  );
 });
 
 export const UPLOAD_LECTURE_AND_QUESTIONS = 'UPLOAD_LECTURE_AND_QUESTIONS';
@@ -243,22 +245,22 @@ const UploadReducer = {
   }),
   [INIT_UPLOAD_STATES]: (state, action) => ({
     ...initialState
-  }),
+  })
 };
 
 export default createReducer(initialState, {
-  ...UploadReducer,
+  ...UploadReducer
 });
 
 function* uploadLectureAndQuestions({
-                                      questionState,
-                                      title,
-                                      description,
-                                      subject,
-                                      textbook,
-                                      videoURL,
-                                      thumbURL
-                                    }) {
+  questionState,
+  title,
+  description,
+  subject,
+  textbook,
+  videoURL,
+  thumbURL
+}) {
   try {
     const lectureBody = yield call(LectureBodyAdapter.upload, {
       questionState,
@@ -279,7 +281,7 @@ function* uploadLectureAndQuestions({
     yield put({
       type: SUCCESS_UPLOAD_QUESTIONS,
       payload: {
-        lectureUrl: urlResponse.id,
+        lectureUrl: urlResponse.id
       }
     });
   } catch (error) {

@@ -1,8 +1,6 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
-import {
-  createReducer
-} from '../reducerHelper';
+import { createReducer } from '../reducerHelper';
 import { dateTimeFormat } from '../../util/TimeUtil';
 import logger from '../../util/LogUtil';
 import agent from '../agent';

@@ -21,13 +21,11 @@ class RulerComponent extends Component {
     space.push(<div className="indicator-bar-ruler__first" key="first">first</div>);
 
     for (let i = 0; i < NUM_OF_RULER_SPACING; i += 1) {
-      space.push(
-        <div className="indicator-bar-ruler__space" key={ i } >
-          <div className="indicator-bar-ruler__digit">
-            { i }
-          </div>
+      space.push(<div className="indicator-bar-ruler__space" key={ i } >
+        <div className="indicator-bar-ruler__digit">
+          { i }
         </div>
-      );
+                 </div>);
     }
 
     return space;

@@ -30,6 +30,4 @@ const QuestionResDataAdapter = {
   }
 };
 
-export {
-  QuestionResDataAdapter
-};
+export { QuestionResDataAdapter };

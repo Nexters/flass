@@ -5,7 +5,7 @@ import { SingleChoice } from './SingleChoiceStyled';
 const propTypes = {
   answer: PropTypes.string.isRequired,
   userAnswers: PropTypes.array.isRequired,
-  isCorrect: PropTypes.bool.isRequired,
+  isCorrect: PropTypes.bool.isRequired
 };
 
 const defaultProps = {};
@@ -16,7 +16,7 @@ class SingleChoiceComponent extends Component {
     return (
       <SingleChoice.Wrapper>
         <SingleChoice.Header>
-          <SingleChoice.Dot isCorrect={ isCorrect }>{''}</SingleChoice.Dot>
+          <SingleChoice.Dot isCorrect={ isCorrect } />
           <SingleChoice.Title isCorrect={ isCorrect }>
             { answer }
           </SingleChoice.Title>

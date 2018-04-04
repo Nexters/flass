@@ -4,7 +4,9 @@ import classNames from 'classnames';
 
 import './VideoButtonStyle.scss';
 
-const { func, string, number, oneOfType, arrayOf } = PropTypes;
+const {
+  func, string, number, oneOfType, arrayOf
+} = PropTypes;
 
 const propTypes = {
   onButtonClick: func.isRequired,

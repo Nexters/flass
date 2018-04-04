@@ -64,7 +64,9 @@ const BtnReply = styled.a`
   float: right;
 `;
 
-const { number, string, bool, object, func, oneOfType } = PropTypes;
+const {
+  number, string, bool, object, func, oneOfType
+} = PropTypes;
 
 const propTypes = {
   id: oneOfType([number, string]).isRequired,
@@ -96,8 +98,10 @@ class CommentItem extends Component {
   }
 
   render() {
-    const { isAdmin, userName, content, createdAt,
-            isReply, replyCount, like, isSelectedReply, onSelectedReply } = this.props;
+    const {
+      isAdmin, userName, content, createdAt,
+      isReply, replyCount, like, isSelectedReply, onSelectedReply
+    } = this.props;
     const { toggleMenu, toggleHeart } = this.state;
 
     return (
@@ -119,7 +123,8 @@ class CommentItem extends Component {
           { createdAt } {!isReply &&
           <BtnReply onClick={ onSelectedReply }>{isSelectedReply
           ? `설명글 (${replyCount})`
-          : `설명글 (${replyCount})`}</BtnReply>}
+          : `설명글 (${replyCount})`}
+          </BtnReply>}
         </Bottom>
       </LectureCommentItem>
     );

@@ -4,7 +4,9 @@ import autobind from 'autobind-decorator';
 
 import { CompletedSingleChoice } from './VideoModalCompletedSingleChoiceStyled';
 
-const { shape, bool, string, number } = PropTypes;
+const {
+  shape, bool, string, number
+} = PropTypes;
 
 const propTypes = {
   singleChoiceValue: shape({

@@ -1,7 +1,5 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import {
-  createReducer
-} from '../reducerHelper';
+import { createReducer } from '../reducerHelper';
 import logger from '../../util/LogUtil';
 import agent from '../agent';
 
@@ -43,7 +41,7 @@ export function* makeSelectedAnswer(answer) {
   const user = yield call(agent.User.byId, answer['user_id']);
   return {
     ...answer,
-    userName: user.username,
+    userName: user.username
   };
 }
 

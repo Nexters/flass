@@ -21,7 +21,7 @@ export const AnalysisFetchHOC = WrappedComponent => {
       );
     }
 
-    _updateLectureAnalysis = async (selectedIndex = 0) => {
+    _updateLectureAnalysis = async(selectedIndex = 0) => {
       const { lectureId } = this.props;
       if (lectureId !== -1) {
         await this.props.requestLectureAnalysisAction(lectureId, selectedIndex);

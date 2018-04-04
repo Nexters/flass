@@ -9,7 +9,9 @@ import AppBar from '../../FlassCommon/AppBar/AppBar';
 import Lecture from '../Lecture/Lecture';
 import { LOGOUT } from '../../../ducks/Sign/signs';
 
-const { shape, string, object, number, func } = PropTypes;
+const {
+  shape, string, object, number, func
+} = PropTypes;
 
 const propTypes = {
   match: shape({
@@ -39,18 +41,17 @@ class FlassViewComponent extends Component {
     }
 
     return (
-        <div>
-          <Drawer />
-          <AppBar
-            isLogin={ this.isUserLogin() }
-            onClickLogoutBtn={ this.signOutFlassService } />
+      <div>
+        <Drawer />
+        <AppBar
+          isLogin={ this.isUserLogin() }
+          onClickLogoutBtn={ this.signOutFlassService } />
 
-          <Content>
-            <Lecture
-              lectureIdFromLink={ parseInt(id) }
-            />
-          </Content>
-        </div>
+        <Content>
+          <Lecture
+            lectureIdFromLink={ parseInt(id) } />
+        </Content>
+      </div>
     );
   }
 

@@ -1,15 +1,11 @@
 import { call, fork, take, select, put, cancel, takeLatest, takeEvery } from 'redux-saga/effects';
 
-const setItemToLocalStorage = (key, value) => {
-  return new Promise(resolve => {
-    localStorage.setItem(key, value);
-    return resolve();
-  });
-};
+const setItemToLocalStorage = (key, value) => new Promise(resolve => {
+  localStorage.setItem(key, value);
+  return resolve();
+});
 
-const getItemFromLocalStorage = key => {
-  return new Promise(resolve => resolve(localStorage.getItem(key)));
-};
+const getItemFromLocalStorage = key => new Promise(resolve => resolve(localStorage.getItem(key)));
 
 function createLazily(msec = 1000) {
   let ongoing;

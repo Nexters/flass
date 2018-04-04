@@ -20,7 +20,7 @@ const Tab = styled.li`
 
 const propTypes = {
   badgeItems: PropTypes.array.isRequired,
-  fetchBadgeHistory: PropTypes.func.isRequired,
+  fetchBadgeHistory: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
@@ -45,11 +45,9 @@ class BadgeHistory extends Component {
   renderChildren() {
     const { badgeItems } = this.props;
 
-    return _.map(badgeItems, item => {
-      return (
-        <BadgeItem key={item.id} name={item.name} content={item.content} />
-      );
-    });
+    return _.map(badgeItems, item => (
+      <BadgeItem key={ item.id } name={ item.name } content={ item.content } />
+    ));
   }
 
   render() {

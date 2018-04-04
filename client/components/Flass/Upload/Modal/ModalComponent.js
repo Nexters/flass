@@ -39,7 +39,7 @@ class ModalComponent extends Component {
               </Modal.Btn>
             </Modal.Body>
 
-            <Modal.Hr>{ ' ' }</Modal.Hr>
+            <Modal.Hr />
 
             <Modal.Footer>
               <Modal.CompleteBtn

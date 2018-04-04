@@ -58,15 +58,19 @@ const getUpdatedComment = (func, state, parentId, id) => {
       ...state,
       commentchild: {
         ...state.commentchild,
-        [parentId]: _.map(state.commentchild[parentId],
-          comment => (comment.id === id ? func(comment) : comment))
+        [parentId]: _.map(
+          state.commentchild[parentId],
+          comment => (comment.id === id ? func(comment) : comment)
+        )
       }
     };
   }
   return {
     ...state,
-    comments: _.map(state.comments,
-      comment => (comment.id === id ? func(comment) : comment))
+    comments: _.map(
+      state.comments,
+      comment => (comment.id === id ? func(comment) : comment)
+    )
   };
 };
 
@@ -138,7 +142,7 @@ export function* fetchComment({ lectureId }) {
     yield put({
       type: FETCH_COMMENT_SUCCESS,
       comments: response.comments,
-      commentchild: response.commentchild,
+      commentchild: response.commentchild
     });
   } catch (err) {
     yield put({
@@ -148,7 +152,9 @@ export function* fetchComment({ lectureId }) {
   }
 }
 
-export function* addComment({ tempId, commentId, lectureId, userId, userName, content }) {
+export function* addComment({
+  tempId, commentId, lectureId, userId, userName, content
+}) {
   const tempCommentId = tempId || Date.now().toString();
   yield put({
     type: ADD_READY_COMMENT,
@@ -168,7 +174,7 @@ export function* addComment({ tempId, commentId, lectureId, userId, userName, co
       type: ADD_COMMENT_SUCCESS,
       parentId: commentId,
       id: tempCommentId,
-      newComment: res,
+      newComment: res
     });
   } catch (err) {
     yield put({
@@ -192,7 +198,7 @@ function* updateComment({ parentId, commentId, content }) {
   } catch (err) {
     yield put({
       type: UPDATE_COMMENT_ERROR,
-      message: err.message,
+      message: err.message
     });
   }
 }

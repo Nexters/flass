@@ -24,7 +24,9 @@ import {
   EndedPageOnUploadPage
 } from './VideoStyled';
 
-const { string, oneOfType, arrayOf, func, number, bool, shape } = PropTypes;
+const {
+  string, oneOfType, arrayOf, func, number, bool, shape
+} = PropTypes;
 
 const propTypes = {
   VideoBarClassName: oneOfType([string, arrayOf(string)]),

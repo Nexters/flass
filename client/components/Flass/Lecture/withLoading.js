@@ -38,7 +38,7 @@ const withLoadingComponent = (props, options, WrappedComponent) => {
       </Wrapper>
     );
   }
-  return <WrappedComponent {...props} />;
+  return <WrappedComponent { ...props } />;
 };
 
 withLoadingComponent.propTypes = propTypes;

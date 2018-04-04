@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import color from '../../../css/base/colors.scss';
-import {
-  DeleteIcon
-} from './icons';
+import { DeleteIcon } from './icons';
 
 const Item = styled.div`
   position: relative;
@@ -136,8 +134,10 @@ const defaultProps = {
 };
 
 const GridItem = props => {
-  const { id, title, thumbnailUrl, createdAt,
-    questionCount, textbookRange, onClickDeleteBtn } = props;
+  const {
+    id, title, thumbnailUrl, createdAt,
+    questionCount, textbookRange, onClickDeleteBtn
+  } = props;
 
   return (
     <Item src={ thumbnailUrl }>
@@ -146,8 +146,7 @@ const GridItem = props => {
           <Header>{ `수업범위: ${textbookRange}` }</Header>
           <DeleteBtn
             srcSet={ DeleteIcon }
-            onClick={ () => onClickDeleteBtn(id) }
-          />
+            onClick={ () => onClickDeleteBtn(id) } />
         </HeaderWrapper>
         <Link to={ `/lecture/${id}` }>
           <Title>

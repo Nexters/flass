@@ -8,7 +8,9 @@ import { VideoPlayer } from './VideoPlayerStyled';
 import logger from '../../../../util/LogUtil';
 import './VideoPlayerStyles.scss';
 
-const { func, string, number, bool } = PropTypes;
+const {
+  func, string, number, bool
+} = PropTypes;
 
 const propTypes = {
   onProgress: func.isRequired,

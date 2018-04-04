@@ -5,7 +5,7 @@ import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/ef
 import agent from '../agent';
 import {
   FETCH_BADGE_HISTORY_SUCCESS, FETCH_READY_BADGE_HISTORY,
-  fetchBadgeHistory,
+  fetchBadgeHistory
 } from './badges';
 
 describe('BadgeSagas ', () => {
@@ -15,9 +15,11 @@ describe('BadgeSagas ', () => {
 
     expect(gen.next().value).to.deep.equal(put({ type: FETCH_READY_BADGE_HISTORY }));
     expect(gen.next().value).to.deep.equal(call(agent.Badge.byType, param.badgeType));
-    expect(gen.next().value).to.deep.equal(put({ type: FETCH_BADGE_HISTORY_SUCCESS,
+    expect(gen.next().value).to.deep.equal(put({
+      type: FETCH_BADGE_HISTORY_SUCCESS,
       badgeItems: undefined,
-      badgeType: param.badgeType }));
+      badgeType: param.badgeType
+    }));
     expect(gen.next().done).to.equal(true);
   });
 });

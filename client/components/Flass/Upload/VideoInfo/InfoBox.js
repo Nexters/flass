@@ -10,7 +10,6 @@ const propTypes = {
 };
 
 class InfoBox extends Component {
-
   render() {
     const { videoInfo, onChange } = this.props;
 

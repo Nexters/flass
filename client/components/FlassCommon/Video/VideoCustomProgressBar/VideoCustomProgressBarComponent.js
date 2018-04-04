@@ -9,7 +9,9 @@ import VideoCustomQuizBarComponent from './VideoCustomQuizBarComponent';
 import { VideoProgressBar } from './VideoCustomProgressBarStyled';
 import { convertSecsToPercentage } from '../VideoUtils';
 
-const { func, number, string, oneOfType, arrayOf, bool, shape } = PropTypes;
+const {
+  func, number, string, oneOfType, arrayOf, bool, shape
+} = PropTypes;
 
 const propTypes = {
   VideoBarClassName: oneOfType([string, arrayOf(string)]),
@@ -87,7 +89,9 @@ class VideoCustomProgressBarComponent extends Component {
   }
 
   render() {
-    const { played, loaded, duration, ismouseover } = this.state;
+    const {
+      played, loaded, duration, ismouseover
+    } = this.state;
     const {
       VideoBarClassName,
       VideoPlayedBarClassName,

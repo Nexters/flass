@@ -2,9 +2,7 @@ import { call, fork, take, select, put, cancel, takeLatest, takeEvery } from 're
 import _ from 'lodash';
 import { createReducer } from '../reducerHelper';
 import agent from '../agent';
-import {
-  getItemFromLocalStorage
-} from '../sagasHelper';
+import { getItemFromLocalStorage } from '../sagasHelper';
 
 export const FETCH_USER = 'FETCH_USER';
 export const FETCH_READY_USER = 'FETCH_READY_USER';

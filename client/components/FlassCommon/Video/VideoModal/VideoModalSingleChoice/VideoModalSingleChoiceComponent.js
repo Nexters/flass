@@ -4,7 +4,9 @@ import autobind from 'autobind-decorator';
 
 import { VideoModalSingleChoice } from './VideoModalSingleChoiceStyled';
 
-const { func, shape, string, bool, number } = PropTypes;
+const {
+  func, shape, string, bool, number
+} = PropTypes;
 
 const propTypes = {
   onCheckboxClick: func.isRequired,

@@ -29,14 +29,16 @@ export function completeAddingQuestion() {
 }
 
 export const SAVE_MULTIPLE_CHOICE_QUESTION = 'SAVE_MULTIPLE_CHOICE_QUESTION';
-export function saveMultipleChoiceQuestion({  numOfQuestion,
-                                             numOfChoice,
-                                             checkedQuizIndex,
-                                             TitleInputValue,
-                                             SingleChoiceValues,
-                                             duration,
-                                             played,
-                                             secsOfQuiz }) {
+export function saveMultipleChoiceQuestion({
+  numOfQuestion,
+  numOfChoice,
+  checkedQuizIndex,
+  TitleInputValue,
+  SingleChoiceValues,
+  duration,
+  played,
+  secsOfQuiz
+}) {
   return {
     type: SAVE_MULTIPLE_CHOICE_QUESTION,
     payload: {
@@ -213,17 +215,17 @@ function findQuestionSecsStateAndTextStateByLabel(questionSecsStateArray, questi
   let index = -1;
 
   const secsStateOfFocusedQuestion = List(questionSecsStateArray)
-  .filter(({ label }, i) => {
-    if (label === targetLabel) {
-      index = i;
+    .filter(({ label }, i) => {
+      if (label === targetLabel) {
+        index = i;
 
-      return true;
-    }
+        return true;
+      }
 
-    return false;
-  })
-  .map(secsState => ({ ...secsState, isFocused: true }))
-  .toArray()[0];
+      return false;
+    })
+    .map(secsState => ({ ...secsState, isFocused: true }))
+    .toArray()[0];
 
   const textStateOfFocusdQuestion = findQuestionTextStateByLabel(questionTextStateArray, index);
 
@@ -239,8 +241,8 @@ const editQuestionReducer = {
     const { EditedTextStateOfFocusedQuestion } = action.payload;
     const { indexOfQuestion } = EditedTextStateOfFocusedQuestion;
     const UpdatedQuizState = List(state.quizState)
-    .update(indexOfQuestion, () => EditedTextStateOfFocusedQuestion)
-    .toArray();
+      .update(indexOfQuestion, () => EditedTextStateOfFocusedQuestion)
+      .toArray();
 
     return {
       ...state,
@@ -255,17 +257,17 @@ const deleteQuestionReducer = {
     const { indexOfQuestion } = action.payload;
 
     const UpdatedQuizState = List(state.quizState)
-    .delete(indexOfQuestion)
-    .toArray();
+      .delete(indexOfQuestion)
+      .toArray();
     const UpdatedQuizSecsState = List(state.questionSecsStateArray)
-    .delete(indexOfQuestion)
-    .map((secsState, i) => ({
-      ...secsState,
-      indexOfQuestion: i + 1,
-      label: `Q${i + 1}`,
-      isFocused: false
-    }))
-    .toArray();
+      .delete(indexOfQuestion)
+      .map((secsState, i) => ({
+        ...secsState,
+        indexOfQuestion: i + 1,
+        label: `Q${i + 1}`,
+        isFocused: false
+      }))
+      .toArray();
 
     return {
       ...state,

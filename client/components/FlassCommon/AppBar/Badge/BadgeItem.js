@@ -24,14 +24,12 @@ const propTypes = {
 
 const defaultProps = {};
 
-const BadgeItem = ({ name, content }) => {
-  return (
-    <BadgeItemView>
-      <Name>{name}</Name>
-      <Content>{content}</Content>
-    </BadgeItemView>
-  );
-};
+const BadgeItem = ({ name, content }) => (
+  <BadgeItemView>
+    <Name>{name}</Name>
+    <Content>{content}</Content>
+  </BadgeItemView>
+);
 
 BadgeItem.propTypes = propTypes;
 BadgeItem.defaultProps = defaultProps;

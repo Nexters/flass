@@ -4,7 +4,9 @@ import autobind from 'autobind-decorator';
 
 import { QuizEditSingleChoice } from './QuizEditSingleChoiceStyled';
 
-const { string, bool, func, number } = PropTypes;
+const {
+  string, bool, func, number
+} = PropTypes;
 
 const propTypes = {
   onCheckboxClick: func.isRequired,
@@ -51,7 +53,7 @@ class QuizEditSingleChoiceComponent extends Component {
   @autobind
   renderCheckComponent({ isChecked }) {
     if (isChecked) {
-      return <QuizEditSingleChoice.Check>{ ' ' }</QuizEditSingleChoice.Check>;
+      return <QuizEditSingleChoice.Check />;
     }
 
     return ' ';

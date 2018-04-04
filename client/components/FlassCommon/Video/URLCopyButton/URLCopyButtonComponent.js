@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import autobind from 'autobind-decorator';
 import PropTypes from 'prop-types';
 import Copy from 'copy-to-clipboard';
-import {
-  IconImg
-} from './icons';
+import { IconImg } from './icons';
 import {
   Wrapper,
   Icon

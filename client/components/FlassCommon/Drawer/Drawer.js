@@ -70,24 +70,24 @@ class Drawer extends Component {
         </Link>
         <Route
           path="/home"
-          children={({ match }) =>
+          children={ ({ match }) =>
             (
               <FlassMenu
                 to="/home" >
                 <FlassMenuImage alt="" width="17" src={ match ? SideHomeActive : SideHome } />
                 {match && <ClickLine />}
               </FlassMenu>
-            )} />
+            ) } />
         <Route
           path="/upload"
-          children={({ match }) =>
+          children={ ({ match }) =>
             (
               <FlassMenu
                 to="/upload" >
                 <FlassMenuImage alt="" width="17" src={ match ? SideUploadActive : SideUpload } />
                 {match && <ClickLine />}
               </FlassMenu>
-            )} />
+            ) } />
       </div>
     );
   }

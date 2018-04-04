@@ -41,7 +41,7 @@ const propTypes = {
   user: object.isRequired,
   items: array.isRequired,
   fetchRequestMyChannelItems: func.isRequired,
-  deleteMyChannelItem: func.isRequired,
+  deleteMyChannelItem: func.isRequired
 };
 
 const defaultProps = {
