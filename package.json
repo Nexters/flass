@@ -14,8 +14,8 @@
   },
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "mocha-test": "mocha --compilers js:./client/spec/compiler.js --require babel-polyfill ./client/css/styled/helper.js ./client/**/*.spec.js",
-    "test": "bundlesize",
+    "test": "mocha --compilers js:./client/spec/compiler.js --require babel-polyfill ./client/css/styled/helper.js ./client/**/*.spec.js",
+    "bundlesize-test": "bundlesize",
     "eslint": "eslint client/ --fix",
     "test:watch": "npm run test -- --watch",
     "dev": "cross-env BACK_END='local' webpack-dev-server --mode=development --history-api-fallback --open --host 0.0.0.0",
