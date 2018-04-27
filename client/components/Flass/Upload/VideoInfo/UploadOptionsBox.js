@@ -34,10 +34,12 @@ class UploadOptionsBox extends Component {
           <Button
             color="#9abf32"
             margin="0 1.78rem 0 0"
-            onClick={ selectFileMethod }>파일 업로드</Button>
+            onClick={ selectFileMethod }>파일 업로드
+          </Button>
           <Button
             color="#9abf32"
-            onClick={ selectURLMethod }>유튜브 URL</Button>
+            onClick={ selectURLMethod }>유튜브 URL
+          </Button>
         </div>
       </div>
     );

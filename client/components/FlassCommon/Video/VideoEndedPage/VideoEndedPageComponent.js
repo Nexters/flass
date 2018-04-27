@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 
 import { StyledVideoEndedPage } from './VideoEndedPageStyled';
 
-import ReplayBtnIcon from '../../../../../public/icons/replay-btn.png';
+import ReplayBtnIcon from './images/replay-btn.png';
 
 const { func } = PropTypes;
 

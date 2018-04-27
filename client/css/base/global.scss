@@ -1,7 +1,24 @@
+@import './normalize.css';
+
 @font-face {
   font-family: "NotoSansCJKkr-Medium";
-  src: url("../../../public/fonts/NotoSansCJKkr-Medium.woff");
+  src: url("../fonts/NotoSansCJKkr-Medium.woff");
 }
+
+html, body {
+  font-size: 13px;
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+body {
+  font-family: "NotoSansCJKkr-Medium", "Noto Sans", "Noto Sans CJK KR", sans-serif;
+  overflow-x: hidden;
+}
+
 
 body {
   font-family: "NotoSansCJKkr-Medium", "Noto Sans", "Noto Sans CJK KR", sans-serif;

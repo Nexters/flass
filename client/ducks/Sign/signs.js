@@ -7,9 +7,7 @@ import {
   setItemToLocalStorage,
   getItemFromLocalStorage
 } from '../sagasHelper';
-import {
-  SET_USER
-} from '../Flass/users';
+import { SET_USER } from '../Flass/users';
 
 export const INIT_GOOGLE_SERVICE = 'INIT_GOOGLE_SERVICE';
 export const SUCCESS_INIT_GOOGLE_SERVICE = 'SUCCESS_INIT_GOOGLE_SERVICE';
@@ -63,26 +61,26 @@ const initialState = {
 };
 
 const initGoogleReducer = {
-  [INIT_GOOGLE_SERVICE]: (state) => ({
+  [INIT_GOOGLE_SERVICE]: state => ({
     ...state,
-    isGoogleChecking: true,
+    isGoogleChecking: true
   }),
-  [SUCCESS_INIT_GOOGLE_SERVICE]: (state) => ({
+  [SUCCESS_INIT_GOOGLE_SERVICE]: state => ({
     ...state,
-    isGoogleChecking: false,
+    isGoogleChecking: false
   }),
-  [LOGIN_GOOGLE_SERVICE]: (state) => ({
+  [LOGIN_GOOGLE_SERVICE]: state => ({
     ...state,
-    isGoogleChecking: true,
+    isGoogleChecking: true
   }),
   [SUCCESS_LOGIN_GOOGLE_SERVICE]: (state, { payload }) => ({
     ...state,
-    isGoogleChecking: false,
+    isGoogleChecking: false
   }),
-  [FAIL_LOGIN_FLASS_SERVICE]: (state) => ({
+  [FAIL_LOGIN_FLASS_SERVICE]: state => ({
     ...state,
-    isGoogleChecking: false,
-  }),
+    isGoogleChecking: false
+  })
 };
 
 const userSignInReducer = {
@@ -91,7 +89,7 @@ const userSignInReducer = {
     isUserSignedIn: true,
     id_token: payload.id_token,
     sessionValid: true
-  }),
+  })
 };
 
 const userSignOutReducer = {
@@ -133,7 +131,7 @@ export default createReducer(initialState, {
   ...userSignOutReducer,
   ...userIsSignedInReducer,
   ...entryPointReducer,
-  ...initGoogleReducer,
+  ...initGoogleReducer
 });
 
 function* initGoogleService() {

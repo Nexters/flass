@@ -4,16 +4,12 @@ import autobind from 'autobind-decorator';
 import { connect } from 'react-redux';
 import { STEP_1, STEP_2 } from '../../../ducks/constants';
 import * as actions from '../../../ducks/Upload/uploads';
-import {
-  INIT_QUESTION_STATES
-} from '../../../ducks/Upload/uploadInsertionQuizzes';
+import { INIT_QUESTION_STATES } from '../../../ducks/Upload/uploadInsertionQuizzes';
 import VideoInfo from './VideoInfo';
 import QuestionInsertionContainer from './QuestionInsertion/QuestionInsertionComponent';
 import SubHeader from './SubHeader/SubHeaderComponent';
 import './index.scss';
-import {
-  Container
-} from './styled';
+import { Container } from './styled';
 
 
 import {
@@ -179,7 +175,9 @@ const mapDispatchToProps = dispatch => ({
   resetVideo: () => dispatch(actions.resetVideo()),
   goToGoogleAuthPage: () => dispatch(actions.goToGoogleAuthPage()),
   uploadYoutubeVideo: file => dispatch(actions.uploadYoutubeVideo(file)),
-  uploadLectureAndQuestions: ({ questionState, title, description, subject, textbook, videoURL, thumbURL }) => {
+  uploadLectureAndQuestions: ({
+    questionState, title, description, subject, textbook, videoURL, thumbURL
+  }) => {
     dispatch({
       type: actions.UPLOAD_LECTURE_AND_QUESTIONS,
       questionState,

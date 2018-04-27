@@ -6,7 +6,7 @@ import './styles.scss';
 const { string, element } = PropTypes;
 
 const propTypes = {
-  title: string.isRequired,
+  title: string.isRequired
 };
 const defaultProps = {
 };

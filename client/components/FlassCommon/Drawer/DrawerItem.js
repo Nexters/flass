@@ -4,12 +4,12 @@ import './DrawerItem.scss';
 
 const propTypes = {
   icon: PropTypes.object,
-  children: PropTypes.string,
+  children: PropTypes.string
 };
 
 const defaultProps = {
   icon: null,
-  children: null,
+  children: null
 };
 
 class DrawerItem extends Component {

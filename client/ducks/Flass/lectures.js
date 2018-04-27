@@ -100,7 +100,7 @@ export function* fetchLectureAll({ lectureId }) {
 
     yield [
       put({ type: FETCH_QUESTION, lectureId }),
-      put({ type: FETCH_VIDEO, url: lecture && lecture.url }),
+      put({ type: FETCH_VIDEO, url: lecture && lecture.url })
     ];
     yield put({ type: FETCH_LECTURE_SUCCESS,  lecture });
   } catch (err) {
@@ -123,7 +123,9 @@ export function* updateStateAfterSolveQuestion({ newState }) {
 
   yield [put({
     type: UPDATE_SOLVED_QUESTION,
-    payload: { id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
+    payload: {
+      id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer
+    }
   }), put({
     type: UPDATE_SEARCHABLE_SECS,
     searchableSecs

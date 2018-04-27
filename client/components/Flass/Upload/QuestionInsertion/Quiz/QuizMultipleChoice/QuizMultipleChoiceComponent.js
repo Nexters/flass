@@ -122,17 +122,15 @@ class QuizMultipleChoiceComponent extends Component {
     for (let i = 0; i < numOfChoice; i += 1) {
       const { choiceTextValue } = SingleChoiceValues[i];
 
-      choices.push(
-        <QuizSingleChoiceComponent
-          numberingKeyword={ NUMBERING_KEYWORD[i] }
-          key={ i }
-          choiceIndex={ i }
-          choiceTextValue={ choiceTextValue }
-          isChecked={ this.isCheckedQuizIndexSameWithIndex(i) }
-          onCheckboxClick={ this.onCheckboxClick }
-          onChoiceInputChange={ this.onSingleChoiceInputChange }
-          onSingleChoiceDeleteBtnClick={ this.onSingleChoiceDeleteBtnClick } />
-      );
+      choices.push(<QuizSingleChoiceComponent
+        numberingKeyword={ NUMBERING_KEYWORD[i] }
+        key={ i }
+        choiceIndex={ i }
+        choiceTextValue={ choiceTextValue }
+        isChecked={ this.isCheckedQuizIndexSameWithIndex(i) }
+        onCheckboxClick={ this.onCheckboxClick }
+        onChoiceInputChange={ this.onSingleChoiceInputChange }
+        onSingleChoiceDeleteBtnClick={ this.onSingleChoiceDeleteBtnClick } />);
     }
 
     return choices;
@@ -212,7 +210,9 @@ class QuizMultipleChoiceComponent extends Component {
 
   @autobind
   onRegisterBtnClick() {
-    const { numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = this.state;
+    const {
+      numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues
+    } = this.state;
 
     if (this.isMultiChoiceFormFilled()) {
       this.props.setPlayingState(true);

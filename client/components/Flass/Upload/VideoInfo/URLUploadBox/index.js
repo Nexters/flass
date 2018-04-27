@@ -14,7 +14,9 @@ const propTypes = {
 
 class URLUploadBox extends Component {
   render() {
-    const { back, urlStatus, handleURLCheck, thumbURL } = this.props;
+    const {
+      back, urlStatus, handleURLCheck, thumbURL
+    } = this.props;
 
     switch(urlStatus) {
       case SUCC_URL:

@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import chai, { expect } from 'chai';
 import { all, call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
-import { fetchLectureAll } from '../sagas';
 import { makeSelectedAnswer, requestLectureAnalysis, SUCCESS_REQUEST_LECTURE_ANALYSIS } from './analysises';
 import agent from '../agent';
 

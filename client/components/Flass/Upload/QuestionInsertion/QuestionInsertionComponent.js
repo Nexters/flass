@@ -21,7 +21,9 @@ import {
 } from '../../../../ducks/Upload/uploadInsertionQuizzes';
 import './QuestionInsertionComponentStyles.scss';
 
-const { func, string, bool, arrayOf, number, shape, oneOfType } = PropTypes;
+const {
+  func, string, bool, arrayOf, number, shape, oneOfType
+} = PropTypes;
 
 const propTypes = {
   saveMultipleChoiceQuestion: func.isRequired,
@@ -258,7 +260,9 @@ class QuestionInsertionComponent extends Component {
 
   @autobind
   saveMultipleChoiceQuestion(quizState) {
-    const { numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues } = quizState;
+    const {
+      numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues
+    } = quizState;
     const { duration, played, numOfQuestion } = this.state;
     const secsOfQuiz = (duration * played).toFixed(2);
     // const labelOfQuiz = this.makeQuestionTooltipLabel(numOfQuestion);

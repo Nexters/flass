@@ -9,11 +9,7 @@ import { isDevelop } from './config/EnvironmentConfig';
 
 export default function configureStore(initialState) {
   const sagaMiddleware = createSagaMiddleware();
-  const applyMiddlewares = isDevelop() ? composeWithDevTools(applyMiddleware(
-    sagaMiddleware, thunkMiddleware, createLogger()
-  )) : applyMiddleware(
-    sagaMiddleware, thunkMiddleware
-  );
+  const applyMiddlewares = isDevelop() ? composeWithDevTools(applyMiddleware(sagaMiddleware, thunkMiddleware, createLogger())) : applyMiddleware(sagaMiddleware, thunkMiddleware);
   const store = createStore(
     reducer,
     initialState,

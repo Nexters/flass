@@ -2,13 +2,9 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   entry: {
-    app: [
-      'babel-polyfill',
-      'react-hot-loader/patch',
-      './client/index'
-    ]
+    app: ['babel-polyfill', 'react-hot-loader/patch', './client/index']
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -18,34 +14,22 @@ module.exports = {
 
   devServer: {
     hot: true,
-    inline: true,
     host: 'localhost',
     port: 4000,
     contentBase: path.resolve(__dirname, 'public')
   },
+  resolve: {
+    modules: [
+      path.join(__dirname, "client"),
+      "node_modules"
+    ]
+  },
   module: {
-    // https://velopert.com/1492
     rules: [
-      /*  {
-       test: /\.js$/,
-       exclude: /node_modules/,
-       loader: 'eslint-loader',
-       enforce: 'pre',
-       query: {
-       confile: './.eslintrc-tmp',
-       },
-       }, */
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          plugins: [
-            'transform-decorators-legacy',
-            'transform-class-properties',
-            'transform-async-functions'
-          ]
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,
@@ -67,10 +51,15 @@ module.exports = {
           name: '[name].[ext]'
         }
       }
-    ],
+    ]
   },
-
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
   plugins: [
+    new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en|ko|ja|zh-cn)$/),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({

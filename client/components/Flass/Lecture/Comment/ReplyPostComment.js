@@ -12,18 +12,16 @@ const ReplayPostCommentView = styled.div`
 `;
 
 const propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.element.isRequired
 };
 
 const defaultProps = {};
 
-const ReplyPostComment = ({ component }) => {
-  return (
-    <ReplayPostCommentView>
-      { component }
-    </ReplayPostCommentView>
-  );
-};
+const ReplyPostComment = ({ component }) => (
+  <ReplayPostCommentView>
+    { component }
+  </ReplayPostCommentView>
+);
 
 ReplyPostComment.propTypes = propTypes;
 ReplyPostComment.defaultProps = defaultProps;

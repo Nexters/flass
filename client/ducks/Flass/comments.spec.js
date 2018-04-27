@@ -18,7 +18,7 @@ import {
   addComment,
   FETCH_COMMENT_ERROR,
   FETCH_COMMENT_SUCCESS, FETCH_READY_COMMENT,
-  fetchComment,
+  fetchComment
 } from './comments';
 
 describe('CommentSagas ', () => {

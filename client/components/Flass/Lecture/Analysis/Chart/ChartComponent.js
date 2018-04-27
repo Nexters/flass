@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 const propTypes = {
   labels: PropTypes.array.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired
 };
 const defaultProps = {};
 
@@ -68,9 +68,9 @@ class ChartComponent extends Component {
   componentWillReceiveProps(nextProps) {
   }
 
-  updateChart = (nextProps) => {
+  updateChart = nextProps => {
     const { labels, data } = nextProps;
-    if(!this.viewChart) {
+    if (!this.viewChart) {
       return;
     }
     this.viewChart.config.data = {

@@ -1,8 +1,6 @@
 import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
-import {
-  createReducer
-} from '../reducerHelper';
+import { createReducer } from '../reducerHelper';
 import agent from '../agent';
 import { QuestionResDataAdapter } from '../../ResponseDataAdapter';
 
@@ -15,10 +13,14 @@ export const ADD_QUESTION = 'ADD_QUESTION';
 
 export const UPDATE_SOLVED_QUESTION = 'UPDATE_SOLVED_QUESTION';
 
-export function updateSolvedQuestion({ id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }) {
+export function updateSolvedQuestion({
+  id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer
+}) {
   return {
     type: UPDATE_SOLVED_QUESTION,
-    payload: { id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
+    payload: {
+      id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer
+    }
   };
 }
 
@@ -40,13 +42,17 @@ const fetchQuestionReducer = {
 
 const updateSolvedQuestionReducer = {
   [UPDATE_SOLVED_QUESTION]: (state, action) => {
-    const { id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer } = action.payload;
+    const {
+      id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer
+    } = action.payload;
 
     return {
       ...state,
       solvedQuestionsState: _.concat(
         state.solvedQuestionsState,
-        { id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer }
+        {
+          id, indexOfQuestion, isCorrect, indexOfSelectedChoice, indexOfAnswer
+        }
       )
     };
   }

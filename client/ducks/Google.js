@@ -65,7 +65,7 @@ export default class Google {
           client_id: GOOGLE_CLIENT_KEY,
           scope: LOGIN_SCOPE
         })
-        .then(() => resolve());
+          .then(() => resolve());
       });
     });
   }
@@ -104,7 +104,7 @@ export default class Google {
       const user = auth.currentUser.get();
 
       user.reloadAuthResponse()
-          .then(response => resolve(response));
+        .then(response => resolve(response));
     });
   }
 
@@ -118,9 +118,11 @@ export default class Google {
     return auth.signOut();
   }
 
-  static uploadVideo(file,
+  static uploadVideo(
+    file,
     handleUploading, handleUploadingFinished,
-    handleProcessing, handleProcessingFinished) {
+    handleProcessing, handleProcessingFinished
+  ) {
     if (file == null) {
       return;
     }
@@ -176,8 +178,10 @@ export default class Google {
         if (response.error) {
           // The status polling failed.
           console.error(response.error.message);
-          setTimeout(Google.getUploadStatus(videoId, handleProcessing, handleProcessingFinished),
-            GET_UPLOAD_STATUS_INTERVAL_MILLIS);
+          setTimeout(
+            Google.getUploadStatus(videoId, handleProcessing, handleProcessingFinished),
+            GET_UPLOAD_STATUS_INTERVAL_MILLIS
+          );
         } else {
           var uploadStatus = response.items[0].status.uploadStatus;
           const processingDetails = response.items[0].processingDetails;
@@ -190,14 +194,18 @@ export default class Google {
                   / processingDetails.processingProgress.partsTotal;
                 handleProcessing(progress * 100);
               }
-              setTimeout(Google.getUploadStatus(videoId, handleProcessing, handleProcessingFinished),
-                GET_UPLOAD_STATUS_INTERVAL_MILLIS);
+              setTimeout(
+                Google.getUploadStatus(videoId, handleProcessing, handleProcessingFinished),
+                GET_UPLOAD_STATUS_INTERVAL_MILLIS
+              );
               break;
             // The video was successfully transcoded and is available.
             case 'processed':
               if (processingDetails.thumbnailsAvailability == 'inProgress') {
-                setTimeout(Google.getUploadStatus(videoId, handleProcessing, handleProcessingFinished),
-                  GET_UPLOAD_STATUS_INTERVAL_MILLIS);
+                setTimeout(
+                  Google.getUploadStatus(videoId, handleProcessing, handleProcessingFinished),
+                  GET_UPLOAD_STATUS_INTERVAL_MILLIS
+                );
               } else {
                 handleProcessingFinished(videoId, response.items[0].snippet.thumbnails);
               }
@@ -217,11 +225,11 @@ export default class Google {
     form.append('id_token', this.idToken);
 
     axios.post(`${BASE_URL}/users.json`, form)
-    .then(response => {
+      .then(response => {
       // console.log(response);
-    })
-    .catch(error => {
+      })
+      .catch(error => {
       // console.log(error);
-    });
+      });
   }
 }

@@ -6,7 +6,7 @@ import color from '../../../../css/base/colors.scss';
 const propTypes = {
   headerName: PropTypes.string.isRequired,
   rangeComponent: PropTypes.object.isRequired,
-  headerDetail: PropTypes.string.isRequired,
+  headerDetail: PropTypes.string.isRequired
 };
 
 const defaultProps = {};
@@ -28,7 +28,7 @@ const Footer = styled.div`
   padding: .5rem .5rem;
 `;
 
-const AnalysisHeaderItem = (props) => {
+const AnalysisHeaderItem = props => {
   const { headerName, rangeComponent, headerDetail } = props;
 
   return (

@@ -28,13 +28,11 @@ class VideoVolumeComponent extends Component {
     const bars = [];
 
     for (let i = 0; i < NUM_OF_VOLUME_BAR; i += 1) {
-      bars.push(
-        <VideoVolumeBarComponent
-          key={ i }
-          index={ i }
-          isActive={ this.isBarActive(i) }
-          onVolumebarClick={ this.onVolumebarClick } />
-      );
+      bars.push(<VideoVolumeBarComponent
+        key={ i }
+        index={ i }
+        isActive={ this.isBarActive(i) }
+        onVolumebarClick={ this.onVolumebarClick } />);
     }
 
     return bars;

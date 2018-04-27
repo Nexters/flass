@@ -67,7 +67,8 @@ class URLUpload extends Component {
             </div>
             <Button
               color="#9abf32"
-              onClick={ () => handleURLCheck(videoURL) }>입력</Button>
+              onClick={ () => handleURLCheck(videoURL) }>입력
+            </Button>
           </div>
         </div>
       </div>

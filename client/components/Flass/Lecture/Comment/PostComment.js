@@ -69,7 +69,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  isUpdate: false,
+  isUpdate: false
 };
 
 class PostComment extends Component {
@@ -97,22 +97,26 @@ class PostComment extends Component {
     );
   }
 
-  renderTextArea = ({ input, meta: { touched, error }, id, label, userName, ...props }) => {
-    return (
-      <FormGroup controlId={ id }>
-        <TextArea
-          { ...input }
-          componentClass="textarea"
-          { ...props } />
-      </FormGroup>
-    );
-  };
+  renderTextArea = ({
+    input, meta: { touched, error }, id, label, userName, ...props
+  }) => (
+    <FormGroup controlId={ id }>
+      <TextArea
+        { ...input }
+        componentClass="textarea"
+        { ...props } />
+    </FormGroup>
+  );
 
   submit = ({ content }) => {
     if (content) {
-      const { isUpdate, lectureId, user, addComment, updateComment, reset } = this.props;
-      isUpdate ? updateComment(content) : addComment(lectureId, user.id,
-        user.userName, content);
+      const {
+        isUpdate, lectureId, user, addComment, updateComment, reset
+      } = this.props;
+      isUpdate ? updateComment(content) : addComment(
+        lectureId, user.id,
+        user.userName, content
+      );
       reset();
     }
   };
@@ -122,5 +126,5 @@ PostComment.propTypes = propTypes;
 PostComment.defaultProps = defaultProps;
 
 export default reduxForm({
-  form: 'postComment',
+  form: 'postComment'
 })(PostComment);

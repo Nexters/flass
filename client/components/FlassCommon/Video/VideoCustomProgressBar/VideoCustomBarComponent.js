@@ -9,7 +9,9 @@ const Wrapper = styled.div`
   height: ${props => (!props.ismouseover ? '.625rem' : '1.5rem')};
 `;
 
-const { number, string, oneOfType, arrayOf, func, bool } = PropTypes;
+const {
+  number, string, oneOfType, arrayOf, func, bool
+} = PropTypes;
 
 const propTypes = {
   onMouseOverOnBar: func.isRequired,
@@ -35,7 +37,7 @@ class VideoCustomBarComponent extends Component {
     super(props);
 
     this.state = {
-      quizTime: [],
+      quizTime: []
     };
   }
 
@@ -75,7 +77,6 @@ class VideoCustomBarComponent extends Component {
       </Wrapper>
     );
   }
-
 }
 
 VideoCustomBarComponent.propTypes = propTypes;

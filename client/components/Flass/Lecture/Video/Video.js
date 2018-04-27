@@ -5,16 +5,12 @@ import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  FETCH_QUESTION
-} from '../../../../ducks/Flass/questions';
+import { FETCH_QUESTION } from '../../../../ducks/Flass/questions';
 import {
   SET_VIDEO_COMPLETE,
-  RESET_VIDEO_COMPLETE,
+  RESET_VIDEO_COMPLETE
 } from '../../../../ducks/Flass/videos';
-import {
-  UPDATE_STATE_AFTER_SOLVE_QUESTION
-} from '../../../../ducks/Flass/lectures';
+import { UPDATE_STATE_AFTER_SOLVE_QUESTION } from '../../../../ducks/Flass/lectures';
 import {
   VideoPlayerComponent,
   VideoButtonComponent,
@@ -42,7 +38,9 @@ import {
   EndedPageOnLecturePage
 } from './VideoStyled';
 
-const { string, oneOfType, arrayOf, func, number, array, shape, bool } = PropTypes;
+const {
+  string, oneOfType, arrayOf, func, number, array, shape, bool
+} = PropTypes;
 
 const propTypes = {
   VideoBarClassName: oneOfType([string, arrayOf(string)]),

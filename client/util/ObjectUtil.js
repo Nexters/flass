@@ -2,7 +2,7 @@ export function callValue(supplier, defaultValue) {
   try {
     const value = supplier();
     return value || defaultValue;
-  } catch(err) {
+  } catch (err) {
     console.error(supplier);
     return defaultValue;
   }

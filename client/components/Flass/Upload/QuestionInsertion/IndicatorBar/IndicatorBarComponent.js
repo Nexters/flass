@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-import {
-  VideoCustomProgressBarComponent
-} from '../../../../FlassCommon/Video';
+import { VideoCustomProgressBarComponent } from '../../../../FlassCommon/Video';
 import RulerComponent from './Ruler/RulerComponent';
 
 import './IndicatorBarComponentStyles.scss';
 
-const { string, oneOfType, arrayOf, func, number, bool } = PropTypes;
+const {
+  string, oneOfType, arrayOf, func, number, bool
+} = PropTypes;
 
 const propTypes = {
   VideoProgressBarClassName: oneOfType([string, arrayOf(string)]),

@@ -99,8 +99,8 @@ export default function MediaUploader(options) {
   this.file = options.file;
   this.contentType = options.contentType || this.file.type || 'application/octet-stream';
   this.metadata = options.metadata || {
-    'title': this.file.name,
-    'mimeType': this.contentType
+    title: this.file.name,
+    mimeType: this.contentType
   };
   this.token = options.token;
   this.onComplete = options.onComplete || noop;
@@ -117,7 +117,7 @@ export default function MediaUploader(options) {
     this.url = this.buildUrl_(options.fileId, params, options.baseUrl);
   }
   this.httpMethod = options.fileId ? 'PUT' : 'POST';
-};
+}
 
 /**
  * Initiate the upload.
@@ -127,7 +127,7 @@ MediaUploader.prototype.upload = function() {
   var xhr = new XMLHttpRequest();
 
   xhr.open(this.httpMethod, this.url, true);
-  xhr.setRequestHeader('Authorization', 'Bearer ' + this.token);
+  xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.setRequestHeader('X-Upload-Content-Length', this.file.size);
   xhr.setRequestHeader('X-Upload-Content-Type', this.contentType);
@@ -165,7 +165,7 @@ MediaUploader.prototype.sendFile_ = function() {
   var xhr = new XMLHttpRequest();
   xhr.open('PUT', this.url, true);
   xhr.setRequestHeader('Content-Type', this.contentType);
-  xhr.setRequestHeader('Content-Range', 'bytes ' + this.offset + '-' + (end - 1) + '/' + this.file.size);
+  xhr.setRequestHeader('Content-Range', `bytes ${this.offset}-${end - 1}/${this.file.size}`);
   xhr.setRequestHeader('X-Upload-Content-Type', this.file.type);
   if (xhr.upload) {
     xhr.upload.addEventListener('progress', this.onProgress);
@@ -183,7 +183,7 @@ MediaUploader.prototype.sendFile_ = function() {
 MediaUploader.prototype.resume_ = function() {
   var xhr = new XMLHttpRequest();
   xhr.open('PUT', this.url, true);
-  xhr.setRequestHeader('Content-Range', 'bytes */' + this.file.size);
+  xhr.setRequestHeader('Content-Range', `bytes */${this.file.size}`);
   xhr.setRequestHeader('X-Upload-Content-Type', this.file.type);
   if (xhr.upload) {
     xhr.upload.addEventListener('progress', this.onProgress);
@@ -257,9 +257,7 @@ MediaUploader.prototype.onUploadError_ = function(e) {
  */
 MediaUploader.prototype.buildQuery_ = function(params) {
   params = params || {};
-  return Object.keys(params).map(function(key) {
-    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-  }).join('&');
+  return Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&');
 };
 
 /**
@@ -277,7 +275,7 @@ MediaUploader.prototype.buildUrl_ = function(id, params, baseUrl) {
   }
   var query = this.buildQuery_(params);
   if (query) {
-    url += '?' + query;
+    url += `?${query}`;
   }
   return url;
 };

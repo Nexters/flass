@@ -13,7 +13,9 @@ export const AnalysisMapAnswersHOC = WrappedComponent => {
     }
 
     _getUsersOfAnswers = () => {
-      const { questions, questionIndex, question_answers, answers } = this.props;
+      const {
+        questions, questionIndex, question_answers, answers
+      } = this.props;
       if (questions.length === 0) {
         return [];
       }

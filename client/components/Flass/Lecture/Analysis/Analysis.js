@@ -9,9 +9,7 @@ import AnalysisTabItemComponent from './AnalysisTabItem/AnalysisTabItemComponent
 import { AnalysisLoadingHOC } from './AnalysisLoadingHOC';
 import { AnalysisFetchHOC } from './AnalysisFetchHOC';
 import { AnalysisMapAnswersHOC } from './AnalysisMapAnswersHOC';
-import {
-  AnalysisStyled
-} from './AnalysisStyled';
+import { AnalysisStyled } from './AnalysisStyled';
 import {
   REQUEST_LECTURE_ANALYSIS,
   UNMOUNT_ANALYSIS
@@ -29,7 +27,9 @@ const {
   ChartTextTitle,
   ChartTextNumber
 } = AnalysisStyled;
-const { string, func, arrayOf, shape, number } = PropTypes;
+const {
+  string, func, arrayOf, shape, number
+} = PropTypes;
 
 const propTypes = {
   updateLectureAnalysis: func.isRequired,
@@ -94,27 +94,23 @@ class Analysis extends Component {
     );
   }
 
-  _renderQuestionTabs = () => {
-    return (
-      <Tab>
-        { this._renderQuestionTab() }
-      </Tab>
-    );
-  }
+  _renderQuestionTabs = () => (
+    <Tab>
+      { this._renderQuestionTab() }
+    </Tab>
+  )
 
   _renderQuestionTab = () => {
     const { questions, questionIndex } = this.props;
 
-    return _.map(questions, (question, index) => {
-      return (
-        <AnalysisTabItemComponent
-          key={ question.id }
-          isActive={ index === questionIndex }
-          questionId={ question.id }
-          questionIndex={ index }
-          handleSelect={ this._handleSelect } />
-      );
-    });
+    return _.map(questions, (question, index) => (
+      <AnalysisTabItemComponent
+        key={ question.id }
+        isActive={ index === questionIndex }
+        questionId={ question.id }
+        questionIndex={ index }
+        handleSelect={ this._handleSelect } />
+    ));
   }
 
   _handleSelect = index => {

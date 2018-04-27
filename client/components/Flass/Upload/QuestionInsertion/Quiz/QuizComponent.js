@@ -8,7 +8,9 @@ import QuizMultipleChoiceComponent from './QuizMultipleChoice/QuizMultipleChoice
 import QuizEditMultipleChoiceComponent from './QuizEditMultipleChoice/QuizEditMultipleChoiceComponent';
 import './QuizComponentStyles.scss';
 
-const { bool, func, number, shape, string, arrayOf, oneOfType } = PropTypes;
+const {
+  bool, func, number, shape, string, arrayOf, oneOfType
+} = PropTypes;
 
 const propTypes = {
   addMultipleChoiceQuestion: func.isRequired,
@@ -120,7 +122,9 @@ class QuizComponent extends Component {
   }
 
   @autobind
-  saveMultipleChoiceQuestion({ numOfQuiz, numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues }) {
+  saveMultipleChoiceQuestion({
+    numOfQuiz, numOfChoice, checkedQuizIndex, TitleInputValue, SingleChoiceValues
+  }) {
     this.props.saveMultipleChoiceQuestion({
       numOfQuiz,
       numOfChoice,

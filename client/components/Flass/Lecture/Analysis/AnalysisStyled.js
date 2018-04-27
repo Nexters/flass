@@ -74,6 +74,4 @@ const AnalysisStyled = {
   `
 };
 
-export {
-  AnalysisStyled
-};
+export { AnalysisStyled };

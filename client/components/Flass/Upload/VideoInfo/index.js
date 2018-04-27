@@ -101,7 +101,8 @@ class VideoInfo extends Component {
           disabled={ !this.isComplete() }
           fontSize="1.57rem"
           color={ this.isComplete() ? '#176d99' : '#b6bfc1' }
-          onClick={ () => handleNext(videoInfo) }>다 음</Button>
+          onClick={ () => handleNext(videoInfo) }>다 음
+        </Button>
       </div>
     );
 

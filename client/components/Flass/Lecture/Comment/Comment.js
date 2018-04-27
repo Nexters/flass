@@ -41,7 +41,7 @@ class Comment extends Component {
     super(props);
     this.state = {
       selectedReply: -1,
-      selectedUpdateId: -1,
+      selectedUpdateId: -1
     };
   }
 
@@ -80,7 +80,7 @@ class Comment extends Component {
     const { updateComment } = this.props;
 
     this.setState({
-      selectedUpdateId: -1,
+      selectedUpdateId: -1
     });
     updateComment(parentId, commentId, content);
   };
@@ -135,7 +135,7 @@ class Comment extends Component {
 
   handleSelectedUpdateId = commentId => {
     this.setState({
-      selectedUpdateId: commentId,
+      selectedUpdateId: commentId
     });
   };
 
@@ -149,11 +149,13 @@ class Comment extends Component {
       key="reply-post"
       component={ this.renderPostComment('replyPostComment', '답글 등록', comment.id) } />];
     const parentId = comment.id;
-    return _.map(commentchild[parentId],
+    return _.map(
+      commentchild[parentId],
       ((comment, index) => {
         const commentView = this.renderComment(comment, index, parentId);
         return <ReplyComment key={ `reply${comment.id}` } component={ commentView } />;
-      }))
+      })
+    )
       .concat(replyPostComments);
   };
 }

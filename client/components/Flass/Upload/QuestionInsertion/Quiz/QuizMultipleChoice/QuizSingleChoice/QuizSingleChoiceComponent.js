@@ -6,7 +6,9 @@ import classNames from 'classnames';
 import './QuizSingleChoiceComponentStyles.scss';
 import DeleteIcon from '../icons/x-copy-2@2x.png';
 
-const { string, bool, func, number } = PropTypes;
+const {
+  string, bool, func, number
+} = PropTypes;
 
 const propTypes = {
   onCheckboxClick: func.isRequired,
@@ -55,7 +57,7 @@ class QuizSingleChoiceComponent extends Component {
           className="quiz-single-choice__checkbox"
           onClick={ this.onCheckboxClick }>
           {
-            isChecked && <div className="quiz-single-choice__check">{ ' ' }</div>
+            isChecked && <div className="quiz-single-choice__check" />
           }
         </div>
 
@@ -69,7 +71,7 @@ class QuizSingleChoiceComponent extends Component {
             value={ ChoiceInputValue }
             onClick={ this.onChoiceInputClick }
             onChange={ this.onChoiceInputChange } />
-            <span className="quiz-single-choice__underline"></span>
+          <span className="quiz-single-choice__underline" />
         </div>
         <span
           className="quiz-single-choice__delete-btn"

@@ -19,7 +19,9 @@ const InvalidName = styled.div`
   color: ${color['cool-grey']};
 `;
 
-const { func, arrayOf, shape, number, bool, string } = PropTypes;
+const {
+  func, arrayOf, shape, number, bool, string
+} = PropTypes;
 
 const propTypes = {
   onQuestionSolved: func.isRequired,
@@ -224,7 +226,7 @@ class VideoModalComponent extends Component {
     const {
       indexOfQuestion,
       textStateOfQuestions
-     } = this.props;
+    } = this.props;
     const {
       isCorrect,
       selectedChoiceIndex

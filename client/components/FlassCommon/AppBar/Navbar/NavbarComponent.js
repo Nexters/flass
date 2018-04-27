@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import './NavbarComponentStyles.scss';
 
 const propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.bool, PropTypes.array]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.bool, PropTypes.array]).isRequired
 };
 
 const NavbarComponent = props => (
@@ -12,7 +12,8 @@ const NavbarComponent = props => (
     className={ classNames(
       'flass-app-bar',
       'flass-app-bar--no-b-margin',
-      'flass-app-bar--static-top') }>
+      'flass-app-bar--static-top'
+) }>
     { props.children }
   </div>
 );

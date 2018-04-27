@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import AnalysisLoadingComponent from './AnalysisLoading/AnalysisLoadingComponent';
 
-const { number, shape, arrayOf, string } = PropTypes;
+const {
+  number, shape, arrayOf, string
+} = PropTypes;
 
 export const AnalysisLoadingHOC = WrappedComponent => {
   class WithLoading extends Component {
