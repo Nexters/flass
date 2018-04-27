@@ -63,6 +63,11 @@ export const FlassLectureStyled = {
 
       .tab-content {
         padding: 0 3rem;
+
+        .fade {
+          opacity: 1;
+          transition: opacity .15s linear;
+        }
       }
   `
 };
