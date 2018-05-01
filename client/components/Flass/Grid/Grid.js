@@ -7,16 +7,16 @@ import autobind from 'autobind-decorator';
 import { Row, Grid as GridView } from 'react-bootstrap';
 import _ from 'lodash';
 import GridItem from './GridItem';
-import color from '../../../css/base/colors.scss';
+import color from 'css/base/colors.scss';
 import {
   Title,
   Header
-} from '../../FlassCommon';
-import '../../../css/base/_row.scss';
+} from 'components/FlassCommon';
+import 'css/base/_row.scss';
 import {
   FETCH_MY_CHANNEL,
   DELETE_MY_CHANNEL_ITEM
-} from '../../../ducks/Flass/grids';
+} from 'ducks/Flass/grids';
 
 const GridBox = styled.div`
   position: relative;
@@ -69,10 +69,10 @@ class Grid extends Component {
     return (
       <GridBox>
         <Header
-          Title={ () => <Title title="Home Channel" /> }
-          SubTitle={ () => null } />
+          Title={() => <Title title="Home Channel" />}
+          SubTitle={() => null} />
         <GridView>
-          { renderAllItems }
+          {renderAllItems}
         </GridView>
         <CustomerService>
           우주컴퍼니팀 | 문의  flassadm@gmail.com
@@ -89,7 +89,7 @@ class Grid extends Component {
 
   renderRowsAndCols(items) {
     return _.chunk(items, NUM_OF_ITEMS_PER_COLS).map((splitItems, index) => (
-      <Row key={ `row${index}` } bsClass="Row">
+      <Row key={`row${index}`} bsClass="Row">
         {this.renderChildren(splitItems)}
       </Row>
     ));
@@ -98,11 +98,11 @@ class Grid extends Component {
   renderChildren(items) {
     const { user } = this.props;
     return items.map((item, index) => (
-      <div key={ `col${index}` } className="Col__grid">
+      <div key={`col${index}`} className="Col__grid">
         <GridItem
-          { ...item }
-          userName={ user.userName }
-          onClickDeleteBtn={ this.deleteItem } />
+          {...item}
+          userName={user.userName}
+          onClickDeleteBtn={this.deleteItem} />
       </div>
     ));
   }

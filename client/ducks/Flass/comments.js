@@ -39,11 +39,13 @@ const mapToComment = comment => ({
   updatedAt: dateTimeFormat(comment['updated_at'])
 });
 
+const orderByCreatedAtDesc = (items) => _.orderBy(items, ["created_at"], ["desc"]);
+
 const fetchCommentReducer = {
   [FETCH_READY_COMMENT]: (state, action) => state,
   [FETCH_COMMENT_SUCCESS]: (state, action) => ({
     ...state,
-    comments: mapToComments(action.comments),
+    comments: _.flow([orderByCreatedAtDesc, mapToComments])(action.comments),
     commentchild: _.reduce(Object.keys(action.commentchild), (res, key) => {
       res[key] = mapToComments(action.commentchild[key]);
       return res;
