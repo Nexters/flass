@@ -35,6 +35,7 @@ const LogoutBtnIcon = styled.img`
   width: 1.19rem;
   height: 1.19rem;
   cursor: pointer;
+  margin-bottom: 5px;
 `;
 
 const propTypes = {
@@ -49,7 +50,7 @@ const propTypes = {
 const defaultProps = {};
 
 class UserAppBar extends Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     const { user } = this.props;
@@ -59,9 +60,9 @@ class UserAppBar extends Component {
         <UserName>{user.userName}</UserName>
         <LogoutBtn>
           <LogoutBtnIcon
-            src={ LogoutIcon }
+            src={LogoutIcon}
             alt="logout button"
-            onClick={ this.onClickLogoutBtn } />
+            onClick={this.onClickLogoutBtn} />
         </LogoutBtn>
       </FlassUserAppBarView>
     );

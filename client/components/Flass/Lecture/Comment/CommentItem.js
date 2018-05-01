@@ -51,7 +51,7 @@ const Content = styled.div`
 const Bottom = styled.div`
   color: ${color['steel-grey']};
   font-weight: 300;
-  font-size: 1.2rem;
+  font-size: 1rem;
 `;
 
 const BtnReply = styled.a`
@@ -111,7 +111,7 @@ class CommentItem extends Component {
           <CommentMenu className="flass-comment-item-float-box">
             {
               isAdmin &&
-              <MenuIcon alt="menu" src={ toggleMenu ? MenuActive : Menu } onClick={ this.handleToggleMenu } />
+              <MenuIcon alt="menu" src={toggleMenu ? MenuActive : Menu} onClick={this.handleToggleMenu} />
             }
             {this.renderAdminMenu()}
           </CommentMenu>
@@ -120,11 +120,11 @@ class CommentItem extends Component {
           {content}
         </Content>
         <Bottom>
-          { createdAt } {!isReply &&
-          <BtnReply onClick={ onSelectedReply }>{isSelectedReply
-          ? `설명글 (${replyCount})`
-          : `설명글 (${replyCount})`}
-          </BtnReply>}
+          {createdAt} {!isReply &&
+            <BtnReply onClick={onSelectedReply}>{isSelectedReply
+              ? `설명글 (${replyCount})`
+              : `설명글 (${replyCount})`}
+            </BtnReply>}
         </Bottom>
       </LectureCommentItem>
     );
@@ -145,8 +145,8 @@ class CommentItem extends Component {
     const { toggleMenu } = this.state;
 
     return toggleMenu && <CommentItemMenu
-      onDelete={ _.partial(onDelete, id) }
-      onUpdate={ onUpdate } />;
+      onDelete={_.partial(onDelete, id)}
+      onUpdate={onUpdate} />;
   }
 }
 

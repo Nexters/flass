@@ -4,6 +4,9 @@ $silver-four: #d3d9d9;
 
 .flass-app-bar {
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   top: 0;
   padding-left: $flassDrawerWidth;
   width: 100%;
