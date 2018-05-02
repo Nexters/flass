@@ -46,8 +46,7 @@ class SignIn extends Component {
       <div className="signInBackground">
         <div className="signInContainer">
           <img
-            src="http://i.imgur.com/MU2Hfwn.png"
-            srcSet="http://i.imgur.com/z8nzuak.png 2x,http://i.imgur.com/HZ49y59.png 3x"
+            src={require('./img/logo.png')}
             className="flassLogo"
             alt="Flass 로고" />
           <span className="signInMessage">Better interaction, Better learning</span>

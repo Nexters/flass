@@ -8,7 +8,7 @@ const Wrapper = styled.div`
 `;
 
 const LoadingIcon = styled.img`
-  width: 25rem;
+  width: 18.25rem;
   margin-left: 50%;
   transform: translate(-50%, -50%);
 `;
