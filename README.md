@@ -13,6 +13,6 @@ Better interaction, Better learning with __flip learning__
 
 ## Contact
 
-* Blog: flassofficial.tistory.com
+* Blog: https://flassofficial.tistory.com
 * Facebook: https://www.facebook.com/f1ass/
 
