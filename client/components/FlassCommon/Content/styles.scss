@@ -1,7 +1,3 @@
-$paddingTop: 87.75px;
-$paddingLeft: 9.9vw;
-$paddingLeftMin: 114px;
-
 .content {
   height: 100%;
 }
@@ -9,13 +5,13 @@ $paddingLeftMin: 114px;
 @media only screen and (min-width: 1161px) {
   /* For large screens: */
   .content {
-    padding: $paddingTop 0 0 $paddingLeft;
+    padding: 2.0625rem 0 0 11.3rem;
   }
 }
 
 @media only screen and (max-width: 1161px) {
   /* For small screens: */
   .content {
-    padding: $paddingTop 0 0 $paddingLeftMin;
+    padding: 2.0625rem 0 0 11.3rem;
   }
 }
