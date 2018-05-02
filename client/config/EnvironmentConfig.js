@@ -13,4 +13,4 @@ export const API_ROOT = (function(type) {
   }
 })(TYPE_OF_BACKEND);
 
-export const API_ROOT_FRONT = TYPE_OF_BACKEND === 'local' ? API_JSON : API_PRODUCTION;
+export const API_ROOT_FRONT = TYPE_OF_BACKEND === 'local' ? API_LOCAL : API_PRODUCTION;

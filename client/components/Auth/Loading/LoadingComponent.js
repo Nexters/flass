@@ -4,7 +4,7 @@ import {
   LoadingIcon,
   LoadingText
 } from './LoadingStyled';
-import FlassIcon from './icons/logo@3x.png';
+import FlassIcon from './icons/logo@2x.png';
 
 class LoadingComponent extends Component {
   render() {

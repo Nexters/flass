@@ -1,24 +1,23 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+  height: 100vh;
   display: flex;
-  margin-top: 17rem;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
 `;
 
 const LoadingIcon = styled.img`
-  width: 25rem;
-  margin-left: 50%;
-  transform: translate(-50%, -50%);
+  width: 18.25rem;
 `;
 
 const LoadingText = styled.div`
-  margin-top: 1.375rem;
-  font-size: 1.5625rem;
+  margin-top: 1rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #b6bfc1;
-  text-align: center;
 `;
 
 export {

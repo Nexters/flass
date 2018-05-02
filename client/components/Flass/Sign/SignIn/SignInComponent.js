@@ -46,8 +46,7 @@ class SignIn extends Component {
       <div className="signInBackground">
         <div className="signInContainer">
           <img
-            src="http://i.imgur.com/MU2Hfwn.png"
-            srcSet="http://i.imgur.com/z8nzuak.png 2x,http://i.imgur.com/HZ49y59.png 3x"
+            src={require('./img/logo.png')}
             className="flassLogo"
             alt="Flass 로고" />
           <span className="signInMessage">Better interaction, Better learning</span>
@@ -71,6 +70,7 @@ class SignIn extends Component {
 
   @autobind
   onClickLoginBtn() {
+    console.log(this.props.location);
     const redirectUrl = callValue(() => this.props.location.state.referrer, '/');
     window.location = `https://oauth.classting.com/v1/oauth2/authorize?client_id=${CLASSTING_CLIENT_ID}&redirect_uri=${API_ROOT_FRONT}?redirect_url=${redirectUrl}&response_type=token`;
     // https://oauth.classting.com/v1/oauth2/authorize?client_id=4cb80de500c6cec9be15d59b5617085c&redirect_uri=http://localhost:4000&response_type=token
