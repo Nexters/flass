@@ -65,15 +65,16 @@ class Comment extends Component {
     const { lectureId, user, addComment } = this.props;
 
     return (<PostComment
-      key={ `${form}${commentId}` }
-      isUpdate={ !!content }
-      form={ form }
-      initialValues={ { content } }
-      lectureId={ lectureId }
-      name={ name }
-      user={ user }
-      addComment={ _.partial(addComment, commentId) }
-      updateComment={ _.partial(this.handleUpdateComment, parentId, commentId) } />);
+      key={`${form}${commentId}`}
+      isReplyPost={!!parentId}
+      isUpdate={!!content}
+      form={form}
+      initialValues={{ content }}
+      lectureId={lectureId}
+      name={name}
+      user={user}
+      addComment={_.partial(addComment, commentId)}
+      updateComment={_.partial(this.handleUpdateComment, parentId, commentId)} />);
   }
 
   handleUpdateComment = (parentId, commentId, content) => {
@@ -100,24 +101,24 @@ class Comment extends Component {
     const { selectedReply, selectedUpdateId } = this.state;
 
     if (selectedUpdateId === comment.id) {
-      return this.renderPostComment('updateComment', '댓글 수정', comment.id, parentId, comment.content);
+      return this.renderPostComment('updateComment', `${!!parentId ? '답글' : '질문'} 수정`, comment.id, parentId, comment.content);
     }
-    const content = <div dangerouslySetInnerHTML={ { __html: comment.content } } />;
+    const content = <div dangerouslySetInnerHTML={{ __html: comment.content }} />;
     const replyCount = commentchild[comment.id] || [];
     return (<CommentItem
-      key={ `comment${comment.id}` }
-      id={ comment.id }
-      isAdmin={ comment['user_id'] == user.id }
-      userName={ comment.userName }
-      content={ content }
-      createdAt={ comment.createdAt }
-      isReply={ !!parentId }
-      replyCount={ replyCount.length }
-      like={ comment.like }
-      isSelectedReply={ selectedReply === index }
-      onSelectedReply={ _.partial(this.handleSelectedReply, index) }
-      onUpdate={ _.partial(this.handleSelectedUpdateId, comment.id) }
-      onDelete={ _.partial(deleteComment, parentId) } />);
+      key={`comment${comment.id}`}
+      id={comment.id}
+      isAdmin={comment['user_id'] == user.id}
+      userName={comment.userName}
+      content={content}
+      createdAt={comment.createdAt}
+      isReply={!!parentId}
+      replyCount={replyCount.length}
+      like={comment.like}
+      isSelectedReply={selectedReply === index}
+      onSelectedReply={_.partial(this.handleSelectedReply, index)}
+      onUpdate={_.partial(this.handleSelectedUpdateId, comment.id)}
+      onDelete={_.partial(deleteComment, parentId)} />);
   };
 
   handleSelectedReply = index => {
@@ -145,15 +146,16 @@ class Comment extends Component {
     if (!comment) {
       return [];
     }
+    const parentId = comment.id;
     const replyPostComments = [<ReplyPostComment
       key="reply-post"
-      component={ this.renderPostComment('replyPostComment', '답글 등록', comment.id) } />];
-    const parentId = comment.id;
+      component={this.renderPostComment('replyPostComment', '답글 등록', comment.id, parentId)} />];
+
     return _.map(
       commentchild[parentId],
       ((comment, index) => {
         const commentView = this.renderComment(comment, index, parentId);
-        return <ReplyComment key={ `reply${comment.id}` } component={ commentView } />;
+        return <ReplyComment key={`reply${comment.id}`} component={commentView} />;
       })
     )
       .concat(replyPostComments);

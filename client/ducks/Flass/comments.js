@@ -1,5 +1,6 @@
 import { all, call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
+import moment from 'moment';
 import { createReducer } from '../reducerHelper';
 import { dateTimeFormat } from '../../util/TimeUtil';
 import agent from '../agent';
@@ -116,7 +117,9 @@ const removeCommentReducer = {
     if (parentId) {
       return ({
         ...state,
-        commentchild: _.filter(state.commentchild[parentId], comment => (comment.id !== id))
+        commentchild: {
+          [parentId]: _.filter(state.commentchild[parentId], comment => (comment.id !== id))
+        }
       });
     }
     return ({
@@ -166,7 +169,8 @@ export function* addComment({
       lectureId,
       userId,
       userName,
-      content
+      content,
+      createdAt: moment().format()
     }
   });
   try {

@@ -122,8 +122,8 @@ class CommentItem extends Component {
         <Bottom>
           {createdAt} {!isReply &&
             <BtnReply onClick={onSelectedReply}>{isSelectedReply
-              ? `설명글 (${replyCount})`
-              : `설명글 (${replyCount})`}
+              ? `답글 (${replyCount})`
+              : `답글 (${replyCount})`}
             </BtnReply>}
         </Bottom>
       </LectureCommentItem>
@@ -141,10 +141,11 @@ class CommentItem extends Component {
   };
 
   renderAdminMenu() {
-    const { id, onUpdate, onDelete } = this.props;
+    const { id, isReply, onUpdate, onDelete } = this.props;
     const { toggleMenu } = this.state;
 
     return toggleMenu && <CommentItemMenu
+      isReply={isReply}
       onDelete={_.partial(onDelete, id)}
       onUpdate={onUpdate} />;
   }

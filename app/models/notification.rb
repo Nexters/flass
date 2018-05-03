@@ -9,7 +9,7 @@ class Notification < ApplicationRecord
   	url = '{"lecture_id":' + lecture_id.to_s + '}'
 
   	if from == 'comment'
-  		content = User.find(user_id).username + '님이 강의에 댓글을 달았습니다.'
+  		content = User.find(user_id).username + '님이 강의에 질문을 달았습니다.'
   	else
   		content = ''
   	end
