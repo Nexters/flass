@@ -87,7 +87,7 @@ const Comment = {
   putComment: (commentId, content) => requestsForApi.put('/comments', { id: commentId, content }),
   putReplyComment: (commentId, content) => requestsForApi.put('/comment_children', { id: commentId, content }),
   deleteById: commentId => requestsForApi.del(`/comments?id=${commentId}`),
-  deleteReplyById: id => requestsForApi.del('/comment_children', { id })
+  deleteReplyById: id => requestsForApi.del(`/comment_children?id=${id}`)
 };
 
 const Like = {

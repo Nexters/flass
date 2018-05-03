@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import normalizePostComment from './normalizePostComment';
 import color from '../../../../css/base/colors.scss';
 
-const LectureForm = styled(Form)`
+const LectureForm = styled(Form) `
   padding: 20px 0;
   border-bottom: 1px solid #d0d0d0;
 `;
@@ -24,13 +24,13 @@ const LecturePostComment = styled.div`
   text-align: left;
 `;
 
-const Label = styled(ControlLabel)`
+const Label = styled(ControlLabel) `
   padding: 1rem 0 0 1rem;
   letter-spacing: 4px;
   float: left;
 `;
 
-const TextArea = styled(FormControl)`
+const TextArea = styled(FormControl) `
   height: 130px !important;
   border: 0;
   box-shadow: none;
@@ -54,6 +54,7 @@ const BtnPostComment = styled.button`
 `;
 
 const propTypes = {
+  isReplyPost: PropTypes.bool,
   isUpdate: PropTypes.bool,
   lectureId: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
@@ -73,25 +74,26 @@ const defaultProps = {
 };
 
 class PostComment extends Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
-    const { name, user, handleSubmit } = this.props;
+    const { isReplyPost, name, user, handleSubmit } = this.props;
+    const placeholder = isReplyPost ? '질문에 대해 달글로 알려주세요' : '해당 강의 내용 또는 퀴즈에 대해 궁금한 점이 잇다면 질문을 달아주세요.';
 
     return (
-      <LectureForm onSubmit={ handleSubmit(this.submit) }>
+      <LectureForm onSubmit={handleSubmit(this.submit)}>
         <LecturePostComment>
           <Field
             id="content"
             name="content"
-            userName={ user.userName }
+            userName={user.userName}
             type="text"
-            placeholder="해당 강의 내용 또는 퀴즈에 대해 궁금한 점이 잇다면 댓글을 달아주세요."
-            component={ this.renderTextArea }
-            normalize={ normalizePostComment } />
+            placeholder={placeholder}
+            component={this.renderTextArea}
+            normalize={normalizePostComment} />
         </LecturePostComment>
         <Bottom>
-          <BtnPostComment type="submit">{ name }</BtnPostComment>
+          <BtnPostComment type="submit">{name}</BtnPostComment>
         </Bottom>
       </LectureForm>
     );
@@ -100,13 +102,13 @@ class PostComment extends Component {
   renderTextArea = ({
     input, meta: { touched, error }, id, label, userName, ...props
   }) => (
-    <FormGroup controlId={ id }>
-      <TextArea
-        { ...input }
-        componentClass="textarea"
-        { ...props } />
-    </FormGroup>
-  );
+      <FormGroup controlId={id}>
+        <TextArea
+          {...input}
+          componentClass="textarea"
+          {...props} />
+      </FormGroup>
+    );
 
   submit = ({ content }) => {
     if (content) {

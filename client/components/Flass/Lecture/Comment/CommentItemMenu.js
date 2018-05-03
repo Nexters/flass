@@ -27,6 +27,7 @@ const Item = styled.li`
 `;
 
 const propTypes = {
+  isReply: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired
 };
@@ -35,13 +36,13 @@ const defaultProps = {};
 
 class CommentItemMenu extends Component {
   render() {
-    const { onUpdate, onDelete } = this.props;
-
+    const { isReply, onUpdate, onDelete } = this.props;
+    const name = isReply ? '답글' : '질문';
     return (
       <CommentItemMenuView>
         <List>
-          <Item onClick={ onUpdate }>댓글 수정</Item>
-          <Item onClick={ onDelete }>댓글 삭제</Item>
+          <Item onClick={onUpdate}>{name} 수정</Item>
+          <Item onClick={onDelete}>{name} 삭제</Item>
         </List>
       </CommentItemMenuView>
     );
