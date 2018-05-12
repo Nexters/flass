@@ -119,7 +119,7 @@ export default class Google {
   }
 
   static uploadVideo(
-    file,
+    file, title, description,
     handleUploading, handleUploadingFinished,
     handleProcessing, handleProcessingFinished
   ) {
@@ -129,8 +129,8 @@ export default class Google {
     const that = this;
     var metadata = {
       snippet: {
-        title: 'Flass',
-        description: '강의 동영상'
+        title,
+        description
       },
       status: {
         privacyStatus: 'unlisted'

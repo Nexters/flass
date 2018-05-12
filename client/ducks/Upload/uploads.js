@@ -153,7 +153,7 @@ const setProcessProgress = processProgress => ({
   processProgress
 });
 
-export const uploadYoutubeVideo = file => (dispatch => {
+export const uploadYoutubeVideo = (file, title, description) => (dispatch => {
   dispatch(setUploadStatus(UPLOADING));
 
   const handleUploading = uploadProgress => {
@@ -173,7 +173,7 @@ export const uploadYoutubeVideo = file => (dispatch => {
     dispatch(setURLStatus(SUCC_URL));
   };
   Google.uploadVideo(
-    file, handleUploading, handleUploadingFinished,
+    file, title, description, handleUploading, handleUploadingFinished,
     handleProcessing, handleProcessingFinished
   );
 });

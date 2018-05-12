@@ -52,6 +52,8 @@ class Upload extends Component {
 
   render() {
     const {
+      title,
+      description,
       step,
       method,
       handleSetUploadMethod,
@@ -87,7 +89,7 @@ class Upload extends Component {
             resetVideo={resetVideo}
             isGoogleAuth={isGoogleAuth}
             goToGoogleAuthPage={goToGoogleAuthPage}
-            handleYoutubeUpload={file => uploadYoutubeVideo(file)}
+            handleYoutubeUpload={file => uploadYoutubeVideo(file, title, description)}
             uploadStatus={uploadStatus}
             uploadProgress={uploadProgress}
             processProgress={processProgress} />
