@@ -5,7 +5,7 @@ import agent from '../agent';
 import {
   QuestionBodyAdapter,
   ChoiceBodyAdapter
-} from '../../RequestBodyAdapter';
+} from '~/RequestBodyAdapter';
 import { createReducer } from '../reducerHelper';
 
 export const ADD_MULTIPLE_CHIOICE_QUESTION = 'ADD_MULTIPLE_CHIOICE_QUESTION';

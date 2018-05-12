@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
+
 import BadgeIcon from './images/appbar-badge.png';
 import BadgeHistory from './BadgeHistory';
 import {
   FETCH_BADGE_HISTORY,
   TOGGLE_BADGE_HISTORY
-} from '../../../../ducks/Flass/badges';
+} from '~/ducks/Flass/badges';
 import './Badge.scss';
 
 const BadgeView = styled.div`
@@ -35,20 +36,20 @@ class Badge extends Component {
     this.props.fetchBadgeHistory(userId, badgeType);
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     const { userId, badgeItems, toggleBadge } = this.props;
 
     return (
       <BadgeView>
-        <span className="flass-badge" onClick={ this.handleToggleBadge }>
-          <img alt="badge" src={ BadgeIcon } />
+        <span className="flass-badge" onClick={this.handleToggleBadge}>
+          <img alt="badge" src={BadgeIcon} />
         </span>
         {toggleBadge
           ? <BadgeHistory
-            badgeItems={ badgeItems }
-            fetchBadgeHistory={ _.partial(this.fetchBadgeHistory, userId, _) } />
+            badgeItems={badgeItems}
+            fetchBadgeHistory={_.partial(this.fetchBadgeHistory, userId, _)} />
           : ''}
       </BadgeView>
     );

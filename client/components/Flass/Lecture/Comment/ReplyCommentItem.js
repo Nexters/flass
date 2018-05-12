@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import color from '../../../../css/base/colors.scss';
+
+import color from '~/css/base/colors.scss';
 
 const ReplayCommentView = styled.div`
   padding-right: 15px;
@@ -29,7 +30,7 @@ const defaultProps = {};
 const ReplyComment = ({ component }) => (
   <ReplayCommentView>
     <ReplyContent>
-      { component }
+      {component}
     </ReplyContent>
   </ReplayCommentView>
 );

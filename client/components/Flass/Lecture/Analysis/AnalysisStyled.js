@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import media from '../../../../css/styled/base/media';
+
+import media from '~/css/styled/base/media';
 
 const AnalysisStyled = {
   Wrapper: styled.div`

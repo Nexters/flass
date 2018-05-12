@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import styled from 'styled-components';
+
 import NavbarComponent from './Navbar/NavbarComponent';
 import NavComponent from './Nav/NavComponent';
 import UserAppBar from './UserAppBar/UserAppBar';
-import color from '../../../css/base/colors.scss';
+import color from '~/css/base/colors.scss';
 import './AppBar.scss';
 
 const NavTitle = styled.span`
@@ -28,7 +29,7 @@ const defaultProps = {
 };
 
 class AppBar extends Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     const { isLogin } = this.props;
@@ -42,11 +43,11 @@ class AppBar extends Component {
         </NavComponent>
         {
           isLogin ?
-          (<NavComponent isRight>
-            <UserAppBar
-              onClickLogoutBtn={ this.onClickLogoutBtn } />
-          </NavComponent>) :
-          null
+            (<NavComponent isRight>
+              <UserAppBar
+                onClickLogoutBtn={this.onClickLogoutBtn} />
+            </NavComponent>) :
+            null
         }
       </NavbarComponent>
     );

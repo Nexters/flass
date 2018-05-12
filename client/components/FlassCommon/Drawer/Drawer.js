@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
 import styled from 'styled-components';
+
 import {
   SideHome,
   SideHomeActive,
@@ -9,7 +10,7 @@ import {
   SideUploadActive,
   FlassLogo
 } from './images';
-import color from '../../../css/base/colors.scss';
+import color from '~/css/base/colors.scss';
 import './Drawer.scss';
 
 const FlassMark = styled.div`
@@ -22,7 +23,7 @@ const FlassLogoImg = styled.img`
   margin: auto;
 `;
 
-const FlassMenu = styled(Link)`
+const FlassMenu = styled(Link) `
   display: block;
   position: relative;
   width: 100%;
@@ -65,29 +66,29 @@ class Drawer extends Component {
       <div className="flass-drawer">
         <Link to="/">
           <FlassMark>
-            <FlassLogoImg srcSet={ FlassLogo } alt="Flass logo" />
+            <FlassLogoImg srcSet={FlassLogo} alt="Flass logo" />
           </FlassMark>
         </Link>
         <Route
           path="/home"
-          children={ ({ match }) =>
+          children={({ match }) =>
             (
               <FlassMenu
                 to="/home" >
-                <FlassMenuImage alt="" width="17" src={ match ? SideHomeActive : SideHome } />
+                <FlassMenuImage alt="" width="17" src={match ? SideHomeActive : SideHome} />
                 {match && <ClickLine />}
               </FlassMenu>
-            ) } />
+            )} />
         <Route
           path="/upload"
-          children={ ({ match }) =>
+          children={({ match }) =>
             (
               <FlassMenu
                 to="/upload" >
-                <FlassMenuImage alt="" width="17" src={ match ? SideUploadActive : SideUpload } />
+                <FlassMenuImage alt="" width="17" src={match ? SideUploadActive : SideUpload} />
                 {match && <ClickLine />}
               </FlassMenu>
-            ) } />
+            )} />
       </div>
     );
   }

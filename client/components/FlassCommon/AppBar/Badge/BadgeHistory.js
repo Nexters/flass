@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
-import color from '../../../../css/base/colors.scss';
+
+import color from '~/css/base/colors.scss';
 import BadgeItem from './BadgeItem';
 
 const Tabs = styled.ul`
@@ -40,13 +41,13 @@ class BadgeHistory extends Component {
     this.props.fetchBadgeHistory();
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   renderChildren() {
     const { badgeItems } = this.props;
 
     return _.map(badgeItems, item => (
-      <BadgeItem key={ item.id } name={ item.name } content={ item.content } />
+      <BadgeItem key={item.id} name={item.name} content={item.content} />
     ));
   }
 
@@ -56,8 +57,8 @@ class BadgeHistory extends Component {
     return (
       <BadgeHistoryView>
         <Tabs>
-          <Tab><span onClick={ _.partial(fetchBadgeHistory, 'comment') }>댓글</span></Tab>
-          <Tab><span onClick={ _.partial(fetchBadgeHistory, 'question') }>질문</span></Tab>
+          <Tab><span onClick={_.partial(fetchBadgeHistory, 'comment')}>댓글</span></Tab>
+          <Tab><span onClick={_.partial(fetchBadgeHistory, 'question')}>질문</span></Tab>
         </Tabs>
         <div>
           {this.renderChildren()}

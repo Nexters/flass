@@ -20,8 +20,11 @@
       "module-resolver",
       {
         "root": [
-          "./client"
-        ]
+          "."
+        ],
+        "alias": {
+          "~/*": "./client"
+        }
       }
     ]
   ]

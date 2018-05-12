@@ -13,7 +13,7 @@ import Video from './Video/Video';
 import {
   Title,
   Header
-} from '../../FlassCommon';
+} from '~/components/FlassCommon';
 import { FlassLectureStyled } from './LectureStyled';
 import {
   contentImageActive,
@@ -23,13 +23,13 @@ import {
   analysisImageActive,
   analysisImage
 } from './icons';
-import color from '../../../css/base/colors.scss';
+import color from '~/css/base/colors.scss';
 import './Lecture.scss';
 import {
   FETCH_LECTURE,
   unmountLecture
-} from '../../../ducks/Flass/lectures';
-import { REQUEST_ON_ENDED } from '../../../ducks/Flass/videos';
+} from '~/ducks/Flass/lectures';
+import { REQUEST_ON_ENDED } from '~/ducks/Flass/videos';
 import withLoading from './withLoading';
 
 
@@ -156,22 +156,22 @@ class Lecture extends Component {
 
       <FlassLectureStyled.Wrapper>
         <Header
-          Title={ () => <Title title="Watching Video" /> }
-          SubTitle={ () => null } />
+          Title={() => <Title title="Watching Video" />}
+          SubTitle={() => null} />
 
         <FlassLectureStyled.Content>
           <Video
-            VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
+            VideoPlayPauseBtnClassName={classNames('video-btn', 'video-btn--l-margin')}
             VideoVolumeBtnClassName="video-btn"
-            VideoVolumeBarClassName={ classNames('video-volume-bar') }
+            VideoVolumeBarClassName={classNames('video-volume-bar')}
 
-            saveQuestionsStateOnEnded={ this.saveQuestionsStateOnEnded }
-            videoUrl={ videoUrl }
-            shortenUrl={ shortenUrl }
-            questions={ questions } />
+            saveQuestionsStateOnEnded={this.saveQuestionsStateOnEnded}
+            videoUrl={videoUrl}
+            shortenUrl={shortenUrl}
+            questions={questions} />
 
           <FlassLectureStyled.Tab>
-            { this.renderTabs() }
+            {this.renderTabs()}
           </FlassLectureStyled.Tab>
         </FlassLectureStyled.Content>
       </FlassLectureStyled.Wrapper>;
@@ -203,42 +203,42 @@ class Lecture extends Component {
 
     const tabTitle = (title, src) => (
       <TabTitle>
-        <TabIcon alt="" src={ src } />
+        <TabIcon alt="" src={src} />
         {title}
       </TabTitle>);
 
-    return (<Tabs id="lecture-tabs" activeKey={ selected } onSelect={ this.handleSelect }>
+    return (<Tabs id="lecture-tabs" activeKey={selected} onSelect={this.handleSelect}>
       <Tab
-        eventKey={ 1 }
+        eventKey={1}
         title={
           tabTitle(
             '강의 정보',
             selected === 1 ? contentImageActive : contentImage
-) }>
+          )}>
         <Content
-          title={ lecture.title }
-          subject={ lecture.subject }
-          content={ lecture.content }
-          textbookRange={ lecture.textbookRange } />
+          title={lecture.title}
+          subject={lecture.subject}
+          content={lecture.content}
+          textbookRange={lecture.textbookRange} />
       </Tab>
       <Tab
-        eventKey={ 2 }
+        eventKey={2}
         title={
           tabTitle(
             `학생 질문 - ${comment.comments.length}`,
             selected === 2 ? commentImageActive : commentImage
-) }>
-        <Comment lectureId={ lectureIdFromReducer } />
+          )}>
+        <Comment lectureId={lectureIdFromReducer} />
       </Tab>
       {
         this._isLectureOwner() ? (
           <Tab
-            eventKey={ 3 }
+            eventKey={3}
             title={
               tabTitle(
-'분석',
-              selected === 3 ? analysisImageActive : analysisImage
-) }>
+                '분석',
+                selected === 3 ? analysisImageActive : analysisImage
+              )}>
             <Analysis />
           </Tab>
         ) : null

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import color from '../../../../css/base/colors.scss';
+import color from '~/css/base/colors.scss';
 
 const LectureContent = styled.div`
   width: 100%;
@@ -51,24 +51,24 @@ const Content = props => {
   return (
     <LectureContent>
       <Row className="show-grid">
-        <Col xs={ 6 } md={ 6 }>
+        <Col xs={6} md={6}>
           <Title>강의 제목</Title>
           <LeftContent>
-            { title }
+            {title}
           </LeftContent>
           <Title>강의 과목</Title>
           <LeftContent>
-            { subject }
+            {subject}
           </LeftContent>
           <Title>교재 범위</Title>
           <LeftContent>
-            { textbookRange }
+            {textbookRange}
           </LeftContent>
         </Col>
-        <Col xs={ 6 } md={ 6 }>
+        <Col xs={6} md={6}>
           <Title>강의 설명</Title>
           <RightContent>
-            { content }
+            {content}
           </RightContent>
         </Col>
       </Row>

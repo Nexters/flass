@@ -18,7 +18,7 @@ import {
   focusOnQuestion,
   completeEditQuestion,
   deleteCompleteQuestion
-} from '../../../../ducks/Upload/uploadInsertionQuizzes';
+} from '~/ducks/Upload/uploadInsertionQuizzes';
 import './QuestionInsertionComponentStyles.scss';
 
 const {
@@ -136,42 +136,42 @@ class QuestionInsertionComponent extends Component {
               VideoLoadedBarClassName="loaded-bar--thinner"
               VideoQuizIndicatorClassName="quiz-indicator--thinner"
               VideoQuizIndicatorBarClassName="quiz-indicator-bar--thinner"
-              VideoPlayPauseBtnClassName={ classNames('video-btn', 'video-btn--l-margin') }
+              VideoPlayPauseBtnClassName={classNames('video-btn', 'video-btn--l-margin')}
               VideoVolumeBtnClassName="video-btn"
-              VideoVolumeBarClassName={ classNames('video-volume-bar') }
+              VideoVolumeBarClassName={classNames('video-volume-bar')}
 
-              setPlayer={ this.setPlayer }
-              playerSeekTo={ this.playerSeekTo }
-              onProgress={ this.onProgress }
-              onDuration={ this.onDuration }
-              setSeekingState={ this.setSeekingState }
-              setPlayingState={ this.setPlayingState }
-              setPlayedState={ this.setPlayedState }
-              setIsQuizSecsState={ this.setIsQuizSecsState }
-              onQuestionbarClick={ this.onQuestionbarClick }
-              url={ videoUrl }
-              duration={ duration }
-              played={ played }
-              loaded={ loaded }
-              playing={ playing }
-              isQuizSecs={ isQuizSecs }
-              questionSecsStateArray={ questionSecsStateArray } />
+              setPlayer={this.setPlayer}
+              playerSeekTo={this.playerSeekTo}
+              onProgress={this.onProgress}
+              onDuration={this.onDuration}
+              setSeekingState={this.setSeekingState}
+              setPlayingState={this.setPlayingState}
+              setPlayedState={this.setPlayedState}
+              setIsQuizSecsState={this.setIsQuizSecsState}
+              onQuestionbarClick={this.onQuestionbarClick}
+              url={videoUrl}
+              duration={duration}
+              played={played}
+              loaded={loaded}
+              playing={playing}
+              isQuizSecs={isQuizSecs}
+              questionSecsStateArray={questionSecsStateArray} />
           </div>
 
           <div className="Row__player-large-5">
             <QuizComponent
-              saveMultipleChoiceQuestion={ this.saveMultipleChoiceQuestion }
-              setPlayingState={ this.setPlayingState }
-              cancelAddingQuestion={ this.cancelAddingQuestion }
-              completeAddingQuestion={ this.completeAddingQuestion }
-              addMultipleChoiceQuestion={ this.addMultipleChoiceQuestion }
-              decreaseNumOfQuestion={ this.decreaseNumOfQuestion }
-              completeEditQuestion={ this.completeEditQuestion }
-              deleteCompleteQuestion={ this.deleteCompleteQuestion }
+              saveMultipleChoiceQuestion={this.saveMultipleChoiceQuestion}
+              setPlayingState={this.setPlayingState}
+              cancelAddingQuestion={this.cancelAddingQuestion}
+              completeAddingQuestion={this.completeAddingQuestion}
+              addMultipleChoiceQuestion={this.addMultipleChoiceQuestion}
+              decreaseNumOfQuestion={this.decreaseNumOfQuestion}
+              completeEditQuestion={this.completeEditQuestion}
+              deleteCompleteQuestion={this.deleteCompleteQuestion}
 
-              isAdding={ isAdding }
-              numOfQuestion={ numOfQuestion }
-              stateOfFocusedQuestion={ stateOfFocusedQuestion } />
+              isAdding={isAdding}
+              numOfQuestion={numOfQuestion}
+              stateOfFocusedQuestion={stateOfFocusedQuestion} />
           </div>
         </div>
 
@@ -179,7 +179,7 @@ class QuestionInsertionComponent extends Component {
           <div className="flass-upload-insertion-media__container">
             <div
               className="flass-upload-insertion-media__btn"
-              onClick={ this.onClickUploadBtn }>
+              onClick={this.onClickUploadBtn}>
               <span>
                 업 로 드
               </span>
@@ -201,7 +201,7 @@ class QuestionInsertionComponent extends Component {
     return (
       isUploadingQuestionRequestSuccess ?
         <ModalComponent
-          url={ lectureUrl } /> :
+          url={lectureUrl} /> :
         null
     );
   }

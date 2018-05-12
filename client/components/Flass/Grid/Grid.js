@@ -6,17 +6,18 @@ import styled from 'styled-components';
 import autobind from 'autobind-decorator';
 import { Row, Grid as GridView } from 'react-bootstrap';
 import _ from 'lodash';
+
 import GridItem from './GridItem';
-import color from 'css/base/colors.scss';
+import color from '~/css/base/colors.scss';
 import {
   Title,
   Header
-} from 'components/FlassCommon';
-import 'css/base/_row.scss';
+} from '~/components/FlassCommon';
+import '~/css/base/_row.scss';
 import {
   FETCH_MY_CHANNEL,
   DELETE_MY_CHANNEL_ITEM
-} from 'ducks/Flass/grids';
+} from '~/ducks/Flass/grids';
 
 const GridBox = styled.div`
   position: relative;

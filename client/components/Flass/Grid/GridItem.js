@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import color from '../../../css/base/colors.scss';
+
+import color from '~/css/base/colors.scss';
 import { DeleteIcon } from './icons';
 
 const Item = styled.div`
@@ -140,26 +141,26 @@ const GridItem = props => {
   } = props;
 
   return (
-    <Item src={ thumbnailUrl }>
+    <Item src={thumbnailUrl}>
       <Container>
         <HeaderWrapper>
-          <Header>{ `수업범위: ${textbookRange}` }</Header>
+          <Header>{`수업범위: ${textbookRange}`}</Header>
           <DeleteBtn
-            srcSet={ DeleteIcon }
-            onClick={ () => onClickDeleteBtn(id) } />
+            srcSet={DeleteIcon}
+            onClick={() => onClickDeleteBtn(id)} />
         </HeaderWrapper>
-        <Link to={ `/lecture/${id}` }>
+        <Link to={`/lecture/${id}`}>
           <Title>
-            { title }
+            {title}
           </Title>
           <Date>
-            { createdAt }
+            {createdAt}
           </Date>
         </Link>
         <Body>
           <Question>
             <Text>
-              질문 { questionCount }개
+              질문 {questionCount}개
             </Text>
           </Question>
           <Analysis>

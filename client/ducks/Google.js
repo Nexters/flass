@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
+import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from 'config/Constants';
 import MediaUploader from './MediaUploader';
 import { API_ROOT } from '../config/EnvironmentConfig';
 
@@ -186,7 +186,7 @@ export default class Google {
           var uploadStatus = response.items[0].status.uploadStatus;
           const processingDetails = response.items[0].processingDetails;
           let progress;
-          switch(uploadStatus) {
+          switch (uploadStatus) {
             // This is a non-final status, so we need to poll again.
             case 'uploaded':
               if (processingDetails.processingProgress) {
@@ -226,10 +226,10 @@ export default class Google {
 
     axios.post(`${BASE_URL}/users.json`, form)
       .then(response => {
-      // console.log(response);
+        // console.log(response);
       })
       .catch(error => {
-      // console.log(error);
+        // console.log(error);
       });
   }
 }

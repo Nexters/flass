@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 
 import { VideoPlayer } from './VideoPlayerStyled';
-import logger from '../../../../util/LogUtil';
+import logger from '~/util/LogUtil';
 import './VideoPlayerStyles.scss';
 
 const {
@@ -46,20 +46,20 @@ class VideoPlayerComponent extends Component {
       styledProps
     } = this.props;
     return (
-      <VideoPlayer.Wrapper styledProps={ styledProps }>
+      <VideoPlayer.Wrapper styledProps={styledProps}>
         <ReactPlayer
-          ref={ player => setPlayer(player) }
-          className={ classNames('react-player', 'player') }
+          ref={player => setPlayer(player)}
+          className={classNames('react-player', 'player')}
           width="100%"
           height="100%"
-          url={ url }
-          progressFrequency={ PROGRESS_FREQUENCY }
-          playing={ playing }
-          volume={ volume }
-          onEnded={ this.onEnded }
-          onError={ e => logger.error(e) }
-          onProgress={ onProgress }
-          onDuration={ onDuration } />
+          url={url}
+          progressFrequency={PROGRESS_FREQUENCY}
+          playing={playing}
+          volume={volume}
+          onEnded={this.onEnded}
+          onError={e => logger.error(e)}
+          onProgress={onProgress}
+          onDuration={onDuration} />
       </VideoPlayer.Wrapper>
     );
   }

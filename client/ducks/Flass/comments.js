@@ -2,7 +2,7 @@ import { all, call, fork, take, select, put, cancel, takeLatest } from 'redux-sa
 import _ from 'lodash';
 import moment from 'moment';
 import { createReducer } from '../reducerHelper';
-import { dateTimeFormat } from '../../util/TimeUtil';
+import { dateTimeFormat } from '~/util/TimeUtil';
 import agent from '../agent';
 
 export const FETCH_COMMENT = 'FETCH_COMMENT';

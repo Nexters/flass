@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import autobind from 'autobind-decorator';
-import color from '../../../../css/base/colors.scss';
 
+import color from '~/css/base/colors.scss';
 import { VideoModal } from './VideoModalStyled';
 import VideoModalSingleChoiceComponent from './VideoModalSingleChoice/VideoModalSingleChoiceComponent';
 import VideoModalCompletedSingleChoiceComponent from './VideoModalCompletedSingleChoice/VideoModalCompletedSingleChoiceComponent';
@@ -86,27 +86,27 @@ class VideoModalComponent extends Component {
     } = textStateOfQuestions[indexOfQuestion];
 
     return (
-      <VideoModal.Container isOpen={ isOpen }>
+      <VideoModal.Container isOpen={isOpen}>
         <VideoModal.Inner
-          isSolved={ isSolved }
-          isCorrect={ isCorrect }>
+          isSolved={isSolved}
+          isCorrect={isCorrect}>
           <VideoModal.ContentWrapper>
             <VideoModal.Header>
               <VideoModal.QuestionNum>
-                { this.renderQuestionNumber(indexOfQuestion) }
+                {this.renderQuestionNumber(indexOfQuestion)}
               </VideoModal.QuestionNum>
               <VideoModal.QuestionTitle>
-                { title }
+                {title}
               </VideoModal.QuestionTitle>
             </VideoModal.Header>
 
             <VideoModal.Body>
-              { this.renderChoices(answerIndex, singleChoiceValues) }
+              {this.renderChoices(answerIndex, singleChoiceValues)}
             </VideoModal.Body>
 
             <VideoModal.Footer>
               <InvalidName>※ 강의를 끝까지 시청해야 답안이 제출됩니다.</InvalidName>
-              { this.renderModalBtn() }
+              {this.renderModalBtn()}
             </VideoModal.Footer>
           </VideoModal.ContentWrapper>
         </VideoModal.Inner>
@@ -128,18 +128,18 @@ class VideoModalComponent extends Component {
     return SingleChoiceValues.map((singleChoiceValue, index) => (
       !this.shouldRenderCompleteChoiceComponent() ?
         <VideoModalSingleChoiceComponent
-          key={ index }
-          isChecked={ index ===  selectedChoiceIndex }
-          isSolved={ isSolved }
-          isCorrect={ isCorrect }
-          singleChoiceValue={ singleChoiceValue }
-          choiceIndex={ index }
-          onCheckboxClick={ this.onCheckboxClick } /> :
+          key={index}
+          isChecked={index === selectedChoiceIndex}
+          isSolved={isSolved}
+          isCorrect={isCorrect}
+          singleChoiceValue={singleChoiceValue}
+          choiceIndex={index}
+          onCheckboxClick={this.onCheckboxClick} /> :
         <VideoModalCompletedSingleChoiceComponent
-          key={ index }
-          index={ index }
-          solvedQuestionState={ solvedQuestionState }
-          singleChoiceValue={ singleChoiceValue } />
+          key={index}
+          index={index}
+          solvedQuestionState={solvedQuestionState}
+          singleChoiceValue={singleChoiceValue} />
     ));
   }
 
@@ -164,8 +164,8 @@ class VideoModalComponent extends Component {
         return (
           <VideoModal.Button
             right
-            onClick={ this.isChoicesSelected() ? this.onClickSolveBtn : null }
-            selected={ this.isChoicesSelected() }>
+            onClick={this.isChoicesSelected() ? this.onClickSolveBtn : null}
+            selected={this.isChoicesSelected()}>
             <VideoModal.Text>
               확인
             </VideoModal.Text>
@@ -175,10 +175,10 @@ class VideoModalComponent extends Component {
       return (
         <VideoModal.Button
           right
-          onClick={ this.onClickKeepGoingBtn }
-          isSolved={ isSolved }
-          isCorrect={ isCorrect }
-          selected={ this.isChoicesSelected() }>
+          onClick={this.onClickKeepGoingBtn}
+          isSolved={isSolved}
+          isCorrect={isCorrect}
+          selected={this.isChoicesSelected()}>
           <VideoModal.Text>
             이어보기
           </VideoModal.Text>
@@ -188,11 +188,11 @@ class VideoModalComponent extends Component {
       return (
         <VideoModal.Button
           right
-          onClick={ this.onClickVideoCompleteCaseKeepGoingBtn }
-          isSolved={ isSolved }
-          isCorrect={ isCorrect }
+          onClick={this.onClickVideoCompleteCaseKeepGoingBtn}
+          isSolved={isSolved}
+          isCorrect={isCorrect}
           pointer
-          selected={ this.isChoicesSelected() }>
+          selected={this.isChoicesSelected()}>
           <VideoModal.Text>
             이어보기
           </VideoModal.Text>

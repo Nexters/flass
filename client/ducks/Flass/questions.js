@@ -2,7 +2,7 @@ import { call, fork, take, select, put, cancel, takeLatest } from 'redux-saga/ef
 import _ from 'lodash';
 import { createReducer } from '../reducerHelper';
 import agent from '../agent';
-import { QuestionResDataAdapter } from '../../ResponseDataAdapter';
+import { QuestionResDataAdapter } from '~/ResponseDataAdapter';
 
 export const FETCH_QUESTION = 'FETCH_QUESTION';
 export const FETCH_READY_QUESTION = 'FETCH_READY_QUESTION';

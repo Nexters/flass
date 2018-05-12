@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+
 import ChartComponent from './Chart/ChartComponent';
 import SingleChoiceComponent from './SingleChoice/SingleChoiceComponent';
 import AnalysisTabItemComponent from './AnalysisTabItem/AnalysisTabItemComponent';
@@ -13,7 +14,7 @@ import { AnalysisStyled } from './AnalysisStyled';
 import {
   REQUEST_LECTURE_ANALYSIS,
   UNMOUNT_ANALYSIS
-} from '../../../../ducks/Flass/analysises';
+} from '~/ducks/Flass/analysises';
 
 const {
   Tab,
@@ -70,7 +71,7 @@ class Analysis extends Component {
         <Body>
           <Row>
             <Title>
-              { `Q${questionIndex + 1}. ${question.content}` }
+              {`Q${questionIndex + 1}. ${question.content}`}
             </Title>
           </Row>
           <Row marginTop>
@@ -96,7 +97,7 @@ class Analysis extends Component {
 
   _renderQuestionTabs = () => (
     <Tab>
-      { this._renderQuestionTab() }
+      {this._renderQuestionTab()}
     </Tab>
   )
 
@@ -105,11 +106,11 @@ class Analysis extends Component {
 
     return _.map(questions, (question, index) => (
       <AnalysisTabItemComponent
-        key={ question.id }
-        isActive={ index === questionIndex }
-        questionId={ question.id }
-        questionIndex={ index }
-        handleSelect={ this._handleSelect } />
+        key={question.id}
+        isActive={index === questionIndex}
+        questionId={question.id}
+        questionIndex={index}
+        handleSelect={this._handleSelect} />
     ));
   }
 
@@ -123,16 +124,16 @@ class Analysis extends Component {
     const labels = usersOfAnswers.map(usersOfAnswer => usersOfAnswer.answer);
     const data = usersOfAnswers.map(usersOfAnswer => usersOfAnswer.userAnswers.length);
     return (<ChartComponent
-      labels={ labels }
-      data={ data } />);
+      labels={labels}
+      data={data} />);
   };
 
   _renderSingleChoices = question => {
     const { usersOfAnswers } = this.props;
     return usersOfAnswers.map(usersOfAnswer => (<SingleChoiceComponent
-      key={ usersOfAnswer.id }
-      question={ question }
-      { ...usersOfAnswer } />));
+      key={usersOfAnswer.id}
+      question={question}
+      {...usersOfAnswer} />));
   };
 }
 

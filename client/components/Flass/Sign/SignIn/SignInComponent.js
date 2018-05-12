@@ -4,11 +4,11 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import BtnLoginWithClassting from './img/btn.login_with_classting_e_600.png';
-import { CLASSTING_CLIENT_ID } from '../../../../../config/Constants';
+import { CLASSTING_CLIENT_ID } from 'config/Constants';
 import './signIn.scss';
-import { callValue } from '../../../../util/ObjectUtil';
-import { API_ROOT_FRONT } from '../../../../config/EnvironmentConfig';
-import { LOGOUT } from '../../../../ducks/Sign/signs';
+import { callValue } from '~/util/ObjectUtil';
+import { API_ROOT_FRONT } from '~/config/EnvironmentConfig';
+import { LOGOUT } from '~/ducks/Sign/signs';
 
 const {
   func, bool, shape, object, string
@@ -56,11 +56,11 @@ class SignIn extends Component {
             지금 바로 시작해보세요.
           </span>
           <a
-            onClick={ this.onClickLoginBtn }>
+            onClick={this.onClickLoginBtn}>
             <img
               className="classtingIcon"
               width="200"
-              src={ BtnLoginWithClassting }
+              src={BtnLoginWithClassting}
               alt="Classting 아이콘" />
           </a>
         </div>
