@@ -2,20 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import { connect } from 'react-redux';
-import { STEP_1, STEP_2 } from '../../../ducks/constants';
-import * as actions from '../../../ducks/Upload/uploads';
-import { INIT_QUESTION_STATES } from '../../../ducks/Upload/uploadInsertionQuizzes';
+
+import { STEP_1, STEP_2 } from '~/ducks/constants';
+import * as actions from '~/ducks/Upload/uploads';
+import { INIT_QUESTION_STATES } from '~/ducks/Upload/uploadInsertionQuizzes';
 import VideoInfo from './VideoInfo';
 import QuestionInsertionContainer from './QuestionInsertion/QuestionInsertionComponent';
 import SubHeader from './SubHeader/SubHeaderComponent';
 import './index.scss';
 import { Container } from './styled';
-
-
 import {
   Title,
   Header
-} from '../../FlassCommon';
+} from '~/components/FlassCommon';
 import WithGoogleSignComponent from '../Sign/SignIn/WithGoogleSignComponent';
 
 const { number, string, func } = PropTypes;
@@ -53,6 +52,8 @@ class Upload extends Component {
 
   render() {
     const {
+      title,
+      description,
       step,
       method,
       handleSetUploadMethod,
@@ -70,28 +71,28 @@ class Upload extends Component {
 
     const header = (
       <Header
-        Title={ () =>  <Title title="Upload new video" /> }
-        SubTitle={ () => <SubHeader step={ step } STEP_1={ STEP_1 } STEP_2={ STEP_2 } /> } />
+        Title={() => <Title title="Upload new video" />}
+        SubTitle={() => <SubHeader step={step} STEP_1={STEP_1} STEP_2={STEP_2} />} />
     );
 
     let body;
-    switch(step) {
+    switch (step) {
       case STEP_1:
         body = (
           <VideoInfo
-            method={ method }
-            setUploadMethod={ method => handleSetUploadMethod(method) }
-            urlStatus={ urlStatus }
-            handleURLCheck={ videoURL => handleURLCheck(videoURL) }
-            handleNext={ videoInfo => this.goToStep2(videoInfo) }
-            thumbURL={ thumbURL }
-            resetVideo={ resetVideo }
-            isGoogleAuth={ isGoogleAuth }
-            goToGoogleAuthPage={ goToGoogleAuthPage }
-            handleYoutubeUpload={ file => uploadYoutubeVideo(file) }
-            uploadStatus={ uploadStatus }
-            uploadProgress={ uploadProgress }
-            processProgress={ processProgress } />
+            method={method}
+            setUploadMethod={method => handleSetUploadMethod(method)}
+            urlStatus={urlStatus}
+            handleURLCheck={videoURL => handleURLCheck(videoURL)}
+            handleNext={videoInfo => this.goToStep2(videoInfo)}
+            thumbURL={thumbURL}
+            resetVideo={resetVideo}
+            isGoogleAuth={isGoogleAuth}
+            goToGoogleAuthPage={goToGoogleAuthPage}
+            handleYoutubeUpload={file => uploadYoutubeVideo(file, title, description)}
+            uploadStatus={uploadStatus}
+            uploadProgress={uploadProgress}
+            processProgress={processProgress} />
         );
         break;
 
@@ -99,14 +100,14 @@ class Upload extends Component {
       default:
         body = (
           <QuestionInsertionContainer
-            onClickUploadBtn={ this.uploadLectureAndQuestions } />
+            onClickUploadBtn={this.uploadLectureAndQuestions} />
         );
     }
 
     return (
       <Container>
-        { header }
-        { body }
+        {header}
+        {body}
       </Container>
     );
   }

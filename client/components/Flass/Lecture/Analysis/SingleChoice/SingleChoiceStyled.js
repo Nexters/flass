@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import color from '../../../../../css/base/colors.scss';
+
+import color from '~/css/base/colors.scss';
 
 export const SingleChoice = {
   Wrapper: styled.div`

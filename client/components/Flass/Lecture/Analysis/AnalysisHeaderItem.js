@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import color from '../../../../css/base/colors.scss';
+
+import color from '~/css/base/colors.scss';
 
 const propTypes = {
   headerName: PropTypes.string.isRequired,
@@ -34,8 +35,8 @@ const AnalysisHeaderItem = props => {
   return (
     <Item>
       <Content>
-        { headerName }
-        { rangeComponent }
+        {headerName}
+        {rangeComponent}
       </Content>
       <Footer>
         {headerDetail}

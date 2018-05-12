@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import color from '../../../css/base/colors.scss';
+import color from '~/css/base/colors.scss';
 
 const $playerHeight = 650;
 const $playerWidth = 100;

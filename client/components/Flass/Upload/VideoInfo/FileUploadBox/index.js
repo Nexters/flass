@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 // import './infoBox.scss';
-import { INIT, FAIL_AUTH, SUCC_AUTH } from '../../../../../ducks/constants';
+import { INIT, FAIL_AUTH, SUCC_AUTH } from '~/ducks/constants';
 import GoogleLogin from './GoogleLogin';
 import Uploader from './Uploader';
 
@@ -25,22 +25,22 @@ class FileUploadBox extends Component {
       uploadStatus, uploadProgress, processProgress, thumbURL
     } = this.props;
 
-    switch(isGoogleAuth) {
+    switch (isGoogleAuth) {
       case FAIL_AUTH:
         return (
           <GoogleLogin
-            back={ back }
-            goToGoogleAuthPage={ goToGoogleAuthPage } />
+            back={back}
+            goToGoogleAuthPage={goToGoogleAuthPage} />
         );
       case SUCC_AUTH:
         return (
           <Uploader
-            back={ back }
-            handleYoutubeUpload={ file => handleYoutubeUpload(file) }
-            uploadStatus={ uploadStatus }
-            uploadProgress={ uploadProgress }
-            processProgress={ processProgress }
-            thumbURL={ thumbURL } />
+            back={back}
+            handleYoutubeUpload={file => handleYoutubeUpload(file)}
+            uploadStatus={uploadStatus}
+            uploadProgress={uploadProgress}
+            processProgress={processProgress}
+            thumbURL={thumbURL} />
         );
       case INIT:
       default:

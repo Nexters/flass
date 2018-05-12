@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-import Drawer from '../../FlassCommon/Drawer/Drawer';
-import Content from '../../FlassCommon/Content';
-import AppBar from '../../FlassCommon/AppBar/AppBar';
+import Drawer from '~/components/FlassCommon/Drawer/Drawer';
+import Content from '~/components/FlassCommon/Content';
+import AppBar from '~/components/FlassCommon/AppBar/AppBar';
 import Lecture from '../Lecture/Lecture';
-import { LOGOUT } from '../../../ducks/Sign/signs';
+import { LOGOUT } from '~/ducks/Sign/signs';
 
 const {
   shape, string, object, number, func
@@ -44,12 +44,12 @@ class FlassViewComponent extends Component {
       <div>
         <Drawer />
         <AppBar
-          isLogin={ this.isUserLogin() }
-          onClickLogoutBtn={ this.signOutFlassService } />
+          isLogin={this.isUserLogin()}
+          onClickLogoutBtn={this.signOutFlassService} />
 
         <Content>
           <Lecture
-            lectureIdFromLink={ parseInt(id) } />
+            lectureIdFromLink={parseInt(id)} />
         </Content>
       </div>
     );

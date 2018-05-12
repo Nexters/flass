@@ -2,7 +2,7 @@ import { all, call, fork, take, select, put, cancel, takeLatest } from 'redux-sa
 import _ from 'lodash';
 import moment from 'moment';
 import { createReducer } from '../reducerHelper';
-import { dateTimeFormat } from '../../util/TimeUtil';
+import { dateTimeFormat } from '~/util/TimeUtil';
 import agent from '../agent';
 
 export const FETCH_COMMENT = 'FETCH_COMMENT';
@@ -40,13 +40,13 @@ const mapToComment = comment => ({
   updatedAt: dateTimeFormat(comment['updated_at'])
 });
 
-const orderByCreatedAtDesc = (items) => _.orderBy(items, ["created_at"], ["desc"]);
+const orderByCreatedAtAsc = (items) => _.orderBy(items, ["created_at"], ["asc"]);
 
 const fetchCommentReducer = {
   [FETCH_READY_COMMENT]: (state, action) => state,
   [FETCH_COMMENT_SUCCESS]: (state, action) => ({
     ...state,
-    comments: _.flow([orderByCreatedAtDesc, mapToComments])(action.comments),
+    comments: _.flow([orderByCreatedAtAsc, mapToComments])(action.comments),
     commentchild: _.reduce(Object.keys(action.commentchild), (res, key) => {
       res[key] = mapToComments(action.commentchild[key]);
       return res;

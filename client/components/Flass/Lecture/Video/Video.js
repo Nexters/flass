@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FETCH_QUESTION } from '../../../../ducks/Flass/questions';
+
+import { FETCH_QUESTION } from '~/ducks/Flass/questions';
 import {
   SET_VIDEO_COMPLETE,
   RESET_VIDEO_COMPLETE
-} from '../../../../ducks/Flass/videos';
-import { UPDATE_STATE_AFTER_SOLVE_QUESTION } from '../../../../ducks/Flass/lectures';
+} from '~/ducks/Flass/videos';
+import { UPDATE_STATE_AFTER_SOLVE_QUESTION } from '~/ducks/Flass/lectures';
 import {
   VideoPlayerComponent,
   VideoButtonComponent,
@@ -27,11 +28,11 @@ import {
   PauseBtnIcon,
   VolumeOnBtnIcon,
   VolumeOffBtnIcon
-} from '../../../FlassCommon/Video';
+} from '~/components/FlassCommon/Video';
 import {
   convertSecsToPercentage,
   updatePlayedPercentage
-} from '../../../FlassCommon/Video/VideoUtils';
+} from '~/components/FlassCommon/Video/VideoUtils';
 import {
   FlassLectureVideo,
   StyledPlayerOnLecturePage,
@@ -154,17 +155,17 @@ class Video extends Component {
     return (
       <FlassLectureVideo.Container>
         <VideoPlayerComponent
-          styledProps={ StyledPlayerOnLecturePage }
-          url={ videoUrl }
-          playing={ playing }
-          volume={ volume }
-          played={ played }
-          loaded={ loaded }
-          duration={ duration }
-          onProgress={ this.onProgress }
-          onDuration={ this.onDuration }
-          onEnded={ this.onEnded }
-          setPlayer={ this.setPlayer } />
+          styledProps={StyledPlayerOnLecturePage}
+          url={videoUrl}
+          playing={playing}
+          volume={volume}
+          played={played}
+          loaded={loaded}
+          duration={duration}
+          onProgress={this.onProgress}
+          onDuration={this.onDuration}
+          onEnded={this.onEnded}
+          setPlayer={this.setPlayer} />
         {
           this.renderEndedPage(isEnded)
         }
@@ -177,53 +178,53 @@ class Video extends Component {
           <VideoControllerAndBarWrapperComponent>
             <div>
               <VideoCustomProgressBarComponent
-                VideoBarClassName={ VideoBarClassName }
-                VideoPlayedBarClassName={ VideoPlayedBarClassName }
-                VideoLoadedBarClassName={ VideoLoadedBarClassName }
-                VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
-                VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
+                VideoBarClassName={VideoBarClassName}
+                VideoPlayedBarClassName={VideoPlayedBarClassName}
+                VideoLoadedBarClassName={VideoLoadedBarClassName}
+                VideoQuizIndicatorClassName={VideoQuizIndicatorClassName}
+                VideoQuizIndicatorBarClassName={VideoQuizIndicatorBarClassName}
 
-                duration={ duration }
-                playedPercentage={ played }
-                loadedPercentage={ loaded }
-                onCustomSeekBarMouseDown={ this.onCustomSeekBarMouseDown }
-                onCustomSeekBarChange={ this.onCustomSeekBarChange }
-                onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
-                onCustomSeekBarClick={ this.onCustomSeekBarClick }
-                onArrowKeyPressed={ this.onArrowKeyPressed }
-                onQuestionbarClick={ this.onQuestionbarClick }
+                duration={duration}
+                playedPercentage={played}
+                loadedPercentage={loaded}
+                onCustomSeekBarMouseDown={this.onCustomSeekBarMouseDown}
+                onCustomSeekBarChange={this.onCustomSeekBarChange}
+                onCustomSeekBarMouseUp={this.onCustomSeekBarMouseUp}
+                onCustomSeekBarClick={this.onCustomSeekBarClick}
+                onArrowKeyPressed={this.onArrowKeyPressed}
+                onQuestionbarClick={this.onQuestionbarClick}
 
-                quizTimeArray={ secsStateOfQuestions }
-                canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
-                isQuizSecs={ isQuizSecs }
-                searchableSecs={ searchableSecs } />
+                quizTimeArray={secsStateOfQuestions}
+                canChangeIsQuizSecs={this.canChangeIsQuizSecs}
+                isQuizSecs={isQuizSecs}
+                searchableSecs={searchableSecs} />
 
               <VideoControllerWrapperComponent>
                 <VideoButtonComponent
-                  buttonClass={ VideoPlayPauseBtnClassName }
-                  srcSet={ playing ? PauseBtnIcon : PlayBtnIcon }
-                  onButtonClick={ this.onClickPlayPause } />
+                  buttonClass={VideoPlayPauseBtnClassName}
+                  srcSet={playing ? PauseBtnIcon : PlayBtnIcon}
+                  onButtonClick={this.onClickPlayPause} />
 
                 <VideoTimePanelComponent
-                  duration={ duration }
-                  elapsed={ played * duration } />
+                  duration={duration}
+                  elapsed={played * duration} />
 
 
                 <VideoVolumeWrapperComponent>
                   <URLCopyButtonComponent
-                    shortenUrl={ shortenUrl } />
+                    shortenUrl={shortenUrl} />
 
                   <VideoButtonComponent
-                    buttonClass={ VideoVolumeBtnClassName }
-                    srcSet={ !isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon }
-                    onButtonClick={ this.onClickVolumeBtn }
-                    onButtonMouseOver={ this.onVolumeBtnMouseOver }
-                    onButtonMouseLeave={ this.onVolumeBtnMouseLeave } />
+                    buttonClass={VideoVolumeBtnClassName}
+                    srcSet={!isMute ? VolumeOnBtnIcon : VolumeOffBtnIcon}
+                    onButtonClick={this.onClickVolumeBtn}
+                    onButtonMouseOver={this.onVolumeBtnMouseOver}
+                    onButtonMouseLeave={this.onVolumeBtnMouseLeave} />
 
                   <VideoVolumeComponent
-                    onVolumebarClick={ this.onVolumebarClick }
-                    barClass={ VideoVolumeBarClassName }
-                    volume={ volume } />
+                    onVolumebarClick={this.onVolumebarClick}
+                    barClass={VideoVolumeBarClassName}
+                    volume={volume} />
                 </VideoVolumeWrapperComponent>
 
               </VideoControllerWrapperComponent>
@@ -249,8 +250,8 @@ class Video extends Component {
   renderEndedPage(isEnded) {
     return isEnded ?
       <VideoEndedPageComponent
-        onReplayBtnClick={ this.onReplayBtnClick }
-        styledProps={ EndedPageOnLecturePage } /> :
+        onReplayBtnClick={this.onReplayBtnClick}
+        styledProps={EndedPageOnLecturePage} /> :
       null;
   }
 
@@ -268,12 +269,12 @@ class Video extends Component {
     return (
       isQuizSecs ?
         <VideoModalComponent
-          onQuestionSolved={ this.onQuestionSolved }
-          textStateOfQuestions={ textStateOfQuestions }
-          indexOfQuestion={ indexOfQuestion }
-          isVideoComplete={ isVideoComplete }
-          solvedQuestionsState={ solvedQuestionsState }
-          onKeepGoingOnVideoCompleteCase={ this.onKeepGoingOnVideoCompleteCase } /> :
+          onQuestionSolved={this.onQuestionSolved}
+          textStateOfQuestions={textStateOfQuestions}
+          indexOfQuestion={indexOfQuestion}
+          isVideoComplete={isVideoComplete}
+          solvedQuestionsState={solvedQuestionsState}
+          onKeepGoingOnVideoCompleteCase={this.onKeepGoingOnVideoCompleteCase} /> :
         null
     );
   }

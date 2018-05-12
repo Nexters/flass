@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { NO_URL, SUCC_URL, FAIL_URL } from '../../../../../ducks/constants';
+import { NO_URL, SUCC_URL, FAIL_URL } from '~/ducks/constants';
 import URLSuccess from './URLSuccess';
 import URLUpload from './URLUpload';
 
@@ -18,21 +18,21 @@ class URLUploadBox extends Component {
       back, urlStatus, handleURLCheck, thumbURL
     } = this.props;
 
-    switch(urlStatus) {
+    switch (urlStatus) {
       case SUCC_URL:
         return (
           <URLSuccess
-            back={ back }
-            thumbURL={ thumbURL } />
+            back={back}
+            thumbURL={thumbURL} />
         );
       case NO_URL:
       case FAIL_URL:
       default:
         return (
           <URLUpload
-            back={ back }
-            urlStatus={ urlStatus }
-            handleURLCheck={ videoURL => handleURLCheck(videoURL) } />
+            back={back}
+            urlStatus={urlStatus}
+            handleURLCheck={videoURL => handleURLCheck(videoURL)} />
         );
     }
   }

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD, SUCC_URL } from '../../../../ducks/constants';
+import { METHOD_NOT_SELECTED, FILE_METHOD, URL_METHOD, SUCC_URL } from '~/ducks/constants';
 import InfoBox from './InfoBox';
 import UploadOptionsBox from './UploadOptionsBox';
 import FileUploadBox from './FileUploadBox';
 import URLUploadBox from './URLUploadBox';
-import Button from '../../../FlassCommon/Button';
+import Button from '~/components/FlassCommon/Button';
 import '../step.scss';
-import '../../../../css/base/_row.scss';
+import '~/css/base/_row.scss';
 
 const propTypes = {
   handleNext: PropTypes.func.isRequired,
@@ -49,21 +49,21 @@ class VideoInfo extends Component {
     const { videoInfo } = this.state;
 
     const left = (
-      <div className={ classNames('box', 'info-box') }>
+      <div className={classNames('box', 'info-box')}>
         <InfoBox
-          videoInfo={ videoInfo }
-          onChange={ this.handleChange } />
+          videoInfo={videoInfo}
+          onChange={this.handleChange} />
       </div>
     );
 
     let right;
-    switch(method) {
+    switch (method) {
       case METHOD_NOT_SELECTED:
         right = (
           <div className="box">
             <UploadOptionsBox
-              selectFileMethod={ () => setUploadMethod(FILE_METHOD) }
-              selectURLMethod={ () => setUploadMethod(URL_METHOD) } />
+              selectFileMethod={() => setUploadMethod(FILE_METHOD)}
+              selectURLMethod={() => setUploadMethod(URL_METHOD)} />
           </div>
         );
         break;
@@ -71,14 +71,14 @@ class VideoInfo extends Component {
         right = (
           <div className="box">
             <FileUploadBox
-              back={ resetVideo }
-              isGoogleAuth={ isGoogleAuth }
-              goToGoogleAuthPage={ goToGoogleAuthPage }
-              handleYoutubeUpload={ file => handleYoutubeUpload(file) }
-              uploadStatus={ uploadStatus }
-              uploadProgress={ uploadProgress }
-              processProgress={ processProgress }
-              thumbURL={ thumbURL } />
+              back={resetVideo}
+              isGoogleAuth={isGoogleAuth}
+              goToGoogleAuthPage={goToGoogleAuthPage}
+              handleYoutubeUpload={file => handleYoutubeUpload(file)}
+              uploadStatus={uploadStatus}
+              uploadProgress={uploadProgress}
+              processProgress={processProgress}
+              thumbURL={thumbURL} />
           </div>
         );
         break;
@@ -87,10 +87,10 @@ class VideoInfo extends Component {
         right = (
           <div className="box">
             <URLUploadBox
-              back={ resetVideo }
-              urlStatus={ urlStatus }
-              handleURLCheck={ videoURL => handleURLCheck(videoURL) }
-              thumbURL={ thumbURL } />
+              back={resetVideo}
+              urlStatus={urlStatus}
+              handleURLCheck={videoURL => handleURLCheck(videoURL)}
+              thumbURL={thumbURL} />
           </div>
         );
     }
@@ -98,10 +98,10 @@ class VideoInfo extends Component {
     const next = (
       <div className="nextButton">
         <Button
-          disabled={ !this.isComplete() }
+          disabled={!this.isComplete()}
           fontSize="1.57rem"
-          color={ this.isComplete() ? '#176d99' : '#b6bfc1' }
-          onClick={ () => handleNext(videoInfo) }>다 음
+          color={this.isComplete() ? '#176d99' : '#b6bfc1'}
+          onClick={() => handleNext(videoInfo)}>다 음
         </Button>
       </div>
     );
@@ -110,15 +110,15 @@ class VideoInfo extends Component {
       <div className="container">
         <div className="Row">
           <div className="Row__large-5">
-            { left }
+            {left}
           </div>
-          <div className={ classNames('Row__large-5', 'Row--l-padding', 'Row--t-margin') }>
-            { right }
+          <div className={classNames('Row__large-5', 'Row--l-padding', 'Row--t-margin')}>
+            {right}
           </div>
         </div>
 
-        <div className={ classNames('Row', 'Row--t-small-margin') }>
-          { next }
+        <div className={classNames('Row', 'Row--t-small-margin')}>
+          {next}
         </div>
       </div>
 

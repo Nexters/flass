@@ -4,12 +4,13 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import LoadingComponent from './Loading/LoadingComponent';
-import { hashToObjectKey, queryToObjectKey } from '../../util/UrlUtil';
+
+import { hashToObjectKey, queryToObjectKey } from '~/util/UrlUtil';
 import {
   CHECK_SESSION, LOGIN_CLASSTING_SERVICE,
   setEntryPoint
-} from '../../ducks/Sign/signs';
-import { FETCH_USER } from '../../ducks/Flass/users';
+} from '~/ducks/Sign/signs';
+import { FETCH_USER } from '~/ducks/Flass/users';
 
 const {
   func, bool, shape, object
@@ -76,17 +77,17 @@ class SessionCheckBeforeRoute extends Component {
 
     const redirectUrl = queryToObjectKey(location, 'redirect_url');
     if (redirectUrl) {
-      return (<Redirect to={ {
+      return (<Redirect to={{
         pathname: redirectUrl
-      } } />);
+      }} />);
     }
     if (sessionValid) {
-      return <Route { ...rest } component={ component } />;
+      return <Route {...rest} component={component} />;
     } else {
-      return (<Redirect to={ {
+      return (<Redirect to={{
         pathname: '/user/login',
         state: { referrer: location.pathname }
-      } } />);
+      }} />);
     }
   }
 

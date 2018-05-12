@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
-import { VideoCustomProgressBarComponent } from '../../../../FlassCommon/Video';
+
+import { VideoCustomProgressBarComponent } from '~/components/FlassCommon/Video';
 import RulerComponent from './Ruler/RulerComponent';
 
 import './IndicatorBarComponentStyles.scss';
@@ -61,24 +62,24 @@ class IndicatorBarComponent extends Component {
     return (
       <div>
         <VideoCustomProgressBarComponent
-          VideoProgressBarClassName={ VideoProgressBarClassName }
-          VideoBarClassName={ VideoBarClassName }
-          VideoPlayedBarClassName={ VideoPlayedBarClassName }
-          VideoLoadedBarClassName={ VideoLoadedBarClassName }
-          VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
-          VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
+          VideoProgressBarClassName={VideoProgressBarClassName}
+          VideoBarClassName={VideoBarClassName}
+          VideoPlayedBarClassName={VideoPlayedBarClassName}
+          VideoLoadedBarClassName={VideoLoadedBarClassName}
+          VideoQuizIndicatorClassName={VideoQuizIndicatorClassName}
+          VideoQuizIndicatorBarClassName={VideoQuizIndicatorBarClassName}
 
-          duration={ duration }
-          playedPercentage={ played }
-          loadedPercentage={ loaded }
-          onCustomSeekBarMouseDown={ this.onCustomSeekBarMouseDown }
-          onCustomSeekBarChange={ this.onCustomSeekBarChange }
-          onCustomSeekBarMouseUp={ this.onCustomSeekBarMouseUp }
-          onCustomSeekBarClick={ this.onCustomSeekBarClick }
-          onArrowKeyPressed={ this.onArrowKeyPressed }
+          duration={duration}
+          playedPercentage={played}
+          loadedPercentage={loaded}
+          onCustomSeekBarMouseDown={this.onCustomSeekBarMouseDown}
+          onCustomSeekBarChange={this.onCustomSeekBarChange}
+          onCustomSeekBarMouseUp={this.onCustomSeekBarMouseUp}
+          onCustomSeekBarClick={this.onCustomSeekBarClick}
+          onArrowKeyPressed={this.onArrowKeyPressed}
 
-          canChangeIsQuizSecs={ this.canChangeIsQuizSecs }
-          isQuizSecs={ isQuizSecs } />
+          canChangeIsQuizSecs={this.canChangeIsQuizSecs}
+          isQuizSecs={isQuizSecs} />
 
         <RulerComponent />
       </div>

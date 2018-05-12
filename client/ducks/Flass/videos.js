@@ -1,9 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
 import { createReducer } from '../reducerHelper';
-import logger from '../../util/LogUtil';
+import logger from '~/util/LogUtil';
 import agent from '../agent';
-import { AnswerBodyAdapter } from '../../RequestBodyAdapter';
+import { AnswerBodyAdapter } from '~/RequestBodyAdapter';
 
 export const FETCH_VIDEO = 'FLASS_LECTURE/FETCH_VIDEO';
 export function fetchdVideo() {

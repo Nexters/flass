@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
 import styled from 'styled-components';
-import color from '../../../../css/base/colors.scss';
+
+import color from '~/css/base/colors.scss';
 import { LogoutIcon } from './icons';
 
 const {

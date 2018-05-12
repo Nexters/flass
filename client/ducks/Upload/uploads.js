@@ -12,12 +12,12 @@ import {
   LectureBodyAdapter,
   QuestionBodyAdapter,
   ChoiceBodyAdapter
-} from '../../RequestBodyAdapter';
+} from '~/RequestBodyAdapter';
 import {
   SUCCESS_UPLOAD_QUESTIONS,
   FAIL_UPLOAD_QUESTIONS
 } from './uploadInsertionQuizzes';
-import { API_ROOT, API_ROOT_FRONT } from '../../config/EnvironmentConfig';
+import { API_ROOT, API_ROOT_FRONT } from '~/config/EnvironmentConfig';
 import { createReducer } from '../reducerHelper';
 
 export const SET_STEP = 'SET_STEP';
@@ -51,7 +51,7 @@ const setUploadMethod = method => ({
 
 // handles upload method change and takes care of google api set up for accordingly
 export const handleSetUploadMethod = method => (dispatch => {
-  switch(method) {
+  switch (method) {
     case FILE_METHOD:
       dispatch(initYoutubeUpload());
       break;
@@ -153,7 +153,7 @@ const setProcessProgress = processProgress => ({
   processProgress
 });
 
-export const uploadYoutubeVideo = file => (dispatch => {
+export const uploadYoutubeVideo = (file, title, description) => (dispatch => {
   dispatch(setUploadStatus(UPLOADING));
 
   const handleUploading = uploadProgress => {
@@ -173,7 +173,7 @@ export const uploadYoutubeVideo = file => (dispatch => {
     dispatch(setURLStatus(SUCC_URL));
   };
   Google.uploadVideo(
-    file, handleUploading, handleUploadingFinished,
+    file, title, description, handleUploading, handleUploadingFinished,
     handleProcessing, handleProcessingFinished
   );
 });
