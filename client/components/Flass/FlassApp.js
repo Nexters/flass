@@ -13,6 +13,7 @@ import AppBar from '../FlassCommon/AppBar/AppBar';
 import './FlassApp.scss';
 import { FETCH_USER } from '~/ducks/Flass/users';
 import { LOGOUT } from '~/ducks/Sign/signs';
+import CustomerService from '../FlassCommon/Footer/CustomerService';
 
 const Grid = Loadable({
   loader: () => import('./Grid/Grid'),
@@ -60,6 +61,7 @@ class FlassApp extends Component {
         <Content>
           {this.renderContent()}
         </Content>
+        <CustomerService />
       </FlassAppBox>
     );
   }
@@ -68,7 +70,6 @@ class FlassApp extends Component {
     return (
       <Switch>
         <Route exact path="/" component={Grid} />
-        <Route exact path="/home" component={Grid} />
         <Route exact path="/lecture/:id" component={Lecture} />
         <Route exact path="/upload" component={Upload} />
         <Route path="/*" render={() => <Redirect to="/error" />} />

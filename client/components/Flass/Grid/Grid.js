@@ -20,20 +20,7 @@ import {
 } from '~/ducks/Flass/grids';
 
 const GridBox = styled.div`
-  position: relative;
   min-height: 100%;
-`;
-
-const CustomerService = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  font-size: 15px;
-  margin-right: 40px;
-  color: #a7acad;
-  text-align: right;
-  padding-bottom: 10px;
-  color: ${color['cool-grey']};
 `;
 
 const { object, array, func } = PropTypes;
@@ -75,9 +62,6 @@ class Grid extends Component {
         <GridView>
           {renderAllItems}
         </GridView>
-        <CustomerService>
-          우주컴퍼니팀 | 문의  flassadm@gmail.com
-        </CustomerService>
       </GridBox>
     );
   }

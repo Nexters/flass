@@ -60,7 +60,7 @@ class ModalComponent extends Component {
 
   @autobind
   onClickCompleteBtn() {
-    return this.context.router.history.push('/home');
+    return this.context.router.history.push('/');
   }
 }
 

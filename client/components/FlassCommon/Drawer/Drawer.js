@@ -1,8 +1,8 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
-
 import {
   SideHome,
   SideHomeActive,
@@ -70,28 +70,38 @@ class Drawer extends Component {
           </FlassMark>
         </Link>
         <Route
-          path="/home"
-          children={({ match }) =>
-            (
-              <FlassMenu
-                to="/home" >
-                <FlassMenuImage alt="" width="17" src={match ? SideHomeActive : SideHome} />
-                {match && <ClickLine />}
-              </FlassMenu>
-            )} />
+          path="/"
+          exact
+          children={this.renderLinkMap("home")} />
         <Route
           path="/upload"
-          children={({ match }) =>
-            (
-              <FlassMenu
-                to="/upload" >
-                <FlassMenuImage alt="" width="17" src={match ? SideUploadActive : SideUpload} />
-                {match && <ClickLine />}
-              </FlassMenu>
-            )} />
+          children={this.renderLinkMap("upload")} />
       </div>
     );
   }
+
+  renderLinkMap = (name) => {
+    const menus = [
+      {
+        name: "home", path: "", activeImage: SideHomeActive, image: SideHome
+      },
+      {
+        name: "upload", path: "upload", activeImage: SideUploadActive, image: SideUpload
+      }];
+    const linkMap = _.reduce(menus, (res, menu) => {
+      return {
+        [menu.name]: ({ match }) => {
+          return (<FlassMenu
+            to={`/${menu.path}`} >
+            <FlassMenuImage alt="" width="17" src={match ? menu.activeImage : menu.image} />
+            {match && <ClickLine />}
+          </FlassMenu>);
+        },
+        ...res,
+      }
+    }, {});
+    return linkMap[name];
+  };
 }
 
 Drawer.propTypes = propTypes;
