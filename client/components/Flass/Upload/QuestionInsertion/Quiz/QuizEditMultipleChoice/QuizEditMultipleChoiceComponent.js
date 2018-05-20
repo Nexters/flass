@@ -58,7 +58,7 @@ class QuizEditMultipleChoiceComponent extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { textStateOfFocusdQuestion } = this.props;
 
     this.setState({
@@ -80,41 +80,41 @@ class QuizEditMultipleChoiceComponent extends Component {
     return (
       <QuizEditMultipleChoice.Wrapper>
         <QuizEditMultipleChoice.Header>
-          <QuizEditMultipleChoice.QuestionNum>{ label }</QuizEditMultipleChoice.QuestionNum>
+          <QuizEditMultipleChoice.QuestionNum>{label}</QuizEditMultipleChoice.QuestionNum>
           <span>
             <QuizEditMultipleChoice.QuestionTitle
-              value={ title }
-              onChange={ this.onTitleInputChange }
-              disabled={ !isEdit } />
+              value={title}
+              onChange={this.onTitleInputChange}
+              disabled={!isEdit} />
           </span>
         </QuizEditMultipleChoice.Header>
 
         <QuizEditMultipleChoice.Body>
-          { this.renderChoices({ isEdit }) }
+          {this.renderChoices({ isEdit })}
         </QuizEditMultipleChoice.Body>
 
         <QuizEditMultipleChoice.Footer>
           {
             !isEdit ?
-            (
-              <QuizEditMultipleChoice.Button
-                right
-                onClick={ this.onEditBtnClick }>
-                수정
+              (
+                <QuizEditMultipleChoice.Button
+                  right
+                  onClick={this.onEditBtnClick}>
+                  수정
               </QuizEditMultipleChoice.Button>
-            ) :
-            (
-              <QuizEditMultipleChoice.Button
-                right
-                onClick={ this.onCompleteBtnClick }>
-                완료
+              ) :
+              (
+                <QuizEditMultipleChoice.Button
+                  right
+                  onClick={this.onCompleteBtnClick}>
+                  완료
               </QuizEditMultipleChoice.Button>
-            )
+              )
           }
           <QuizEditMultipleChoice.Button
             right
             color="gray"
-            onClick={ this.onDeleteBtnClick }>
+            onClick={this.onDeleteBtnClick}>
             삭제
           </QuizEditMultipleChoice.Button>
         </QuizEditMultipleChoice.Footer>
@@ -136,13 +136,13 @@ class QuizEditMultipleChoiceComponent extends Component {
       const { isAnswer, choiceTextValue } = SingleChoiceValues[i];
 
       choices.push(<QuizEditSingleChoiceComponent
-        key={ i }
-        isChecked={ isAnswer }
-        isEdit={ isEdit }
-        quizIndex={ i }
-        choiceTextValue={ choiceTextValue }
-        onCheckboxClick={ this.onCheckboxClick }
-        onChoiceInputChange={ this.onChoiceInputChange } />);
+        key={i}
+        isChecked={isAnswer}
+        isEdit={isEdit}
+        quizIndex={i}
+        choiceTextValue={choiceTextValue}
+        onCheckboxClick={this.onCheckboxClick}
+        onChoiceInputChange={this.onChoiceInputChange} />);
     }
 
     return choices;

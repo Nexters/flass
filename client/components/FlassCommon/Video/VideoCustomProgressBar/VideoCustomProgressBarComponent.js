@@ -40,7 +40,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  onQuestionbarClick: () => {},
+  onQuestionbarClick: () => { },
   VideoBarClassName: '',
   VideoPlayedBarClassName: '',
   VideoLoadedBarClassName: '',
@@ -58,6 +58,26 @@ const PROGRESS_MAX = 100;
 const SHIFT_AMOUNT_PERCENTAGE = 0.15;
 
 class VideoCustomProgressBarComponent extends Component {
+
+  static getDerivedStateFromProps(props) {
+    const {
+      duration,
+      playedPercentage,
+      loadedPercentage,
+      isQuizSecs
+    } = props;
+
+    if (!isQuizSecs) {
+      const playedSecs = parseInt(duration * playedPercentage);
+      this.props.canChangeIsQuizSecs(playedSecs);
+    }
+    return {
+      duration,
+      played: playedPercentage * 100,
+      loaded: loadedPercentage * 100
+    };
+  }
+
   constructor(props) {
     super(props);
 
@@ -69,23 +89,6 @@ class VideoCustomProgressBarComponent extends Component {
       isDragging: false,
       ismouseover: false
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {
-      duration,
-      playedPercentage,
-      loadedPercentage,
-      isQuizSecs
-    } = nextProps;
-
-    if (!isQuizSecs) {
-      const playedSecs = parseInt(duration * playedPercentage);
-      this.props.canChangeIsQuizSecs(playedSecs);
-      this.updateProgressbarStatus(duration, playedPercentage, loadedPercentage);
-    } else {
-      this.updateProgressbarStatus(duration, playedPercentage, loadedPercentage);
-    }
   }
 
   render() {
@@ -104,43 +107,35 @@ class VideoCustomProgressBarComponent extends Component {
 
     return (
       <VideoProgressBar
-        onMouseDown={ this.onCustomSeekBarMouseDown }
-        onMouseMove={ this.onCustomSeekBarChange }
-        onMouseUp={ this.onCustomSeekBarMouseUp }
-        onClick={ this.onCustomSeekBarClick }>
+        onMouseDown={this.onCustomSeekBarMouseDown}
+        onMouseMove={this.onCustomSeekBarChange}
+        onMouseUp={this.onCustomSeekBarMouseUp}
+        onClick={this.onCustomSeekBarClick}>
         <VideoCustomBarComponent
-          VideoBarClassName={ VideoBarClassName }
-          VideoPlayedBarClassName={ VideoPlayedBarClassName }
-          VideoLoadedBarClassName={ VideoLoadedBarClassName }
-          played={ played }
-          loaded={ loaded }
-          onMouseOverOnBar={ this.onMouseOverOnBar }
-          onMouseOutFromBar={ this.onMouseOutFromBar }
-          ismouseover={ ismouseover } />
+          VideoBarClassName={VideoBarClassName}
+          VideoPlayedBarClassName={VideoPlayedBarClassName}
+          VideoLoadedBarClassName={VideoLoadedBarClassName}
+          played={played}
+          loaded={loaded}
+          onMouseOverOnBar={this.onMouseOverOnBar}
+          onMouseOutFromBar={this.onMouseOutFromBar}
+          ismouseover={ismouseover} />
         <VideoCustomQuizBarComponent
-          VideoQuizIndicatorClassName={ VideoQuizIndicatorClassName }
-          VideoQuizIndicatorBarClassName={ VideoQuizIndicatorBarClassName }
-          onQuestionbarClick={ this.onQuestionbarClick }
-          onMouseOverOnBar={ this.onMouseOverOnBar }
-          onMouseOutFromBar={ this.onMouseOutFromBar }
-          duration={ duration }
+          VideoQuizIndicatorClassName={VideoQuizIndicatorClassName}
+          VideoQuizIndicatorBarClassName={VideoQuizIndicatorBarClassName}
+          onQuestionbarClick={this.onQuestionbarClick}
+          onMouseOverOnBar={this.onMouseOverOnBar}
+          onMouseOutFromBar={this.onMouseOutFromBar}
+          duration={duration}
 
-          quizTimeArray={ quizTimeArray }
-          ismouseover={ ismouseover } />
+          quizTimeArray={quizTimeArray}
+          ismouseover={ismouseover} />
       </VideoProgressBar>
     );
   }
 
-  updateProgressbarStatus(duration, playedPercentage, loadedPercentage) {
-    this.setState({
-      duration,
-      played: playedPercentage * 100,
-      loaded: loadedPercentage * 100
-    });
-  }
-
   @autobind
-  onCustomSeekBarMouseDown(e)  {
+  onCustomSeekBarMouseDown(e) {
     this.setState({ isDragging: true });
     this.props.onCustomSeekBarMouseDown();
     e.stopPropagation();

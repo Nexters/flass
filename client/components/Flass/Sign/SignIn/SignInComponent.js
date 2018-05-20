@@ -42,11 +42,9 @@ class SignIn extends Component {
     })
   };
 
-  componentDidMount() {
-  }
 
-  componentWillReceiveProps(nextProps) {
-    const { sessionValid, prevPath } = nextProps;
+  static getDerivedStateFromProps(props) {
+    const { sessionValid, prevPath } = props;
     if (sessionValid) {
       this.context.router.history.push(prevPath);
     }

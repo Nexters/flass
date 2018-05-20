@@ -91,6 +91,19 @@ const defaultProps = {
 };
 
 class Video extends Component {
+
+  static getDerivedStateFromProps(props, state) {
+    const { questions, searchableSecs } = props;
+    if (!_.isEmpty(questions) && this.shouldUpdateSearchableSecs(searchableSecs, state)) {
+      return { searchableSecs };
+    }
+    return null;
+  };
+
+  static shouldUpdateSearchableSecs({ secs }, { isSearchableSecsInit, searchableSecs }) {
+    return isSearchableSecsInit && searchableSecs !== secs;
+  };
+
   constructor(props) {
     super(props);
 
@@ -109,14 +122,6 @@ class Video extends Component {
       searchableSecs: 0,
       isSearchableSecsInit: false
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { questions } = nextProps;
-
-    if (!_.isEmpty(questions)) {
-      this.updateSearchableSecsState(nextProps);
-    }
   }
 
   componentWillUnmount() {
@@ -233,17 +238,6 @@ class Video extends Component {
         </FlassLectureVideo.ControllerBar>
       </FlassLectureVideo.Container>
     );
-  }
-
-  updateSearchableSecsState({ searchableSecs }) {
-    if (this.shouldUpdateSearchableSecs(searchableSecs)) {
-      this.setState({ searchableSecs });
-    }
-  }
-
-  shouldUpdateSearchableSecs(secs) {
-    const { isSearchableSecsInit, searchableSecs } = this.state;
-    return isSearchableSecsInit && searchableSecs !== secs;
   }
 
   @autobind

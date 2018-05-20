@@ -27,7 +27,7 @@ class QuizEditSingleChoiceComponent extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ choiceTextValue: this.props.choiceTextValue });
   }
 
@@ -37,15 +37,15 @@ class QuizEditSingleChoiceComponent extends Component {
     return (
       <QuizEditSingleChoice.Wrapper>
         <QuizEditSingleChoice.Checkbox
-          onClick={ this.onCheckboxClick }>
-          { this.renderCheckComponent({ isChecked }) }
+          onClick={this.onCheckboxClick}>
+          {this.renderCheckComponent({ isChecked })}
         </QuizEditSingleChoice.Checkbox>
 
         <div>
           <QuizEditSingleChoice.QuestionText
-            value={ this.state.choiceTextValue }
-            disabled={ !isEdit }
-            onChange={ this.onChoiceInputChange } />
+            value={this.state.choiceTextValue}
+            disabled={!isEdit}
+            onChange={this.onChoiceInputChange} />
         </div>
       </QuizEditSingleChoice.Wrapper>
     );

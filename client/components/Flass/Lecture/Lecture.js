@@ -121,14 +121,10 @@ class Lecture extends Component {
       videoUrl: ''
     };
   }
-
-  componentWillMount() {
+  componentDidMount() {
     if (this._isLectureOwner()) {
       this.setState({ selected: 3 });
     }
-  }
-
-  componentDidMount() {
     if (!this._isLectureAlreadyFetch()) {
       const id = this.selectLectureId();
       this.props.fetchRequestLectureAll(id);

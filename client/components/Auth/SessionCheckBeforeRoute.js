@@ -37,6 +37,11 @@ class SessionCheckBeforeRoute extends Component {
     })
   };
 
+  static getDerivedStateFromProps(props) {
+    const { sessionValid, isSessionChecking } = props;
+    return { sessionValid, isSessionChecking };
+  }
+
   constructor(props) {
     super(props);
 
@@ -46,7 +51,7 @@ class SessionCheckBeforeRoute extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { sessionValid, ...rest } = this.props;
     const { location } = rest;
     const { checkSession, loginClasting } = this.props;
@@ -60,11 +65,6 @@ class SessionCheckBeforeRoute extends Component {
     if (!sessionValid) {
       this.setEntryPoint(rest);
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { sessionValid, isSessionChecking } = nextProps;
-    this.setState({ sessionValid, isSessionChecking });
   }
 
   render() {

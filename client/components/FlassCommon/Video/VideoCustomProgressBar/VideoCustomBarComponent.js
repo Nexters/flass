@@ -33,16 +33,8 @@ const defaultProps = {
 };
 
 class VideoCustomBarComponent extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      quizTime: []
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { played, loaded } = nextProps;
+  static getDerivedStateFromProps(props) {
+    const { played, loaded } = props;
     const playedBars = document.getElementsByClassName('played-bar');
     const loadedBars = document.getElementsByClassName('loaded-bar');
 
@@ -53,6 +45,15 @@ class VideoCustomBarComponent extends Component {
     Object.keys(loadedBars).forEach(key => {
       loadedBars[key].style.width = `${loaded}%`;
     });
+    return null;
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      quizTime: []
+    };
   }
 
   render() {
@@ -64,16 +65,16 @@ class VideoCustomBarComponent extends Component {
 
     return (
       <Wrapper
-        onMouseOver={ onMouseOverOnBar }
-        onMouseOut={ onMouseOutFromBar }
-        ismouseover={ ismouseover } >
-        <div className={ classNames('bar', { 'bar--thicker': ismouseover }) } />
+        onMouseOver={onMouseOverOnBar}
+        onMouseOut={onMouseOutFromBar}
+        ismouseover={ismouseover} >
+        <div className={classNames('bar', { 'bar--thicker': ismouseover })} />
         <div
           id="loaded-bar"
-          className={ classNames('loaded-bar', { 'loaded-bar--thicker': ismouseover }) } />
+          className={classNames('loaded-bar', { 'loaded-bar--thicker': ismouseover })} />
         <div
           id="played-bar"
-          className={ classNames('played-bar', { 'played-bar--thicker': ismouseover }) } />
+          className={classNames('played-bar', { 'played-bar--thicker': ismouseover })} />
       </Wrapper>
     );
   }

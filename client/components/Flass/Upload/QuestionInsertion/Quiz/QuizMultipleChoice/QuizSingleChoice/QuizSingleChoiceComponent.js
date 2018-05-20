@@ -25,6 +25,17 @@ const defaultProps = {
 };
 
 class QuizSingleChoiceComponent extends Component {
+
+  static getDerivedStateFromProps(props, state) {
+    const { choiceTextValue } = props;
+    const { isChoiceInputDirty, ChoiceInputValue } = state;
+
+    if (choiceTextValue !== ChoiceInputValue && isChoiceInputDirty) {
+      return { ChoiceInputValue: choiceTextValue };
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
 
@@ -34,17 +45,8 @@ class QuizSingleChoiceComponent extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ ChoiceInputValue: `${this.props.numberingKeyword} 문항을 입력하세요.` });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { choiceTextValue } = nextProps;
-    const { isChoiceInputDirty, ChoiceInputValue } = this.state;
-
-    if (choiceTextValue !== ChoiceInputValue && isChoiceInputDirty) {
-      this.setState({ ChoiceInputValue: choiceTextValue });
-    }
   }
 
   render() {
@@ -55,7 +57,7 @@ class QuizSingleChoiceComponent extends Component {
       <div className="quiz-single-choice">
         <div
           className="quiz-single-choice__checkbox"
-          onClick={ this.onCheckboxClick }>
+          onClick={this.onCheckboxClick}>
           {
             isChecked && <div className="quiz-single-choice__check" />
           }
@@ -64,19 +66,19 @@ class QuizSingleChoiceComponent extends Component {
         <div className="quiz-single-choice__q-text-wrapper">
           <input
             type="text"
-            className={ classNames(
+            className={classNames(
               'quiz-single-choice__q-text',
               { 'quiz-single-choice__q-text--font-black': isChoiceInputDirty }
-            ) }
-            value={ ChoiceInputValue }
-            onClick={ this.onChoiceInputClick }
-            onChange={ this.onChoiceInputChange } />
+            )}
+            value={ChoiceInputValue}
+            onClick={this.onChoiceInputClick}
+            onChange={this.onChoiceInputChange} />
           <span className="quiz-single-choice__underline" />
         </div>
         <span
           className="quiz-single-choice__delete-btn"
-          onClick={ this.onDeleteBtnClick }>
-          <img alt="choice delete button" srcSet={ DeleteIcon } className="quiz-single-choice__delete-icon" />
+          onClick={this.onDeleteBtnClick}>
+          <img alt="choice delete button" srcSet={DeleteIcon} className="quiz-single-choice__delete-icon" />
         </span>
       </div>
     );

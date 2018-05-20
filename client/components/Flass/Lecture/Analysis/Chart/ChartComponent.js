@@ -65,9 +65,6 @@ class ChartComponent extends Component {
     this.updateChart(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
   updateChart = nextProps => {
     const { labels, data } = nextProps;
     if (!this.viewChart) {
@@ -90,7 +87,7 @@ class ChartComponent extends Component {
 
   render() {
     return (
-      <canvas id="myChart" width="300" height="200" ref={ chart => this.myChart = chart } />
+      <canvas id="myChart" width="300" height="200" ref={chart => this.myChart = chart} />
     );
   }
 }
