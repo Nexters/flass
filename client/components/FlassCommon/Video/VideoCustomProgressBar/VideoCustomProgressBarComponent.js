@@ -64,12 +64,13 @@ class VideoCustomProgressBarComponent extends Component {
       duration,
       playedPercentage,
       loadedPercentage,
-      isQuizSecs
+      isQuizSecs,
+      canChangeIsQuizSecs
     } = props;
 
     if (!isQuizSecs) {
       const playedSecs = parseInt(duration * playedPercentage);
-      this.props.canChangeIsQuizSecs(playedSecs);
+      canChangeIsQuizSecs(playedSecs);
     }
     return {
       duration,

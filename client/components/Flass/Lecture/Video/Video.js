@@ -94,7 +94,7 @@ class Video extends Component {
 
   static getDerivedStateFromProps(props, state) {
     const { questions, searchableSecs } = props;
-    if (!_.isEmpty(questions) && this.shouldUpdateSearchableSecs(searchableSecs, state)) {
+    if (!_.isEmpty(questions) && Video.shouldUpdateSearchableSecs(searchableSecs, state)) {
       return { searchableSecs };
     }
     return null;
