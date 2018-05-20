@@ -14,9 +14,9 @@ const Container = styled.div`
 `;
 
 
-const CustomerService = () => {
+const CustomerService = ({ style, className }) => {
     return (
-        <Container>
+        <Container style={style} className={className}>
             우주컴퍼니팀 | 문의  flassadm@gmail.com
         </Container>
     );

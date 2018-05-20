@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import autobind from 'autobind-decorator';
+import styled from 'styled-components';
+
 import BtnLoginWithClassting from './img/btn.login_with_classting_e_600.png';
 import { CLASSTING_CLIENT_ID } from 'config/Constants';
-import './signIn.scss';
 import { callValue } from '~/util/ObjectUtil';
 import { API_ROOT_FRONT } from '~/config/EnvironmentConfig';
 import { LOGOUT } from '~/ducks/Sign/signs';
+import CustomerService from '~/components/FlassCommon/Footer/CustomerService';
+import './signIn.scss';
+
 
 const {
   func, bool, shape, object, string
@@ -23,6 +27,13 @@ const defaultProps = {
   sessionValid: false,
   prevPath: '/'
 };
+
+const CustomerServiceView = styled(CustomerService) `
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: #fff;
+`;
 
 class SignIn extends Component {
   static contextTypes = {
@@ -64,6 +75,7 @@ class SignIn extends Component {
               alt="Classting 아이콘" />
           </a>
         </div>
+        <CustomerServiceView />
       </div>
     );
   }
