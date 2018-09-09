@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from 'config/Constants';
+import { GOOGLE_API_KEY, GOOGLE_CLIENT_KEY } from '../../config/Constants';
 import MediaUploader from './MediaUploader';
 import { API_ROOT } from '../config/EnvironmentConfig';
 

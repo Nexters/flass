@@ -172,7 +172,6 @@ const mapDispatchToProps = dispatch => ({
   handleSetUploadMethod: method => dispatch(actions.handleSetUploadMethod(method)),
   setVideoInfo: videoInfo => dispatch(actions.setVideoInfo(videoInfo)),
   handleURLCheck: videoURL => dispatch(actions.handleURLCheck(videoURL)),
-  getThumbnail: videoURL => dispatch(actions.getThumbnail(videoURL)),
   resetVideo: () => dispatch(actions.resetVideo()),
   goToGoogleAuthPage: () => dispatch(actions.goToGoogleAuthPage()),
   uploadYoutubeVideo: file => dispatch(actions.uploadYoutubeVideo(file)),

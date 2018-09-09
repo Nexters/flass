@@ -6,7 +6,7 @@ import autobind from 'autobind-decorator';
 import styled from 'styled-components';
 
 import BtnLoginWithClassting from './img/btn.login_with_classting_e_600.png';
-import { CLASSTING_CLIENT_ID } from 'config/Constants';
+import { CLASSTING_CLIENT_ID } from '../../../../../config/Constants';
 import { callValue } from '~/util/ObjectUtil';
 import { API_ROOT_FRONT } from '~/config/EnvironmentConfig';
 import { LOGOUT } from '~/ducks/Sign/signs';

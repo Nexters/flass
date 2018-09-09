@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as Constants from 'config/Constants';
+import * as Constants from '../../config/Constants';
 import { API_ROOT } from '../config/EnvironmentConfig';
 
 
